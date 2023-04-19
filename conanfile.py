@@ -1,9 +1,15 @@
 from conans import ConanFile, CMake, tools
 
+def get_verion_tag():
+    git = tools.Git("stonex-cms-amqp-test-engine")
+    try:
+        return "%s" % (git.get_tag())
+    except Exception as e:
+        return e
 
 class StonexCmsAmqpTestEngineConan(ConanFile):
     name = "stonex-cms-amqp-test-engine"
-    version = "0.0.1"
+    version = get_verion_tag()
     license = "<Put the package license here>"
     author = "krzysztof.obrebski@stonex.com"
     url = "<Package recipe repository url here, for issues about the package>"
