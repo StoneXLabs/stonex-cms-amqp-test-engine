@@ -30,3 +30,22 @@
 *.exe
 *.out
 *.app
+
+#visual studio
+*.vcxproj
+*.vcxproj.*
+*.cmake
+*.bin
+*.rule
+CMakeFiles
+*.dir
+*.sln
+*.tlog
+*.pdb
+CMakeCache.txt
+
+#conan
+conaninfo.txt
+conanbuildinfo.txt
+conan.lock
+graph_info.json
