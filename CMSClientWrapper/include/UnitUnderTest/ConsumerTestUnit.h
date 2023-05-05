@@ -24,10 +24,12 @@
 #include <cms/MessageConsumer.h>
 #include <cms/Destination.h>
 
+#include <logger/StoneXLogger.h>
+
 class ConsumerTestUnit : public ClientTestUnit, public cms::MessageConsumer
 {
 public:
-	ConsumerTestUnit(const ConsumerConfiguration& params, cms::Session* session);
+	ConsumerTestUnit(const ConsumerConfiguration& params, std::shared_ptr<StonexLogger> logger, cms::Session* session);
 	ConsumerTestUnit(ConsumerTestUnit&& other);
 	~ConsumerTestUnit();
 

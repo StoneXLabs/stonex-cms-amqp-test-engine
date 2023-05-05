@@ -25,9 +25,9 @@ CMSClientTestUnit::CMSClientTestUnit(const std::string userIdentifier)
 {
 }
 
-CMSClientTestUnit::CMSClientTestUnit(const CMSClientTestConfiguration & config, const std::string userIdentifier, cms::ExceptionListener* factoryExceptionListener, cms::ExceptionListener* connectionExceptionListener, cms::ExceptionListener* sessionExceptionListener)
+CMSClientTestUnit::CMSClientTestUnit(const CMSClientTestConfiguration & config, std::shared_ptr<StonexLogger> logger, const std::string userIdentifier, cms::ExceptionListener* factoryExceptionListener, cms::ExceptionListener* connectionExceptionListener, cms::ExceptionListener* sessionExceptionListener)
 {
-	std::for_each(std::cbegin(config.config()), std::cend(config.config()), [this, factoryExceptionListener, connectionExceptionListener, sessionExceptionListener](const ConnectionConfiguration& item) {addConnection(&item, factoryExceptionListener, connectionExceptionListener, sessionExceptionListener); });
+	std::for_each(std::cbegin(config.config()), std::cend(config.config()), [this, factoryExceptionListener, connectionExceptionListener, sessionExceptionListener, logger](const ConnectionConfiguration& item) {addConnection(&item, logger, factoryExceptionListener, connectionExceptionListener, sessionExceptionListener); });
 
 
 }
@@ -38,23 +38,7 @@ CMSClientTestUnit::~CMSClientTestUnit()
 	mConnections.clear();
 }
 
-void CMSClientTestUnit::initialize(const CMSClientTestConfiguration & config, cms::ExceptionListener* factoryExceptionListener, cms::ExceptionListener* connectionExceptionListener, cms::ExceptionListener* sessionExceptionListener)
-{
-	std::for_each(std::cbegin(config.config()), std::cend(config.config()), [this, factoryExceptionListener, connectionExceptionListener, sessionExceptionListener](const ConnectionConfiguration& item) {
-		try
-		{
-			addConnection(&item, factoryExceptionListener, connectionExceptionListener, sessionExceptionListener);
-		}
-		catch (const std::exception& ex)
-		{
-//			onException(ex);
-		}
-	});
-
-//	std::for_each(std::begin(mConnections), std::end(mConnections), [this](ConnectionTestUnit* item) {concatenateExceptions(item); });
-}
-
-void CMSClientTestUnit::addConnection(const ConnectionConfiguration* params, cms::ExceptionListener* factoryExceptionListener, cms::ExceptionListener* connectionExceptionListener, cms::ExceptionListener* sessionExceptionListener)
+void CMSClientTestUnit::addConnection(const ConnectionConfiguration* params, std::shared_ptr<StonexLogger> logger, cms::ExceptionListener* factoryExceptionListener, cms::ExceptionListener* connectionExceptionListener, cms::ExceptionListener* sessionExceptionListener)
 {
 	auto existing_connection = std::find_if(std::begin(mConnections), std::end(mConnections), [params, factoryExceptionListener, connectionExceptionListener, sessionExceptionListener](ConnectionTestUnit& item) {return item.id() == params->key(); });
 	if (existing_connection != mConnections.end())
@@ -64,7 +48,7 @@ void CMSClientTestUnit::addConnection(const ConnectionConfiguration* params, cms
 	{
 		try
 		{
-			auto connection = ConnectionTestUnit(*params, factoryExceptionListener, connectionExceptionListener, sessionExceptionListener);
+			auto connection = ConnectionTestUnit(*params,logger, factoryExceptionListener, connectionExceptionListener, sessionExceptionListener);
 			mConnections.push_back(std::move(connection));
 
 		}

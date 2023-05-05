@@ -27,13 +27,15 @@
 #include "NodeAccessor.h"
 #include "CMSExceptionListenerTestUnit.h"
 
+#include <logger/StoneXLogger.h>
+
 class SessionConfiguration;
 
 
 class SessionTestUnit : public cms::Session, public CMSExceptionListenerTestUnit
 {
 public:
-	SessionTestUnit(const SessionConfiguration* configuration, cms::Connection* conn, cms::ExceptionListener* exceptionListener);
+	SessionTestUnit(const SessionConfiguration* configuration, std::shared_ptr<StonexLogger> logger, cms::Connection* conn, cms::ExceptionListener* exceptionListener);
 	SessionTestUnit(SessionTestUnit&& other);
 	SessionTestUnit(const SessionTestUnit* other) = delete;
 	~SessionTestUnit();

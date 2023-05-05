@@ -20,13 +20,14 @@
 #include <TestSuite/TestRunner.h>
 #include <TestSuite/SingleTest.h>
 
-TestRunner::TestRunner(TestSuiteConfigParser & configurationParser, TestFunctionRegister & functionRegister, MessageReceiverFactory & receiverFactory,  MessageSenderFactory & senderFactory, TestVerifierFactory & verifierFactory, TestObserver * reporter, ExceptionListenerFactory& exceptionListenerFactory)
+TestRunner::TestRunner(TestSuiteConfigParser & configurationParser, TestFunctionRegister & functionRegister, MessageReceiverFactory & receiverFactory,  MessageSenderFactory & senderFactory, TestVerifierFactory & verifierFactory, TestObserver * reporter, ExceptionListenerFactory& exceptionListenerFactory, std::shared_ptr<StonexLogger> logger)
 	:mRegister{ functionRegister },
 	mReceiverFactory{ receiverFactory },
 	mSenderFactory{ senderFactory },
 	mVeifierFactory{ verifierFactory },
 	mTestReporter{ reporter },
-	mExceptionListenerFactory{&exceptionListenerFactory}
+	mExceptionListenerFactory{&exceptionListenerFactory},
+	mLogger{logger}
  {
 	 mSuiteConfiguration = configurationParser.createConfiguration();
  }
@@ -34,6 +35,7 @@ TestRunner::TestRunner(TestSuiteConfigParser & configurationParser, TestFunction
 
  void TestRunner::run()
  {
+
 	 mCurrentTestNumber = 0;
 
 	 if (mTestReporter)
@@ -53,7 +55,7 @@ TestRunner::TestRunner(TestSuiteConfigParser & configurationParser, TestFunction
 		 // use test status
 		 TestCaseStatus status;
 		 {
-			 SingleTest single_test(test, mRegister, mReceiverFactory, mSenderFactory, *mExceptionListenerFactory, mTestReporter);
+			 SingleTest single_test(test, mRegister, mReceiverFactory, mSenderFactory, *mExceptionListenerFactory, mTestReporter, mLogger);
 			 status = single_test.run();
 		 }
 		 

@@ -24,13 +24,14 @@
 
 #include <Verifier/MessageReceiverVerifier.h>
 #include "MessageSender/MessageSenderFactory.h"
+#include <logger/StoneXLogger.h>
 
 
-SingleTest::SingleTest(const TestCaseConfiguration & test, TestFunctionRegister & functionRegister, const MessageReceiverFactory& receiverFactory, const MessageSenderFactory& senderFactory, ExceptionListenerFactory& exceptionListenerFactory, TestObserver* reporter)
+SingleTest::SingleTest(const TestCaseConfiguration & test, TestFunctionRegister & functionRegister, const MessageReceiverFactory& receiverFactory, const MessageSenderFactory& senderFactory, ExceptionListenerFactory& exceptionListenerFactory, TestObserver* reporter, std::shared_ptr<StonexLogger> logger)
 	:TestNotifier(test, reporter),
 	mTestName{ test.testName() },
 	mEnabled{ test.enabled() },
-	mUUT{ test.uutConfig(), "", exceptionListenerFactory.create(*this), exceptionListenerFactory.create(*this), exceptionListenerFactory.create(*this) },
+	mUUT{ test.uutConfig(),logger, "", exceptionListenerFactory.create(*this), exceptionListenerFactory.create(*this), exceptionListenerFactory.create(*this) },
 	mTCP{ test.performerConfig(),mUUT, *this, senderFactory },
 	mTMR{ receiverFactory.create(test,*this) }
 {

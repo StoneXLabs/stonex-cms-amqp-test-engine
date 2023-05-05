@@ -18,15 +18,20 @@
  */
 
 #include <UnitUnderTest/ConsumerTestUnit.h>
+#include <logger/StonexLogSource.h>
 
-ConsumerTestUnit::ConsumerTestUnit(const ConsumerConfiguration & params, cms::Session * session)
+ConsumerTestUnit::ConsumerTestUnit(const ConsumerConfiguration & params, std::shared_ptr<StonexLogger> logger, cms::Session * session)
 	:ClientTestUnit(params.key(), params.address(), params.type(), params.destType(), session, params.getTerminationMode())
 {
-	if (session)
+	if (session) {
 		if (const cms::Topic* topic = dynamic_cast<const cms::Topic*>(mDestination); params.durable() == true)
 			mConsumer = session->createDurableConsumer(topic, params.subscriptionName(), params.selector());
 		else
 			mConsumer = session->createConsumer(mDestination, params.selector());
+	
+		if (auto log_source = dynamic_cast<StonexLogSource*>(mConsumer); log_source != nullptr)
+			logger->attach("session", log_source);
+	}
 	else
 		throw cms::CMSException("Session used to create consumer do not exist");
 }

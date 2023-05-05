@@ -21,13 +21,18 @@
 #include <algorithm>
 
 #include <Configuration/SessionConfiguration.h>
+#include <logger/StonexLogSource.h>
 
-SessionTestUnit::SessionTestUnit(const SessionConfiguration* params, cms::Connection* conn, cms::ExceptionListener* exceptionListener)
+SessionTestUnit::SessionTestUnit(const SessionConfiguration* params, std::shared_ptr<StonexLogger> logger, cms::Connection* conn, cms::ExceptionListener* exceptionListener)
 	:CMSExceptionListenerTestUnit(params->key()),
 	mId{params->key()}
 {
-	if (conn)
+	if (conn) {
 		mSession = conn->createSession(params->autoAck() == true ? cms::Session::AcknowledgeMode::AUTO_ACKNOWLEDGE : cms::Session::AcknowledgeMode::CLIENT_ACKNOWLEDGE);
+		
+		if (auto log_source = dynamic_cast<StonexLogSource*>(mSession); log_source != nullptr)
+			logger->attach("session", log_source);
+	}
 	else
 	{
 		mSession = nullptr;
@@ -37,10 +42,10 @@ SessionTestUnit::SessionTestUnit(const SessionConfiguration* params, cms::Connec
 	attachListener(exceptionListener);
 
 
-	std::for_each(std::cbegin(params->consumerConfiguration()), std::cend(params->consumerConfiguration()), [this](const ConsumerConfiguration& item) {
+	std::for_each(std::cbegin(params->consumerConfiguration()), std::cend(params->consumerConfiguration()), [this, logger](const ConsumerConfiguration& item) {
 		try
 		{
-			mConsumers.push_back(ConsumerTestUnit(item, mSession));
+			mConsumers.push_back(ConsumerTestUnit(item, logger, mSession));
 		}
 		catch (const cms::CMSException & ex)
 		{
@@ -48,10 +53,10 @@ SessionTestUnit::SessionTestUnit(const SessionConfiguration* params, cms::Connec
 		}
 	});
 
-	std::for_each(std::cbegin(params->producerConfiguration()), std::cend(params->producerConfiguration()), [this](const ProducerConfiguration& item) {
+	std::for_each(std::cbegin(params->producerConfiguration()), std::cend(params->producerConfiguration()), [this, logger](const ProducerConfiguration& item) {
 		try
 		{
-			mProducers.push_back(ProducerTestUnit(item, mSession));
+			mProducers.push_back(ProducerTestUnit(item, logger, mSession));
 		}
 		catch (const cms::CMSException & ex)
 		{

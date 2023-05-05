@@ -24,10 +24,12 @@
 #include "SessionTestUnit.h"
 #include "CMSExceptionListenerTestUnit.h"
 
+#include <logger/StoneXLogger.h>
+
 class ConnectionTestUnit :  public cms::Connection, public CMSExceptionListenerTestUnit
 {
 public:
-	ConnectionTestUnit(const ConnectionConfiguration& params, cms::ExceptionListener* factoryExceptionListener, cms::ExceptionListener* connectionExceptionListener, cms::ExceptionListener* sessionExceptionListener);
+	ConnectionTestUnit(const ConnectionConfiguration& params, std::shared_ptr<StonexLogger> logger, cms::ExceptionListener* factoryExceptionListener, cms::ExceptionListener* connectionExceptionListener, cms::ExceptionListener* sessionExceptionListener);
 	ConnectionTestUnit(ConnectionTestUnit&& other);
 	~ConnectionTestUnit();
 	

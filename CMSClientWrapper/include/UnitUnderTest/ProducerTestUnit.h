@@ -21,11 +21,12 @@
 #include "ClientTestUnit.h"
 #include "Configuration/ProducerConfiguration.h"
 
+#include <logger/StoneXLogger.h>
 
 class ProducerTestUnit : public ClientTestUnit, public cms::MessageProducer
 {
 public:
-	ProducerTestUnit(const ProducerConfiguration& params, cms::Session* session);
+	ProducerTestUnit(const ProducerConfiguration& params, std::shared_ptr<StonexLogger> logger, cms::Session* session);
 	ProducerTestUnit(ProducerTestUnit&& other);
 	ProducerTestUnit(const ProducerTestUnit& other) = delete;
 	~ProducerTestUnit();

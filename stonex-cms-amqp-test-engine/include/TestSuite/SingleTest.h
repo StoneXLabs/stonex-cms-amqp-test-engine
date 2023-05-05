@@ -39,7 +39,7 @@
 class SingleTest : public TestCase, public TestNotifier
 {
 public:
-	SingleTest(const TestCaseConfiguration & test, TestFunctionRegister& functionRegister, const MessageReceiverFactory& receiverFactory, const MessageSenderFactory& senderFactory, ExceptionListenerFactory& exceptionListenerFactory, TestObserver* reporter);
+	SingleTest(const TestCaseConfiguration & test, TestFunctionRegister& functionRegister, const MessageReceiverFactory& receiverFactory, const MessageSenderFactory& senderFactory, ExceptionListenerFactory& exceptionListenerFactory, TestObserver* reporter, std::shared_ptr<StonexLogger> logger);
 	~SingleTest();
 
 	TestCaseStatus run() override;

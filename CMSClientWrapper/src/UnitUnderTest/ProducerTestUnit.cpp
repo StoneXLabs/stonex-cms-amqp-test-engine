@@ -18,14 +18,18 @@
  */
 
 #include <UnitUnderTest/ProducerTestUnit.h>
+#include <logger/StonexLogSource.h>
 
-ProducerTestUnit::ProducerTestUnit(const ProducerConfiguration & params, cms::Session * session)
+ProducerTestUnit::ProducerTestUnit(const ProducerConfiguration & params, std::shared_ptr<StonexLogger> logger, cms::Session * session)
 	:ClientTestUnit(params.key(), params.address(), params.type(), params.destType(), session, params.getTerminationMode())
 {
 	if(session)
 		mProducer = session->createProducer(mDestination);
 	else
 		throw cms::CMSException("Session used to create producer do not exist");
+
+	if (auto log_source = dynamic_cast<StonexLogSource*>(mProducer); log_source != nullptr)
+		logger->attach("session", log_source);
 }
 
 ProducerTestUnit::ProducerTestUnit(ProducerTestUnit && other)

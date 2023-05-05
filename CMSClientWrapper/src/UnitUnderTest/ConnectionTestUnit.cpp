@@ -23,7 +23,7 @@
 
 #include <algorithm>
 
-ConnectionTestUnit::ConnectionTestUnit(const ConnectionConfiguration& params, cms::ExceptionListener* factoryExceptionListener, cms::ExceptionListener* connectionExceptionListener, cms::ExceptionListener* sessionExceptionListener)
+ConnectionTestUnit::ConnectionTestUnit(const ConnectionConfiguration& params, std::shared_ptr<StonexLogger> logger, cms::ExceptionListener* factoryExceptionListener, cms::ExceptionListener* connectionExceptionListener, cms::ExceptionListener* sessionExceptionListener)
 	:CMSExceptionListenerTestUnit(params.key()),
 	mConnectionExceptionListener{connectionExceptionListener}
 {
@@ -31,6 +31,13 @@ ConnectionTestUnit::ConnectionTestUnit(const ConnectionConfiguration& params, cm
 	{
 
 		auto factory = cms::amqp::CMSConnectionFactory::createCMSConnectionFactory(params.url());
+		
+		if (auto log_source = dynamic_cast<StonexLogSource*>(factory); log_source != nullptr)
+			logger->attach("connection factory", log_source);
+		
+			
+
+
 		if (factoryExceptionListener)
 		{
 			attachListener(factoryExceptionListener);
@@ -45,17 +52,22 @@ ConnectionTestUnit::ConnectionTestUnit(const ConnectionConfiguration& params, cm
 
 			delete factory;
 
-			if (mConnection)
+			if (mConnection) {
+
+				if (auto log_source = dynamic_cast<StonexLogSource*>(mConnection); log_source != nullptr)
+					logger->attach("connection", log_source);
+
 				mConnection->setExceptionListener(this);
+			}
 
 			if (mConnectionExceptionListener)
 				attachListener(mConnectionExceptionListener);
 			
 
-			std::transform(std::cbegin(params.sessionConfiguration()), std::cend(params.sessionConfiguration()), std::back_inserter(mSessions), [this, sessionExceptionListener](const SessionConfiguration& item) {
+			std::transform(std::cbegin(params.sessionConfiguration()), std::cend(params.sessionConfiguration()), std::back_inserter(mSessions), [this, sessionExceptionListener,logger](const SessionConfiguration& item) {
 				try
 				{
-					return SessionTestUnit(&item, mConnection, sessionExceptionListener);
+					return SessionTestUnit(&item, logger, mConnection, sessionExceptionListener);
 				}
 				catch (const std::exception& ex)
 				{

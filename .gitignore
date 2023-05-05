@@ -43,9 +43,16 @@ CMakeFiles
 *.tlog
 *.pdb
 CMakeCache.txt
+*.ilk
 
 #conan
 conaninfo.txt
 conanbuildinfo.txt
 conan.lock
 graph_info.json
+*.db
+*.opendb
+*.ipch
+*.db-shm
+*.db-wal
+*.log

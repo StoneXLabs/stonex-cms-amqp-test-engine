@@ -22,19 +22,18 @@
 #include "NodeAccessor.h"
 #include "Configuration/CMSClientTestConfiguration.h"
 
+#include <logger/StoneXLogger.h>
 
 
 class CMSClientTestUnit
 {
 public:
 	explicit CMSClientTestUnit(const std::string userIdentifier = "");
-	CMSClientTestUnit(const CMSClientTestConfiguration &config, const std::string userIdentifier = "", cms::ExceptionListener* factoryExceptionListener = nullptr, cms::ExceptionListener* connectionExceptionListener = nullptr, cms::ExceptionListener* sessionExceptionListener = nullptr);
+	CMSClientTestUnit(const CMSClientTestConfiguration &config, std::shared_ptr<StonexLogger> logger, const std::string userIdentifier = "", cms::ExceptionListener* factoryExceptionListener = nullptr, cms::ExceptionListener* connectionExceptionListener = nullptr, cms::ExceptionListener* sessionExceptionListener = nullptr);
 
 	~CMSClientTestUnit();
 
-	void initialize(const CMSClientTestConfiguration &config, cms::ExceptionListener* factoryExceptionListener, cms::ExceptionListener* connectionExceptionListener, cms::ExceptionListener* sessionExceptionListener);
-
-	void addConnection(const ConnectionConfiguration* params, cms::ExceptionListener* factoryExceptionListener, cms::ExceptionListener* connectionExceptionListener, cms::ExceptionListener* sessionExceptionListener);
+	void addConnection(const ConnectionConfiguration* params, std::shared_ptr<StonexLogger> logger, cms::ExceptionListener* factoryExceptionListener, cms::ExceptionListener* connectionExceptionListener, cms::ExceptionListener* sessionExceptionListener);
 	void startConnection(const std::string& id);
 	void closeConnection(const std::string& id);
 	void startConnections();
