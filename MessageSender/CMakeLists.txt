@@ -21,6 +21,8 @@ target_include_directories(stonex-cms-amqp-message-sender PUBLIC ${PROJECT_SOURC
 target_link_libraries(
 	stonex-cms-amqp-message-sender
 	stonex-cms-amqp-wrapper
-	stonex-cms-amqp-test-verifier
-	stonex-cms-amqp-test-notifier
+#	stonex-cms-amqp-test-verifier
+#	stonex-cms-amqp-test-notifier
 	)
+
+add_subdirectory(Test)
