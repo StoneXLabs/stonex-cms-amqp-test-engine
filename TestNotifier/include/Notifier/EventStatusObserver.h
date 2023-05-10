@@ -19,16 +19,16 @@
 
 #pragma once
 
-#include <Verifier/EventStatus.h>
+#include "EventStatus.h"
 #include "TestNotifier.h"
 
 class EventStatusObserver
 {
 public:
-	explicit EventStatusObserver(TestNotifier& notifier);
+	explicit EventStatusObserver(Notifier& notifier);
 	void onEvent(const EventStatus& event);
 
 protected:
-	TestNotifier& mNotifier;
+	Notifier& mNotifier;
 };
 

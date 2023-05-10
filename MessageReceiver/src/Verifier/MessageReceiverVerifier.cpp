@@ -23,27 +23,21 @@
 #include <Verifier/MessageVerifier.h>
 
 
-MessageReceiverVerifier::MessageReceiverVerifier(const TestCaseConfiguration& config)
-	: mName{ config.testName() }
+MessageReceiverVerifier::MessageReceiverVerifier(std::vector<TestCaseMessageReceiverConfiguration*>& config)//	: mName{ config.testName() }
 {
-	if (!config.verifierConfig().messageExpectations().empty())
-	{
-		std::transform(std::cbegin(config.verifierConfig().messageExpectations()), std::cend(config.verifierConfig().messageExpectations()),std::back_inserter(mVerifiers), [this](TestCaseMessageReceiverConfiguration* item) {
-			return std::make_shared<MessageVerifier>(*item);
-		});
-
-
-	}
+	std::transform(std::cbegin(config), std::cend(config),std::back_inserter(mVerifiers), [this](TestCaseMessageReceiverConfiguration* item) {
+		return std::make_shared<MessageVerifier>(*item);
+	});
 }
 
 MessageReceiverVerifier::~MessageReceiverVerifier()
 {
 }
 
-void MessageReceiverVerifier::addVerifier(TestCaseMessageReceiverConfiguration& config)
-{
-	mVerifiers.emplace_back(std::make_shared<MessageVerifier>(config));
-}
+//void MessageReceiverVerifier::addVerifier(TestCaseMessageReceiverConfiguration& config)
+//{
+//	mVerifiers.emplace_back(std::make_shared<MessageVerifier>(config));
+//}
 
 
 

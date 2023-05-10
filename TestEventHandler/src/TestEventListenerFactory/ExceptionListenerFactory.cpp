@@ -20,7 +20,7 @@
 #include <TestEventListenerFactory/ExceptionListenerFactory.h>
 #include <Notifier/TestNotifier.h>
 
-ExceptionListener* ExceptionListenerFactory::create(TestNotifier& notifier)
+ExceptionListener* ExceptionListenerFactory::create(Notifier& notifier)
 {
 	return new ExceptionListener(notifier);
 }

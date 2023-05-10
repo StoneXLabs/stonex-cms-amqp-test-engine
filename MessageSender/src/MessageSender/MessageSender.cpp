@@ -18,7 +18,7 @@
  */
 
 #include <MessageSender/MessageSenderFactory.h>
-#include <Verifier/EventStatus.h>
+#include <Notifier/EventStatus.h>
 
 MessageSender::MessageSender(const TestCaseProducerConfiguration& params, CMSClientTestUnit & client_params, EventStatusObserver& parent)
 	:mSession{ client_params.session(params.sessionId()) },

@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-#include <ConfigParser/TestSuiteJsonConfigParser.h>
+#include <ConfigurationParser/TestSuiteJsonConfigParser.h>
 
 #include <fstream>
 

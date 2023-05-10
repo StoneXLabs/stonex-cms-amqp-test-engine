@@ -19,59 +19,84 @@
 
 #include <Notifier/TestNotifier.h>
 #include <string>
+//
+//TestNotifier::TestNotifier(const TestCaseConfiguration& config, TestObserver* reporter)
+//	:mConfiguration{ config },
+//	mReporter{ reporter }
+//{
+//}
+//TestNotifier::~TestNotifier()
+//{
+//	if (mReporter)
+//	{
+//		if (mErrorCount) 		
+//			mReporter->onMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR, mConfiguration.testName(), "Encountered "+ std::to_string(mErrorCount) + "errors"));
+//
+//		mReporter->onMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_END, mConfiguration.testName(), "duration='" + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(mEnd - mStart).count()) + "'"));
+//
+//
+//	}
+//}
+//;
+//
+//void TestNotifier::start() {
+//	mStart = std::chrono::system_clock::now();
+//	if (mReporter)
+//		mReporter->onMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_START,mConfiguration.testName(), mConfiguration.testFunctionName()));
+//};
+//
+//void TestNotifier::end() {
+//	mEnd = std::chrono::system_clock::now();
+//};
+//
+//void TestNotifier::skip()
+//{
+//	if (mReporter)
+//		mReporter->onMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_IGNORED, mConfiguration.testName(), mConfiguration.testFunctionName()));
+//	end();
+//}
+//
+//void TestNotifier::testEvent(const EventStatus& event)
+//{
+//	if (mReporter)
+//	{
+//		if (!event.correct()) 
+//		{
+//			mErrorCount++;
+//			mReporter->onMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR, mConfiguration.testName(), " [" + event.eventSource() + "] " + event.errorMessage()));
+//
+//		}
+//	}
+//}
+//
+//std::ostream & operator<<(std::ostream & os, const TestNotifier & dt)
+//{
+//	os << "[" << std::chrono::system_clock::to_time_t(dt.mEnd) << "]";
+//	os << "Test Case\n" << dt.mConfiguration;
+//	return os;
+//}
 
-TestNotifier::TestNotifier(const TestCaseConfiguration& config, TestObserver* reporter)
-	:mConfiguration{ config },
-	mReporter{ reporter }
+Notifier::Notifier(TestObserver * reporter)
+	:mReporter{ reporter }
 {
 }
-TestNotifier::~TestNotifier()
-{
-	if (mReporter)
-	{
-		if (mErrorCount) 		
-			mReporter->onMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR, mConfiguration.testName(), "Encountered "+ std::to_string(mErrorCount) + "errors"));
 
-		mReporter->onMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_END, mConfiguration.testName(), "duration='" + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(mEnd - mStart).count()) + "'"));
-
-
-	}
-}
-;
-
-void TestNotifier::start() {
-	mStart = std::chrono::system_clock::now();
-	if (mReporter)
-		mReporter->onMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_START,mConfiguration.testName(), mConfiguration.testFunctionName()));
-};
-
-void TestNotifier::end() {
-	mEnd = std::chrono::system_clock::now();
-};
-
-void TestNotifier::skip()
-{
-	if (mReporter)
-		mReporter->onMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_IGNORED, mConfiguration.testName(), mConfiguration.testFunctionName()));
-	end();
-}
-
-void TestNotifier::testEvent(const EventStatus& event)
+void Notifier::testEvent(const EventStatus & event)
 {
 	if (mReporter)
 	{
 		if (!event.correct()) 
 		{
-			mErrorCount++;
-			mReporter->onMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR, mConfiguration.testName(), " [" + event.eventSource() + "] " + event.errorMessage()));
+			mReporter->onMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR, "mConfiguration.testName()", " [" + event.eventSource() + "] " + event.errorMessage()));
 
 		}
 	}
 }
 
-std::ostream & operator<<(std::ostream & os, const TestNotifier & dt)
+
+std::ostream & operator<<(std::ostream & os, const Notifier & dt)
 {
-	os << "[" << std::chrono::system_clock::to_time_t(dt.mEnd) << "]";
-	os << "Test Case\n" << dt.mConfiguration;
+//	os << "[" << std::chrono::system_clock::to_time_t(dt.mEnd) << "]";
+//	os << "Test Case\n" << dt.mConfiguration;
 	return os;
 }

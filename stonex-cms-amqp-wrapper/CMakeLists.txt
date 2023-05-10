@@ -21,4 +21,5 @@ target_link_libraries(stonex-cms-amqp-wrapper
 	apache-cms-interface
 	stonex-cms-amqp-event-handler
 	CONAN_PKG::stonex-cms-amqp-lib
+	CONAN_PKG::boost
 	)

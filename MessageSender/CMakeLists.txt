@@ -8,8 +8,8 @@ set(CMAKE_CXX_STANDARD 20)
 
 
 
-file(GLOB sourceFiles ${PROJECT_SOURCE_DIR}/src/MessageSender/*.cpp)
-file(GLOB headerFiles ${PROJECT_SOURCE_DIR}/include/MessageSender/*.h)
+file(GLOB sourceFiles ${PROJECT_SOURCE_DIR}/src/MessageSender/*.cpp  ${PROJECT_SOURCE_DIR}/src/Configuration/*.cpp)
+file(GLOB headerFiles ${PROJECT_SOURCE_DIR}/include/MessageSender/*.h ${PROJECT_SOURCE_DIR}/include/Configuration/*.h)
 
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${sourceFiles} ${headerFiles})

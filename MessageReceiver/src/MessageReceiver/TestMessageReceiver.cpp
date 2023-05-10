@@ -18,11 +18,10 @@
  */
 
 #include <MessageReceiver/TestMessageReceiver.h>
-#include <TestEventListenerFactory/CMSMessageListenerFactory.h>
 
 #include <algorithm>
 
-TestMessageReceiver::TestMessageReceiver(CMSMessageListenerFactory * messageListenerFactory, TestNotifier& notifier)
+TestMessageReceiver::TestMessageReceiver(CMSMessageListenerFactory * messageListenerFactory, Notifier& notifier)
 	:EventStatusObserver(notifier),
 	mListenerFactory{messageListenerFactory}
 {

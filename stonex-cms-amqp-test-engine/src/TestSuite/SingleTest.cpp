@@ -28,7 +28,7 @@
 
 
 SingleTest::SingleTest(const TestCaseConfiguration & test, TestFunctionRegister & functionRegister, const MessageReceiverFactory& receiverFactory, const MessageSenderFactory& senderFactory, ExceptionListenerFactory& exceptionListenerFactory, TestObserver* reporter, std::shared_ptr<StonexLogger> logger)
-	:TestNotifier(test, reporter),
+	:Notifier(reporter),
 	mTestName{ test.testName() },
 	mEnabled{ test.enabled() },
 	mUUT{ test.uutConfig(),logger, "", exceptionListenerFactory.create(*this), exceptionListenerFactory.create(*this), exceptionListenerFactory.create(*this) },
@@ -62,10 +62,10 @@ TestCaseStatus SingleTest::run()
 	 if (!mCurrentTestFunction)
 		 return mStatus;
 	 else if (mEnabled) {
-		 start();
+	//	 start();
 		 TEST_CASE_STATUS status =  mCurrentTestFunction(&mUUT, &mTCP, mTMR);
 		 mStatus.nextState();
-		 end();
+	//	 end();
 	 }
 	 else
 		 mStatus.nextState(false);

@@ -17,26 +17,22 @@
  * limitations under the License.
  */
 
-#include <TestEventListener/CMSMessageListener.h>
+#pragma once
 
-#include <sstream>
-#include <iomanip>
-#include <algorithm>
+#include <MessageReceiver/CMSMessageListener.h>
+#include <Verifier/BaseVerifier.h>
+#include <TestEventWrapperFactory/EventWrapperFactory.h>
 
-#include <cms/TextMessage.h>
-#include <cms/BytesMessage.h>
-#include <cms/MapMessage.h>
-#include <cms/StreamMessage.h>
 
-void CMSMessageListener::onMessage(const::cms::Message * mes)
+class VerifyingListener : public CMSMessageListener
 {
-	delete mes;
-}
+public:
+	VerifyingListener(const std::string& id, std::shared_ptr<BaseVerifier> verifier);
+	~VerifyingListener() = default;
+	void onMessage(const cms::Message* message) override;
 
-std::string CMSMessageListener::printBinaryArray(unsigned char * data)
-{
-	std::stringstream ss;
-	ss << "0x";
-	std::for_each_n(data, strlen((char*)data), [&ss](unsigned char item) {ss << std::hex << std::setw(2) << std::setfill('0') << (int)item; });
-	return ss.str();
-}
+private:
+	const std::string mId{};
+	std::shared_ptr<BaseVerifier> mMessageVerifier;
+	EventWrapperFactory* mEventWrapperFactory;
+};

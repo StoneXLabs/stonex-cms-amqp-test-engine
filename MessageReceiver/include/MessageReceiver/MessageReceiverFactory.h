@@ -24,6 +24,6 @@
 class MessageReceiverFactory
 {
 public:
-	virtual TestMessageReceiver* create(const TestCaseConfiguration& config, TestNotifier& notifier) const = 0;
+	virtual TestMessageReceiver* create(const TestCaseConfiguration& config, Notifier& notifier) const = 0;
 };
 

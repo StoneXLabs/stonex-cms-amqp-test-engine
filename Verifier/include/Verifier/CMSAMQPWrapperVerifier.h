@@ -20,14 +20,14 @@
 #pragma once
 
 #include <list>
-
 #include "BaseVerifier.h"
-#include <Configuration/TestCaseConfiguration.h>
+
+class CMSExceptionsConfiguration;
 
 class CMSAMQPWrapperVerifier
 {
 public:
-	explicit CMSAMQPWrapperVerifier(const TestCaseConfiguration& config);
+	explicit CMSAMQPWrapperVerifier(const std::vector<CMSExceptionsConfiguration*>& config);
 	~CMSAMQPWrapperVerifier();
 
 	std::shared_ptr<BaseVerifier> getVerifier(const std::string& id);
@@ -35,6 +35,6 @@ public:
 
 protected:
 	std::list<std::shared_ptr<BaseVerifier>> mVerifiers;
-	const std::string mName;
+//	const std::string mName;
 };
 

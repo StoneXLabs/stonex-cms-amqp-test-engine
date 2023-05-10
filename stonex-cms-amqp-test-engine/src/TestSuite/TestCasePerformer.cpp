@@ -19,10 +19,10 @@
 
 #include <TestSuite/TestCasePerformer.h>
 #include <algorithm>
-#include <Verifier/EventStatus.h>
+#include <Notifier/EventStatus.h>
 
 
-TestCasePerformer::TestCasePerformer(const TestCasePerformerConfiguration & params, CMSClientTestUnit & client_params, TestNotifier& notifier, const MessageSenderFactory& sender_factory)
+TestCasePerformer::TestCasePerformer(const TestCasePerformerConfiguration & params, CMSClientTestUnit & client_params, Notifier& notifier, const MessageSenderFactory& sender_factory)
 	:EventStatusObserver(notifier)
 {
 		 std::transform(std::cbegin(params.senders()), std::cend(params.senders()), std::back_inserter(mSenders), [this,&client_params, &sender_factory](const TestCaseProducerConfiguration* item) { return sender_factory.create(*item, client_params, *this); });

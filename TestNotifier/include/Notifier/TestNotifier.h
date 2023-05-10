@@ -19,28 +19,36 @@
 
 #pragma once
 #include <chrono>
-#include <Configuration/TestCaseConfiguration.h>
+//#include <Configuration/TestCaseConfiguration.h>
 #include "TestObserver.h"
-#include <Verifier/EventStatus.h>
+#include "EventStatus.h"
 
-class TestNotifier {
+class Notifier {
 public:
-	TestNotifier(const TestCaseConfiguration& config, TestObserver* reporter);
-	virtual ~TestNotifier();
-	void start();
-	void end();
-	void skip();
-	void testEvent(const EventStatus& event);
-
-
-	friend std::ostream& operator<<(std::ostream& os, const TestNotifier& dt);
-
-
+	Notifier(TestObserver* reporter);
+	virtual void testEvent(const EventStatus& event);
+	friend std::ostream& operator<<(std::ostream& os, const Notifier& dt);
 private:
-	TestCaseConfiguration mConfiguration;
 	TestObserver* mReporter{ nullptr };
-	std::chrono::system_clock::time_point mStart;
-	std::chrono::system_clock::time_point mEnd;
-	int mErrorCount{ 0 };
 };
+
+//class Notifier {
+//public:
+//	Notifier(const TestCaseConfiguration& config, TestObserver* reporter);
+//	virtual ~Notifier();
+//	void start();
+//	void end();
+//	void skip();
+//	void testEvent(const EventStatus& event);
+//
+//
+//	friend std::ostream& operator<<(std::ostream& os, const Notifier& dt);
+//
+//
+//private:
+//	TestCaseConfiguration mConfiguration;
+//	std::chrono::system_clock::time_point mStart;
+//	std::chrono::system_clock::time_point mEnd;
+//	int mErrorCount{ 0 };
+//};
 

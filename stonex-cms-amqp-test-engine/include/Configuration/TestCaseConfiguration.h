@@ -20,7 +20,7 @@
 #pragma once
 #include <string>
 
-#include <Configuration/CMSClientTestConfiguration.h>
+#include <Configuration/CMSWrapperConfiguration.h>
 #include <Configuration/TestCasePerformerConfiguration.h>
 #include <Configuration/TestCaseVerifierConfiguration.h>
 

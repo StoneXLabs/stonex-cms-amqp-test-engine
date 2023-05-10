@@ -24,5 +24,5 @@
 class ExceptionListenerFactory 
 {
 public:
-	virtual ExceptionListener* create(TestNotifier& notifier);
+	virtual ExceptionListener* create(Notifier& notifier);
 };

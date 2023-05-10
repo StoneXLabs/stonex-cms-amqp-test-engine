@@ -19,7 +19,7 @@
 
 #include <Notifier/EventStatusObserver.h>
 
-EventStatusObserver::EventStatusObserver(TestNotifier& notifier)
+EventStatusObserver::EventStatusObserver(Notifier& notifier)
 	:mNotifier{notifier}
 {
 }

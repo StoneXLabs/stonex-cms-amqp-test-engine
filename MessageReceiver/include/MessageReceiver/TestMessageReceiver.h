@@ -22,10 +22,10 @@
 #include <list>
 
 #include <cms/MessageListener.h>
-#include <Configuration/CMSClientTestConfiguration.h>
 
 #include <Wrapper/CMSClientTestUnit.h>
-#include <TestEventListenerFactory/CMSMessageListenerFactory.h>
+#include "CMSMessageListenerFactory.h"
+#include <Configuration/CMSWrapperConfiguration.h>
 
 #include <Notifier/EventStatusObserver.h>
 
@@ -34,7 +34,7 @@ class EventStatus;
 class TestMessageReceiver : public EventStatusObserver
 {
 public:
-	TestMessageReceiver(CMSMessageListenerFactory* messageListenerFactory, TestNotifier& notifier);
+	TestMessageReceiver(CMSMessageListenerFactory* messageListenerFactory, Notifier& notifier);
 	virtual ~TestMessageReceiver();
 
 	virtual void initialize(CMSClientTestUnit & UUT, const CMSWrapperConfiguration & config);

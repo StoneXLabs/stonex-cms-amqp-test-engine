@@ -17,27 +17,36 @@
  * limitations under the License.
  */
 
-#pragma once
 
-#include <list>
+#include <Notifier/EventStatus.h>
+#include <iomanip>
 
-#include "BaseVerifier.h"
-#include <Configuration/TestCaseConfiguration.h>
 
-class MessageReceiverVerifier
+EventStatus::EventStatus(bool status, const std::string& eventSource, const std::string &errorMessage)
+	:mMessageCorrect{ status },
+	mEventSource{eventSource},
+	mErrorMessage(errorMessage)
 {
-public:
-	explicit MessageReceiverVerifier(const TestCaseConfiguration& config);
-	~MessageReceiverVerifier();
+}
 
-	virtual void addVerifier(TestCaseMessageReceiverConfiguration& config);
+bool EventStatus::correct() const {
+	return mMessageCorrect;
+}
 
-	std::shared_ptr<BaseVerifier> getVerifier(const std::string& id);
-	std::list<std::shared_ptr<BaseVerifier>>& verifiers();
+std::string EventStatus::eventSource() const
+{
+	return mEventSource;
+}
 
-protected:
-	std::list<std::shared_ptr<BaseVerifier>> mVerifiers;
-	const std::string mName;
+std::string EventStatus::errorMessage() const
+{
+	return mErrorMessage;
+}
 
-};
-
+std::ostream& operator<<(std::ostream& os, const EventStatus& obj)
+{
+	os << "status : " << std::boolalpha << obj.correct();
+	if (!obj.correct())
+		os << " reason : " << obj.errorMessage();
+	return os;
+}

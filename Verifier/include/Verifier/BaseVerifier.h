@@ -22,7 +22,7 @@
 #include <set>
 #include <iostream>
 #include <MessageContentVerifiers/VerifierStatus.h>
-#include <Verifier/EventStatus.h>
+#include <Notifier/EventStatus.h>
 
 class EventWrapper;
 

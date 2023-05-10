@@ -16,4 +16,4 @@ add_library(stonex-cms-amqp-test-notifier STATIC ${sourceFiles} ${headerFiles})
 
 target_include_directories(stonex-cms-amqp-test-notifier PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
-target_link_libraries(stonex-cms-amqp-test-notifier  stonex-cms-amqp-test-verifier stonex-cms-amqp-test-configuration stonex-cms-amqp-test-verifier)
+#target_link_libraries(stonex-cms-amqp-test-notifier  stonex-cms-amqp-test-verifier)

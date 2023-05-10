@@ -36,7 +36,7 @@
 
 #include <Notifier/TestNotifier.h>
 
-class SingleTest : public TestCase, public TestNotifier
+class SingleTest : public TestCase, public Notifier
 {
 public:
 	SingleTest(const TestCaseConfiguration & test, TestFunctionRegister& functionRegister, const MessageReceiverFactory& receiverFactory, const MessageSenderFactory& senderFactory, ExceptionListenerFactory& exceptionListenerFactory, TestObserver* reporter, std::shared_ptr<StonexLogger> logger);

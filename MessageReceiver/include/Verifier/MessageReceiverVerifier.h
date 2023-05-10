@@ -19,35 +19,25 @@
 
 #pragma once
 
-#include "BaseVerifier.h"
-#include "TestEventWrapper/MessageWrapper.h"
-#include  "MessageContentVerifiers/ExpectedField.h"
+#include <list>
 
-#include <functional>
-
+#include <Verifier/BaseVerifier.h>
 #include <Configuration/TestCaseMessageReceiverConfiguration.h>
-#include <MessageContentVerifiers/VerifierStatus.h>
 
-
-class MessageVerifier : public BaseVerifier, public std::enable_shared_from_this<MessageVerifier>
+class MessageReceiverVerifier
 {
 public:
-	MessageVerifier(const std::string& verifier_id, const std::string  msg_destination_type, const std::string msg_destination_address);
-	MessageVerifier(TestCaseMessageReceiverConfiguration& config);
-	void addFieldVerifier(IExpectedField* fieldVerifier);
+	explicit MessageReceiverVerifier(std::vector<TestCaseMessageReceiverConfiguration*>& config);
+	~MessageReceiverVerifier();
 
-	EventStatus trigger(const EventWrapper* event) override;
-	void expectCount(int count);
-	int expectCount() const;
+	//virtual void addVerifier(TestCaseMessageReceiverConfiguration& config);
 
+	std::shared_ptr<BaseVerifier> getVerifier(const std::string& id);
+	std::list<std::shared_ptr<BaseVerifier>>& verifiers();
 
-private:
-	VerifierStatus* mStatus{nullptr};
+protected:
+	std::list<std::shared_ptr<BaseVerifier>> mVerifiers;
+	const std::string mName;
 
-	int mExpectedMessageCount{ -1 };
-	int mMessageCount{ 0 };
-	cms::Destination::DestinationType mMsgDestType;
-	std::string mDestinationAddress;
-
-	std::list<IExpectedField*> mFieldVerifiers;
 };
+

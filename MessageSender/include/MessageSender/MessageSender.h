@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <Configuration/TestCasePerformerConfiguration.h>
+#include "Configuration/TestCaseProducerConfiguration.h"
 #include <Wrapper/CMSClientTestUnit.h>
 #include <Notifier/EventStatusObserver.h>
 

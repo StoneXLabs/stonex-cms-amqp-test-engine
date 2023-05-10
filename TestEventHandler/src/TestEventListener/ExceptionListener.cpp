@@ -19,7 +19,7 @@
 
 #include <TestEventListener/ExceptionListener.h>
 
-ExceptionListener::ExceptionListener(TestNotifier& notifier)
+ExceptionListener::ExceptionListener(Notifier& notifier)
 	:EventStatusObserver(notifier)
 {
 }

@@ -31,6 +31,6 @@ public:
 	{
 		std::cout << "ExceptionListener closed" << std::endl;
 	}
-	ExceptionListener(TestNotifier& notifier);
+	ExceptionListener(Notifier& notifier);
 	virtual void onException(const cms::CMSException& ex);
 };

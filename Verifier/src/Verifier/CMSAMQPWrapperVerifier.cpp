@@ -22,17 +22,12 @@
 
 #include <Configuration/CMSExceptionsConfiguration.h>
 
-CMSAMQPWrapperVerifier::CMSAMQPWrapperVerifier(const TestCaseConfiguration& config)
-	: mName{ config.testName() }
+CMSAMQPWrapperVerifier::CMSAMQPWrapperVerifier(const std::vector<CMSExceptionsConfiguration*>& config) //	: mName{ config.testName() }
 {
-	if (!config.verifierConfig().exceptionsExpectations().empty())
-	{
-		std::transform(std::cbegin(config.verifierConfig().exceptionsExpectations()), std::cend(config.verifierConfig().exceptionsExpectations()), std::back_inserter(mVerifiers), [this](CMSExceptionsConfiguration* item) {
-			return std::make_shared<ExceptionVerifier>(*item);
-		});
+	std::transform(std::cbegin(config), std::cend(config), std::back_inserter(mVerifiers), [](CMSExceptionsConfiguration* item) {
+		return std::make_shared<ExceptionVerifier>(*item);
+	});
 
-
-	}
 }
 
 CMSAMQPWrapperVerifier::~CMSAMQPWrapperVerifier()
