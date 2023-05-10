@@ -7,8 +7,8 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_CXX_STANDARD 20)
 
 
-file(GLOB sourceFiles ${PROJECT_SOURCE_DIR}/src/UnitUnderTest/*.cpp )
-file(GLOB headerFiles ${PROJECT_SOURCE_DIR}/include/UnitUnderTest/*.h)
+file(GLOB sourceFiles ${PROJECT_SOURCE_DIR}/src/Wrapper/*.cpp )
+file(GLOB headerFiles ${PROJECT_SOURCE_DIR}/include/Wrapper/*.h)
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${sourceFiles} ${headerFiles})
 

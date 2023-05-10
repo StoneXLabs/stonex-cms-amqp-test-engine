@@ -8,7 +8,7 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_CXX_STANDARD 20)
 
 
-add_subdirectory(CMSClientWrapper)
+add_subdirectory(stonex-cms-amqp-wrapper)
 add_subdirectory(common)
 add_subdirectory(Configuration)
 add_subdirectory(ConfigurationParser)

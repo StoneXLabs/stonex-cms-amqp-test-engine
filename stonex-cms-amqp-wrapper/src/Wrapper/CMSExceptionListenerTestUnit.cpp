@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-#include <UnitUnderTest/CMSExceptionListenerTestUnit.h>
+#include <Wrapper/CMSExceptionListenerTestUnit.h>
 
 #include <iostream>
 

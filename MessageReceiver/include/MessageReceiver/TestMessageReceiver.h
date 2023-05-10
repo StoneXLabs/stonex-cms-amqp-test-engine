@@ -24,7 +24,7 @@
 #include <cms/MessageListener.h>
 #include <Configuration/CMSClientTestConfiguration.h>
 
-#include <UnitUnderTest/CMSClientTestUnit.h>
+#include <Wrapper/CMSClientTestUnit.h>
 #include <TestEventListenerFactory/CMSMessageListenerFactory.h>
 
 #include <Notifier/EventStatusObserver.h>

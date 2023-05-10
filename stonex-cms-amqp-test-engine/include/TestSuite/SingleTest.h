@@ -23,7 +23,7 @@
 #include <string>
 #include <functional>
 #include <Configuration/TestCaseConfiguration.h>
-#include <UnitUnderTest/CMSClientTestUnit.h>
+#include <Wrapper/CMSClientTestUnit.h>
 #include "TestCasePerformer.h"
 #include "MessageReceiver/TestMessageReceiver.h"
 #include "MessageReceiver/MessageReceiverFactory.h"

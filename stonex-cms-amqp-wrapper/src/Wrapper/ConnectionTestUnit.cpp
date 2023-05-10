@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-#include <UnitUnderTest/ConnectionTestUnit.h>
+#include <Wrapper/ConnectionTestUnit.h>
 
 #include <API/CMSConnectionFactory.h>
 

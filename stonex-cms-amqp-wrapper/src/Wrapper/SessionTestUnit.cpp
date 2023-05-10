@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-#include <UnitUnderTest/SessionTestUnit.h>
+#include <Wrapper/SessionTestUnit.h>
 #include <algorithm>
 
 #include <Configuration/SessionConfiguration.h>

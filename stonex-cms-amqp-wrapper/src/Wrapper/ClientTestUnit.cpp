@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-#include <UnitUnderTest/ClientTestUnit.h>
+#include <Wrapper/ClientTestUnit.h>
 
 ClientTestUnit::ClientTestUnit(const std::string & key, const std::string & address, const ClientType clientType, const DestinationType destinationType, cms::Session * session, DefaultTerminationMode termination_method)
 	:DefaultTerminationConfiguration(termination_method),

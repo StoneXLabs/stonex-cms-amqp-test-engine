@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-#include <UnitUnderTest/ProducerTestUnit.h>
+#include <Wrapper/ProducerTestUnit.h>
 #include <logger/StonexLogSource.h>
 
 ProducerTestUnit::ProducerTestUnit(const ProducerConfiguration & params, std::shared_ptr<StonexLogger> logger, cms::Session * session)

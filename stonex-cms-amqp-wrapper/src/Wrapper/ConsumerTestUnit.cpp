@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-#include <UnitUnderTest/ConsumerTestUnit.h>
+#include <Wrapper/ConsumerTestUnit.h>
 #include <logger/StonexLogSource.h>
 
 ConsumerTestUnit::ConsumerTestUnit(const ConsumerConfiguration & params, std::shared_ptr<StonexLogger> logger, cms::Session * session)
