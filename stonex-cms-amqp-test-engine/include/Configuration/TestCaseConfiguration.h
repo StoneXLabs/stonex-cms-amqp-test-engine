@@ -27,7 +27,7 @@
 class TestCaseConfiguration
 {
 public:
-	TestCaseConfiguration(const std::string& testCaseName, const std::string& testFunctionName, bool enabled, const CMSClientTestConfiguration& uutConfiguration, const TestCasePerformerConfiguration& testPerformerConfiguration, const TestCaseVerifierConfiguration& testVertestVerifierConfiguration);
+	TestCaseConfiguration(const std::string& testCaseName, const std::string& testFunctionName, bool enabled, const CMSWrapperConfiguration& uutConfiguration, const TestCasePerformerConfiguration& testPerformerConfiguration, const TestCaseVerifierConfiguration& testVertestVerifierConfiguration);
 
 	TestCaseConfiguration& operator=(const TestCaseConfiguration& other);
 
@@ -35,7 +35,7 @@ public:
 	std::string testFunctionName() const;
 	bool enabled() const;
 
-	const CMSClientTestConfiguration& uutConfig() const;
+	const CMSWrapperConfiguration& uutConfig() const;
 	const TestCaseVerifierConfiguration& verifierConfig() const;
 	const TestCasePerformerConfiguration& performerConfig() const;
 
@@ -45,7 +45,7 @@ private:
 	std::string mTestCaseName;
 	std::string mTestFunctionName;
 	bool mEnabled;
-	CMSClientTestConfiguration mUnitUnderTestConfig;
+	CMSWrapperConfiguration mUnitUnderTestConfig;
 	TestCaseVerifierConfiguration mTestExpectationConfig;
 	TestCasePerformerConfiguration mTestConfig;
 };

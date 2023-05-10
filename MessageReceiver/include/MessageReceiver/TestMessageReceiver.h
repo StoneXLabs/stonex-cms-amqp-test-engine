@@ -37,7 +37,7 @@ public:
 	TestMessageReceiver(CMSMessageListenerFactory* messageListenerFactory, TestNotifier& notifier);
 	virtual ~TestMessageReceiver();
 
-	virtual void initialize(CMSClientTestUnit & UUT, const CMSClientTestConfiguration & config);
+	virtual void initialize(CMSClientTestUnit & UUT, const CMSWrapperConfiguration & config);
 
 	virtual void wait() = 0;
 

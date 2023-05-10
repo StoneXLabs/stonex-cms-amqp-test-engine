@@ -22,15 +22,15 @@
 
 #include <Configuration/ConnectionConfiguration.h>
 
-class CMSClientTestConfiguration
+class CMSWrapperConfiguration
 {
 public:
-	CMSClientTestConfiguration() = default;
-	explicit CMSClientTestConfiguration(std::vector<ConnectionConfiguration>& params);
+	CMSWrapperConfiguration() = default;
+	explicit CMSWrapperConfiguration(std::vector<ConnectionConfiguration>& params);
 	void addConnectionParam(const ConnectionConfiguration& params);
 	const std::vector<ConnectionConfiguration>& config() const;
 
-	friend std::ostream& operator<<(std::ostream& os, const CMSClientTestConfiguration& other);
+	friend std::ostream& operator<<(std::ostream& os, const CMSWrapperConfiguration& other);
 private:
 	std::vector<ConnectionConfiguration> mCMSConfig;
 };

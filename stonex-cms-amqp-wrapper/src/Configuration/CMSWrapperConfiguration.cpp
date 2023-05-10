@@ -17,28 +17,28 @@
  * limitations under the License.
  */
 
-#include <Configuration/CMSClientTestConfiguration.h>
+#include <Configuration/CMSWrapperConfiguration.h>
 #include <sstream>
 #include <iterator>
 
-CMSClientTestConfiguration::CMSClientTestConfiguration(std::vector<ConnectionConfiguration>& connectionConfiguration)
+CMSWrapperConfiguration::CMSWrapperConfiguration(std::vector<ConnectionConfiguration>& connectionConfiguration)
 	:mCMSConfig{connectionConfiguration }
  {
  }
 
 
 
-void CMSClientTestConfiguration::addConnectionParam(const ConnectionConfiguration & params)
+void CMSWrapperConfiguration::addConnectionParam(const ConnectionConfiguration & params)
 {
 	mCMSConfig.push_back(std::move(params));
 }
 
-const std::vector<ConnectionConfiguration>& CMSClientTestConfiguration::config() const
+const std::vector<ConnectionConfiguration>& CMSWrapperConfiguration::config() const
 {
 	return mCMSConfig;
 }
 
-std::ostream & operator<<(std::ostream & os, const CMSClientTestConfiguration & other)
+std::ostream & operator<<(std::ostream & os, const CMSWrapperConfiguration & other)
 {
 	os << "cms client configuration :\n";
 	os << "cms client connections :\n";

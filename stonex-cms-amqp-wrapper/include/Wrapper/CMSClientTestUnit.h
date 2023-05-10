@@ -20,7 +20,7 @@
 #pragma once
 #include "ConnectionTestUnit.h"
 #include "NodeAccessor.h"
-#include "Configuration/CMSClientTestConfiguration.h"
+#include "Configuration/CMSWrapperConfiguration.h"
 
 #include <logger/StoneXLogger.h>
 
@@ -29,7 +29,7 @@ class CMSClientTestUnit
 {
 public:
 	explicit CMSClientTestUnit(const std::string userIdentifier = "");
-	CMSClientTestUnit(const CMSClientTestConfiguration &config, std::shared_ptr<StonexLogger> logger, const std::string userIdentifier = "", cms::ExceptionListener* factoryExceptionListener = nullptr, cms::ExceptionListener* connectionExceptionListener = nullptr, cms::ExceptionListener* sessionExceptionListener = nullptr);
+	CMSClientTestUnit(const CMSWrapperConfiguration &config, std::shared_ptr<StonexLogger> logger, const std::string userIdentifier = "", cms::ExceptionListener* factoryExceptionListener = nullptr, cms::ExceptionListener* connectionExceptionListener = nullptr, cms::ExceptionListener* sessionExceptionListener = nullptr);
 
 	~CMSClientTestUnit();
 

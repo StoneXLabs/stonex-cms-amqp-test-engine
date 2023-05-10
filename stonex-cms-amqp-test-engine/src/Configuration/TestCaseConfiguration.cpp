@@ -20,7 +20,7 @@
 #include <Configuration/TestCaseConfiguration.h>
 #include <sstream>
 
-TestCaseConfiguration::TestCaseConfiguration(const std::string& testCaseName, const std::string& testFunctionName, bool enabled, const CMSClientTestConfiguration& uutConfiguration, const TestCasePerformerConfiguration& testPerformerConfiguration, const TestCaseVerifierConfiguration& testVertestVerifierConfiguration)
+TestCaseConfiguration::TestCaseConfiguration(const std::string& testCaseName, const std::string& testFunctionName, bool enabled, const CMSWrapperConfiguration& uutConfiguration, const TestCasePerformerConfiguration& testPerformerConfiguration, const TestCaseVerifierConfiguration& testVertestVerifierConfiguration)
 	:mTestCaseName{ testCaseName },
 	mTestFunctionName{ testFunctionName },
 	mEnabled{ enabled },
@@ -57,7 +57,7 @@ bool TestCaseConfiguration::enabled() const
 	return mEnabled; 
 }
 
-const CMSClientTestConfiguration& TestCaseConfiguration::uutConfig() const
+const CMSWrapperConfiguration& TestCaseConfiguration::uutConfig() const
 {
 	return mUnitUnderTestConfig; 
 }

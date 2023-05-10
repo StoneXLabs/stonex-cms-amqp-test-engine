@@ -37,18 +37,18 @@ protected:
 	
 	TestCaseConfiguration createTestCaseConfig(const std::string& configName, const boost::json::value& json) const;
 
-	CMSClientTestConfiguration createCMSConfig(const boost::json::value& json) const;
 
 	TestCasePerformerConfiguration createTestPerformerConfig(const boost::json::value & json) const;
 
 	TestCaseVerifierConfiguration createTestVerifierConfig(const boost::json::value & json) const;
 
 
-
+/*
+	CMSWrapperConfiguration createCMSConfig(const boost::json::value& json) const;
 	ConnectionConfiguration  createConnectionConfig(const std::string& configName, const boost::json::value& json) const;
 	SessionConfiguration createSessionConfig(const std::string& configName, const boost::json::value& json) const;
 	ConsumerConfiguration createConsumerConfig(const std::string& configName, const boost::json::value& json) const;
-	ProducerConfiguration createProducerConfig(const std::string& configName, const boost::json::value& json) const;
+	ProducerConfiguration createProducerConfig(const std::string& configName, const boost::json::value& json) const;*/
 	
 
 	virtual TestCaseProducerConfiguration* createTestCaseProducerConfig(const std::string& configName, const boost::json::value& json) const;

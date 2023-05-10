@@ -32,7 +32,7 @@ TestMessageReceiver::~TestMessageReceiver()
 {
 }
 
-void TestMessageReceiver::initialize(CMSClientTestUnit & UUT, const CMSClientTestConfiguration & config)
+void TestMessageReceiver::initialize(CMSClientTestUnit & UUT, const CMSWrapperConfiguration & config)
 {
 	std::for_each(std::begin(config.config()), std::end(config.config()), [&UUT, this](const ConnectionConfiguration& connection_item) {
 

@@ -9,9 +9,8 @@ set(CMAKE_CXX_STANDARD 20)
 
 
 add_subdirectory(stonex-cms-amqp-wrapper)
+
 add_subdirectory(common)
-add_subdirectory(Configuration)
-add_subdirectory(ConfigurationParser)
 add_subdirectory(MessageContent)
 add_subdirectory(MessageContentVerifiers)
 add_subdirectory(MessageReceiver)

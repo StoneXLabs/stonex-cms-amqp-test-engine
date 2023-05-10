@@ -21,13 +21,10 @@ PUBLIC ${PROJECT_SOURCE_DIR}/include/
 PRIVATE ${PROJECT_SOURCE_DIR}/src/
 )
 
-#add_dependencies(stonex-cms-amqp-test-verifier stonex-cms-amqp-message-content-verifier)
 
-## consider movine MEssageProperties  -- stonex-cms-amqp-test-configuration
 target_link_libraries(stonex-cms-amqp-test-verifier 
 	apache-cms-interface
 	stonex-cms-amqp-event-handler
-	stonex-cms-amqp-test-configuration
 	stonex-cms-amqp-message-content-verifier
 	)
 

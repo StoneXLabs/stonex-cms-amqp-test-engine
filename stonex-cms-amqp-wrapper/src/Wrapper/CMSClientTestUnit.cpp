@@ -25,7 +25,7 @@ CMSClientTestUnit::CMSClientTestUnit(const std::string userIdentifier)
 {
 }
 
-CMSClientTestUnit::CMSClientTestUnit(const CMSClientTestConfiguration & config, std::shared_ptr<StonexLogger> logger, const std::string userIdentifier, cms::ExceptionListener* factoryExceptionListener, cms::ExceptionListener* connectionExceptionListener, cms::ExceptionListener* sessionExceptionListener)
+CMSClientTestUnit::CMSClientTestUnit(const CMSWrapperConfiguration & config, std::shared_ptr<StonexLogger> logger, const std::string userIdentifier, cms::ExceptionListener* factoryExceptionListener, cms::ExceptionListener* connectionExceptionListener, cms::ExceptionListener* sessionExceptionListener)
 {
 	std::for_each(std::cbegin(config.config()), std::cend(config.config()), [this, factoryExceptionListener, connectionExceptionListener, sessionExceptionListener, logger](const ConnectionConfiguration& item) {addConnection(&item, logger, factoryExceptionListener, connectionExceptionListener, sessionExceptionListener); });
 
