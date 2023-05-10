@@ -4,6 +4,7 @@
 #include <boost/json.hpp>
 #include <fstream>
 #include <vector>
+#include <iostream>
 
 #include "StdOutLogger/StdOutLogger.h"
 
@@ -24,6 +25,11 @@ boost::json::value valueFromFile(const std::string& configFile)
 
 	return  p.release();
 }
+
+class TestExceptionListener : public cms::ExceptionListener {
+public:
+	void onException(const cms::CMSException& ex) { std::cout << "EXCEPTION " << ex.what() << std::endl; }
+};
 
 int main()
 {
@@ -59,8 +65,10 @@ int main()
 
 	assert(wrapper == wrapper_config);
 
+	TestExceptionListener test_exception_listener;
+
 	auto logger = std::make_shared<StdOutLogger>();
-	CMSClientTestUnit test_client(wrapper_config, logger);
+	CMSClientTestUnit test_client(wrapper_config, logger, "", &test_exception_listener, &test_exception_listener, &test_exception_listener);
 }
 
 
