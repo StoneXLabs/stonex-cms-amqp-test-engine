@@ -44,6 +44,7 @@ public:
 	const SessionConfiguration* session(const std::string& name) const;
 
 	friend std::ostream & operator<<(std::ostream & os, const ConnectionConfiguration & other);
+	friend bool operator== (const ConnectionConfiguration& lhs, const ConnectionConfiguration& rhs);
 
 private:
 	std::string mKey{};

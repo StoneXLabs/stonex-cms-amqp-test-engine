@@ -80,3 +80,15 @@ std::ostream & operator<<(std::ostream & os, const ConnectionConfiguration & oth
 	return os;
 	// TODO: insert return statement here
 }
+
+
+bool operator==(const ConnectionConfiguration & lhs, const ConnectionConfiguration & rhs)
+{
+	return lhs.mKey == rhs.mKey &&
+		lhs.mBrokerUrl == rhs.mBrokerUrl &&
+		lhs.mConnUser == rhs.mConnUser &&
+		lhs.mConnPassword == rhs.mConnPassword &&
+		lhs.mConnId == rhs.mConnId &&
+		lhs.mSessions.size() == rhs.mSessions.size() &&
+		std::equal(std::cbegin(lhs.mSessions), std::cend(lhs.mSessions), std::cbegin(rhs.mSessions)) == true;
+}

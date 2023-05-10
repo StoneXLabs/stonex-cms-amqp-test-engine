@@ -20,6 +20,7 @@
 #include <Configuration\SessionConfiguration.h>
 #include <sstream>
 #include <iterator>
+#include <algorithm>
 
 SessionConfiguration::SessionConfiguration(const std::string key, bool autoAck, bool transacted, const  std::vector<ConsumerConfiguration>& consumerConfiguration, const  std::vector<ProducerConfiguration>& producerConfiguration)
 	:DefaultTerminationConfiguration(DefaultTerminationMode::CloseOnDestruction),
@@ -58,6 +59,18 @@ void SessionConfiguration::addClientConfiguration(const ProducerConfiguration & 
 	mProducers.push_back(params);
 }
 
+
+bool operator==(const SessionConfiguration & lhs, const SessionConfiguration & rhs)
+{
+	return 	lhs.mKey == rhs.mKey &&
+		lhs.mAutoAck == rhs.mAutoAck &&
+		lhs.mTransacted == rhs.mTransacted &&
+		lhs.getTerminationMode() == rhs.getTerminationMode() &&
+		lhs.mConsumers.size() == rhs.mConsumers.size() &&
+		std::equal(std::cbegin(lhs.mConsumers), std::cend(lhs.mConsumers), std::cbegin(rhs.mConsumers)) == true &&
+		lhs.mProducers.size() == rhs.mProducers.size() &&
+		std::equal(std::cbegin(lhs.mProducers), std::cend(lhs.mProducers), std::cbegin(rhs.mProducers)) == true;
+}
 
 std::ostream & operator<<(std::ostream & os, const SessionConfiguration & other)
 {

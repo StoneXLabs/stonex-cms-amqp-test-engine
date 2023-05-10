@@ -27,4 +27,5 @@ class ProducerConfiguration : public ClientConfiguration
 public:
 	ProducerConfiguration(const std::string& key, const std::string dest_type, const std::string& address, std::map<std::string, std::string> properties = {});
 	friend std::ostream & operator<<(std::ostream & os, const ProducerConfiguration & other);
+	friend bool operator== (const ProducerConfiguration& lhs, const ProducerConfiguration& rhs);
 };

@@ -30,7 +30,9 @@ class SessionConfiguration : public DefaultTerminationConfiguration
 public:
 	SessionConfiguration(const std::string key, bool autoAck = false, bool transacted = false,const std::vector<ConsumerConfiguration>& consumerConfiguration = {}, const std::vector<ProducerConfiguration>& producerConfiguration = {});
 
-	SessionConfiguration& operator=(const SessionConfiguration& other); 
+	SessionConfiguration& operator=(const SessionConfiguration& other);
+	friend bool operator== (const SessionConfiguration& lhs, const SessionConfiguration& rhs);
+	friend std::ostream & operator<<(std::ostream & os, const SessionConfiguration & other);
 	
 	std::string key() const;
 	bool autoAck() const;
@@ -46,5 +48,4 @@ private:
 	std::vector<ConsumerConfiguration> mConsumers;
 	std::vector<ProducerConfiguration> mProducers;
 
-	friend std::ostream & operator<<(std::ostream & os, const SessionConfiguration & other);
 };

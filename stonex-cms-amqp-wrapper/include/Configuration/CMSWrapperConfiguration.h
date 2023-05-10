@@ -26,11 +26,12 @@ class CMSWrapperConfiguration
 {
 public:
 	CMSWrapperConfiguration() = default;
-	explicit CMSWrapperConfiguration(std::vector<ConnectionConfiguration>& params);
+	explicit CMSWrapperConfiguration(const std::vector<ConnectionConfiguration>& params);
 	void addConnectionParam(const ConnectionConfiguration& params);
 	const std::vector<ConnectionConfiguration>& config() const;
 
 	friend std::ostream& operator<<(std::ostream& os, const CMSWrapperConfiguration& other);
+	friend bool operator== (const CMSWrapperConfiguration& lhs, const CMSWrapperConfiguration& rhs);
 private:
 	std::vector<ConnectionConfiguration> mCMSConfig;
 };

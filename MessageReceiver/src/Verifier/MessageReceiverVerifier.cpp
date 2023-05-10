@@ -34,13 +34,6 @@ MessageReceiverVerifier::~MessageReceiverVerifier()
 {
 }
 
-//void MessageReceiverVerifier::addVerifier(TestCaseMessageReceiverConfiguration& config)
-//{
-//	mVerifiers.emplace_back(std::make_shared<MessageVerifier>(config));
-//}
-
-
-
 std::shared_ptr<BaseVerifier> MessageReceiverVerifier::getVerifier(const std::string& id)
 {
 	auto item = std::find_if(std::begin(mVerifiers), std::end(mVerifiers), [id](std::shared_ptr<BaseVerifier> item) {return id == item->id(); });

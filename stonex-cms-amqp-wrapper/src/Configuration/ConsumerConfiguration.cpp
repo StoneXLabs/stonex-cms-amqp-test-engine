@@ -50,3 +50,14 @@ std::ostream & operator<<(std::ostream & os, const ConsumerConfiguration & other
 	return os;
 	// TODO: insert return statement here
 }
+
+bool operator==(const ConsumerConfiguration & lhs, const ConsumerConfiguration & rhs)
+{
+	return lhs.key() == rhs.key() &&
+		lhs.address() == rhs.address() &&
+		lhs.destType() == rhs.destType() &&
+		lhs.durable() == rhs.durable() &&
+		lhs.mDurableSubscriptionName == rhs.mDurableSubscriptionName &&
+		lhs.getTerminationMode() == rhs.getTerminationMode() &&
+		lhs.mSelector == rhs.mSelector;
+}

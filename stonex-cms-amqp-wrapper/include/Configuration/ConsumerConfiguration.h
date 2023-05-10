@@ -36,6 +36,7 @@ public:
 
 
 	friend std::ostream & operator<<(std::ostream & os, const ConsumerConfiguration & other);
+	friend bool operator== (const ConsumerConfiguration& lhs, const ConsumerConfiguration& rhs);
 
 private:
 	std::string mSelector;

@@ -21,7 +21,7 @@
 #include <sstream>
 #include <iterator>
 
-CMSWrapperConfiguration::CMSWrapperConfiguration(std::vector<ConnectionConfiguration>& connectionConfiguration)
+CMSWrapperConfiguration::CMSWrapperConfiguration(const std::vector<ConnectionConfiguration>& connectionConfiguration)
 	:mCMSConfig{connectionConfiguration }
  {
  }
@@ -45,4 +45,9 @@ std::ostream & operator<<(std::ostream & os, const CMSWrapperConfiguration & oth
 
 	std::copy(std::begin(other.mCMSConfig), std::end(other.mCMSConfig), std::ostream_iterator<ConnectionConfiguration>(os,"\n"));
 	return os;
+}
+
+bool operator==(const CMSWrapperConfiguration & lhs, const CMSWrapperConfiguration & rhs)
+{
+	return std::equal(std::cbegin(lhs.mCMSConfig), std::cend(lhs.mCMSConfig), std::cbegin(rhs.mCMSConfig)) == true;
 }

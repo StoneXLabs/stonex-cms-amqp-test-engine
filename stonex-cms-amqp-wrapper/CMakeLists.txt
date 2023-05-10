@@ -23,3 +23,5 @@ target_link_libraries(stonex-cms-amqp-wrapper
 	CONAN_PKG::stonex-cms-amqp-lib
 	CONAN_PKG::boost
 	)
+
+add_subdirectory(Test)

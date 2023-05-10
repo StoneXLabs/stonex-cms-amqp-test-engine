@@ -31,3 +31,12 @@ std::ostream & operator<<(std::ostream & os, const ProducerConfiguration & other
 	return os;
 	// TODO: insert return statement here
 }
+
+bool operator==(const ProducerConfiguration & lhs, const ProducerConfiguration & rhs)
+{
+	return lhs.key() == rhs.key() &&
+		lhs.address() == rhs.address() &&
+		lhs.destType() == rhs.destType() &&
+		lhs.getTerminationMode() == rhs.getTerminationMode() &&
+		lhs.type() == rhs.type();
+}
