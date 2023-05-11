@@ -20,14 +20,14 @@
 #pragma once
 #include <string>
 
-#include <Configuration/CMSWrapperConfiguration.h>
+#include <Configuration/WrapperConfiguration.h>
 #include <Configuration/TestCasePerformerConfiguration.h>
 #include <Configuration/TestCaseVerifierConfiguration.h>
 
-class TestCaseConfiguration
+class TestCaseConfiguration : private WrapperConfiguration, private TestCasePerformerConfiguration, private TestCaseVerifierConfiguration
 {
 public:
-	TestCaseConfiguration(const std::string& testCaseName, const std::string& testFunctionName, bool enabled, const CMSWrapperConfiguration& uutConfiguration, const TestCasePerformerConfiguration& testPerformerConfiguration, const TestCaseVerifierConfiguration& testVertestVerifierConfiguration);
+	TestCaseConfiguration(const std::string& testCaseName, const std::string& testFunctionName, bool enabled, const WrapperConfiguration& uutConfiguration, const TestCasePerformerConfiguration& testPerformerConfiguration, const TestCaseVerifierConfiguration& testVerifierConfiguration);
 
 	TestCaseConfiguration& operator=(const TestCaseConfiguration& other);
 
@@ -35,17 +35,17 @@ public:
 	std::string testFunctionName() const;
 	bool enabled() const;
 
-	const CMSWrapperConfiguration& uutConfig() const;
+	const WrapperConfiguration& uutConfig() const;
 	const TestCaseVerifierConfiguration& verifierConfig() const;
 	const TestCasePerformerConfiguration& performerConfig() const;
 
+
+	friend bool operator== (const TestCaseConfiguration& lhs, const TestCaseConfiguration& rhs);
 	friend std::ostream& operator<<(std::ostream& os, const TestCaseConfiguration& dt);
 
 private:
 	std::string mTestCaseName;
 	std::string mTestFunctionName;
 	bool mEnabled;
-	CMSWrapperConfiguration mUnitUnderTestConfig;
-	TestCaseVerifierConfiguration mTestExpectationConfig;
-	TestCasePerformerConfiguration mTestConfig;
+
 };

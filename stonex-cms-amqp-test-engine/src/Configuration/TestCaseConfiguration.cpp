@@ -20,13 +20,13 @@
 #include <Configuration/TestCaseConfiguration.h>
 #include <sstream>
 
-TestCaseConfiguration::TestCaseConfiguration(const std::string& testCaseName, const std::string& testFunctionName, bool enabled, const CMSWrapperConfiguration& uutConfiguration, const TestCasePerformerConfiguration& testPerformerConfiguration, const TestCaseVerifierConfiguration& testVertestVerifierConfiguration)
-	:mTestCaseName{ testCaseName },
+TestCaseConfiguration::TestCaseConfiguration(const std::string& testCaseName, const std::string& testFunctionName, bool enabled, const WrapperConfiguration& uutConfiguration, const TestCasePerformerConfiguration& testPerformerConfiguration, const TestCaseVerifierConfiguration& testVerifierConfiguration)
+	:WrapperConfiguration(uutConfiguration),
+	TestCasePerformerConfiguration(testPerformerConfiguration),
+	TestCaseVerifierConfiguration(testVerifierConfiguration),
+	mTestCaseName{ testCaseName },
 	mTestFunctionName{ testFunctionName },
-	mEnabled{ enabled },
-	mUnitUnderTestConfig{ uutConfiguration },
-	mTestConfig{ testPerformerConfiguration },
-	mTestExpectationConfig{ testVertestVerifierConfiguration }
+	mEnabled{ enabled }
 {
 }
 
@@ -34,10 +34,7 @@ TestCaseConfiguration& TestCaseConfiguration::operator=(const TestCaseConfigurat
 {
 	mTestCaseName = other.mTestCaseName;
 	mTestFunctionName = other.mTestFunctionName;
-	mEnabled = other.mEnabled; 
-	mUnitUnderTestConfig = other.mUnitUnderTestConfig;
-	mTestConfig = other.mTestConfig;
-	mTestExpectationConfig = other.mTestExpectationConfig;
+	mEnabled = other.mEnabled;
 
 	return *this;
 }
@@ -57,25 +54,37 @@ bool TestCaseConfiguration::enabled() const
 	return mEnabled; 
 }
 
-const CMSWrapperConfiguration& TestCaseConfiguration::uutConfig() const
+const WrapperConfiguration& TestCaseConfiguration::uutConfig() const
 {
-	return mUnitUnderTestConfig; 
+	return *this;
 }
 
 const TestCaseVerifierConfiguration & TestCaseConfiguration::verifierConfig() const
 {
-	return mTestExpectationConfig;
+	return *this;
 }
 
 const TestCasePerformerConfiguration & TestCaseConfiguration::performerConfig() const
 {
-	return mTestConfig;
+	return *this;
 }
 
+bool operator== (const TestCaseConfiguration& lhs, const TestCaseConfiguration& rhs)
+{
+
+
+	
+	return lhs.mTestCaseName == rhs.mTestCaseName &&
+		lhs.mTestFunctionName == rhs.mTestFunctionName &&
+		lhs.mEnabled == rhs.mEnabled &&
+		lhs.uutConfig() == rhs.uutConfig() &&
+		lhs.verifierConfig() == rhs.verifierConfig() &&
+		lhs.performerConfig() == rhs.performerConfig();
+}
 
 std::ostream& operator<<(std::ostream& os, const TestCaseConfiguration& dt)
 {
 	os << dt.mTestCaseName << dt.mEnabled ? "\n" : "Test Disabled\n";
-	os << "CMS config\n" << dt.mUnitUnderTestConfig;
+	os << "CMS config\n" << dt.uutConfig();
 	return os;
 }

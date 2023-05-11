@@ -108,7 +108,7 @@ int main()
 		auto producer_config = ProducerConfiguration("producer1", "queue", "CMS_CLIENT_QUEUE", {});
 		auto session_config = SessionConfiguration("session1", true, false, { /*consumer_config*/ }, { producer_config });
 		auto connection_config = ConnectionConfiguration("connection1", "failover:(localhost:5672)?maxReconnectAttempts=5", "admin", "admin", "", { session_config });
-		auto wrapper_config = CMSWrapperConfiguration(std::vector< ConnectionConfiguration>({ connection_config }));
+		auto wrapper_config = WrapperConfiguration(std::vector< ConnectionConfiguration>({ connection_config }));
 
 		auto logger = std::make_shared<StdOutLogger>();
 		CMSClientTestUnit test_client(wrapper_config, logger);

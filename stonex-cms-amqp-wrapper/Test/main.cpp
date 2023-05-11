@@ -1,5 +1,5 @@
 
-#include "ConfigurationParser/CMSWrapperConfigurationParser.h"
+#include "ConfigurationParser/WrapperConfigurationParser.h"
 #include "Wrapper/CMSClientTestUnit.h"
 #include <boost/json.hpp>
 #include <fstream>
@@ -33,7 +33,7 @@ public:
 
 int main()
 {
-	CMSWrapperConfigurationParser parser;
+	WrapperConfigurationParser parser;
 
 	boost::json::object::value_type consumer_config_json = *valueFromFile("test_consumer.config").as_object().cbegin();
 	auto consumer = parser.createConsumerConfig(consumer_config_json.key_c_str(), consumer_config_json.value().as_object());
@@ -60,8 +60,8 @@ int main()
 	assert(connection == connection_config);
 
 	boost::json::value wrapper_config_json = valueFromFile("test_wrapper.config");
-	auto wrapper = parser.createCMSConfig(wrapper_config_json);
-	auto wrapper_config = CMSWrapperConfiguration(std::vector< ConnectionConfiguration>({ connection_config }));
+	auto wrapper = parser.createWrapperConfiguration(wrapper_config_json);
+	auto wrapper_config = WrapperConfiguration(std::vector< ConnectionConfiguration>({ connection_config }));
 
 	assert(wrapper == wrapper_config);
 

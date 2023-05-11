@@ -33,7 +33,7 @@ ExceptionVerifier::ExceptionVerifier(const std::string& verifier_id, int expecte
 {
 }
 
-ExceptionVerifier::ExceptionVerifier(CMSExceptionsConfiguration& config)
+ExceptionVerifier::ExceptionVerifier(ExceptionsConfiguration& config)
 	:ExceptionVerifier(config.exceptionSourceId(), config.expectedExceptionCount())
 {
 }

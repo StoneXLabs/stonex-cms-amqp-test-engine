@@ -22,12 +22,12 @@
 #include <list>
 #include "BaseVerifier.h"
 
-class CMSExceptionsConfiguration;
+class ExceptionsConfiguration;
 
 class CMSAMQPWrapperVerifier
 {
 public:
-	explicit CMSAMQPWrapperVerifier(const std::vector<CMSExceptionsConfiguration*>& config);
+	explicit CMSAMQPWrapperVerifier(const std::vector<ExceptionsConfiguration*>& config);
 	~CMSAMQPWrapperVerifier();
 
 	std::shared_ptr<BaseVerifier> getVerifier(const std::string& id);

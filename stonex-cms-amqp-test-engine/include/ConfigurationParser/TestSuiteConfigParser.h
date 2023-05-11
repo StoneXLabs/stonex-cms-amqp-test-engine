@@ -18,9 +18,7 @@
  */
 
 #pragma once
-
-
-class TestSuiteConfiguration;
+#include <Configuration/TestSuiteConfiguration.h>
 
 class TestSuiteConfigParser 
 {

@@ -22,12 +22,14 @@
 #include <boost/json.hpp>
 
 #include <ConfigurationParser/TestSuiteConfigParser.h>
+#include <ConfigurationParser/TestCaseConfigurationParser.h>
+
+
 #include <Configuration/TestSuiteConfiguration.h>
-#include <Configuration/CMSExceptionsConfiguration.h>
+#include <Configuration/ExceptionsConfiguration.h>
 
-#include <ConfigurationParser/CMSWrapperConfigurationParser.h>
 
-class TestSuiteJsonConfigParser : public TestSuiteConfigParser, public CMSWrapperConfigurationParser
+class TestSuiteJsonConfigParser : public TestSuiteConfigParser, public TestCaseConfigurationParser
 {
 public:
 	explicit TestSuiteJsonConfigParser(const std::string& configFile);
@@ -37,17 +39,6 @@ public:
 protected:
 	boost::json::value fromFile() const;
 	
-	TestCaseConfiguration createTestCaseConfig(const std::string& configName, const boost::json::value& json) const;
-
-
-	TestCasePerformerConfiguration createTestPerformerConfig(const boost::json::value & json) const;
-
-	TestCaseVerifierConfiguration createTestVerifierConfig(const boost::json::value & json) const;
-
-	virtual TestCaseProducerConfiguration* createTestCaseProducerConfig(const std::string& configName, const boost::json::value& json) const;
-	virtual TestCaseMessageReceiverConfiguration* createTestReceiverConfig(const std::string& configName, const boost::json::value& json) const;
-	virtual CMSExceptionsConfiguration* createTestExceptionConfig(const std::string& configName, const boost::json::value& json) const;
-
 private:
 	const std::string mConfigFilePath;
 };

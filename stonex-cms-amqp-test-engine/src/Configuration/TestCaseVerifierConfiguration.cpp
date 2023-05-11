@@ -18,8 +18,9 @@
  */
 
 #include "Configuration/TestCaseVerifierConfiguration.h"
+#include <algorithm>
 
-TestCaseVerifierConfiguration::TestCaseVerifierConfiguration(std::vector<TestCaseMessageReceiverConfiguration*>& receivers_config, std::vector<CMSExceptionsConfiguration*>& exceptions_config)
+TestCaseVerifierConfiguration::TestCaseVerifierConfiguration(const std::vector<TestCaseMessageReceiverConfiguration*>& receivers_config, const std::vector<ExceptionsConfiguration*>& exceptions_config)
 	:mReceiversConfig{ receivers_config },
 	mExceptionsConfig{ exceptions_config }
 {
@@ -30,7 +31,22 @@ const std::vector<TestCaseMessageReceiverConfiguration*>& TestCaseVerifierConfig
 	return mReceiversConfig;
 }
 
-const std::vector<CMSExceptionsConfiguration*>& TestCaseVerifierConfiguration::exceptionsExpectations() const
+const std::vector<ExceptionsConfiguration*>& TestCaseVerifierConfiguration::exceptionsExpectations() const
 {
 	return mExceptionsConfig;
+}
+
+TestCaseVerifierConfiguration & TestCaseVerifierConfiguration::operator=(const TestCaseVerifierConfiguration & other)
+{
+	std::transform(std::cbegin(other.mReceiversConfig), std::cend(other.mReceiversConfig), std::back_inserter(mReceiversConfig), [](const TestCaseMessageReceiverConfiguration* item) {return new TestCaseMessageReceiverConfiguration(*item); });
+	std::transform(std::cbegin(other.mExceptionsConfig), std::cend(other.mExceptionsConfig), std::back_inserter(mExceptionsConfig), [](const ExceptionsConfiguration* item) {return new ExceptionsConfiguration(*item); });
+	
+	return *this;
+}
+
+bool operator==(const TestCaseVerifierConfiguration & lhs, const TestCaseVerifierConfiguration & rhs)
+{
+
+	return std::equal(std::cbegin(lhs.mReceiversConfig), std::cend(lhs.mReceiversConfig), std::cbegin(rhs.mReceiversConfig), std::cend(rhs.mReceiversConfig), [](const TestCaseMessageReceiverConfiguration* lhs, TestCaseMessageReceiverConfiguration* rhs) { return *lhs == *rhs; }) == true &&
+		std::equal(std::cbegin(lhs.mExceptionsConfig), std::cend(lhs.mExceptionsConfig), std::cbegin(rhs.mExceptionsConfig), std::cend(rhs.mExceptionsConfig), [](const ExceptionsConfiguration* lhs, ExceptionsConfiguration* rhs) { return *lhs == *rhs; }) == true;
 }

@@ -1,7 +1,7 @@
-#include <ConfigurationParser/CMSWrapperConfigurationParser.h>
+#include <ConfigurationParser/WrapperConfigurationParser.h>
 
 
-CMSWrapperConfiguration CMSWrapperConfigurationParser::createCMSConfig(const boost::json::value & json) const
+WrapperConfiguration WrapperConfigurationParser::createWrapperConfiguration(const boost::json::value & json) const
 {
 
 	if (json.is_object())
@@ -14,13 +14,13 @@ CMSWrapperConfiguration CMSWrapperConfigurationParser::createCMSConfig(const boo
 				return createConnectionConfig(item.key_c_str(), item.value());
 			});
 
-			return CMSWrapperConfiguration(configuration);
+			return WrapperConfiguration(configuration);
 		}
 	}
-	return CMSWrapperConfiguration();
+	return WrapperConfiguration();
 }
 
-ConnectionConfiguration CMSWrapperConfigurationParser::createConnectionConfig(const std::string& configName, const boost::json::value & json) const
+ConnectionConfiguration WrapperConfigurationParser::createConnectionConfig(const std::string& configName, const boost::json::value & json) const
 {
 	try
 	{
@@ -54,7 +54,7 @@ ConnectionConfiguration CMSWrapperConfigurationParser::createConnectionConfig(co
 				});
 			}
 
-			return { configName, url, user, password, id, sessionConfiguration };
+			return ConnectionConfiguration(configName, url, user, password, id, sessionConfiguration);
 		}
 	}
 	catch (const std::exception& ex)
@@ -62,7 +62,7 @@ ConnectionConfiguration CMSWrapperConfigurationParser::createConnectionConfig(co
 	}
 }
 
-SessionConfiguration CMSWrapperConfigurationParser::createSessionConfig(const std::string& configName, const boost::json::value & json) const
+SessionConfiguration WrapperConfigurationParser::createSessionConfig(const std::string& configName, const boost::json::value & json) const
 {
 	bool autoAck{ false };
 	bool isTransacted{ false };
@@ -108,7 +108,7 @@ SessionConfiguration CMSWrapperConfigurationParser::createSessionConfig(const st
 		return SessionConfiguration(configName);
 }
 
-ConsumerConfiguration CMSWrapperConfigurationParser::createConsumerConfig(const std::string& configName, const boost::json::value & json) const
+ConsumerConfiguration WrapperConfigurationParser::createConsumerConfig(const std::string& configName, const boost::json::value & json) const
 {
 
 	std::string dest_type;
@@ -147,10 +147,10 @@ ConsumerConfiguration CMSWrapperConfigurationParser::createConsumerConfig(const 
 
 	//TO DO config error
 
-	return { configName,dest_type,address,terminate_method,selector,durable,durable_subscription_name };
+	return ConsumerConfiguration( configName,dest_type,address,terminate_method,selector,durable,durable_subscription_name );
 }
 
-ProducerConfiguration CMSWrapperConfigurationParser::createProducerConfig(const std::string& configName, const boost::json::value & json) const
+ProducerConfiguration WrapperConfigurationParser::createProducerConfig(const std::string& configName, const boost::json::value & json) const
 {
 	std::string dest_type;
 	std::string address;
@@ -167,5 +167,5 @@ ProducerConfiguration CMSWrapperConfigurationParser::createProducerConfig(const 
 
 	//TO DO config error
 
-	return { configName,dest_type,address };
+	return ProducerConfiguration(configName,dest_type,address);
 }

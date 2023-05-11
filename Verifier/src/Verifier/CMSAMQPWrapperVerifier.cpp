@@ -20,11 +20,11 @@
 #include <Verifier/CMSAMQPWrapperVerifier.h>
 #include <Verifier/ExceptionVerifier.h>
 
-#include <Configuration/CMSExceptionsConfiguration.h>
+#include <Configuration/ExceptionsConfiguration.h>
 
-CMSAMQPWrapperVerifier::CMSAMQPWrapperVerifier(const std::vector<CMSExceptionsConfiguration*>& config) //	: mName{ config.testName() }
+CMSAMQPWrapperVerifier::CMSAMQPWrapperVerifier(const std::vector<ExceptionsConfiguration*>& config) //	: mName{ config.testName() }
 {
-	std::transform(std::cbegin(config), std::cend(config), std::back_inserter(mVerifiers), [](CMSExceptionsConfiguration* item) {
+	std::transform(std::cbegin(config), std::cend(config), std::back_inserter(mVerifiers), [](ExceptionsConfiguration* item) {
 		return std::make_shared<ExceptionVerifier>(*item);
 	});
 

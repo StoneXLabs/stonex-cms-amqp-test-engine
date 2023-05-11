@@ -9,24 +9,24 @@ set(CMAKE_CXX_STANDARD 20)
 
 file(GLOB sourceFiles 
 	${PROJECT_SOURCE_DIR}/src/Configuration/*.cpp
-	${PROJECT_SOURCE_DIR}/src/TestEventHandler/*.cpp
 	${PROJECT_SOURCE_DIR}/src/ConfigurationParser/*.cpp 
-	${PROJECT_SOURCE_DIR}/src/Listener/*.cpp
-	${PROJECT_SOURCE_DIR}/src/MessageSource/*.cpp
-	${PROJECT_SOURCE_DIR}/src/VerifyingReceiverFactory/*.cpp
-	${PROJECT_SOURCE_DIR}/src/TestEventWrapperFactory/*.cpp
-	${PROJECT_SOURCE_DIR}/src/TestSuite/*.cpp
+#	${PROJECT_SOURCE_DIR}/src/TestEventHandler/*.cpp
+#	${PROJECT_SOURCE_DIR}/src/Listener/*.cpp
+#	${PROJECT_SOURCE_DIR}/src/MessageSource/*.cpp
+#	${PROJECT_SOURCE_DIR}/src/VerifyingReceiverFactory/*.cpp
+#	${PROJECT_SOURCE_DIR}/src/TestEventWrapperFactory/*.cpp
+#	${PROJECT_SOURCE_DIR}/src/TestSuite/*.cpp
 	)
 
 file(GLOB headerFiles 
 	${PROJECT_SOURCE_DIR}/include/Configuration/*.h 
-	${PROJECT_SOURCE_DIR}/include/TestEventHandler/*.h 
 	${PROJECT_SOURCE_DIR}/include/ConfigurationParser/*.h 
-	${PROJECT_SOURCE_DIR}/include/Listener/*.h
-	${PROJECT_SOURCE_DIR}/include/MessageSource/*.h
-	${PROJECT_SOURCE_DIR}/include/VerifyingReceiverFactory/*.h
-	${PROJECT_SOURCE_DIR}/include/TestEventWrapperFactory/*.h
-	${PROJECT_SOURCE_DIR}/include/TestSuite/*.h
+#	${PROJECT_SOURCE_DIR}/include/TestEventHandler/*.h 
+#	${PROJECT_SOURCE_DIR}/include/Listener/*.h
+#	${PROJECT_SOURCE_DIR}/include/MessageSource/*.h
+#	${PROJECT_SOURCE_DIR}/include/VerifyingReceiverFactory/*.h
+#	${PROJECT_SOURCE_DIR}/include/TestEventWrapperFactory/*.h
+#	${PROJECT_SOURCE_DIR}/include/TestSuite/*.h
 	)
 
 
@@ -50,3 +50,5 @@ target_link_libraries(stonex-cms-amqp-test-engine
 	stonex-cms-amqp-test-notifier
 	CONAN_PKG::boost
 	)
+
+	add_subdirectory(Test)

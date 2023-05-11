@@ -43,7 +43,7 @@ private:
 };
 
 //#include "CMSMessageListenerFactory.h"
-//#include <Configuration/CMSWrapperConfiguration.h>
+//#include <Configuration/WrapperConfiguration.h>
 
 //	virtual void initialize(CMSClientTestUnit & UUT, const CMSWrapperConfiguration & config);
 //

@@ -17,22 +17,26 @@
  * limitations under the License.
  */
 
-#pragma once
-#include <vector>
+#include <Configuration/ExceptionsConfiguration.h>
 
-#include <Configuration/ConnectionConfiguration.h>
-
-class CMSWrapperConfiguration
+ExceptionsConfiguration::ExceptionsConfiguration(const std::string& exceptionSourceId, int expectedExceptionCount)
+	:mExceptionSourceId{exceptionSourceId},
+	mExpectedExceptionCount{expectedExceptionCount}
 {
-public:
-	CMSWrapperConfiguration() = default;
-	explicit CMSWrapperConfiguration(const std::vector<ConnectionConfiguration>& params);
-	void addConnectionParam(const ConnectionConfiguration& params);
-	const std::vector<ConnectionConfiguration>& config() const;
+}
 
-	friend std::ostream& operator<<(std::ostream& os, const CMSWrapperConfiguration& other);
-	friend bool operator== (const CMSWrapperConfiguration& lhs, const CMSWrapperConfiguration& rhs);
-private:
-	std::vector<ConnectionConfiguration> mCMSConfig;
-};
+std::string ExceptionsConfiguration::exceptionSourceId() const
+{
+	return mExceptionSourceId;
+}
 
+int ExceptionsConfiguration::expectedExceptionCount() const
+{
+	return mExpectedExceptionCount;
+}
+
+bool operator==(const ExceptionsConfiguration & lhs, const ExceptionsConfiguration & rhs)
+{
+	return lhs.mExceptionSourceId == rhs.mExceptionSourceId &&
+		lhs.mExpectedExceptionCount == rhs.mExpectedExceptionCount;
+}

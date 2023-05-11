@@ -17,28 +17,28 @@
  * limitations under the License.
  */
 
-#include <Configuration/CMSWrapperConfiguration.h>
+#include <Configuration/WrapperConfiguration.h>
 #include <sstream>
 #include <iterator>
 
-CMSWrapperConfiguration::CMSWrapperConfiguration(const std::vector<ConnectionConfiguration>& connectionConfiguration)
+WrapperConfiguration::WrapperConfiguration(const std::vector<ConnectionConfiguration>& connectionConfiguration)
 	:mCMSConfig{connectionConfiguration }
  {
  }
 
 
 
-void CMSWrapperConfiguration::addConnectionParam(const ConnectionConfiguration & params)
+void WrapperConfiguration::addConnectionParam(const ConnectionConfiguration & params)
 {
 	mCMSConfig.push_back(std::move(params));
 }
 
-const std::vector<ConnectionConfiguration>& CMSWrapperConfiguration::config() const
+const std::vector<ConnectionConfiguration>& WrapperConfiguration::config() const
 {
 	return mCMSConfig;
 }
 
-std::ostream & operator<<(std::ostream & os, const CMSWrapperConfiguration & other)
+std::ostream & operator<<(std::ostream & os, const WrapperConfiguration & other)
 {
 	os << "cms client configuration :\n";
 	os << "cms client connections :\n";
@@ -47,7 +47,7 @@ std::ostream & operator<<(std::ostream & os, const CMSWrapperConfiguration & oth
 	return os;
 }
 
-bool operator==(const CMSWrapperConfiguration & lhs, const CMSWrapperConfiguration & rhs)
+bool operator==(const WrapperConfiguration & lhs, const WrapperConfiguration & rhs)
 {
 	return std::equal(std::cbegin(lhs.mCMSConfig), std::cend(lhs.mCMSConfig), std::cbegin(rhs.mCMSConfig)) == true;
 }

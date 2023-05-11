@@ -19,6 +19,12 @@
 
 #include <Configuration/TestCaseConfiguration.h>
 
+TestCasePerformerConfiguration::TestCasePerformerConfiguration(const std::vector<TestCaseProducerConfiguration*>& params)
+{
+	std::transform(std::cbegin(params), std::cend(params), std::back_inserter(mSendersConfiguration), [](const TestCaseProducerConfiguration* item) {return new TestCaseProducerConfiguration(*item); });
+
+}
+
 void TestCasePerformerConfiguration::addProducerMessagesParameter(TestCaseProducerConfiguration* params)
 {
 	mSendersConfiguration.push_back(params);
@@ -29,3 +35,14 @@ const std::vector<TestCaseProducerConfiguration*> & TestCasePerformerConfigurati
 	return mSendersConfiguration;
 }
 
+TestCasePerformerConfiguration & TestCasePerformerConfiguration::operator=(const TestCasePerformerConfiguration & other)
+{
+	std::transform(std::cbegin(other.mSendersConfiguration), std::cend(other.mSendersConfiguration), std::back_inserter(mSendersConfiguration), [](const TestCaseProducerConfiguration* item) {return new TestCaseProducerConfiguration(*item); });
+	return *this;
+}
+
+
+bool operator== (const TestCasePerformerConfiguration& lhs, const TestCasePerformerConfiguration& rhs)
+{
+	return 	std::equal(std::cbegin(lhs.mSendersConfiguration), std::cend(lhs.mSendersConfiguration), std::cbegin(rhs.mSendersConfiguration), std::cend(rhs.mSendersConfiguration), [](const TestCaseProducerConfiguration* lhs, const TestCaseProducerConfiguration* rhs) {return *lhs == *rhs; });
+}

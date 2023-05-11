@@ -31,7 +31,6 @@ TestSuiteConfiguration& TestSuiteConfiguration::operator=(const TestSuiteConfigu
 {
 	mTestSuiteName = other.mTestSuiteName;
 	mTests = other.mTests;
-
 	return *this;
 }
 

@@ -22,13 +22,13 @@
 #include "BaseVerifier.h"
 #include <list>
 #include <TestEventWrapper/EventWrapper.h>
-#include <Configuration/CMSExceptionsConfiguration.h>
+#include <Configuration/ExceptionsConfiguration.h>
 
 class ExceptionVerifier : public BaseVerifier, public std::enable_shared_from_this<ExceptionVerifier>
 {
 public:
 	explicit ExceptionVerifier(const std::string& verifier_id, int expectedExceptionsCount);
-	ExceptionVerifier(CMSExceptionsConfiguration& config);
+	ExceptionVerifier(ExceptionsConfiguration& config);
 	~ExceptionVerifier();
 	EventStatus trigger(const EventWrapper* event) override;
 	void expectCount(int count);

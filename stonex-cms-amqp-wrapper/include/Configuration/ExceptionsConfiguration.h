@@ -20,12 +20,13 @@
 #pragma once
 #include <string>
 
-class CMSExceptionsConfiguration
+class ExceptionsConfiguration
 {
 public:
-	CMSExceptionsConfiguration(const std::string& exceptionSourceId, int expectedExceptionCount);
+	ExceptionsConfiguration(const std::string& exceptionSourceId, int expectedExceptionCount);
 	std::string exceptionSourceId() const;
 	int expectedExceptionCount() const;
+	friend bool operator== (const ExceptionsConfiguration& lhs, const ExceptionsConfiguration& rhs);
 private:
 	const std::string mExceptionSourceId;
 	const int mExpectedExceptionCount;
