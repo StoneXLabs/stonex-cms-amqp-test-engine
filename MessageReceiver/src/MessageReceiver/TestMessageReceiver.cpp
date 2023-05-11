@@ -36,7 +36,14 @@ TestMessageReceiver::~TestMessageReceiver()
 #include <iostream>
 
 void TestMessageReceiver::onMessage(const cms::Message* message) {
-	std::cout << "LISTENER on message" << std::endl;
+	if (mListener)
+		mListener->onMessage(message);
+}
+
+
+void TestMessageReceiver::setMessageListener(cms::MessageListener* listener)
+{
+	mListener = listener;
 }
 
 //

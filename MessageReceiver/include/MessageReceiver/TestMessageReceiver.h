@@ -36,6 +36,10 @@ public:
 	TestMessageReceiver(const TestCaseMessageReceiverConfiguration& config, CMSClientTestUnit & client_params, Notifier& notifier);
 	virtual ~TestMessageReceiver();
 	virtual void onMessage(const cms::Message* message) override;
+	void setMessageListener(cms::MessageListener* listener);
+
+private:
+	cms::MessageListener *mListener{ nullptr };
 };
 
 //#include "CMSMessageListenerFactory.h"
