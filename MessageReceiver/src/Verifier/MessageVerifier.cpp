@@ -47,7 +47,7 @@ MessageVerifier::MessageVerifier(const std::string& verifier_id, const std::stri
 }
 
 MessageVerifier::MessageVerifier(TestCaseMessageReceiverConfiguration & config)
-	:MessageVerifier(config.consumerId(), config.destinationType(), config.destinationAddress())
+	:MessageVerifier(config.connectionId(), config.sessionId(), config.consumerId()/*config.destinationType(), config.destinationAddress()*/)
 {
 }
 

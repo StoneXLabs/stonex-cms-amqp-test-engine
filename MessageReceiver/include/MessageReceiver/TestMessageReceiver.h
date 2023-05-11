@@ -22,33 +22,34 @@
 #include <list>
 
 #include <cms/MessageListener.h>
+#include <cms/Message.h>
 
 #include <Wrapper/CMSClientTestUnit.h>
-#include "CMSMessageListenerFactory.h"
-#include <Configuration/CMSWrapperConfiguration.h>
+#include <Configuration/TestCaseMessageReceiverConfiguration.h>
 
 #include <Notifier/EventStatusObserver.h>
 
-class EventStatus;
 
-class TestMessageReceiver : public EventStatusObserver
+class TestMessageReceiver : public EventStatusObserver, public cms::MessageListener
 {
 public:
-	TestMessageReceiver(CMSMessageListenerFactory* messageListenerFactory, Notifier& notifier);
+	TestMessageReceiver(const TestCaseMessageReceiverConfiguration& config, CMSClientTestUnit & client_params, Notifier& notifier);
 	virtual ~TestMessageReceiver();
-
-	virtual void initialize(CMSClientTestUnit & UUT, const CMSWrapperConfiguration & config);
-
-	virtual void wait() = 0;
-
-
-	void onMessageReceived(EventStatus status);
-
-protected:
-	virtual void received(EventStatus status) = 0;
-
-protected:
-	std::list<cms::MessageListener*> mMessageListeners;
-	CMSMessageListenerFactory * mListenerFactory;
+	virtual void onMessage(const cms::Message* message) override;
 };
+
+//#include "CMSMessageListenerFactory.h"
+//#include <Configuration/CMSWrapperConfiguration.h>
+
+//	virtual void initialize(CMSClientTestUnit & UUT, const CMSWrapperConfiguration & config);
+//
+//	virtual void wait() = 0;
+//
+//
+//	void onMessageReceived(EventStatus status);
+//
+//protected:
+//	virtual void received(EventStatus status) = 0;
+
+//};
 

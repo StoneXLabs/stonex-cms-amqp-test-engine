@@ -25,16 +25,18 @@
 class TestCaseMessageReceiverConfiguration
 {
 public:
-	TestCaseMessageReceiverConfiguration(const std::string consumerId, const std::string& destination_type, const std::string& destination_address);
+	TestCaseMessageReceiverConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string consumerId);
 	virtual ~TestCaseMessageReceiverConfiguration() = default;
-	const std::string consumerId() const;
-	const std::string destinationType() const;
-	const std::string destinationAddress() const;
+	std::string connectionId() const;
+	std::string sessionId() const;
+	std::string consumerId() const;
+
+	friend bool operator== (const TestCaseMessageReceiverConfiguration& lhs, const TestCaseMessageReceiverConfiguration& rhs);
 
 private:
+	const std::string mConnectionId;
+	const std::string mSessionId;
 	const std::string mConsumerId;
-	const std::string mDestinationType;
-	const std::string mDestinationAddress;
 
 };
 

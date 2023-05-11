@@ -9,12 +9,14 @@ set(CMAKE_CXX_STANDARD 20)
 file(GLOB sourceFiles 
 	${PROJECT_SOURCE_DIR}/src/MessageReceiver/*.cpp
 	${PROJECT_SOURCE_DIR}/src/Configuration/*.cpp
+	${PROJECT_SOURCE_DIR}/src/ConfigurationParser/*.cpp
 	${PROJECT_SOURCE_DIR}/src/Listener/*.cpp
 	${PROJECT_SOURCE_DIR}/src/Verifier/*.cpp
 	)
 file(GLOB headerFiles 
 	${PROJECT_SOURCE_DIR}/include/MessageReceiver/*.h
 	${PROJECT_SOURCE_DIR}/include/Configuration/*.h
+	${PROJECT_SOURCE_DIR}/include/ConfigurationParser/*.h
 	${PROJECT_SOURCE_DIR}/include/Listener/*.h
 	${PROJECT_SOURCE_DIR}/include/Verifier/*.h	
 	)
@@ -34,3 +36,5 @@ target_link_libraries(stonex-cms-amqp-message-receiver
 	stonex-cms-amqp-test-verifier
 	stonex-cms-amqp-test-notifier
 	)
+
+	add_subdirectory(Test)

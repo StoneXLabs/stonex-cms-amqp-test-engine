@@ -19,23 +19,28 @@
 
 #include <Configuration\TestCaseMessageReceiverConfiguration.h>
 
-TestCaseMessageReceiverConfiguration::TestCaseMessageReceiverConfiguration(const std::string consumerId, const std::string& destination_type, const std::string& destination_address)
-	:mConsumerId{ consumerId },
-	mDestinationType{destination_type},
-	mDestinationAddress{destination_address}
+TestCaseMessageReceiverConfiguration::TestCaseMessageReceiverConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string consumerId)
+	:mConnectionId{ connectionId },
+	mSessionId{ sessionId }, 
+	mConsumerId{ consumerId }
 {}
 
-const std::string TestCaseMessageReceiverConfiguration::consumerId() const 
+std::string TestCaseMessageReceiverConfiguration::connectionId() const
+{
+	return mConnectionId;
+}
+std::string TestCaseMessageReceiverConfiguration::sessionId() const
+{
+	return mSessionId;
+}
+std::string TestCaseMessageReceiverConfiguration::consumerId() const 
 { 
 	return mConsumerId;
 }
 
-const std::string TestCaseMessageReceiverConfiguration::destinationType() const
+bool operator== (const TestCaseMessageReceiverConfiguration& lhs, const TestCaseMessageReceiverConfiguration& rhs)
 {
-	return mDestinationType;
-}
-
-const std::string TestCaseMessageReceiverConfiguration::destinationAddress() const
-{
-	return mDestinationAddress;
+	return lhs.connectionId() == rhs.connectionId() &&
+		lhs.sessionId() == rhs.sessionId() &&
+		lhs.mConsumerId == rhs.mConsumerId;
 }

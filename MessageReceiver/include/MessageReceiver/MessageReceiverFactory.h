@@ -19,11 +19,11 @@
 
 #pragma once
 #include "TestMessageReceiver.h"
-#include <Configuration/TestCaseConfiguration.h>
-
-class MessageReceiverFactory
-{
-public:
-	virtual TestMessageReceiver* create(const TestCaseConfiguration& config, Notifier& notifier) const = 0;
-};
+//#include <Configuration/TestCaseConfiguration.h>
+//
+//class MessageReceiverFactory
+//{
+//public:
+//	virtual TestMessageReceiver* create(const TestCaseConfiguration& config, Notifier& notifier) const = 0;
+//};
 
