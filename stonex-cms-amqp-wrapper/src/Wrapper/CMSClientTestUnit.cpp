@@ -150,7 +150,7 @@ ProducerTestUnit* const CMSClientTestUnit::producer(const std::string &connectio
 
 	if (foundConnection)
 	{
-		SessionTestUnit* foundSession = foundConnection->session(id);
+		SessionTestUnit* foundSession = foundConnection->session(sessionId);
 		if (foundSession)
 		{
 			ProducerTestUnit* foundProducer = foundSession->producer(id);

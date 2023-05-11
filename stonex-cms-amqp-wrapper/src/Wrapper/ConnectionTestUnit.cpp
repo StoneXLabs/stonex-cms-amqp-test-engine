@@ -25,7 +25,8 @@
 
 ConnectionTestUnit::ConnectionTestUnit(const ConnectionConfiguration& params, std::shared_ptr<StonexLogger> logger, cms::ExceptionListener* factoryExceptionListener, cms::ExceptionListener* connectionExceptionListener, cms::ExceptionListener* sessionExceptionListener)
 	:CMSExceptionListenerTestUnit(params.key()),
-	mConnectionExceptionListener{connectionExceptionListener}
+	mConnectionExceptionListener{connectionExceptionListener},
+	mId{params.key()}
 {
 	if (!params.user().empty() && !params.password().empty())
 	{
@@ -90,6 +91,7 @@ ConnectionTestUnit::ConnectionTestUnit(const ConnectionConfiguration& params, st
 
 ConnectionTestUnit::ConnectionTestUnit(ConnectionTestUnit&& other)
 	:CMSExceptionListenerTestUnit(other),
+	mId{other.mId},
 	mSessions{std::move(other.mSessions)},
 	mConnection{other.mConnection},
 	mConnectionExceptionListener{other.mConnectionExceptionListener},

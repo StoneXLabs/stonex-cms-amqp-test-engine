@@ -15,16 +15,16 @@ TestCaseProducerConfiguration * TestCaseProducerConfigurationParser::createTestC
 		std::string session_factory;
 
 
-		if (auto message_factory_id = json.as_object().if_contains("message_factory"); message_factory_id && message_factory_id->is_string())
-			message_factory = message_factory_id->as_string().c_str();
-		else
-			return nullptr;
 
 		if (auto session_factory_id = json.as_object().if_contains("session_factory"); session_factory_id && session_factory_id->is_string())
 			session_factory = session_factory_id->as_string().c_str();
 		else
 			return nullptr;
 
+		if (auto message_factory_id = json.as_object().if_contains("message_factory"); message_factory_id && message_factory_id->is_string())
+			message_factory = message_factory_id->as_string().c_str();
+		else
+			return nullptr;
 
 		if (json.as_object().size() == 2)
 		{

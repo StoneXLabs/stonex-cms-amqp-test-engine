@@ -22,7 +22,7 @@
 
 
 TestCaseProducerConfiguration::TestCaseProducerConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& producerId)
-	:mConnectionId{ sessionId },
+	:mConnectionId{ connectionId },
 	mSessionId{ sessionId },
 	mProducerId{ producerId }
 {}
