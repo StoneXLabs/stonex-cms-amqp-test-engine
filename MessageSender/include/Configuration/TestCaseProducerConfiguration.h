@@ -36,6 +36,5 @@ private:
 	const std::string mConnectionId;
 	const std::string mSessionId;
 	const std::string mProducerId;
-	const std::string mMessageSourceFile;
 };
 
