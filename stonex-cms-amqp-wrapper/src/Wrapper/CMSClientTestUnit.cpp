@@ -112,46 +112,53 @@ ConnectionTestUnit* const CMSClientTestUnit::connection(const std::string &id)
 
 }
 
-SessionTestUnit* const CMSClientTestUnit::session(const std::string &id)
+SessionTestUnit* const CMSClientTestUnit::session(const std::string &connectionId, const std::string &id)
 {
-	SessionTestUnit* found{ nullptr };
+	ConnectionTestUnit* foundConnection = connection(connectionId);
 
-	for (auto &it : mConnections) 
+	if (foundConnection)
 	{
-		if (auto item = it.session(id)) {
-			found = item;
-			break;
-		}
+		SessionTestUnit* foundSession = foundConnection->session(id);
+		return foundSession;
 	}
-
-	return found;
+	else
+		return nullptr;
 }
 
-ConsumerTestUnit* const CMSClientTestUnit::consumer(const std::string &id)
+ConsumerTestUnit* const CMSClientTestUnit::consumer(const std::string &connectionId, const std::string &sessionId, const std::string &id)
 {
-	ConsumerTestUnit* found{ nullptr };
+	ConnectionTestUnit* foundConnection = connection(connectionId);
 
-	for (auto &it : mConnections)
+	if (foundConnection)
 	{
-		if (auto item = it.consumer(id)) {
-			found = item;
-			break;
+		SessionTestUnit* foundSession = foundConnection->session(id);
+		if (foundSession)
+		{
+			ConsumerTestUnit* foundConsumer = foundSession->consumer(id);
+			return foundConsumer;
 		}
+		else
+			return nullptr;
 	}
+	else
+		return nullptr;
 
-	return found;
 }
-ProducerTestUnit* const CMSClientTestUnit::producer(const std::string &id)
+ProducerTestUnit* const CMSClientTestUnit::producer(const std::string &connectionId, const std::string &sessionId, const std::string &id)
 {
-	ProducerTestUnit* found{ nullptr };
+	ConnectionTestUnit* foundConnection = connection(connectionId);
 
-	for (auto &it : mConnections)
+	if (foundConnection)
 	{
-		if (auto item = it.producer(id)) {
-			found = item;
-			break;
+		SessionTestUnit* foundSession = foundConnection->session(id);
+		if (foundSession)
+		{
+			ProducerTestUnit* foundProducer = foundSession->producer(id);
+			return foundProducer;
 		}
+		else
+			return nullptr;
 	}
-
-	return found;
+	else
+		return nullptr;
 }

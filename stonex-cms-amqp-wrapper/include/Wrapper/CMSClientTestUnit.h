@@ -43,9 +43,9 @@ public:
 
 	std::vector<ConnectionTestUnit>& connections();
 	ConnectionTestUnit* const connection(const std::string &id);
-	SessionTestUnit* const session(const std::string &id);
-	ConsumerTestUnit* const consumer(const std::string &id);
-	ProducerTestUnit* const producer(const std::string &id);
+	SessionTestUnit* const session(const std::string &connectionId, const std::string &id);
+	ConsumerTestUnit* const consumer(const std::string &connectionId,const std::string &sessionId,const std::string &id);
+	ProducerTestUnit* const producer(const std::string &connectionId,const std::string &sessionId,const std::string &id);
 	
 
 private:

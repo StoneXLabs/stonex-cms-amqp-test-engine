@@ -21,8 +21,8 @@
 #include <Notifier/EventStatus.h>
 
 MessageSender::MessageSender(const TestCaseProducerConfiguration& params, CMSClientTestUnit & client_params, EventStatusObserver& parent)
-	:mSession{ client_params.session(params.sessionId()) },
-	mProducer{ client_params.producer(params.producerId()) },
+	:mSession{ client_params.session(params.connectionId(), params.sessionId()) },
+	mProducer{ client_params.producer(params.connectionId(), params.sessionId(),params.producerId()) },
 	mId{params.producerId()},
 	mParent{parent}
 {

@@ -46,9 +46,14 @@ public:
 	}
 
 	bool send(int msg_delay_ms = 0) { 
-		auto mes = mSession->createTextMessage("hello");
-		mProducer->send(mes);
-		return true;
+		if (mSession && mProducer) 
+		{
+			auto mes = mSession->createTextMessage("hello");
+			mProducer->send(mes);
+			return true;
+		}
+		return false;
+
 	};
 };
 
@@ -59,7 +64,7 @@ int main()
 	{
 		boost::json::object::value_type message_sender_config_json = *valueFromFile("test_message_sender.config").as_object().cbegin();
 		auto producer = parser.createTestCaseProducerConfig(message_sender_config_json.key_c_str(), message_sender_config_json.value().as_object());
-		auto producer_config = TestCaseProducerConfiguration("producer1", "session1");
+		auto producer_config = TestCaseProducerConfiguration("connection1", "session1", "producer1");
 
 		assert(producer != nullptr);
 		assert(*producer == producer_config);
@@ -68,8 +73,7 @@ int main()
 	{
 		boost::json::object::value_type message_sender_config_json = *valueFromFile("test_message_counting_sender.config").as_object().cbegin();
 		auto producer = parser.createTestCaseProducerConfig(message_sender_config_json.key_c_str(), message_sender_config_json.value().as_object());
-		auto producer_config = CountingCaseProducerConfiguration("producer1", "session1", 1);
-		auto producer_config2 = CountingCaseProducerConfiguration("producer1", "session1", 1);
+		auto producer_config = CountingCaseProducerConfiguration("connection1", "session1", "producer1", 1);
 
 		assert(producer != nullptr);
 		assert(dynamic_cast<CountingCaseProducerConfiguration*>(producer) != nullptr);
@@ -80,7 +84,7 @@ int main()
 	{
 		boost::json::object::value_type message_sender_config_json = *valueFromFile("test_message_sender_from_file.config").as_object().cbegin();
 		auto producer = parser.createTestCaseProducerConfig(message_sender_config_json.key_c_str(), message_sender_config_json.value().as_object());
-		auto producer_config = FileTestCaseProducerConfiguration("producer1", "session1", "test_messages.txt");
+		auto producer_config = FileTestCaseProducerConfiguration("connection1", "session1", "producer1", "test_messages.txt");
 
 
 		assert(producer != nullptr);
@@ -91,7 +95,7 @@ int main()
 	{
 		boost::json::object::value_type message_sender_config_json = *valueFromFile("test_message_counting_sender_from_file.config").as_object().cbegin();
 		auto producer = parser.createTestCaseProducerConfig(message_sender_config_json.key_c_str(), message_sender_config_json.value().as_object());
-		auto producer_config = FileCountingTestCaseProducerConfiguration("producer1", "session1", "test_messages.txt", 1);
+		auto producer_config = FileCountingTestCaseProducerConfiguration("connection1", "session1", "producer1", "test_messages.txt", 1);
 
 		assert(producer != nullptr);
 		assert(dynamic_cast<FileCountingTestCaseProducerConfiguration*>(producer) != nullptr);
@@ -112,10 +116,9 @@ int main()
 		Notifier event_notifier(nullptr);
 		EventStatusObserver event_observer(event_notifier);
 
-		auto test_producer_config = FileCountingTestCaseProducerConfiguration("producer1", "session1", "test_messages.txt", 1);
+		auto test_producer_config = FileCountingTestCaseProducerConfiguration("connection1", "session1", "producer1", "test_messages.txt", 1);
 		TestMessageSender sender(test_producer_config, test_client, event_observer);
-//		while(1)
-			sender.send();
+		sender.send();
 	}
 
 

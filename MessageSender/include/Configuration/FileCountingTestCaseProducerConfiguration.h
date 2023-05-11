@@ -6,7 +6,7 @@
 class FileCountingTestCaseProducerConfiguration : public TestCaseProducerConfiguration, public MessageFile, public EventCounter
 {
 public:
-	FileCountingTestCaseProducerConfiguration(const std::string& producerId, const std::string& sessionId, const std::string& file_path, long long message_count);
+	FileCountingTestCaseProducerConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& producerId, const std::string& file_path, long long message_count);
 	friend bool operator== (const FileCountingTestCaseProducerConfiguration& lhs, const FileCountingTestCaseProducerConfiguration& rhs);
 
 };

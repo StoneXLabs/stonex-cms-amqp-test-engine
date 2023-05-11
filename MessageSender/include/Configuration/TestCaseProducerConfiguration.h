@@ -25,15 +25,17 @@
 class TestCaseProducerConfiguration 
 {
 public:
-	TestCaseProducerConfiguration(const std::string& producerId, const std::string& sessionId);
+	TestCaseProducerConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& producerId);
 	virtual ~TestCaseProducerConfiguration() = default;
-	std::string producerId() const;
+	std::string connectionId() const;
 	std::string sessionId() const;
+	std::string producerId() const;
 	friend bool operator== (const TestCaseProducerConfiguration& lhs, const TestCaseProducerConfiguration& rhs);
 	
 private:
-	const std::string mProducerId;
+	const std::string mConnectionId;
 	const std::string mSessionId;
+	const std::string mProducerId;
 	const std::string mMessageSourceFile;
 };
 

@@ -21,23 +21,30 @@
 
 
 
-TestCaseProducerConfiguration::TestCaseProducerConfiguration(const std::string& producerId, const std::string& sessionId)
-	:mProducerId{ producerId },
-	mSessionId{sessionId}
+TestCaseProducerConfiguration::TestCaseProducerConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& producerId)
+	:mConnectionId{ sessionId },
+	mSessionId{ sessionId },
+	mProducerId{ producerId }
 {}
 
+std::string TestCaseProducerConfiguration::connectionId() const
+{
+	return mConnectionId;
+}
+std::string TestCaseProducerConfiguration::sessionId() const
+{
+	return mSessionId;
+}
 std::string TestCaseProducerConfiguration::producerId() const 
 { 
 	return mProducerId; 
 }
 
-std::string TestCaseProducerConfiguration::sessionId() const
-{
-	return mSessionId;
-}
 
 bool operator==(const TestCaseProducerConfiguration & lhs, const TestCaseProducerConfiguration & rhs)
 {
-	return lhs.producerId() == rhs.producerId() &&
-		lhs.sessionId() == rhs.sessionId();
+	return lhs.connectionId() == rhs.connectionId() &&
+		lhs.sessionId() == rhs.sessionId() &&
+		lhs.producerId() == rhs.producerId();
+		
 }

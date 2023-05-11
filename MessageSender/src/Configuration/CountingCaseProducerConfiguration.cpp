@@ -1,7 +1,7 @@
 #include <Configuration/CountingCaseProducerConfiguration.h>
 
-CountingCaseProducerConfiguration::CountingCaseProducerConfiguration(const std::string& producerId, const std::string& sessionId, long long message_count)
-	:TestCaseProducerConfiguration(producerId, sessionId),
+CountingCaseProducerConfiguration::CountingCaseProducerConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& producerId, long long message_count)
+	:TestCaseProducerConfiguration(connectionId, sessionId,producerId),
 	EventCounter(message_count)
 {
 }
