@@ -69,6 +69,49 @@ int main()
 
 	auto logger = std::make_shared<StdOutLogger>();
 	CMSClientTestUnit test_client(wrapper_config, logger, "", &test_exception_listener, &test_exception_listener, &test_exception_listener);
+
+	assert(test_client.connection("non_existent") == nullptr);
+
+	assert(test_client.session("connection1", "non_existent") == nullptr);
+	assert(test_client.session("non_existent", "session1") == nullptr);
+
+	assert(test_client.consumer("connection1", "session1", "non_existent") == nullptr);
+	assert(test_client.consumer("connection1", "non_existent", "consumer1") == nullptr);
+	assert(test_client.consumer("non_existent", "session1", "consumer1") == nullptr);
+
+
+	assert(test_client.consumer("connection1", "non_existent", "non_existent") == nullptr);
+	assert(test_client.consumer("non_existent", "non_existent", "consumer1") == nullptr);
+	assert(test_client.consumer("non_existent", "session1", "non_existent") == nullptr);
+
+	assert(test_client.consumer("non_existent", "non_existent", "non_existent") == nullptr);
+
+
+
+	assert(test_client.producer("connection1", "session1", "non_existent") == nullptr);
+	assert(test_client.producer("connection1", "non_existent", "producer1") == nullptr);
+	assert(test_client.producer("non_existent", "session1", "producer1") == nullptr);
+
+	assert(test_client.producer("connection1", "non_existent", "non_existent") == nullptr);
+	assert(test_client.producer("non_existent", "non_existent", "producer1") == nullptr);
+	assert(test_client.producer("non_existent", "session1", "non_existent") == nullptr);
+
+	assert(test_client.producer("non_existent", "non_existent", "non_existent") == nullptr);
+	
+
+
+
+	assert(test_client.connection("connection1") != nullptr);
+	assert(test_client.connection("connection1") == test_client.connection(connection_config.key()));
+
+	assert(test_client.session("connection1","session1") != nullptr);
+	assert(test_client.session("connection1","session1") == test_client.session(connection_config.key(),session_config.key()));
+
+	assert(test_client.consumer("connection1","session1","consumer1") != nullptr);
+	assert(test_client.consumer("connection1","session1","consumer1") == test_client.consumer(connection_config.key(), session_config.key(),consumer_config.key()));
+
+	assert(test_client.producer("connection1","session1","producer1") != nullptr);
+	assert(test_client.producer("connection1","session1","producer1") == test_client.producer(connection_config.key(), session_config.key(),producer_config.key()));
 }
 
 
