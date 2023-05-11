@@ -21,30 +21,23 @@
 
 
 
-TestCaseProducerConfiguration::TestCaseProducerConfiguration(const std::string producerId, const std::string sessionId, const std::string& message_file, int messagesCount)
+TestCaseProducerConfiguration::TestCaseProducerConfiguration(const std::string& producerId, const std::string& sessionId)
 	:mProducerId{ producerId },
-	mSessionId{sessionId},
-	mMessagesToSend{ messagesCount },
-	mMessageSourceFile{ message_file }
+	mSessionId{sessionId}
 {}
 
-const std::string TestCaseProducerConfiguration::producerId() const 
+std::string TestCaseProducerConfiguration::producerId() const 
 { 
 	return mProducerId; 
 }
 
-const std::string TestCaseProducerConfiguration::sessionId() const
+std::string TestCaseProducerConfiguration::sessionId() const
 {
 	return mSessionId;
 }
 
-
-const int TestCaseProducerConfiguration::messageToSend() const
+bool operator==(const TestCaseProducerConfiguration & lhs, const TestCaseProducerConfiguration & rhs)
 {
-	return mMessagesToSend;
-}
-
-const std::string TestCaseProducerConfiguration::messageSourcePath() const 
-{ 
-	return mMessageSourceFile; 
+	return lhs.producerId() == rhs.producerId() &&
+		lhs.sessionId() == rhs.sessionId();
 }

@@ -15,15 +15,17 @@ target_include_directories(stonex-cms-amqp-message-sender-test PUBLIC ${PROJECT_
 
 target_link_libraries(stonex-cms-amqp-message-sender-test
 	stonex-cms-amqp-message-sender
-	CONAN_PKG::stonex-logger-wrapper
+	CONAN_PKG::boost
 	secur32 
 	crypt32 
 	Ws2_32
 	)
 
+configure_file(${PROJECT_SOURCE_DIR}/test_message_counting_sender.config ${CMAKE_CURRENT_BINARY_DIR}/test_message_counting_sender.config COPYONLY)              
+configure_file(${PROJECT_SOURCE_DIR}/test_message_counting_sender_from_file.config ${CMAKE_CURRENT_BINARY_DIR}/test_message_counting_sender_from_file.config COPYONLY)
+configure_file(${PROJECT_SOURCE_DIR}/test_message_sender.config ${CMAKE_CURRENT_BINARY_DIR}/test_message_sender.config COPYONLY)
+configure_file(${PROJECT_SOURCE_DIR}/test_message_sender_from_file.config ${CMAKE_CURRENT_BINARY_DIR}/test_message_sender_from_file.config COPYONLY)
 
-configure_file(${PROJECT_SOURCE_DIR}/test_consumer.config ${CMAKE_CURRENT_BINARY_DIR}/test_consumer.config COPYONLY)
-configure_file(${PROJECT_SOURCE_DIR}/test_producer.config ${CMAKE_CURRENT_BINARY_DIR}/test_producer.config COPYONLY)
-configure_file(${PROJECT_SOURCE_DIR}/test_session.config ${CMAKE_CURRENT_BINARY_DIR}/test_session.config COPYONLY)
-configure_file(${PROJECT_SOURCE_DIR}/test_connection.config ${CMAKE_CURRENT_BINARY_DIR}/test_connection.config COPYONLY)
-configure_file(${PROJECT_SOURCE_DIR}/test_wrapper.config ${CMAKE_CURRENT_BINARY_DIR}/test_wrapper.config COPYONLY)
+
+
+

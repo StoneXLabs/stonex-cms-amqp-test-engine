@@ -23,7 +23,8 @@
 #include <Wrapper/CMSClientTestUnit.h>
 #include <Notifier/EventStatusObserver.h>
 
-
+#include "Configuration/EventCounter.h"
+#include <Configuration/MessageFile.h>
 class MessageSender
 {
 public:
@@ -31,8 +32,6 @@ public:
 
 	bool sendMessage();
 	std::string id() const;
-
-	virtual bool messageAvailable() const = 0;
 
 protected:
 	virtual bool send(int msg_delay_ms = 0) = 0;

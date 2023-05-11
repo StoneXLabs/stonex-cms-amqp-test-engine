@@ -22,20 +22,18 @@
 #include <vector>
 
 
-
 class TestCaseProducerConfiguration 
 {
 public:
-	TestCaseProducerConfiguration(const std::string producerId, const std::string sessionId, const std::string& message_file, int messagesCount);
+	TestCaseProducerConfiguration(const std::string& producerId, const std::string& sessionId);
 	virtual ~TestCaseProducerConfiguration() = default;
-	const std::string producerId() const;
-	const std::string sessionId() const;
-	const int messageToSend() const;
-	const std::string messageSourcePath() const;
+	std::string producerId() const;
+	std::string sessionId() const;
+	friend bool operator== (const TestCaseProducerConfiguration& lhs, const TestCaseProducerConfiguration& rhs);
+	
 private:
 	const std::string mProducerId;
 	const std::string mSessionId;
-	int mMessagesToSend;
 	const std::string mMessageSourceFile;
 };
 
