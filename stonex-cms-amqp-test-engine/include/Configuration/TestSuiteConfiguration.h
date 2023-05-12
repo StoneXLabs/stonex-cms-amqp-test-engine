@@ -39,6 +39,9 @@ public:
 	std::list<TestCaseConfiguration>::const_iterator testsBegin();
 	std::list<TestCaseConfiguration>::const_iterator testsEnd();
 
+
+	friend bool operator== (const TestSuiteConfiguration& lhs, const TestSuiteConfiguration& rhs);
+
 private:
 	std::string mTestSuiteName;
 	std::list<TestCaseConfiguration> mTests;

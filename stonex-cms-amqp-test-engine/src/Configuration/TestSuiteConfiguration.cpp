@@ -53,3 +53,10 @@ std::list<TestCaseConfiguration>::const_iterator TestSuiteConfiguration::testsEn
 {
 	return mTests.end(); 
 };
+
+bool operator==(const TestSuiteConfiguration & lhs, const TestSuiteConfiguration & rhs)
+{
+	return 	lhs.mTestSuiteName == rhs.mTestSuiteName &&
+		std::equal(std::cbegin(lhs.mTests), std::cend(lhs.mTests), std::cbegin(rhs.mTests));
+
+}
