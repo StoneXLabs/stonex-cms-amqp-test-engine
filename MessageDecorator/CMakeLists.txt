@@ -8,14 +8,27 @@ set(CMAKE_CXX_STANDARD 20)
 
 
 
-file(GLOB sourceFiles ${PROJECT_SOURCE_DIR}/MessageDecorator/*.cpp)
-file(GLOB headerFiles ${PROJECT_SOURCE_DIR}/MessageDecorator/*.h)
+file(GLOB sourceFiles 
+	${PROJECT_SOURCE_DIR}/src/MessageDecorator/*.cpp
+	${PROJECT_SOURCE_DIR}/src/Configuration/*.cpp
+	${PROJECT_SOURCE_DIR}/src/ConfigurationParser/*.cpp
+	)
+file(GLOB headerFiles 
+	${PROJECT_SOURCE_DIR}/include/MessageDecorator/*.h
+	${PROJECT_SOURCE_DIR}/include/Configuration/*.h
+	${PROJECT_SOURCE_DIR}/include/ConfigurationParser/*.h
+	)
 
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${sourceFiles} ${headerFiles})
 
 add_library(stonex-cms-amqp-message-decorator STATIC ${sourceFiles} ${headerFiles})              
 
-target_include_directories(stonex-cms-amqp-message-decorator PUBLIC ${PROJECT_SOURCE_DIR} )
+target_include_directories(stonex-cms-amqp-message-decorator PUBLIC ${PROJECT_SOURCE_DIR}/include )
 
-target_link_libraries(stonex-cms-amqp-message-decorator stonex-cms-amqp-test-interoperability stonex-cms-amqp-wrapper)
+target_link_libraries(stonex-cms-amqp-message-decorator
+	stonex-cms-amqp-message-content
+	stonex-cms-amqp-wrapper
+	)
+
+add_subdirectory(Test)

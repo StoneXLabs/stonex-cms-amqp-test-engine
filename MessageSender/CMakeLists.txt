@@ -10,11 +10,13 @@ file(GLOB sourceFiles
 	${PROJECT_SOURCE_DIR}/src/MessageSender/*.cpp  
 	${PROJECT_SOURCE_DIR}/src/Configuration/*.cpp
 	${PROJECT_SOURCE_DIR}/src/ConfigurationParser/*.cpp
+	${PROJECT_SOURCE_DIR}/src/utils/*.cpp
 	)
 file(GLOB headerFiles 
 	${PROJECT_SOURCE_DIR}/include/MessageSender/*.h 
 	${PROJECT_SOURCE_DIR}/include/Configuration/*.h
 	${PROJECT_SOURCE_DIR}/include/ConfigurationParser/*.h
+	${PROJECT_SOURCE_DIR}/include/utils/*.h
 	)
 
 
@@ -27,6 +29,9 @@ target_include_directories(stonex-cms-amqp-message-sender PUBLIC ${PROJECT_SOURC
 target_link_libraries(
 	stonex-cms-amqp-message-sender
 	stonex-cms-amqp-wrapper
+	stonex-cms-amqp-message-content
+	stonex-cms-amqp-message-decorator
+
 #	stonex-cms-amqp-test-verifier
 #	stonex-cms-amqp-test-notifier
 	)

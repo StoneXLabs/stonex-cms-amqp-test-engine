@@ -25,5 +25,5 @@ class EventStatusObserver;
 
 class MessageSenderFactory {
 public:
-	virtual MessageSender* create(const TestCaseProducerConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, EventStatusObserver& parent)  const = 0;
+	MessageSender* create(const TestCaseProducerConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, EventStatusObserver& parent)  const;
 };

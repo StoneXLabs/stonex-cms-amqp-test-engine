@@ -12,6 +12,7 @@ add_subdirectory(stonex-cms-amqp-wrapper)
 
 add_subdirectory(common)
 add_subdirectory(MessageContent)
+add_subdirectory(MEssageDecorator)
 add_subdirectory(MessageContentVerifiers)
 add_subdirectory(MessageReceiver)
 add_subdirectory(MessageSender)

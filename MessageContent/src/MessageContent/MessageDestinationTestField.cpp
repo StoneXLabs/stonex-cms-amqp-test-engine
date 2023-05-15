@@ -36,3 +36,12 @@ std::string MessageDestinationTestField::valueString() const
 { 
 	return mDestType.valueString();
 }
+
+bool operator==(const MessageDestinationTestField & lhs, const MessageDestinationTestField & rhs)
+{
+	return lhs.mName == rhs.mName &&
+		lhs.mFieldType == rhs.mFieldType &&
+		lhs.mValueString == rhs.mValueString &&
+		lhs.mDestType == rhs.mDestType &&
+		lhs.mAddress == rhs.mDestType;
+}

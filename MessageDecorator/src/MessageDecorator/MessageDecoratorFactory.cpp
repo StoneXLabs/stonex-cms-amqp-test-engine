@@ -1,16 +1,17 @@
-#include "MessageDecoratorFactory.h"
-#include "ApplicationPropertyDecorator.h"
-#include "CMSPropertyDecorator.h"
-#include "ApplicationPropertyDecorator.h"
+#include <algorithm>
+#include <MessageDecorator/MessageDecoratorFactory.h>
+#include <MessageDecorator/ApplicationPropertyDecorator.h>
+#include <MessageDecorator/CMSPropertyDecorator.h>
+#include <MessageDecorator/ApplicationPropertyDecorator.h>
 
-CMSMessageDecorator * MessageDecoratorFactory::create(const interoperability_tests::config::producer::MessageSenderConfiguration & config)
+CMSMessageDecorator * MessageDecoratorFactory::create(const MessageDecoratorConfiguration& config)
 {
 	CMSMessageDecorator* decorator{ nullptr };
-	std::for_each(std::cbegin(config.properties()), std::cend(config.properties()), [&decorator](const MessageTestField& item) {
+	std::for_each(std::cbegin(config.decorations()), std::cend(config.decorations()), [&decorator](const MessageTestField* item) {
 	
 		CMSMessageDecorator* current_item{ nullptr };
 		
-		switch (item.type())
+		switch (item->type())
 		{
 
 		case FIELD_TYPE::BOOLEANPROPERTY:
@@ -21,7 +22,7 @@ CMSMessageDecorator * MessageDecoratorFactory::create(const interoperability_tes
 		case FIELD_TYPE::LONGPROPERTY:
 		case FIELD_TYPE::SHORTPROPERTY:
 		case FIELD_TYPE::STRINGPROPERTY:
-			current_item = new ApplicationPropertyDecorator(item);
+			current_item = new ApplicationPropertyDecorator(*item);
 		break;
 		case FIELD_TYPE::CMS_CORRELATION_ID:
 		case FIELD_TYPE::CMS_DELIVERY_MODE:
@@ -33,7 +34,7 @@ CMSMessageDecorator * MessageDecoratorFactory::create(const interoperability_tes
 		case FIELD_TYPE::CMS_REPLY_TO:
 		case FIELD_TYPE::CMS_TIMESTAMP:
 		case FIELD_TYPE::CMS_TYPE:
-			current_item = new CMSPropertyDecorator(item);
+			current_item = new CMSPropertyDecorator(*item);
 			break;
 		default:
 			break;

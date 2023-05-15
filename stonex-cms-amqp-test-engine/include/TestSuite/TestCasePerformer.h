@@ -38,7 +38,7 @@ class TestCasePerformer : public EventStatusObserver
 
 
 public:
-	TestCasePerformer(const TestCasePerformerConfiguration& params, CMSClientTestUnit& client_params, Notifier& notifier, const MessageSenderFactory& sender_factory );
+	TestCasePerformer(const TestCasePerformerConfiguration& params, CMSClientTestUnit& client_params, Notifier& notifier);
 	virtual void sendAll(int msg_delay_ms = 0);
 
 private:

@@ -22,10 +22,10 @@
 #include <Notifier/EventStatus.h>
 
 
-TestCasePerformer::TestCasePerformer(const TestCasePerformerConfiguration & params, CMSClientTestUnit & client_params, Notifier& notifier, const MessageSenderFactory& sender_factory)
+TestCasePerformer::TestCasePerformer(const TestCasePerformerConfiguration & params, CMSClientTestUnit & client_params, Notifier& notifier)
 	:EventStatusObserver(notifier)
 {
-		 std::transform(std::cbegin(params.senders()), std::cend(params.senders()), std::back_inserter(mSenders), [this,&client_params, &sender_factory](const TestCaseProducerConfiguration* item) { return sender_factory.create(*item, client_params, *this); });
+		 std::transform(std::cbegin(params.senders()), std::cend(params.senders()), std::back_inserter(mSenders), [this,&client_params](const TestCaseProducerConfiguration* item) { return sender_factory.create(*item, client_params, *this); });
 }
 
  void TestCasePerformer::sendAll(int msg_delay_ms)
@@ -37,11 +37,11 @@ TestCasePerformer::TestCasePerformer(const TestCasePerformerConfiguration & para
 		needToSend = false;
 		std::for_each(std::begin(mSenders), std::end(mSenders), [&needToSend, msg_delay_ms](MessageSender* sender) {
 			if (sender) {
-				if(sender->messageAvailable())
-				{
-					sender->sendMessage();
-					needToSend = true;
-				}
+				//if(sender->messageAvailable())
+				//{
+				//	sender->sendMessage();
+				//	needToSend = true;
+				//}
 			}
 			else
 				needToSend = false;

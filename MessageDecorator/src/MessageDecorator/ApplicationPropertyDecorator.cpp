@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-#include "ApplicationPropertyDecorator.h"
+#include <MessageDecorator/ApplicationPropertyDecorator.h>
 
 #include <API/CMSMessage.h>
 

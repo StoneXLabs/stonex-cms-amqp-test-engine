@@ -2,6 +2,7 @@
 #include <Configuration/FileTestCaseProducerConfiguration.h>
 #include <Configuration/CountingCaseProducerConfiguration.h>
 #include <Configuration/FileCountingTestCaseProducerConfiguration.h>
+#include <Configuration/TestCaseDecoratingProducerConfiguration.h>
 
 
 TestCaseProducerConfiguration * TestCaseProducerConfigurationParser::createTestCaseProducerConfig(const std::string & configName, const boost::json::value & json) const
@@ -45,6 +46,12 @@ TestCaseProducerConfiguration * TestCaseProducerConfigurationParser::createTestC
 				int message_count{ 0 };
 				message_count = tmp_message_count->as_int64();
 				return new CountingCaseProducerConfiguration(session_factory, message_factory, configName, message_count);
+			}
+			else if (auto tmp_message_properties = json.as_object().if_contains("properties"); tmp_message_properties && tmp_message_properties->is_object())
+			{
+				//auto message_properties = tmp_message_properties;
+				auto decorator_configuration = createMessgeDecoratorConfiguration("properties", *tmp_message_properties);
+				return new TestCaseDecoratingProducerConfiguration(session_factory, message_factory, configName, decorator_configuration.decorations());
 			}
 			else
 				return nullptr;

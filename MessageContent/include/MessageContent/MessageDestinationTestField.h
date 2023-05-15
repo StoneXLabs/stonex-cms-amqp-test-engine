@@ -29,6 +29,8 @@ public:
 	std::string name() const;
 	std::string valueString() const;
 
+	friend bool operator== (const MessageDestinationTestField& lhs, const MessageDestinationTestField& rhs);
+
 private:
 	MessageTestField mDestType;
 	MessageTestField mAddress;

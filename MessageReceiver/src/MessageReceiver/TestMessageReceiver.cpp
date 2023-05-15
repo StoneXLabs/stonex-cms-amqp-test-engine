@@ -33,8 +33,6 @@ TestMessageReceiver::~TestMessageReceiver()
 {
 }
 
-#include <iostream>
-
 void TestMessageReceiver::onMessage(const cms::Message* message) {
 	if (mListener)
 		mListener->onMessage(message);

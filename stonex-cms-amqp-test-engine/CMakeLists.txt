@@ -15,7 +15,7 @@ file(GLOB sourceFiles
 #	${PROJECT_SOURCE_DIR}/src/MessageSource/*.cpp
 #	${PROJECT_SOURCE_DIR}/src/VerifyingReceiverFactory/*.cpp
 #	${PROJECT_SOURCE_DIR}/src/TestEventWrapperFactory/*.cpp
-#	${PROJECT_SOURCE_DIR}/src/TestSuite/*.cpp
+	${PROJECT_SOURCE_DIR}/src/TestSuite/TestCasePerformer*.cpp
 	)
 
 file(GLOB headerFiles 
@@ -26,7 +26,7 @@ file(GLOB headerFiles
 #	${PROJECT_SOURCE_DIR}/include/MessageSource/*.h
 #	${PROJECT_SOURCE_DIR}/include/VerifyingReceiverFactory/*.h
 #	${PROJECT_SOURCE_DIR}/include/TestEventWrapperFactory/*.h
-#	${PROJECT_SOURCE_DIR}/include/TestSuite/*.h
+	${PROJECT_SOURCE_DIR}/include/TestSuite/TestCasePerformer*.h
 	)
 
 
