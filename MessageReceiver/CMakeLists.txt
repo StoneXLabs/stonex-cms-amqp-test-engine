@@ -33,7 +33,7 @@ target_include_directories(stonex-cms-amqp-message-receiver
 target_link_libraries(stonex-cms-amqp-message-receiver
 	apache-cms-interface
 	stonex-cms-amqp-wrapper
-	stonex-cms-amqp-test-verifier
+#	stonex-cms-amqp-test-verifier
 	stonex-cms-amqp-test-notifier
 	)
 

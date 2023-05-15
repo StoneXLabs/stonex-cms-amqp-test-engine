@@ -1,14 +1,13 @@
 #pragma once
 #include <MessageSender/MessageSender.h>
 #include "..\Configuration\FileCountingTestCaseProducerConfiguration.h"
+#include "..\utils\MessageSource.h"
+#include "..\utils\SentMessageCounter.h"
 
-class MessageCountingFileSender : public MessageSender, public EventCounter, public MessageFile
+class MessageCountingFileSender : public MessageSender, public SentMessageCounter, public MessageFileSource
 {
 public:
 	explicit MessageCountingFileSender(const FileCountingTestCaseProducerConfiguration& config, CMSClientTestUnit & client_params, EventStatusObserver& parent);
-	bool send(int msg_delay_ms = 0) override  {return false; }
-
-private:
-	long long mSentMessageCount{ 0 };
+	bool send(int msg_delay_ms = 0);
 };
 

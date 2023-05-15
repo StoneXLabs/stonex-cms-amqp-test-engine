@@ -41,19 +41,3 @@ public:
 private:
 	cms::MessageListener *mListener{ nullptr };
 };
-
-//#include "CMSMessageListenerFactory.h"
-//#include <Configuration/WrapperConfiguration.h>
-
-//	virtual void initialize(CMSClientTestUnit & UUT, const CMSWrapperConfiguration & config);
-//
-//	virtual void wait() = 0;
-//
-//
-//	void onMessageReceived(EventStatus status);
-//
-//protected:
-//	virtual void received(EventStatus status) = 0;
-
-//};
-

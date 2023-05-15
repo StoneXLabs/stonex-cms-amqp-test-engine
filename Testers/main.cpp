@@ -105,7 +105,7 @@ int main()
 		EventStatusObserver event_observer(event_notifier);
 
 		auto test_producer_config = TestCaseDecoratingProducerConfiguration("connection1", "session1", "producer1", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"bool_property",false) });
-		MEssageD sender(test_producer_config, test_client, event_observer);
+		MessageDecoratingSender sender(test_producer_config, test_client, event_observer);
 
 		TestCaseMessageReceiverConfiguration test_consumer_config("connection1", "session1", "consumer1");
 		TestMessageReceiver receiver(test_consumer_config, test_client, event_notifier);

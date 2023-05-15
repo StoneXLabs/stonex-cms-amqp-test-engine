@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2022 StoneX Financial Ltd.
  *
@@ -19,17 +18,26 @@
  */
 
 #pragma once
-#include <cms/MessageListener.h>
-#include <string>
+#include <fstream>
 
-class CMSMessageListener : public cms::MessageListener
+class MessageSource {
+public:
+	virtual std::string getMessage() = 0;
+};
+
+
+
+
+class MessageFileSource : public MessageSource
 {
 public:
-	CMSMessageListener() = default;
-	virtual ~CMSMessageListener() = default;
-	virtual void onMessage(const ::cms::Message* mes) override;
+	MessageFileSource(const std::string& file);
+	std::ifstream fHandler;
 
-protected:
-	std::string printBinaryArray(unsigned char* data);
-
+	bool closeFHandler();
+	void reset();
+	std::string getMessage() override;
+	bool mInitialized{ false };
 };
+
+

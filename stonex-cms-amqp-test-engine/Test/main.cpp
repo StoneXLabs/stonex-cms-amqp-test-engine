@@ -139,18 +139,38 @@ int main()
 
 		Notifier test_notifier(nullptr);
 
-		class DummyFactory : public MessageSenderFactory 
-		{
-		public:
-			MessageSender* create(const TestCaseProducerConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, EventStatusObserver& parent)  const {
-				return nullptr;
-			};
+		TestCasePerformer test_performer(test_performer_config, test_client, test_notifier);
+	}
 
-		};
+	{
 
-		DummyFactory dummy_factory;
+		auto consumer_config = ConsumerConfiguration("consumer1", "queue", "CMS_CLIENT_QUEUE", "close", "");
+		auto producer_config = ProducerConfiguration("producer1", "queue", "CMS_CLIENT_QUEUE", {});
+		auto session_config = SessionConfiguration("session1", true, false, { consumer_config }, { producer_config });
+		auto connection_config = ConnectionConfiguration("connection1", "failover:(localhost:5672)?maxReconnectAttempts=5", "admin", "admin", "", { session_config });
+		auto wrapper_config = WrapperConfiguration(std::vector< ConnectionConfiguration>({ connection_config }));
 
-		TestCasePerformer test_performer(test_performer_config, test_client, test_notifier, dummy_factory);
+		TestCaseMessageReceiverConfiguration receiver_config("connection1", "session1", "consumer1");
+		ExceptionsConfiguration exception_config("connection1", 0);
+		TestCaseVerifierConfiguration verifier_config({ &receiver_config }, { &exception_config });
+
+
+		TestCaseProducerConfiguration sender_config("connection1", "session1", "producer1");
+		TestCasePerformerConfiguration test_performer_config({ &sender_config });
+
+		TestCaseConfiguration test_case_config("test_case_1", "test_function_1", true, wrapper_config, test_performer_config, verifier_config);
+
+		TestSuiteConfiguration test_suite_config("test_suite.config", { test_case_config });
+
+
+		TestExceptionListener test_exception_listener;
+
+		auto logger = std::make_shared<StdOutLogger>();
+		CMSClientTestUnit test_client(wrapper_config, logger, "", &test_exception_listener, &test_exception_listener, &test_exception_listener);
+
+		Notifier test_notifier(nullptr);
+
+		TestCasePerformer test_performer(test_performer_config, test_client, test_notifier);
 	}
 }
 

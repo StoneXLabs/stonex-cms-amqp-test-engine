@@ -2,6 +2,23 @@
 
 MessageFileSender::MessageFileSender(const FileTestCaseProducerConfiguration & config, CMSClientTestUnit & client_params, EventStatusObserver & parent)
 	:MessageSender(config, client_params, parent),
-	MessageFile(config.filePath())
+	MessageFileSource(config.filePath())
 {
+}
+
+bool MessageFileSender::send(int msg_delay_ms)
+{
+	auto message_body = getMessage();
+	if (message_body.empty())
+		return false;
+
+	if (mSession && mProducer)
+	{
+		auto mes = mSession->createTextMessage(message_body);
+		mProducer->send(mes);
+		return true;
+	}
+	return false;
+
+}
 }

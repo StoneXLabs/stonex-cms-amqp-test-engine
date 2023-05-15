@@ -17,17 +17,42 @@
  * limitations under the License.
  */
 
-
-#pragma once
-#include <cms/MessageListener.h>
+#include <utils/MessageSource.h>
 #include <string>
+#include <filesystem>
 
-class TestMessageReceiver;
-
-class CMSMessageListenerFactory
+MessageFileSource::MessageFileSource(const std::string & file)
 {
-public:
-	virtual ~CMSMessageListenerFactory() = default;
-	virtual cms::MessageListener* create(const std::string& id, TestMessageReceiver* parent) = 0;
-};
+	fHandler.open(file);
+	if (fHandler.is_open())
+		mInitialized = true;
+}
 
+
+bool MessageFileSource::closeFHandler()
+{
+	fHandler.close();
+	mInitialized = false;
+	return true;
+}
+
+void MessageFileSource::reset()
+{
+	fHandler.clear();
+	fHandler.seekg(0);
+}
+
+std::string MessageFileSource::getMessage()
+{
+	if (mInitialized)
+	{
+		std::string line;
+		if (std::getline(fHandler, line))
+			return line;
+		else
+			throw std::out_of_range("no more data");
+
+	}
+	else
+		return "";
+}
