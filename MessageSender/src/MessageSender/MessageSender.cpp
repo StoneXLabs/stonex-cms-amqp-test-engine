@@ -20,7 +20,7 @@
 #include <MessageSender/MessageSenderFactory.h>
 #include <Notifier/EventStatus.h>
 
-MessageSender::MessageSender(const TestCaseProducerConfiguration& params, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+MessageSender::MessageSender(const MessageSenderConfiguration& params, CMSClientTestUnit & client_params, EventStatusObserver& parent)
 	:mSession{ client_params.session(params.connectionId(), params.sessionId()) },
 	mProducer{ client_params.producer(params.connectionId(), params.sessionId(),params.producerId()) },
 	mId{params.producerId()},
@@ -48,5 +48,20 @@ bool MessageSender::sendMessage()
 std::string MessageSender::id() const
 {
 	return mId;
+}
+
+bool MessageSender::send(int msg_delay_ms)
+{
+	auto message_body = createMessageBody();
+	if (message_body.empty())
+		return false;
+
+	if (mSession && mProducer)
+	{
+		auto mes = mSession->createTextMessage(message_body);
+		mProducer->send(mes);
+		return true;
+	}
+	return false;
 }
 

@@ -1,11 +1,14 @@
 #include <ConfigurationParser/TestCaseProducerConfigurationParser.h>
-#include <Configuration/FileTestCaseProducerConfiguration.h>
-#include <Configuration/CountingCaseProducerConfiguration.h>
-#include <Configuration/FileCountingTestCaseProducerConfiguration.h>
-#include <Configuration/TestCaseDecoratingProducerConfiguration.h>
+#include <Configuration/FileMessageSenderConfiguration.h>
+#include <Configuration/MessageCountingSenderConfiguration.h>
+#include <Configuration/FileMessageCountingSenderConfiguration.h>
+#include <Configuration/MessageDecoratingSenderConfiguration.h>
+#include <Configuration/FileMessageDecoratingSenderConfiguration.h>
+#include <Configuration/MessageCountingDecoratingSenderConfiguration.h>
+#include <Configuration/FileMessageCountingDecoratingSenderConfiguration.h>
 
 
-TestCaseProducerConfiguration * TestCaseProducerConfigurationParser::createTestCaseProducerConfig(const std::string & configName, const boost::json::value & json) const
+MessageSenderConfiguration * TestCaseProducerConfigurationParser::createTestCaseProducerConfig(const std::string & configName, const boost::json::value & json) const
 {
 	if (json.is_object())
 	{
@@ -30,7 +33,7 @@ TestCaseProducerConfiguration * TestCaseProducerConfigurationParser::createTestC
 		if (json.as_object().size() == 2)
 		{
 								
-			return new TestCaseProducerConfiguration(session_factory, message_factory, configName);
+			return new MessageSenderConfiguration(session_factory, message_factory, configName);
 		} 
 		else if (json.as_object().size() == 3)
 		{
@@ -39,19 +42,18 @@ TestCaseProducerConfiguration * TestCaseProducerConfigurationParser::createTestC
 
 				std::string message_file;
 				message_file = tmp_message_file->as_string().c_str();
-				return new FileTestCaseProducerConfiguration(session_factory, message_factory, configName, message_file);
+				return new FileMessageSenderConfiguration(session_factory, message_factory, configName, message_file);
 			}
 			else if (auto tmp_message_count = json.as_object().if_contains("message_count"); tmp_message_count && tmp_message_count->is_int64())
 			{
 				int message_count{ 0 };
 				message_count = tmp_message_count->as_int64();
-				return new CountingCaseProducerConfiguration(session_factory, message_factory, configName, message_count);
+				return new MessageCountingSenderConfiguration(session_factory, message_factory, configName, message_count);
 			}
 			else if (auto tmp_message_properties = json.as_object().if_contains("properties"); tmp_message_properties && tmp_message_properties->is_object())
 			{
-				//auto message_properties = tmp_message_properties;
 				auto decorator_configuration = createMessgeDecoratorConfiguration("properties", *tmp_message_properties);
-				return new TestCaseDecoratingProducerConfiguration(session_factory, message_factory, configName, decorator_configuration.decorations());
+				return new MessageDecoratingSenderConfiguration(session_factory, message_factory, configName, decorator_configuration.decorations());
 			}
 			else
 				return nullptr;
@@ -59,26 +61,62 @@ TestCaseProducerConfiguration * TestCaseProducerConfigurationParser::createTestC
 		}
 		else if (json.as_object().size() == 4)
 		{
-			std::string message_file;
-			int message_count{ 0 };
+			
 
 			if (auto tmp_message_file = json.as_object().if_contains("message_file"); tmp_message_file && tmp_message_file->is_string())
 			{
-				message_file = tmp_message_file->as_string().c_str();
-			}
-			else
-				return nullptr;
+				std::string message_file = tmp_message_file->as_string().c_str();
 
-			if (auto tmp_message_count = json.as_object().if_contains("message_count"); tmp_message_count && tmp_message_count->is_int64()) 
+				if (auto tmp_message_count = json.as_object().if_contains("message_count"); tmp_message_count && tmp_message_count->is_int64())
+				{
+					int message_count = tmp_message_count->as_int64();
+					return new FileMessageCountingSenderConfiguration(session_factory, message_factory, configName, message_file, message_count);
+				}
+				else if (auto tmp_message_properties = json.as_object().if_contains("properties"); tmp_message_properties && tmp_message_properties->is_object())
+				{
+					auto decorator_configuration = createMessgeDecoratorConfiguration("properties", *tmp_message_properties);
+					return new FileMessageDecoratingSenderConfiguration(session_factory, message_factory, configName, message_file, decorator_configuration.decorations());
+
+				}
+			}
+			else if (auto tmp_message_count = json.as_object().if_contains("message_count"); tmp_message_count && tmp_message_count->is_int64())
 			{
-				message_count = tmp_message_count->as_int64();
+				int message_count = tmp_message_count->as_int64();
+
+				if (auto tmp_message_properties = json.as_object().if_contains("properties"); tmp_message_properties && tmp_message_properties->is_object())
+				{
+					auto decorator_configuration = createMessgeDecoratorConfiguration("properties", *tmp_message_properties);
+					return new MessageCountingDecoratingSenderConfiguration(session_factory, message_factory, configName, message_count, decorator_configuration.decorations());
+				}
 			}
 			else
 				return nullptr;
+			}
+			else if (json.as_object().size() == 5)
+			{
+				std::string message_file;
+				int message_count{ 0 };
 
-			return new FileCountingTestCaseProducerConfiguration(session_factory, message_factory, configName, message_file,message_count);
-		}
-		return nullptr;
+				if (auto tmp_message_file = json.as_object().if_contains("message_file"); tmp_message_file && tmp_message_file->is_string())
+					message_file = tmp_message_file->as_string().c_str();
+				else
+					return nullptr;
+
+				if (auto tmp_message_count = json.as_object().if_contains("message_count"); tmp_message_count && tmp_message_count->is_int64())
+					message_count = tmp_message_count->as_int64();
+				else
+					return nullptr;
+
+				if (auto tmp_message_properties = json.as_object().if_contains("properties"); tmp_message_properties && tmp_message_properties->is_object())
+				{
+					auto decorator_configuration = createMessgeDecoratorConfiguration("properties", *tmp_message_properties);
+					return new FileMessageCountingDecoratingSenderConfiguration(session_factory, message_factory, configName, message_file, message_count, decorator_configuration.decorations());
+				}
+				else
+					return nullptr;
+			}
+			else
+				return nullptr;
 	}
 	else
 		return nullptr;

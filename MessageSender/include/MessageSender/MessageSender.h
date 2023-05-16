@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "Configuration/TestCaseProducerConfiguration.h"
+#include "Configuration/MessageSenderConfiguration.h"
 #include <Wrapper/CMSClientTestUnit.h>
 #include <Notifier/EventStatusObserver.h>
 
@@ -28,13 +28,14 @@
 class MessageSender
 {
 public:
-	MessageSender(const TestCaseProducerConfiguration& params, CMSClientTestUnit & client_params, EventStatusObserver& parent);
+	MessageSender(const MessageSenderConfiguration& params, CMSClientTestUnit & client_params, EventStatusObserver& parent);
 
 	bool sendMessage();
 	std::string id() const;
 
 protected:
-	virtual bool send(int msg_delay_ms = 0) = 0;
+	virtual bool send(int msg_delay_ms = 0);
+	virtual std::string createMessageBody() = 0;
 
 protected:
 	SessionTestUnit* mSession;

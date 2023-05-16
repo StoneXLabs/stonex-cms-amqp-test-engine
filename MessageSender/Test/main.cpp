@@ -6,9 +6,10 @@
 #include <iostream>
 
 #include <ConfigurationParser/TestCaseProducerConfigurationParser.h>
-#include <Configuration/CountingCaseProducerConfiguration.h>
-#include <Configuration/FileTestCaseProducerConfiguration.h>
-#include <Configuration/FileCountingTestCaseProducerConfiguration.h>
+#include <Configuration/MessageCountingSenderConfiguration.h>
+#include <Configuration/FileMessageSenderConfiguration.h>
+#include <Configuration/FileMessageCountingSenderConfiguration.h>
+#include <Configuration/FileMessageCountingDecoratingSenderConfiguration.h>
 
 
 #include "Wrapper/CMSClientTestUnit.h"
@@ -19,6 +20,7 @@
 #include <MessageSender/MessageCountingFileSender.h>
 #include <MessageSender/MessageDecoratingFileSender.h>
 #include <MessageSender/MessageCountingDecoratingSender.h>
+#include <MessageSender/MessageCountingDecoratingFileSender.h>
 
 #include "StdOutLogger/StdOutLogger.h"
 
@@ -45,25 +47,7 @@ boost::json::value valueFromFile(const std::string& configFile)
 }
 
 
-class TestMessageSender : public MessageSender
-{
-public:
-	TestMessageSender(const TestCaseProducerConfiguration& params, CMSClientTestUnit & client_params, EventStatusObserver& parent)
-		:MessageSender(params, client_params, parent)
-	{
-	}
 
-	bool send(int msg_delay_ms = 0) { 
-		if (mSession && mProducer) 
-		{
-			auto mes = mSession->createTextMessage("hello");
-			mProducer->send(mes);
-			return true;
-		}
-		return false;
-
-	};
-};
 
 
 
@@ -74,7 +58,7 @@ int main()
 	{
 		boost::json::object::value_type message_sender_config_json = *valueFromFile("test_message_sender.config").as_object().cbegin();
 		auto producer = parser.createTestCaseProducerConfig(message_sender_config_json.key_c_str(), message_sender_config_json.value().as_object());
-		auto producer_config = TestCaseProducerConfiguration("connection1", "session1", "producer1");
+		auto producer_config = MessageSenderConfiguration("connection1", "session1", "producer1");
 
 		assert(producer != nullptr);
 		assert(*producer == producer_config);
@@ -83,44 +67,76 @@ int main()
 	{
 		boost::json::object::value_type message_sender_config_json = *valueFromFile("test_message_counting_sender.config").as_object().cbegin();
 		auto producer = parser.createTestCaseProducerConfig(message_sender_config_json.key_c_str(), message_sender_config_json.value().as_object());
-		auto producer_config = CountingCaseProducerConfiguration("connection1", "session1", "producer1", 1);
+		auto producer_config = MessageCountingSenderConfiguration("connection1", "session1", "producer1", 1);
 
 		assert(producer != nullptr);
-		assert(dynamic_cast<CountingCaseProducerConfiguration*>(producer) != nullptr);
-		assert(*dynamic_cast<CountingCaseProducerConfiguration*>(producer) == producer_config);
+		assert(dynamic_cast<MessageCountingSenderConfiguration*>(producer) != nullptr);
+		assert(*dynamic_cast<MessageCountingSenderConfiguration*>(producer) == producer_config);
 
 	}
 
 	{
 		boost::json::object::value_type message_sender_config_json = *valueFromFile("test_message_sender_from_file.config").as_object().cbegin();
 		auto producer = parser.createTestCaseProducerConfig(message_sender_config_json.key_c_str(), message_sender_config_json.value().as_object());
-		auto producer_config = FileTestCaseProducerConfiguration("connection1", "session1", "producer1", "test_messages.txt");
+		auto producer_config = FileMessageSenderConfiguration("connection1", "session1", "producer1", "test_messages.txt");
 
 
 		assert(producer != nullptr);
-		assert(dynamic_cast<FileTestCaseProducerConfiguration*>(producer) != nullptr);
-		assert(*dynamic_cast<FileTestCaseProducerConfiguration*>(producer) == producer_config);
-	}
-
-	{
-		boost::json::object::value_type message_sender_config_json = *valueFromFile("test_message_counting_sender_from_file.config").as_object().cbegin();
-		auto producer = parser.createTestCaseProducerConfig(message_sender_config_json.key_c_str(), message_sender_config_json.value().as_object());
-		auto producer_config = FileCountingTestCaseProducerConfiguration("connection1", "session1", "producer1", "test_messages.txt", 1);
-
-		assert(producer != nullptr);
-		assert(dynamic_cast<FileCountingTestCaseProducerConfiguration*>(producer) != nullptr);
-		assert(*dynamic_cast<FileCountingTestCaseProducerConfiguration*>(producer) == producer_config);
+		assert(dynamic_cast<FileMessageSenderConfiguration*>(producer) != nullptr);
+		assert(*dynamic_cast<FileMessageSenderConfiguration*>(producer) == producer_config);
 	}
 
 	{
 		boost::json::object::value_type message_sender_config_json = *valueFromFile("test_message_decorating_sender.config").as_object().cbegin();
 		auto producer = parser.createTestCaseProducerConfig(message_sender_config_json.key_c_str(), message_sender_config_json.value().as_object());
-		auto producer_config = TestCaseDecoratingProducerConfiguration("connection1", "session1", "producer1", {new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false")});
+		auto producer_config = MessageDecoratingSenderConfiguration("connection1", "session1", "producer1", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
 
 		assert(producer != nullptr);
-		assert(dynamic_cast<TestCaseDecoratingProducerConfiguration*>(producer) != nullptr);
-		assert(*dynamic_cast<TestCaseDecoratingProducerConfiguration*>(producer) == producer_config);
+		assert(dynamic_cast<MessageDecoratingSenderConfiguration*>(producer) != nullptr);
+		assert(*dynamic_cast<MessageDecoratingSenderConfiguration*>(producer) == producer_config);
 	}
+
+
+	{
+		boost::json::object::value_type message_sender_config_json = *valueFromFile("test_message_decorating_sender_from_file.config").as_object().cbegin();
+		auto producer = parser.createTestCaseProducerConfig(message_sender_config_json.key_c_str(), message_sender_config_json.value().as_object());
+		auto producer_config = FileMessageDecoratingSenderConfiguration("connection1", "session1", "producer1", "test_messages.txt", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+
+		assert(producer != nullptr);
+		assert(dynamic_cast<FileMessageDecoratingSenderConfiguration*>(producer) != nullptr);
+		assert(*dynamic_cast<FileMessageDecoratingSenderConfiguration*>(producer) == producer_config);
+	}
+
+	{
+		boost::json::object::value_type message_sender_config_json = *valueFromFile("test_message_counting_sender_from_file.config").as_object().cbegin();
+		auto producer = parser.createTestCaseProducerConfig(message_sender_config_json.key_c_str(), message_sender_config_json.value().as_object());
+		auto producer_config = FileMessageCountingSenderConfiguration("connection1", "session1", "producer1", "test_messages.txt", 1);
+
+		assert(producer != nullptr);
+		assert(dynamic_cast<FileMessageCountingSenderConfiguration*>(producer) != nullptr);
+		assert(*dynamic_cast<FileMessageCountingSenderConfiguration*>(producer) == producer_config);
+	}
+
+	{
+		boost::json::object::value_type message_sender_config_json = *valueFromFile("test_message_decorating_counting_sender.config").as_object().cbegin();
+		auto producer = parser.createTestCaseProducerConfig(message_sender_config_json.key_c_str(), message_sender_config_json.value().as_object());
+		auto producer_config = MessageCountingDecoratingSenderConfiguration("connection1", "session1", "producer1",  1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+
+		assert(producer != nullptr);
+		assert(dynamic_cast<MessageCountingDecoratingSenderConfiguration*>(producer) != nullptr);
+		assert(*dynamic_cast<MessageCountingDecoratingSenderConfiguration*>(producer) == producer_config);
+	}
+
+	{
+		boost::json::object::value_type message_sender_config_json = *valueFromFile("test_message_decorating_counting_sender_from_file.config").as_object().cbegin();
+		auto producer = parser.createTestCaseProducerConfig(message_sender_config_json.key_c_str(), message_sender_config_json.value().as_object());
+		auto producer_config = FileMessageCountingDecoratingSenderConfiguration("connection1", "session1", "producer1", "test_messages.txt", 1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+
+		assert(producer != nullptr);
+		assert(dynamic_cast<FileMessageCountingDecoratingSenderConfiguration*>(producer) != nullptr);
+		assert(*dynamic_cast<FileMessageCountingDecoratingSenderConfiguration*>(producer) == producer_config);
+	}
+	
 
 
 	
@@ -140,36 +156,114 @@ int main()
 		EventStatusObserver event_observer(event_notifier);
 
 		{
-			auto test_producer_config = TestCaseProducerConfiguration("connection1", "session1", "producer1");
+			class TestMessageSender : public MessageSender
+			{
+			public:
+				TestMessageSender(const MessageSenderConfiguration& params, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+					:MessageSender(params, client_params, parent)
+				{
+				}
+
+
+				std::string createMessageBody() override {
+					return "test message";
+				}
+			};
+
+			auto test_producer_config = MessageSenderConfiguration("connection1", "session1", "producer1");
 			TestMessageSender sender(test_producer_config, test_client, event_observer);
-			sender.send();
+			sender.sendMessage();
 		}
 
 		{
+			class TestMessageSender : public MessageCountingSender
+			{
+			public:
+				TestMessageSender(const MessageCountingSenderConfiguration& params, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+					:MessageCountingSender(params, client_params, parent)
+				{
+				}
 
-			auto test_producer_config = CountingCaseProducerConfiguration("connection1", "session1", "producer1",1);
-			MessageCountingSender sender(test_producer_config, test_client, event_observer);
-			sender.send();
+
+				std::string createMessageBody() override {
+					return "test message";
+				}
+			};
+
+			auto test_producer_config = MessageCountingSenderConfiguration("connection1", "session1", "producer1",1);
+			TestMessageSender sender(test_producer_config, test_client, event_observer);
+			sender.sendMessage();
+			assert(sender.sentMessageCount() == 1);
 		}
 
 		{
-			auto test_producer_config = FileCountingTestCaseProducerConfiguration("connection1", "session1", "producer1", "message_file.txt", 1);
-			MessageCountingFileSender sender(test_producer_config, test_client, event_observer);
-			sender.send();
-		}
-
-		{
-			auto test_producer_config = FileTestCaseProducerConfiguration("connection1", "session1", "producer1", "message_file.txt");
+			auto test_producer_config = FileMessageSenderConfiguration("connection1", "session1", "producer1", "message_file.txt");
 			MessageFileSender sender(test_producer_config, test_client, event_observer);
-			sender.send();
+			sender.sendMessage();
 		}
 
 		{
-			
-			auto test_producer_config = TestCaseDecoratingProducerConfiguration("connection1", "session1", "producer1",{ new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") } );
-			MessageDecoratingSender sender(test_producer_config, test_client, event_observer);
-			sender.send();
+			class TestMessageSender : public MessageDecoratingSender
+			{
+			public:
+				TestMessageSender(const MessageDecoratingSenderConfiguration& params, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+					:MessageDecoratingSender(params, client_params, parent)
+				{
+				}
+
+
+				std::string createMessageBody() override {
+					return "test message";
+				}
+			};
+
+			auto test_producer_config = MessageDecoratingSenderConfiguration("connection1", "session1", "producer1", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+			TestMessageSender sender(test_producer_config, test_client, event_observer);
+			sender.sendMessage();
 		}
+
+		{
+			auto test_producer_config = FileMessageCountingSenderConfiguration("connection1", "session1", "producer1", "message_file.txt", 1);
+			MessageCountingFileSender sender(test_producer_config, test_client, event_observer);
+			sender.sendMessage();
+			assert(sender.sentMessageCount() == 1);
+		}
+
+		{
+			class TestMessageSender : public MessageCountingDecoratingSender
+			{
+			public:
+				TestMessageSender(const MessageCountingDecoratingSenderConfiguration& params, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+					:MessageCountingDecoratingSender(params, client_params, parent)
+				{
+				}
+
+
+				std::string createMessageBody() override {
+					return "test message";
+				}
+			};
+
+			auto test_producer_config = MessageCountingDecoratingSenderConfiguration("connection1", "session1", "producer1", 1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+			TestMessageSender sender(test_producer_config, test_client, event_observer);
+			sender.sendMessage();
+			assert(sender.sentMessageCount() == 1);
+		}
+
+		{
+			auto test_producer_config = FileMessageDecoratingSenderConfiguration("connection1", "session1", "producer1", "message_file.txt", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+			MessageDecoratingFileSender sender(test_producer_config, test_client, event_observer);
+			sender.sendMessage();
+		}
+
+		{
+			auto test_producer_config = FileMessageCountingDecoratingSenderConfiguration("connection1", "session1", "producer1", "message_file.txt", 1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+			MessageCountingDecoratingFileSender sender(test_producer_config, test_client, event_observer);
+			sender.sendMessage();
+			assert(sender.sentMessageCount() == 1);
+		}
+
+
 		
 
 	}

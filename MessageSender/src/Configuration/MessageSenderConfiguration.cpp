@@ -17,31 +17,31 @@
  * limitations under the License.
  */
 
-#include <Configuration\TestCaseProducerConfiguration.h>
+#include <Configuration\MessageSenderConfiguration.h>
 
 
 
-TestCaseProducerConfiguration::TestCaseProducerConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& producerId)
+MessageSenderConfiguration::MessageSenderConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& producerId)
 	:mConnectionId{ connectionId },
 	mSessionId{ sessionId },
 	mProducerId{ producerId }
 {}
 
-std::string TestCaseProducerConfiguration::connectionId() const
+std::string MessageSenderConfiguration::connectionId() const
 {
 	return mConnectionId;
 }
-std::string TestCaseProducerConfiguration::sessionId() const
+std::string MessageSenderConfiguration::sessionId() const
 {
 	return mSessionId;
 }
-std::string TestCaseProducerConfiguration::producerId() const 
+std::string MessageSenderConfiguration::producerId() const 
 { 
 	return mProducerId; 
 }
 
 
-bool operator==(const TestCaseProducerConfiguration & lhs, const TestCaseProducerConfiguration & rhs)
+bool operator==(const MessageSenderConfiguration & lhs, const MessageSenderConfiguration & rhs)
 {
 	return lhs.connectionId() == rhs.connectionId() &&
 		lhs.sessionId() == rhs.sessionId() &&

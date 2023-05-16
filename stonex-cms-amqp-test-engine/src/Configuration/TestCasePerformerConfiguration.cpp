@@ -19,30 +19,30 @@
 
 #include <Configuration/TestCaseConfiguration.h>
 
-TestCasePerformerConfiguration::TestCasePerformerConfiguration(const std::vector<TestCaseProducerConfiguration*>& params)
+TestCasePerformerConfiguration::TestCasePerformerConfiguration(const std::vector<MessageSenderConfiguration*>& params)
 {
-	std::transform(std::cbegin(params), std::cend(params), std::back_inserter(mSendersConfiguration), [](const TestCaseProducerConfiguration* item) {return new TestCaseProducerConfiguration(*item); });
+	std::transform(std::cbegin(params), std::cend(params), std::back_inserter(mSendersConfiguration), [](const MessageSenderConfiguration* item) {return new MessageSenderConfiguration(*item); });
 
 }
 
-void TestCasePerformerConfiguration::addProducerMessagesParameter(TestCaseProducerConfiguration* params)
+void TestCasePerformerConfiguration::addProducerMessagesParameter(MessageSenderConfiguration* params)
 {
 	mSendersConfiguration.push_back(params);
 }
 
-const std::vector<TestCaseProducerConfiguration*> & TestCasePerformerConfiguration::senders() const
+const std::vector<MessageSenderConfiguration*> & TestCasePerformerConfiguration::senders() const
 {
 	return mSendersConfiguration;
 }
 
 TestCasePerformerConfiguration & TestCasePerformerConfiguration::operator=(const TestCasePerformerConfiguration & other)
 {
-	std::transform(std::cbegin(other.mSendersConfiguration), std::cend(other.mSendersConfiguration), std::back_inserter(mSendersConfiguration), [](const TestCaseProducerConfiguration* item) {return new TestCaseProducerConfiguration(*item); });
+	std::transform(std::cbegin(other.mSendersConfiguration), std::cend(other.mSendersConfiguration), std::back_inserter(mSendersConfiguration), [](const MessageSenderConfiguration* item) {return new MessageSenderConfiguration(*item); });
 	return *this;
 }
 
 
 bool operator== (const TestCasePerformerConfiguration& lhs, const TestCasePerformerConfiguration& rhs)
 {
-	return 	std::equal(std::cbegin(lhs.mSendersConfiguration), std::cend(lhs.mSendersConfiguration), std::cbegin(rhs.mSendersConfiguration), std::cend(rhs.mSendersConfiguration), [](const TestCaseProducerConfiguration* lhs, const TestCaseProducerConfiguration* rhs) {return *lhs == *rhs; });
+	return 	std::equal(std::cbegin(lhs.mSendersConfiguration), std::cend(lhs.mSendersConfiguration), std::cbegin(rhs.mSendersConfiguration), std::cend(rhs.mSendersConfiguration), [](const MessageSenderConfiguration* lhs, const MessageSenderConfiguration* rhs) {return *lhs == *rhs; });
 }

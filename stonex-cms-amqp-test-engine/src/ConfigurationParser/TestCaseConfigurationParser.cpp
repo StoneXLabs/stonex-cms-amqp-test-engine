@@ -27,7 +27,7 @@ TestCaseConfiguration TestCaseConfigurationParser::createTestCaseConfig(const st
 
 TestCasePerformerConfiguration TestCaseConfigurationParser::createTestPerformerConfig(const boost::json::value & json) const
 {
-	std::vector<TestCaseProducerConfiguration*> configurationParams;
+	std::vector<MessageSenderConfiguration*> configurationParams;
 
 	if (json.is_object())
 	{

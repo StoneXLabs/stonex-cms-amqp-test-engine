@@ -54,7 +54,7 @@ int main()
 		boost::json::object::value_type test_case_performer_config_json = *valueFromFile("test_case.config").as_object().cbegin();
 		auto test_case_performer = parser.createTestCaseConfig(test_case_performer_config_json.key_c_str(), test_case_performer_config_json.value().as_object()).performerConfig();
 
-		TestCaseProducerConfiguration producer_config("connection1", "session1", "producer1");
+		MessageSenderConfiguration producer_config("connection1", "session1", "producer1");
 		TestCasePerformerConfiguration test_performer_config({ &producer_config });
 
 
@@ -78,7 +78,7 @@ int main()
 		TestCaseVerifierConfiguration verifier_config({ &receiver_config }, { &exception_config });
 
 
-		TestCaseProducerConfiguration sender_config("connection1", "session1", "producer1");
+		MessageSenderConfiguration sender_config("connection1", "session1", "producer1");
 		TestCasePerformerConfiguration test_performer_config({ &sender_config });
 
 		TestCaseConfiguration test_case_config("test_case_1", "test_function_1", true, wrapper_config, test_performer_config, verifier_config);
@@ -101,7 +101,7 @@ int main()
 		TestCaseVerifierConfiguration verifier_config({ &receiver_config }, { &exception_config });
 
 
-		TestCaseProducerConfiguration sender_config("connection1", "session1", "producer1");
+		MessageSenderConfiguration sender_config("connection1", "session1", "producer1");
 		TestCasePerformerConfiguration test_performer_config({ &sender_config });
 
 		TestCaseConfiguration test_case_config("test_case_1", "test_function_1", true, wrapper_config, test_performer_config, verifier_config);
@@ -124,7 +124,7 @@ int main()
 		TestCaseVerifierConfiguration verifier_config({ &receiver_config }, { &exception_config });
 
 
-		TestCaseProducerConfiguration sender_config("connection1", "session1", "producer1");
+		MessageSenderConfiguration sender_config("connection1", "session1", "producer1");
 		TestCasePerformerConfiguration test_performer_config({ &sender_config });
 
 		TestCaseConfiguration test_case_config("test_case_1", "test_function_1", true, wrapper_config, test_performer_config, verifier_config);
@@ -155,7 +155,7 @@ int main()
 		TestCaseVerifierConfiguration verifier_config({ &receiver_config }, { &exception_config });
 
 
-		TestCaseProducerConfiguration sender_config("connection1", "session1", "producer1");
+		MessageSenderConfiguration sender_config("connection1", "session1", "producer1");
 		TestCasePerformerConfiguration test_performer_config({ &sender_config });
 
 		TestCaseConfiguration test_case_config("test_case_1", "test_function_1", true, wrapper_config, test_performer_config, verifier_config);

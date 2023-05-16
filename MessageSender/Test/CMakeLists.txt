@@ -21,11 +21,20 @@ target_link_libraries(stonex-cms-amqp-message-sender-test
 	Ws2_32
 	)
 
-configure_file(${PROJECT_SOURCE_DIR}/test_message_counting_sender.config ${CMAKE_CURRENT_BINARY_DIR}/test_message_counting_sender.config COPYONLY)              
-configure_file(${PROJECT_SOURCE_DIR}/test_message_counting_sender_from_file.config ${CMAKE_CURRENT_BINARY_DIR}/test_message_counting_sender_from_file.config COPYONLY)
 configure_file(${PROJECT_SOURCE_DIR}/test_message_sender.config ${CMAKE_CURRENT_BINARY_DIR}/test_message_sender.config COPYONLY)
+
+configure_file(${PROJECT_SOURCE_DIR}/test_message_counting_sender.config ${CMAKE_CURRENT_BINARY_DIR}/test_message_counting_sender.config COPYONLY)              
 configure_file(${PROJECT_SOURCE_DIR}/test_message_sender_from_file.config ${CMAKE_CURRENT_BINARY_DIR}/test_message_sender_from_file.config COPYONLY)
 configure_file(${PROJECT_SOURCE_DIR}/test_message_decorating_sender.config ${CMAKE_CURRENT_BINARY_DIR}/test_message_decorating_sender.config COPYONLY)
 
+configure_file(${PROJECT_SOURCE_DIR}/test_message_counting_sender_from_file.config ${CMAKE_CURRENT_BINARY_DIR}/test_message_counting_sender_from_file.config COPYONLY)
+configure_file(${PROJECT_SOURCE_DIR}/test_message_decorating_sender_from_file.config ${CMAKE_CURRENT_BINARY_DIR}/test_message_decorating_sender_from_file.config COPYONLY)
+configure_file(${PROJECT_SOURCE_DIR}/test_message_decorating_counting_sender.config ${CMAKE_CURRENT_BINARY_DIR}/test_message_decorating_counting_sender.config COPYONLY)
+
+configure_file(${PROJECT_SOURCE_DIR}/test_message_decorating_counting_sender_from_file.config ${CMAKE_CURRENT_BINARY_DIR}/test_message_decorating_counting_sender_from_file.config COPYONLY)
+
+configure_file(${PROJECT_SOURCE_DIR}/test_message_senders_all.config ${CMAKE_CURRENT_BINARY_DIR}/test_message_senders_all.config COPYONLY)
+
+configure_file(${PROJECT_SOURCE_DIR}/message_file.txt ${CMAKE_CURRENT_BINARY_DIR}/message_file.txt COPYONLY)
 
 

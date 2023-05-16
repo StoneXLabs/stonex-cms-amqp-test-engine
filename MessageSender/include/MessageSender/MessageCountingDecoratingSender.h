@@ -1,15 +1,14 @@
 #pragma once
 #include <MessageSender/MessageSender.h>
-#include "..\Configuration\CountingCaseProducerConfiguration.h"
+#include "..\Configuration\MessageCountingDecoratingSenderConfiguration.h"
 #include "..\utils\SentMessageCounter.h"
-#include "..\Configuration\MessageFile.h"
 #include "..\utils\MessageDecorator.h"
 
-class MessageCountingDecoratingSender : public MessageSender, public SentMessageCounter, MessageDecorator
+class MessageCountingDecoratingSender : public MessageSender, public SentMessageCounter,public MessageDecorator
 {
 public:
-	explicit MessageCountingDecoratingSender(const CountingCaseProducerConfiguration& config, CMSClientTestUnit & client_params, EventStatusObserver& parent);
-	bool send(int msg_delay_ms = 0) override  {return false; }
+	explicit MessageCountingDecoratingSender(const MessageCountingDecoratingSenderConfiguration& config, CMSClientTestUnit & client_params, EventStatusObserver& parent);
+	bool send(int msg_delay_ms = 0) override;
 
 };
 

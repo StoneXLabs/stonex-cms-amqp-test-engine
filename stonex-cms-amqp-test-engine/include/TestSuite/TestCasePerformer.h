@@ -25,7 +25,7 @@
 #include <thread>
 #include <map>
 
-#include "Configuration/TestCaseProducerConfiguration.h"
+#include "Configuration/MessageSenderConfiguration.h"
 #include "Configuration/TestCasePerformerConfiguration.h"
 #include "Wrapper/CMSClientTestUnit.h"
 

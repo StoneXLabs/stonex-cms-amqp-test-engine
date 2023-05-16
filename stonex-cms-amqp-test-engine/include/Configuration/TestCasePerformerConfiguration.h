@@ -19,19 +19,19 @@
 
 #pragma once
 
-#include <Configuration\TestCaseProducerConfiguration.h>
+#include <Configuration\MessageSenderConfiguration.h>
 #include <vector>
 
 class TestCasePerformerConfiguration
 {
 public:
-	TestCasePerformerConfiguration(const std::vector<TestCaseProducerConfiguration*>& params);
-	void addProducerMessagesParameter(TestCaseProducerConfiguration* params);
-	const std::vector<TestCaseProducerConfiguration*>& senders() const;
+	TestCasePerformerConfiguration(const std::vector<MessageSenderConfiguration*>& params);
+	void addProducerMessagesParameter(MessageSenderConfiguration* params);
+	const std::vector<MessageSenderConfiguration*>& senders() const;
 	TestCasePerformerConfiguration& operator=(const TestCasePerformerConfiguration& other);
 	friend bool operator== (const TestCasePerformerConfiguration& lhs, const TestCasePerformerConfiguration& rhs);
 
 private:
-	std::vector<TestCaseProducerConfiguration*> mSendersConfiguration;
+	std::vector<MessageSenderConfiguration*> mSendersConfiguration;
 };
 

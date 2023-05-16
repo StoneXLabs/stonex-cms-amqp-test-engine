@@ -7,9 +7,9 @@
 
 #include <cms/MessageListener.h>
 
-#include <Configuration/TestCaseProducerConfiguration.h>
+#include <Configuration/MessageSenderConfiguration.h>
 
-#include <Configuration/TestCaseDecoratingProducerConfiguration.h>
+#include <Configuration/MessageDecoratingSenderConfiguration.h>
 #include <MessageSender/MessageDecoratingSender.h>
 
 
@@ -24,7 +24,7 @@
 class TestMessageSender : public MessageSender
 {
 public:
-	TestMessageSender(const TestCaseProducerConfiguration& params, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+	TestMessageSender(const MessageSenderConfiguration& params, CMSClientTestUnit & client_params, EventStatusObserver& parent)
 		:MessageSender(params, client_params, parent)
 	{
 	}
@@ -75,7 +75,7 @@ int main()
 		Notifier event_notifier(nullptr);
 		EventStatusObserver event_observer(event_notifier);
 
-		auto test_producer_config = TestCaseProducerConfiguration("connection1", "session1", "producer1");
+		auto test_producer_config = MessageSenderConfiguration("connection1", "session1", "producer1");
 		TestMessageSender sender(test_producer_config, test_client, event_observer);
 
 		TestCaseMessageReceiverConfiguration test_consumer_config("connection1", "session1", "consumer1");
@@ -104,7 +104,7 @@ int main()
 		Notifier event_notifier(nullptr);
 		EventStatusObserver event_observer(event_notifier);
 
-		auto test_producer_config = TestCaseDecoratingProducerConfiguration("connection1", "session1", "producer1", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"bool_property",false) });
+		auto test_producer_config = MessageDecoratingSenderConfiguration("connection1", "session1", "producer1", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"bool_property",false) });
 		MessageDecoratingSender sender(test_producer_config, test_client, event_observer);
 
 		TestCaseMessageReceiverConfiguration test_consumer_config("connection1", "session1", "consumer1");
