@@ -18,20 +18,20 @@
  */
 
 #pragma once
-#include <Configuration/TestCaseMessageReceiverConfiguration.h>
+#include <Configuration/MessageReceiverConfiguration.h>
 #include <Configuration/ExceptionsConfiguration.h>
 
 class TestCaseVerifierConfiguration
 {
 public:
-	TestCaseVerifierConfiguration(const std::vector<TestCaseMessageReceiverConfiguration*>& receivers_config, const std::vector<ExceptionsConfiguration*>& exceptions_config);
-	const std::vector<TestCaseMessageReceiverConfiguration*>& messageExpectations() const;
+	TestCaseVerifierConfiguration(const std::vector<MessageReceiverConfiguration*>& receivers_config, const std::vector<ExceptionsConfiguration*>& exceptions_config);
+	const std::vector<MessageReceiverConfiguration*>& messageExpectations() const;
 	const std::vector<ExceptionsConfiguration*>& exceptionsExpectations() const;
 
 	TestCaseVerifierConfiguration& operator=(const TestCaseVerifierConfiguration& other);
 	friend bool operator==(const TestCaseVerifierConfiguration & lhs, const TestCaseVerifierConfiguration & rhs);
 private:
-	std::vector<TestCaseMessageReceiverConfiguration*> mReceiversConfig;
+	std::vector<MessageReceiverConfiguration*> mReceiversConfig;
 	std::vector<ExceptionsConfiguration*> mExceptionsConfig;
 
 	

@@ -20,13 +20,13 @@
 #include "Configuration/TestCaseVerifierConfiguration.h"
 #include <algorithm>
 
-TestCaseVerifierConfiguration::TestCaseVerifierConfiguration(const std::vector<TestCaseMessageReceiverConfiguration*>& receivers_config, const std::vector<ExceptionsConfiguration*>& exceptions_config)
+TestCaseVerifierConfiguration::TestCaseVerifierConfiguration(const std::vector<MessageReceiverConfiguration*>& receivers_config, const std::vector<ExceptionsConfiguration*>& exceptions_config)
 	:mReceiversConfig{ receivers_config },
 	mExceptionsConfig{ exceptions_config }
 {
 }
 
-const std::vector<TestCaseMessageReceiverConfiguration*>& TestCaseVerifierConfiguration::messageExpectations() const
+const std::vector<MessageReceiverConfiguration*>& TestCaseVerifierConfiguration::messageExpectations() const
 {
 	return mReceiversConfig;
 }
@@ -38,7 +38,7 @@ const std::vector<ExceptionsConfiguration*>& TestCaseVerifierConfiguration::exce
 
 TestCaseVerifierConfiguration & TestCaseVerifierConfiguration::operator=(const TestCaseVerifierConfiguration & other)
 {
-	std::transform(std::cbegin(other.mReceiversConfig), std::cend(other.mReceiversConfig), std::back_inserter(mReceiversConfig), [](const TestCaseMessageReceiverConfiguration* item) {return new TestCaseMessageReceiverConfiguration(*item); });
+	std::transform(std::cbegin(other.mReceiversConfig), std::cend(other.mReceiversConfig), std::back_inserter(mReceiversConfig), [](const MessageReceiverConfiguration* item) {return new MessageReceiverConfiguration(*item); });
 	std::transform(std::cbegin(other.mExceptionsConfig), std::cend(other.mExceptionsConfig), std::back_inserter(mExceptionsConfig), [](const ExceptionsConfiguration* item) {return new ExceptionsConfiguration(*item); });
 	
 	return *this;
@@ -47,6 +47,6 @@ TestCaseVerifierConfiguration & TestCaseVerifierConfiguration::operator=(const T
 bool operator==(const TestCaseVerifierConfiguration & lhs, const TestCaseVerifierConfiguration & rhs)
 {
 
-	return std::equal(std::cbegin(lhs.mReceiversConfig), std::cend(lhs.mReceiversConfig), std::cbegin(rhs.mReceiversConfig), std::cend(rhs.mReceiversConfig), [](const TestCaseMessageReceiverConfiguration* lhs, TestCaseMessageReceiverConfiguration* rhs) { return *lhs == *rhs; }) == true &&
+	return std::equal(std::cbegin(lhs.mReceiversConfig), std::cend(lhs.mReceiversConfig), std::cbegin(rhs.mReceiversConfig), std::cend(rhs.mReceiversConfig), [](const MessageReceiverConfiguration* lhs, MessageReceiverConfiguration* rhs) { return *lhs == *rhs; }) == true &&
 		std::equal(std::cbegin(lhs.mExceptionsConfig), std::cend(lhs.mExceptionsConfig), std::cbegin(rhs.mExceptionsConfig), std::cend(rhs.mExceptionsConfig), [](const ExceptionsConfiguration* lhs, ExceptionsConfiguration* rhs) { return *lhs == *rhs; }) == true;
 }

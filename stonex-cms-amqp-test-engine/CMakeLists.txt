@@ -43,9 +43,9 @@ target_include_directories(stonex-cms-amqp-test-engine
 target_link_libraries(stonex-cms-amqp-test-engine 
 	apache-cms-interface
 	stonex-cms-amqp-event-handler
-	stonex-cms-amqp-test-verifier
+#	stonex-cms-amqp-test-verifier
 	stonex-cms-amqp-wrapper
-	stonex-cms-amqp-message-receiver
+	stonex-cms-amqp-message-receiver2
 	stonex-cms-amqp-message-sender
 	stonex-cms-amqp-test-notifier
 	CONAN_PKG::boost

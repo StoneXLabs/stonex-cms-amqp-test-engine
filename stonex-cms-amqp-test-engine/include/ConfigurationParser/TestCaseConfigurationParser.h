@@ -5,12 +5,12 @@
 
 #include <ConfigurationParser/WrapperConfigurationParser.h>
 #include <ConfigurationParser/TestCaseProducerConfigurationParser.h>
-#include <ConfigurationParser/TestCaseMessageReceiverConfigurationParser.h>
+#include <ConfigurationParser/TestCaseReceiverConfigurationParser.h>
 #include <ConfigurationParser/ExceptionsConfigurationParser.h>
 
 #include <boost/json.hpp>
 
-class TestCaseConfigurationParser : public WrapperConfigurationParser, public TestCaseProducerConfigurationParser, public TestCaseMessageReceiverConfigurationParser, public ExceptionsConfigurationParser
+class TestCaseConfigurationParser : public WrapperConfigurationParser, public TestCaseProducerConfigurationParser, public TestCaseReceiverConfigurationParser, public ExceptionsConfigurationParser
 {
 public:
 	TestCaseConfiguration createTestCaseConfig(const std::string& configName, const boost::json::value& json) const;

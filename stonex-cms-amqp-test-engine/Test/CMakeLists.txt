@@ -15,7 +15,7 @@ target_include_directories(stonex-cms-amqp-test-engne-test PUBLIC ${PROJECT_SOUR
 
 target_link_libraries(stonex-cms-amqp-test-engne-test
 	stonex-cms-amqp-test-engine
-	stonex-cms-amqp-message-receiver
+	stonex-cms-amqp-message-receiver2
 	stonex-cms-amqp-message-sender
 	CONAN_PKG::boost
 	secur32 
@@ -25,4 +25,5 @@ target_link_libraries(stonex-cms-amqp-test-engne-test
 
 	
 configure_file(${PROJECT_SOURCE_DIR}/test_suite.config ${CMAKE_CURRENT_BINARY_DIR}/test_suite.config COPYONLY)    
-configure_file(${PROJECT_SOURCE_DIR}/test_case.config ${CMAKE_CURRENT_BINARY_DIR}/test_case.config COPYONLY)    
+configure_file(${PROJECT_SOURCE_DIR}/test_case.config ${CMAKE_CURRENT_BINARY_DIR}/test_case.config COPYONLY)     
+configure_file(${PROJECT_SOURCE_DIR}/test_case_all_senders.config ${CMAKE_CURRENT_BINARY_DIR}/test_case_all_senders.config COPYONLY)    
