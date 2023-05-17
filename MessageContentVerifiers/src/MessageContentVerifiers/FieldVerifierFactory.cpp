@@ -153,7 +153,7 @@ IExpectedField* FieldVerifierFactory::create(FIELD_TYPE ft, bool check_existance
 	return ef;
 }
 
-IExpectedField * FieldVerifierFactory::create(const cms::Message * message, const IExpectedField* other)
+IExpectedField * FieldVerifierFactory::create(const cms::Message * message, const IExpectedField* other) const
 {
 	IExpectedField *ef{ nullptr };
 

@@ -31,7 +31,7 @@ target_link_libraries(
 	stonex-cms-amqp-wrapper
 	stonex-cms-amqp-message-content
 	stonex-cms-amqp-message-decorator
-
+	stonex-cms-amqp-test-utils
 #	stonex-cms-amqp-test-verifier
 #	stonex-cms-amqp-test-notifier
 	)

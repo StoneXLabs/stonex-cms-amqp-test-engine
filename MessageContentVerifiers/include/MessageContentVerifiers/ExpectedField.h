@@ -23,7 +23,8 @@
 #include <boost/json.hpp>
 #include <ostream>
 #include <chrono>
-#include <API/CMSMessage.h>
+#include <cms/Destination.h>
+#include <cms/CMSException.h>
 #include "MessageContent/MessageProperties.h"
 
 

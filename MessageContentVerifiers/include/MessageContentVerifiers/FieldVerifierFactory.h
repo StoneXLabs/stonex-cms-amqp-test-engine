@@ -21,13 +21,14 @@
 #include "ExpectedField.h"
 
 #include <iostream>
+#include <cms/Message.h>
 
 class FieldVerifierFactory
 {
 public:
 	IExpectedField* create(FIELD_TYPE ft, bool check_existance, bool check_value, const boost::json::value& value = boost::json::value(), const std::string& msg_property = "");
 	IExpectedField* create(FIELD_TYPE ft, bool check_existance, bool check_value, const std::string& value = {}, const std::string& msg_property = "");
-	IExpectedField* create(const cms::Message* message, const IExpectedField* other);
+	IExpectedField* create(const cms::Message* message, const IExpectedField* other) const;
 
 	
 };

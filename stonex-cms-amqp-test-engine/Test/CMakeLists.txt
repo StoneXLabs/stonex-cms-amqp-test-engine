@@ -26,4 +26,12 @@ target_link_libraries(stonex-cms-amqp-test-engne-test
 	
 configure_file(${PROJECT_SOURCE_DIR}/test_suite.config ${CMAKE_CURRENT_BINARY_DIR}/test_suite.config COPYONLY)    
 configure_file(${PROJECT_SOURCE_DIR}/test_case.config ${CMAKE_CURRENT_BINARY_DIR}/test_case.config COPYONLY)     
+configure_file(${PROJECT_SOURCE_DIR}/test_case_all.config ${CMAKE_CURRENT_BINARY_DIR}/test_case_all.config COPYONLY)    
 configure_file(${PROJECT_SOURCE_DIR}/test_case_all_senders.config ${CMAKE_CURRENT_BINARY_DIR}/test_case_all_senders.config COPYONLY)    
+configure_file(${PROJECT_SOURCE_DIR}/test_case_all_receivers.config ${CMAKE_CURRENT_BINARY_DIR}/test_case_all_receivers.config COPYONLY)    
+configure_file(${PROJECT_SOURCE_DIR}/test_message_file1.txt ${CMAKE_CURRENT_BINARY_DIR}/test_message_file1.txt COPYONLY)    
+configure_file(${PROJECT_SOURCE_DIR}/test_message_file2.txt ${CMAKE_CURRENT_BINARY_DIR}/test_message_file2.txt COPYONLY)    
+configure_file(${PROJECT_SOURCE_DIR}/test_message_file3.txt ${CMAKE_CURRENT_BINARY_DIR}/test_message_file3.txt COPYONLY)    
+configure_file(${PROJECT_SOURCE_DIR}/test_message_file4.txt ${CMAKE_CURRENT_BINARY_DIR}/test_message_file4.txt COPYONLY)    
+
+

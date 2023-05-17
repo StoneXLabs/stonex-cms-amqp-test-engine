@@ -1,4 +1,4 @@
-#include <Configuration/EventCounter.h>
+#include <utils/EventCounter.h>
 
 EventCounter::EventCounter(long long expected_message_count)
 	:mExpectedEventCount{expected_message_count}

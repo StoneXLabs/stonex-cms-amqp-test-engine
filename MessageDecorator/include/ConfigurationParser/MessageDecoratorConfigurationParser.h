@@ -1,3 +1,4 @@
+#pragma once
 
 #include <ConfigurationParser/MessageFieldConfigParser.h>
 #include <Configuration/MessageDecoratorConfiguration.h>

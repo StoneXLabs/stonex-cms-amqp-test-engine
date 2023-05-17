@@ -1,7 +1,7 @@
 #pragma once
 
 #include "MessageSenderConfiguration.h"
-#include "EventCounter.h"
+#include <utils/EventCounter.h>
 
 class MessageCountingSenderConfiguration : public MessageSenderConfiguration, public EventCounter
 {

@@ -16,4 +16,8 @@ add_library(stonex-cms-amqp-message-content-verifier STATIC ${sourceFiles} ${hea
 
 target_include_directories(stonex-cms-amqp-message-content-verifier PUBLIC ${PROJECT_SOURCE_DIR}/include/ )
 
-target_link_libraries(stonex-cms-amqp-message-content-verifier stonex-cms-amqp-message-content stonex-cms-amqp-wrapper CONAN_PKG::boost)
+target_link_libraries(stonex-cms-amqp-message-content-verifier
+	stonex-cms-amqp-message-content 
+	apache-cms-interface
+	CONAN_PKG::boost
+	)

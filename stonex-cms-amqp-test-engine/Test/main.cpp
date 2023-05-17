@@ -143,8 +143,9 @@ int main()
 
 		assert(suite_config == test_suite_config);
 	}
+
 	{
-		TestSuiteJsonConfigParser parser("test_case_all_senders.config");
+		TestSuiteJsonConfigParser parser("test_case_all.config");
 		auto suite_config = parser.createConfiguration();
 
 		auto consumer1_config = ConsumerConfiguration("consumer1", "queue", "CMS_CLIENT_QUEUE", "close", "");
@@ -186,30 +187,114 @@ int main()
 
 
 		ExceptionsConfiguration exception_config("connection1", 0);
-		TestCaseVerifierConfiguration verifier_config({ &receiver1_config, &receiver2_config, &receiver3_config, &receiver4_config, &receiver5_config, &receiver6_config, &receiver7_config, &receiver8_config }, { &exception_config });
-
+	
 	
 		MessageSenderConfiguration sender1_config("connection1", "session1", "producer1");
 		MessageCountingSenderConfiguration sender2_config("connection1", "session1", "producer2", 1);
-		FileMessageSenderConfiguration sender3_config("connection1", "session1", "producer3", "test_messages.txt");
+		FileMessageSenderConfiguration sender3_config("connection1", "session1", "producer3", "test_message_file1.txt");
 		MessageDecoratingSenderConfiguration sender4_config("connection1", "session1", "producer4", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
-		FileMessageDecoratingSenderConfiguration sender5_config("connection1", "session1", "producer5", "test_messages.txt", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
-		FileMessageCountingSenderConfiguration sender6_config("connection1", "session1", "producer6", "test_messages.txt", 1);
+		FileMessageDecoratingSenderConfiguration sender5_config("connection1", "session1", "producer5", "test_message_file2.txt", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+		FileMessageCountingSenderConfiguration sender6_config("connection1", "session1", "producer6", "test_message_file3.txt", 1);
 		MessageCountingDecoratingSenderConfiguration sender7_config("connection1", "session1", "producer7", 1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
-		FileMessageCountingDecoratingSenderConfiguration sender8_config("connection1", "session1", "producer8", "test_messages.txt", 1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+		FileMessageCountingDecoratingSenderConfiguration sender8_config("connection1", "session1", "producer8", "test_message_file4.txt", 1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
 		
 
-
+		TestCaseVerifierConfiguration verifier_config({ &receiver1_config, &receiver2_config, &receiver3_config, &receiver4_config, &receiver5_config, &receiver6_config, &receiver7_config, &receiver8_config }, { &exception_config });
 
 		TestCasePerformerConfiguration test_performer_config({ &sender1_config, &sender2_config, &sender3_config, &sender4_config, &sender5_config, &sender6_config, &sender7_config, &sender8_config });
 
 		TestCaseConfiguration test_case_config("test_case_1", "test_function_1", true, wrapper_config, test_performer_config, verifier_config);
 
-		TestSuiteConfiguration test_suite_config("test_case_all_senders.config", { test_case_config });
+		TestSuiteConfiguration test_suite_config("test_case_all.config", { test_case_config });
 
 		assert(suite_config == test_suite_config);
 	}
+	////////////////// current
+	{
+		TestSuiteJsonConfigParser parser("test_case_all_senders.config");
+		auto suite_config = parser.createConfiguration();
+		
+		
+		TestExceptionListener test_exception_listener;
 
+		auto logger = std::make_shared<StdOutLogger>();
+		CMSClientTestUnit test_client(suite_config.testsBegin()->uutConfig(), logger, "", &test_exception_listener, &test_exception_listener, &test_exception_listener);
+
+		Notifier test_notifier(nullptr);
+
+		///test impl
+
+		class TestMessageSender : public MessageSender
+		{
+		public:
+			TestMessageSender(const MessageSenderConfiguration& config, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+				:MessageSender(config, client_params, parent)
+			{
+			}
+			std::string createMessageBody() { return "test message sender"; }
+		};
+		class TestMessageCountingSender : public MessageCountingSender
+		{
+		public:
+			TestMessageCountingSender(const MessageCountingSenderConfiguration& config, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+				:MessageCountingSender(config, client_params, parent)
+			{
+			}
+			std::string createMessageBody() { return "test message counting sender"; }
+		};
+		class TestMessageDecoratingSender : public MessageDecoratingSender {
+		public:
+			TestMessageDecoratingSender(const MessageDecoratingSenderConfiguration& config, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+				:MessageDecoratingSender(config, client_params, parent)
+			{
+			}
+			std::string createMessageBody() { return "test message decorating sender"; }
+		};
+		class TestMessageCountingDecoratingSender : public MessageCountingDecoratingSender
+		{
+		public:
+			TestMessageCountingDecoratingSender(const MessageCountingDecoratingSenderConfiguration& config, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+				:MessageCountingDecoratingSender(config, client_params, parent)
+			{
+			}
+			std::string createMessageBody() { return "test message counting decorating sender"; }
+		};
+
+		class TestSenderFactory : public MessageSenderFactory
+		{
+		public:
+			MessageSender * create_sender(const MessageSenderConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, EventStatusObserver & parent) const
+			{
+				
+				if (auto concrete_configuration = dynamic_cast<const MessageCountingSenderConfiguration*>(&sender_configuration)) {
+					return new TestMessageCountingSender(*concrete_configuration, client_configuration, parent);
+				}
+				else if (auto concrete_configuration = dynamic_cast<const MessageDecoratingSenderConfiguration*>(&sender_configuration)) {
+					return new TestMessageDecoratingSender(*concrete_configuration, client_configuration, parent);
+				}
+				else if (auto concrete_configuration = dynamic_cast<const MessageCountingDecoratingSenderConfiguration*>(&sender_configuration)) {
+					return new TestMessageCountingDecoratingSender(*concrete_configuration, client_configuration, parent);
+				}
+				else if (auto concrete_configuration = dynamic_cast<const MessageSenderConfiguration*>(&sender_configuration)) {
+					return new TestMessageSender(*concrete_configuration, client_configuration, parent);
+				}
+				else
+					return nullptr;
+			}
+		};
+		///
+		auto sender_factory = new TestSenderFactory();
+
+		TestCasePerformer test_performer(suite_config.testsBegin()->performerConfig(), test_client, test_notifier, sender_factory);
+		test_performer.sendAll();
+
+		std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+		//TO DO equality assert
+
+
+	}
+	/////////////////
 	{
 
 		auto consumer_config = ConsumerConfiguration("consumer1", "queue", "CMS_CLIENT_QUEUE", "close", "");
@@ -238,7 +323,9 @@ int main()
 
 		Notifier test_notifier(nullptr);
 
-		TestCasePerformer test_performer(test_performer_config, test_client, test_notifier);
+
+
+		TestCasePerformer test_performer(test_performer_config, test_client, test_notifier,nullptr);
 	}
 
 	{
@@ -269,7 +356,7 @@ int main()
 
 		Notifier test_notifier(nullptr);
 
-		TestCasePerformer test_performer(test_performer_config, test_client, test_notifier);
+		TestCasePerformer test_performer(test_performer_config, test_client, test_notifier, nullptr);
 	}
 
 }

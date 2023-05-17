@@ -1,8 +1,8 @@
 #pragma once
 
 #include "MessageSenderConfiguration.h"
-#include "EventCounter.h"
-#include "MessageFile.h"
+#include <utils/EventCounter.h>
+#include <utils/MessageFile.h>
 
 class FileMessageCountingSenderConfiguration : public MessageSenderConfiguration, public EventCounter, public MessageFile
 {

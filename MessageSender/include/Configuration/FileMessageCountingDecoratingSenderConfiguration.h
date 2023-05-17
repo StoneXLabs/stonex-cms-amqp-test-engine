@@ -1,6 +1,6 @@
 #pragma once
-#include "EventCounter.h"
-#include "MessageFile.h"
+#include <utils/EventCounter.h>
+#include <utils/MessageFile.h>
 #include "MessageSenderConfiguration.h"
 #include <Configuration/MessageDecoratorConfiguration.h>
 

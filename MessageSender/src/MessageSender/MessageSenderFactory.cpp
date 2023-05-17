@@ -20,22 +20,22 @@
 
 MessageSender * MessageSenderFactory::create(const MessageSenderConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, EventStatusObserver & parent) const
 {
-	if (auto sender = create_sender(sender_configuration, client_configuration, parent); sender == nullptr)
-	{
-		if (auto concrete_configuration = dynamic_cast<const FileMessageSenderConfiguration*>(&sender_configuration)) {
-			return new MessageFileSender(*concrete_configuration, client_configuration, parent);
-		}
-		else if (auto concrete_configuration = dynamic_cast<const FileMessageCountingSenderConfiguration*>(&sender_configuration)) {
-			return new MessageCountingFileSender(*concrete_configuration, client_configuration, parent);
-		}
-		else if (auto concrete_configuration = dynamic_cast<const FileMessageDecoratingSenderConfiguration*>(&sender_configuration)) {
-			return new MessageDecoratingFileSender(*concrete_configuration, client_configuration, parent);
-		}
-		else if (auto concrete_configuration = dynamic_cast<const FileMessageCountingDecoratingSenderConfiguration*>(&sender_configuration)) {
-			return new MessageCountingDecoratingFileSender(*concrete_configuration, client_configuration, parent);
-		}
-		return nullptr;
+
+	if (auto concrete_configuration = dynamic_cast<const FileMessageSenderConfiguration*>(&sender_configuration)) {
+		return new MessageFileSender(*concrete_configuration, client_configuration, parent);
 	}
+	else if (auto concrete_configuration = dynamic_cast<const FileMessageCountingSenderConfiguration*>(&sender_configuration)) {
+		return new MessageCountingFileSender(*concrete_configuration, client_configuration, parent);
+	}
+	else if (auto concrete_configuration = dynamic_cast<const FileMessageDecoratingSenderConfiguration*>(&sender_configuration)) {
+		return new MessageDecoratingFileSender(*concrete_configuration, client_configuration, parent);
+	}
+	else if (auto concrete_configuration = dynamic_cast<const FileMessageCountingDecoratingSenderConfiguration*>(&sender_configuration)) {
+		return new MessageCountingDecoratingFileSender(*concrete_configuration, client_configuration, parent);
+	}
+	else
+		return create_sender(sender_configuration, client_configuration, parent);
+	
 }
 
 MessageSender * MessageSenderFactory::create_sender(const MessageSenderConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, EventStatusObserver & parent) const

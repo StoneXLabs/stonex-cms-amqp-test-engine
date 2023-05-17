@@ -1,5 +1,5 @@
 #pragma once
-#include "../Configuration/EventCounter.h"
+#include <utils/EventCounter.h>
 
 class SentMessageCounter : public EventCounter
 {

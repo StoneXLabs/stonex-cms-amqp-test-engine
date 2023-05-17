@@ -6,11 +6,6 @@
 #include <iostream>
 
 #include <ConfigurationParser/TestCaseProducerConfigurationParser.h>
-#include <Configuration/MessageCountingSenderConfiguration.h>
-#include <Configuration/FileMessageSenderConfiguration.h>
-#include <Configuration/FileMessageCountingSenderConfiguration.h>
-#include <Configuration/FileMessageCountingDecoratingSenderConfiguration.h>
-
 
 #include "Wrapper/CMSClientTestUnit.h"
 #include <MessageSender/MessageSender.h>

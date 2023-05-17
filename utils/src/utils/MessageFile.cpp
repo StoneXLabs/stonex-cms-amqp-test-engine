@@ -1,4 +1,4 @@
-#include <Configuration/MessageFile.h>
+#include <utils/MessageFile.h>
 
 MessageFile::MessageFile(const std::string & file_path)
 	:mFilePath{file_path}

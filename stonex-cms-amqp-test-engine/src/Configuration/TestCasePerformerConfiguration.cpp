@@ -20,8 +20,8 @@
 #include <Configuration/TestCaseConfiguration.h>
 
 TestCasePerformerConfiguration::TestCasePerformerConfiguration(const std::vector<MessageSenderConfiguration*>& params)
+	:mSendersConfiguration{params}
 {
-	std::transform(std::cbegin(params), std::cend(params), std::back_inserter(mSendersConfiguration), [](const MessageSenderConfiguration* item) {return new MessageSenderConfiguration(*item); });
 
 }
 

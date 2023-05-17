@@ -23,8 +23,8 @@
 #include <Wrapper/CMSClientTestUnit.h>
 #include <Notifier/EventStatusObserver.h>
 
-#include "Configuration/EventCounter.h"
-#include <Configuration/MessageFile.h>
+#include <utils/EventCounter.h>
+#include <utils/MessageFile.h>
 class MessageSender
 {
 public:

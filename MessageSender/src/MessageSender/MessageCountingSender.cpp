@@ -9,9 +9,14 @@ MessageCountingSender::MessageCountingSender(const MessageCountingSenderConfigur
 
 bool MessageCountingSender::send(int msg_delay_ms)
 {
+
+	auto message_body = createMessageBody();
+	if (message_body.empty())
+		return false;
+
 	if (mSession && mProducer)
 	{
-		auto mes = mSession->createTextMessage("dummy message");
+		auto mes = mSession->createTextMessage(message_body);
 		mProducer->send(mes);
 		incrementSentCount();
 		return true;

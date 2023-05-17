@@ -20,34 +20,36 @@
 #include <TestSuite/TestCasePerformer.h>
 #include <algorithm>
 #include <Notifier/EventStatus.h>
+#include <MessageSender/MessageSenderFactory.h>
 
 
-TestCasePerformer::TestCasePerformer(const TestCasePerformerConfiguration & params, CMSClientTestUnit & client_params, Notifier& notifier)
+TestCasePerformer::TestCasePerformer(const TestCasePerformerConfiguration & params, CMSClientTestUnit & client_params, Notifier& notifier, MessageSenderFactory* senderFactory)
 	:EventStatusObserver(notifier)
 {
-	//	 std::transform(std::cbegin(params.senders()), std::cend(params.senders()), std::back_inserter(mSenders), [this,&client_params](const MessageSenderConfiguration* item) { return sender_factory.create(*item, client_params, *this); });
+	if(senderFactory)
+		std::transform(std::cbegin(params.senders()), std::cend(params.senders()), std::back_inserter(mSenders), [this,&client_params,&senderFactory](const MessageSenderConfiguration* item) { return senderFactory->create(*item, client_params, *this); });
 }
 
  void TestCasePerformer::sendAll(int msg_delay_ms)
 {
-	bool needToSend{ false };
+	//bool needToSend{ false };
 
-	do
-	{
-		needToSend = false;
-		std::for_each(std::begin(mSenders), std::end(mSenders), [&needToSend, msg_delay_ms](MessageSender* sender) {
+	//do
+	//{
+	//	needToSend = false;
+		std::for_each(std::begin(mSenders), std::end(mSenders), [/*&needToSend,*/ msg_delay_ms](MessageSender* sender) {
 			if (sender) {
 				//if(sender->messageAvailable())
 				//{
-				//	sender->sendMessage();
+					sender->sendMessage();
 				//	needToSend = true;
 				//}
-			}
+			}/*
 			else
-				needToSend = false;
+				needToSend = false;*/
 
 		});
-	} while (needToSend);
+//	} while (needToSend);
 
 
 }

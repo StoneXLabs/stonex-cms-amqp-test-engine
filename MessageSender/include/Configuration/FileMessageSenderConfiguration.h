@@ -1,6 +1,6 @@
 #pragma once
 #include "MessageSenderConfiguration.h"
-#include "MessageFile.h"
+#include <utils/MessageFile.h>
 class FileMessageSenderConfiguration : public MessageSenderConfiguration, public MessageFile
 {
 public:
