@@ -18,6 +18,7 @@
  */
 
 #pragma once
+
 #include <Configuration/MessageReceiverConfiguration.h>
 #include <Configuration/ExceptionsConfiguration.h>
 

@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-#include <Configuration/TestCaseConfiguration.h>
 #include <sstream>
+#include <Configuration/TestCaseConfiguration.h>
 
 TestCaseConfiguration::TestCaseConfiguration(const std::string& testCaseName, const std::string& testFunctionName, bool enabled, const WrapperConfiguration& uutConfiguration, const TestCasePerformerConfiguration& testPerformerConfiguration, const TestCaseVerifierConfiguration& testVerifierConfiguration)
 	:WrapperConfiguration(uutConfiguration),

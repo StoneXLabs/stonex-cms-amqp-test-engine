@@ -16,10 +16,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 #pragma once
-#include "MessageReceiverConfiguration.h"
+
 #include <utils/EventCounter.h>
 #include <Configuration/MessageDecoratorConfiguration.h>
+#include "MessageReceiverConfiguration.h"
 
 class MessageCountingDecoratingReceiverConfiguration : public MessageReceiverConfiguration, public EventCounter, public MessageDecoratorConfiguration
 {

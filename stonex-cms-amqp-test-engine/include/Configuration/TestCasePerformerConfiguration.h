@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include <Configuration\MessageSenderConfiguration.h>
 #include <vector>
+#include <Configuration\MessageSenderConfiguration.h>
 
 class TestCasePerformerConfiguration
 {

@@ -17,9 +17,8 @@
  * limitations under the License.
  */
 
-#include <Wrapper/SessionTestUnit.h>
 #include <algorithm>
-
+#include <Wrapper/SessionTestUnit.h>
 #include <Configuration/SessionConfiguration.h>
 #include <logger/StonexLogSource.h>
 

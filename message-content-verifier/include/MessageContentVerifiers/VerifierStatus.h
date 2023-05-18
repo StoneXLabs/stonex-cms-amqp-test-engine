@@ -18,13 +18,11 @@
  */
 
 #pragma once
+
 #include <string>
 #include <chrono>
 #include <list>
-
-#include <MessageContentVerifiers/ExpectedField.h>
-
-
+#include "ExpectedField.h"
 
 class VerifierStatus
 {

@@ -17,9 +17,8 @@
  * limitations under the License.
  */
 
-#include <Wrapper/CMSExceptionListenerTestUnit.h>
-
 #include <iostream>
+#include <Wrapper/CMSExceptionListenerTestUnit.h>
 
 CMSExceptionListenerTestUnit::CMSExceptionListenerTestUnit(const std::string& id)
 	:mId{id}

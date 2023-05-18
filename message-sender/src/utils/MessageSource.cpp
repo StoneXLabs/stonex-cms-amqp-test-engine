@@ -17,9 +17,9 @@
  * limitations under the License.
  */
 
-#include <utils/MessageSource.h>
 #include <string>
 #include <filesystem>
+#include <utils/MessageSource.h>
 
 MessageFileSource::MessageFileSource(const std::string & file)
 {

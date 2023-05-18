@@ -16,8 +16,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include <ConfigurationParser/MessageDecoratorConfigurationParser.h>
+
 #include <iostream>
+#include <ConfigurationParser/MessageDecoratorConfigurationParser.h>
 
 MessageDecoratorConfiguration MessageDecoratorConfigurationParser::createMessgeDecoratorConfiguration(const std::string & configName, const boost::json::value & json) const
 {

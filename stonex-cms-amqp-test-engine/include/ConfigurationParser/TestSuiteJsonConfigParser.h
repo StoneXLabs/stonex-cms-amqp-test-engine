@@ -20,14 +20,10 @@
 #pragma once
 
 #include <boost/json.hpp>
-
 #include <ConfigurationParser/TestSuiteConfigParser.h>
 #include <ConfigurationParser/TestCaseConfigurationParser.h>
-
-
 #include <Configuration/TestSuiteConfiguration.h>
 #include <Configuration/ExceptionsConfiguration.h>
-
 
 class TestSuiteJsonConfigParser : public TestSuiteConfigParser, public TestCaseConfigurationParser
 {

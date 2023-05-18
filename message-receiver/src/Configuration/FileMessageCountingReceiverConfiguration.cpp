@@ -16,10 +16,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 #include <Configuration/FileMessageCountingReceiverConfiguration.h>
-
-
-
 
 FileMessageCountingReceiverConfiguration::FileMessageCountingReceiverConfiguration(const std::string & connectionId, const std::string & sessionId, const std::string & consumerId, const std::string & messageFile, long long message_count)
 	:MessageReceiverConfiguration(connectionId, sessionId, consumerId),

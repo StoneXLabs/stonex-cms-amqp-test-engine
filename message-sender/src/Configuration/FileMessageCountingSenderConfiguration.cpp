@@ -16,10 +16,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 #include <Configuration/FileMessageCountingSenderConfiguration.h>
-
-
-
 
 FileMessageCountingSenderConfiguration::FileMessageCountingSenderConfiguration(const std::string & connectionId, const std::string & sessionId, const std::string & producerId, const std::string & messageFile, long long message_count)
 	:MessageSenderConfiguration(connectionId, sessionId, producerId),

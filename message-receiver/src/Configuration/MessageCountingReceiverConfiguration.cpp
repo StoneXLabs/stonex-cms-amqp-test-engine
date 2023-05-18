@@ -16,6 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 #include <Configuration/MessageCountingReceiverConfiguration.h>
 
 MessageCountingReceiverConfiguration::MessageCountingReceiverConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& consumerId, long long message_count)

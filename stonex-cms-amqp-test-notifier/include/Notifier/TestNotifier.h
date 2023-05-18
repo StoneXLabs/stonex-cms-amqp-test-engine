@@ -18,8 +18,8 @@
  */
 
 #pragma once
+
 #include <chrono>
-//#include <Configuration/TestCaseConfiguration.h>
 #include "TestObserver.h"
 #include "EventStatus.h"
 
@@ -32,24 +32,3 @@ public:
 private:
 	TestObserver* mReporter{ nullptr };
 };
-
-//class Notifier {
-//public:
-//	Notifier(const TestCaseConfiguration& config, TestObserver* reporter);
-//	virtual ~Notifier();
-//	void start();
-//	void end();
-//	void skip();
-//	void testEvent(const EventStatus& event);
-//
-//
-//	friend std::ostream& operator<<(std::ostream& os, const Notifier& dt);
-//
-//
-//private:
-//	TestCaseConfiguration mConfiguration;
-//	std::chrono::system_clock::time_point mStart;
-//	std::chrono::system_clock::time_point mEnd;
-//	int mErrorCount{ 0 };
-//};
-

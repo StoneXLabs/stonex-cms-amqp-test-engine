@@ -19,7 +19,6 @@
 
 #include <Configuration\TestSuiteConfiguration.h>
 
-
 TestSuiteConfiguration::TestSuiteConfiguration(const std::string suiteName, const std::list<TestCaseConfiguration>& testCaseConfigs)
 	:mTestSuiteName{ suiteName },
 	mTests{ testCaseConfigs }

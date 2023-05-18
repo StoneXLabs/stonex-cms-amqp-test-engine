@@ -21,9 +21,7 @@
 #include <fstream>
 #include <vector>
 #include <iostream>
-
 #include <ConfigurationParser/MessageDecoratorConfigurationParser.h>
-
 #include <MessageDecorator/MessageDecoratorFactory.h>
 
 boost::json::value valueFromFile(const std::string& configFile)

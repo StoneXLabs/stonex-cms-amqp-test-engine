@@ -16,6 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 #include <Configuration/MessageDecoratingSenderConfiguration.h>
 
 MessageDecoratingSenderConfiguration::MessageDecoratingSenderConfiguration(const std::string & connectionId, const std::string & sessionId, const std::string & producerId, const std::vector<MessageTestField*>& decorations)

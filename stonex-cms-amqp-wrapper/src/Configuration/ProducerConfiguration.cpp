@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-#include <Configuration/ProducerConfiguration.h>
 #include <sstream>
+#include <Configuration/ProducerConfiguration.h>
 
 ProducerConfiguration::ProducerConfiguration(const std::string & key, const std::string dest_type, const std::string & address, std::map<std::string, std::string> properties)
 	:ClientConfiguration(key, "producer", dest_type, address, DefaultTerminationMode::CloseOnDestruction)

@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-#include <TestSuite/TestCasePerformer.h>
 #include <algorithm>
+#include <TestSuite/TestCasePerformer.h>
 #include <Notifier/EventStatus.h>
 #include <MessageSender/MessageSenderFactory.h>
 
@@ -31,24 +31,13 @@ TestCasePerformer::TestCasePerformer(const TestCasePerformerConfiguration & para
 
  void TestCasePerformer::sendAll(int msg_delay_ms)
 {
-	//bool needToSend{ false };
 
-	//do
-	//{
-	//	needToSend = false;
-		std::for_each(std::begin(mSenders), std::end(mSenders), [/*&needToSend,*/ msg_delay_ms](MessageSender* sender) {
+		std::for_each(std::begin(mSenders), std::end(mSenders), [ msg_delay_ms](MessageSender* sender) {
 			if (sender) {
-				//if(sender->messageAvailable())
-				//{
 					sender->sendMessage();
-				//	needToSend = true;
-				//}
-			}/*
-			else
-				needToSend = false;*/
+			}
 
 		});
-//	} while (needToSend);
 
 
 }

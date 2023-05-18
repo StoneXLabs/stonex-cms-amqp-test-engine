@@ -16,14 +16,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#pragma once
-#include <boost/json.hpp>
 
-#include "Configuration/WrapperConfiguration.h"
-#include "Configuration/ConnectionConfiguration.h"
-#include "Configuration/SessionConfiguration.h"
-#include "Configuration/ConsumerConfiguration.h"
-#include "Configuration/ProducerConfiguration.h"
+#pragma once
+
+#include <boost/json.hpp>
+#include "../Configuration/WrapperConfiguration.h"
+#include "../Configuration/ConnectionConfiguration.h"
+#include "../Configuration/SessionConfiguration.h"
+#include "../Configuration/ConsumerConfiguration.h"
+#include "../Configuration/ProducerConfiguration.h"
 
 class WrapperConfigurationParser
 {

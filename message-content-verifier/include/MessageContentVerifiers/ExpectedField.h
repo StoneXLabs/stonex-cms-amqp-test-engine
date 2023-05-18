@@ -25,7 +25,7 @@
 #include <chrono>
 #include <cms/Destination.h>
 #include <cms/CMSException.h>
-#include "MessageContent/MessageProperties.h"
+#include <MessageContent/MessageProperties.h>
 
 
 std::ostream& operator<<(std::ostream& os, const FIELD_TYPE& ft);

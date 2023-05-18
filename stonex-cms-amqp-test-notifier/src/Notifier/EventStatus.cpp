@@ -17,10 +17,8 @@
  * limitations under the License.
  */
 
-
-#include <Notifier/EventStatus.h>
 #include <iomanip>
-
+#include <Notifier/EventStatus.h>
 
 EventStatus::EventStatus(bool status, const std::string& eventSource, const std::string &errorMessage)
 	:mMessageCorrect{ status },

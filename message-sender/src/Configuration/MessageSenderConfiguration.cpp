@@ -19,8 +19,6 @@
 
 #include <Configuration\MessageSenderConfiguration.h>
 
-
-
 MessageSenderConfiguration::MessageSenderConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& producerId)
 	:mConnectionId{ connectionId },
 	mSessionId{ sessionId },

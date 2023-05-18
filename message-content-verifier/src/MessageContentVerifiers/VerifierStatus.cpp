@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-#include <MessageContentVerifiers/VerifierStatus.h>
 #include <algorithm>
+#include <MessageContentVerifiers/VerifierStatus.h>
 
 VerifierStatus::VerifierStatus()
 	:mCount{0},

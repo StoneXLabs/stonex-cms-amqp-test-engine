@@ -17,10 +17,8 @@
  * limitations under the License.
  */
 
-#include <MessageContentVerifiers/ExpectedField.h>
 #include <sstream>
-
-
+#include <MessageContentVerifiers/ExpectedField.h>
 
 std::ostream& operator<<(std::ostream& os, const FIELD_TYPE& ft)
 {

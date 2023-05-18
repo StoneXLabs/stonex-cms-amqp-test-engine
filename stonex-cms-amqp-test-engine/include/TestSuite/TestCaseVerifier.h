@@ -16,12 +16,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 #pragma once
 
 #include <Notifier/TestNotifier.h>
-#include "Configuration/TestCaseVerifierConfiguration.h"
-#include "Wrapper/CMSClientTestUnit.h"
+#include <Wrapper/CMSClientTestUnit.h>
 #include <MessageReceiver/MessageReceiver.h>
+#include "../Configuration/TestCaseVerifierConfiguration.h"
 
 class TestCaseVerifier 
 {

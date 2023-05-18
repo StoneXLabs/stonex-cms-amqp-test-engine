@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 #pragma once
-#include "..\Configuration\ExceptionsConfiguration.h"
 #include <boost/json.hpp>
+#include "..\Configuration\ExceptionsConfiguration.h"
 
 class ExceptionsConfigurationParser
 {

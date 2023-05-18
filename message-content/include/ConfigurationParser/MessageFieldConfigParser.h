@@ -16,15 +16,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 #pragma once
+
 #include <string>
-#include "MessageContent/MessageTestField.h"
+#include "../MessageContent/MessageTestField.h"
 
 class MessageFieldConfigParser
 {
 public:
-
 	MessageTestField* createMessageFieldConfig(const std::string & configName, const boost::json::value & json) const;
-
 };
 

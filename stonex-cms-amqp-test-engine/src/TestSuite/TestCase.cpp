@@ -16,8 +16,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include <TestSuite/TestCase.h>
+
 #include <chrono>
+#include <TestSuite/TestCase.h>
 
 TestCase::TestCase(const TestCaseConfiguration& test_config, MessageSenderFactory* factory, const TestFunctionRegister& functionRegister, TestObserver* observer)
 	:Notifier(observer),

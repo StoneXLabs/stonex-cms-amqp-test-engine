@@ -18,9 +18,9 @@
  */
 
 #pragma once
+
 #include <iostream>
 #include <vector>
-
 #include "TestObserver.h"
 
 class TeamCityTestObserver : public TestObserver

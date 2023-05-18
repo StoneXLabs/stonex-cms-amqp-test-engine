@@ -16,6 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 #include <Configuration/MessageCountingDecoratingReceiverConfiguration.h>
 
 MessageCountingDecoratingReceiverConfiguration::MessageCountingDecoratingReceiverConfiguration(const std::string & connectionId, const std::string & sessionId, const std::string & consumerId, long long message_count, const std::vector<MessageTestField*>& decorations)

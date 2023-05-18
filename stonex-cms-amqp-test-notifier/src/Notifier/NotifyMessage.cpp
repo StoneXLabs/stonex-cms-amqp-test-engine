@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-#include <Notifier/NotifyMessage.h>
 #include <string>
+#include <Notifier/NotifyMessage.h>
 
 std::ostream & operator<<(std::ostream & os, const REPORT_MESSAGE_SEVERITY & vr)
 {

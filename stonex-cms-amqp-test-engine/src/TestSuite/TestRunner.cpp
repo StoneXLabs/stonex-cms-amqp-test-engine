@@ -50,13 +50,6 @@ TestRunner::TestRunner(TestSuiteConfigParser & configurationParser, TestFunction
 			 mTestReporter->onMessage({ REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::GENERAL, test.testName(), "Initializing test [" + std::to_string(mCurrentTestNumber) + "/" + std::to_string(mSuiteConfiguration.testCaseCount()) + "] : " + test.testFunctionName() });
 		 }
 
-		 // use test status
-		///* TestCaseStatus status;
-		// {
-		//	 SingleTest single_test(test, mRegister, mReceiverFactory, mSenderFactory, *mExceptionListenerFactory, mTestReporter, mLogger);
-		//	 status = single_test.run();
-		// }
-		// */
 		 {
 			 TestCase testCase(test, nullptr, mRegister, mTestReporter);
 			 testCase.run();

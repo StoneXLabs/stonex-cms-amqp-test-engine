@@ -17,10 +17,9 @@
  * limitations under the License.
  */
 
+#include <cms/Message.h>
+#include <cms/Session.h>
 #include <MessageDecorator/CMSPropertyDecorator.h>
-
-#include <API/CMSMessage.h>
-#include <API/CMSSession.h>
 
 CMSPropertyDecorator::CMSPropertyDecorator(const MessageTestField & field)
 	:CMSMessageDecorator(field)

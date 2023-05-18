@@ -16,11 +16,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 #pragma once
+
 #include <utils/EventCounter.h>
 #include <utils/MessageFile.h>
-#include "MessageSenderConfiguration.h"
 #include <Configuration/MessageDecoratorConfiguration.h>
+#include "MessageSenderConfiguration.h"
 
 class FileMessageCountingDecoratingSenderConfiguration : public MessageSenderConfiguration, public MessageFile, public EventCounter, public MessageDecoratorConfiguration
 {

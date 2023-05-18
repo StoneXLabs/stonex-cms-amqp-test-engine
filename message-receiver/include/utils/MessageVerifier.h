@@ -16,11 +16,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 #pragma once
 
-#include <Configuration/MessageDecoratorConfiguration.h>
 #include <cms/Session.h>
 #include <cms/Message.h>
+#include <Configuration/MessageDecoratorConfiguration.h>
 #include <MessageContentVerifiers/ExpectedField.h>
 #include <MessageContentVerifiers/FieldVerifierFactory.h>
 #include <Notifier/TestNotifier.h>

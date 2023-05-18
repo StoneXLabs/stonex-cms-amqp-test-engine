@@ -18,13 +18,13 @@
  */
 
 #pragma once
-#include "ClientTestUnit.h"
 
-#include "Configuration/ConsumerConfiguration.h"
 #include <cms/MessageConsumer.h>
 #include <cms/Destination.h>
-
 #include <logger/StoneXLogger.h>
+#include "ClientTestUnit.h"
+#include "../Configuration/ConsumerConfiguration.h"
+
 
 class ConsumerTestUnit : public ClientTestUnit, public cms::MessageConsumer
 {

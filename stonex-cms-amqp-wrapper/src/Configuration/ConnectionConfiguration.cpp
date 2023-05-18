@@ -17,10 +17,9 @@
  * limitations under the License.
  */
 
-
-#include <Configuration\ConnectionConfiguration.h>
 #include <sstream>
 #include <iterator>
+#include <Configuration\ConnectionConfiguration.h>
 
 ConnectionConfiguration::ConnectionConfiguration(const std::string &key, const std::string &broker_address, const std::string &username, const std::string &password, const std::string &id, const std::vector<SessionConfiguration> &sessionConfiguration)
 	:DefaultTerminationConfiguration(DefaultTerminationMode::CloseOnDestruction),

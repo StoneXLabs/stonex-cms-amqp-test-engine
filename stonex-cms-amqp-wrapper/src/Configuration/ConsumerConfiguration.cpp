@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-#include "Configuration/ConsumerConfiguration.h"
 #include <sstream>
+#include <Configuration/ConsumerConfiguration.h>
 
 ConsumerConfiguration::ConsumerConfiguration(const std::string& key, const std::string dest_type, const std::string& address, const std::string& termination_method, const std::string& selector, bool durable, const std::string& subscription_name)
 	:ClientConfiguration(key, "consumer", dest_type, address, termination_method),

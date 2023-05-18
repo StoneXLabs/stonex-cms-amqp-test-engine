@@ -17,10 +17,8 @@
  * limitations under the License.
  */
 
-
-#include <Notifier/TeamCityTestObserver.h>
 #include <string>
-
+#include <Notifier/TeamCityTestObserver.h>
 
 void TeamCityTestObserver::onMessage(const NotifyMessage& report)
 {

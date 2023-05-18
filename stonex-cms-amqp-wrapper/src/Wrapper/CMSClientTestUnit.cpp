@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-#include <Wrapper/CMSClientTestUnit.h>
 #include <algorithm>
+#include <Wrapper/CMSClientTestUnit.h>
 #include <Wrapper/SessionTestUnit.h>
 
 CMSClientTestUnit::CMSClientTestUnit(const std::string userIdentifier)

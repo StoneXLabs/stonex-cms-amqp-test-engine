@@ -16,9 +16,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 #pragma once
-#include <utils/EventCounter.h>
+
 #include <string>
+#include <utils/EventCounter.h>
 #include <Notifier/TestNotifier.h>
 
 class ReceivedMessageCounter : public EventCounter

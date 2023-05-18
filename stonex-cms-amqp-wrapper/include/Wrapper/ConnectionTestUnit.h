@@ -20,11 +20,11 @@
 #pragma once
 
 #include <cms/Connection.h>
-#include "Configuration/ConnectionConfiguration.h"
+#include <logger/StoneXLogger.h>
+#include "../Configuration/ConnectionConfiguration.h"
 #include "SessionTestUnit.h"
 #include "CMSExceptionListenerTestUnit.h"
 
-#include <logger/StoneXLogger.h>
 
 class ConnectionTestUnit :  public cms::Connection, public CMSExceptionListenerTestUnit
 {

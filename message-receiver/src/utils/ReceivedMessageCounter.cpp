@@ -16,6 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 #include <utils/ReceivedMessageCounter.h>
 #include <Notifier/TestNotifier.h>
 #include <fmt/format.h>

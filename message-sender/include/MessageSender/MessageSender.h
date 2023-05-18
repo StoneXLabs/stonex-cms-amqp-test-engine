@@ -19,12 +19,12 @@
 
 #pragma once
 
-#include "Configuration/MessageSenderConfiguration.h"
 #include <Wrapper/CMSClientTestUnit.h>
 #include <Notifier/TestNotifier.h>
-
 #include <utils/EventCounter.h>
 #include <utils/MessageFile.h>
+#include "Configuration/MessageSenderConfiguration.h"
+
 class MessageSender
 {
 public:

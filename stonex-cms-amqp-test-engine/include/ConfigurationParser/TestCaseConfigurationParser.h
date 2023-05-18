@@ -16,17 +16,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 #pragma once
+
+#include <boost/json.hpp>
 #include <Configuration/TestCaseConfiguration.h>
 #include <Configuration/TestCasePerformerConfiguration.h>
 #include <Configuration/TestCaseVerifierConfiguration.h>
-
 #include <ConfigurationParser/WrapperConfigurationParser.h>
 #include <ConfigurationParser/TestCaseProducerConfigurationParser.h>
 #include <ConfigurationParser/TestCaseReceiverConfigurationParser.h>
 #include <ConfigurationParser/ExceptionsConfigurationParser.h>
 
-#include <boost/json.hpp>
 
 class TestCaseConfigurationParser : public WrapperConfigurationParser, public TestCaseProducerConfigurationParser, public TestCaseReceiverConfigurationParser, public ExceptionsConfigurationParser
 {

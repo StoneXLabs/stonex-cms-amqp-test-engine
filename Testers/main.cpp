@@ -16,20 +16,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "Wrapper/CMSClientTestUnit.h"
+
 #include <boost/json.hpp>
 #include <fstream>
 #include <vector>
 #include <iostream>
 #include <thread>
-
+#include <Wrapper/CMSClientTestUnit.h>
 #include <ConfigurationParser/TestCaseProducerConfigurationParser.h>
+#include <ConfigurationParser/TestCaseReceiverConfigurationParser.h>
 #include <Configuration/MessageCountingSenderConfiguration.h>
 #include <Configuration/FileMessageSenderConfiguration.h>
 #include <Configuration/FileMessageCountingSenderConfiguration.h>
 #include <Configuration/FileMessageCountingDecoratingSenderConfiguration.h>
-
-
+#include <Configuration/MessageCountingReceiverConfiguration.h>
+#include <Configuration/FileMessageReceiverConfiguration.h>
+#include <Configuration/FileMessageCountingReceiverConfiguration.h>
+#include <Configuration/FileMessageCountingDecoratingReceiverConfiguration.h>
+#include <Configuration/MessageDecoratingReceiverConfiguration.h>
 #include <MessageSender/MessageSender.h>
 #include <MessageSender/MessageFileSender.h>
 #include <MessageSender/MessageCountingSender.h>
@@ -38,15 +42,6 @@
 #include <MessageSender/MessageDecoratingFileSender.h>
 #include <MessageSender/MessageCountingDecoratingSender.h>
 #include <MessageSender/MessageCountingDecoratingFileSender.h>
-
-#include <ConfigurationParser/TestCaseReceiverConfigurationParser.h>
-#include <Configuration/MessageCountingReceiverConfiguration.h>
-#include <Configuration/FileMessageReceiverConfiguration.h>
-#include <Configuration/FileMessageCountingReceiverConfiguration.h>
-#include <Configuration/FileMessageCountingDecoratingReceiverConfiguration.h>
-#include <Configuration/MessageDecoratingReceiverConfiguration.h>
-
-
 #include <MessageReceiver/MessageReceiver.h>
 #include <MessageReceiver/MessageFileReceiver.h>
 #include <MessageReceiver/MessageCountingReceiver.h>
@@ -55,13 +50,9 @@
 #include <MessageReceiver/MessageDecoratingFileReceiver.h>
 #include <MessageReceiver/MessageCountingDecoratingReceiver.h>
 #include <MessageReceiver/MessageCountingDecoratingFileReceiver.h>
-
-
-#include "Wrapper/CMSClientTestUnit.h"
-#include "StdOutLogger/StdOutLogger.h"
-
 #include <Notifier/EventStatusObserver.h>
 #include <Notifier/TestNotifier.h>
+#include <StdOutLogger/StdOutLogger.h>
 
 class TestMessageSender : public MessageSender
 {

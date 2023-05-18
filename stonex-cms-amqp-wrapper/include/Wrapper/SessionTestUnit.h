@@ -22,12 +22,11 @@
 #include <cms/Session.h>
 #include <cms/Connection.h>
 
+#include <logger/StoneXLogger.h>
+
 #include "ConsumerTestUnit.h"
 #include "ProducerTestUnit.h"
-#include "NodeAccessor.h"
 #include "CMSExceptionListenerTestUnit.h"
-
-#include <logger/StoneXLogger.h>
 
 class SessionConfiguration;
 

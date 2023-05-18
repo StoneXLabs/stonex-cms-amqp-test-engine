@@ -16,18 +16,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include <MessageSender/MessageSenderFactory.h>
 
 #include <Configuration/MessageCountingSenderConfiguration.h>
 #include <Configuration/MessageDecoratingSenderConfiguration.h>
 #include <Configuration/FileMessageSenderConfiguration.h>
-
 #include <Configuration/FileMessageCountingSenderConfiguration.h>
 #include <Configuration/FileMessageDecoratingSenderConfiguration.h>
 #include <Configuration/MessageCountingDecoratingSenderConfiguration.h>
-
 #include <Configuration/FileMessageCountingDecoratingSenderConfiguration.h>
-
+#include <MessageSender/MessageSenderFactory.h>
 #include <MessageSender/MessageCountingSender.h>
 #include <MessageSender/MessageDecoratingSender.h>
 #include <MessageSender/MessageFileSender.h>

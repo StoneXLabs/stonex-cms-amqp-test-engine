@@ -16,6 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 #include <ConfigurationParser/TestCaseConfigurationParser.h>
 
 TestCaseConfiguration TestCaseConfigurationParser::createTestCaseConfig(const std::string & configName, const boost::json::value & json) const

@@ -18,17 +18,13 @@
  */
 
 #pragma once
+
 #include "TestFunctionRegister.h"
 #include <ConfigurationParser/TestSuiteConfigParser.h>
 #include <Configuration/TestSuiteConfiguration.h>
-
 #include <MessageReceiver/MessageReceiverFactory.h>
 #include <MessageSender/MessageSenderFactory.h>
-
-
 #include <Notifier/TestObserver.h>
-
-
 #include <logger/StoneXLogger.h>
 
 class TestRunner

@@ -16,9 +16,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 #include <MessageSender/MessageDecoratingFileSender.h>
-
-
 
 MessageDecoratingFileSender::MessageDecoratingFileSender(const FileMessageDecoratingSenderConfiguration & config, CMSClientTestUnit & client_params, Notifier & parent)
 	: MessageSender(config, client_params, parent),

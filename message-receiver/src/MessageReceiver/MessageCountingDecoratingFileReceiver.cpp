@@ -16,8 +16,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include <MessageReceiver/MessageCountingDecoratingFileReceiver.h>
+
 #include <fmt/format.h>
+#include <MessageReceiver/MessageCountingDecoratingFileReceiver.h>
 
 MessageCountingDecoratingFileReceiver::MessageCountingDecoratingFileReceiver(const FileMessageCountingDecoratingReceiverConfiguration & config, CMSClientTestUnit & client_params, Notifier & parent)
 	:MessageReceiver(config, client_params),

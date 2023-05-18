@@ -18,6 +18,7 @@
  */
 
 #pragma once
+
 #include <boost/json/value.hpp>
 
 enum class FIELD_TYPE

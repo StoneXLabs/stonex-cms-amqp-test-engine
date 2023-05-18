@@ -17,17 +17,12 @@
  * limitations under the License.
  */
 
-#include "Wrapper/CMSClientTestUnit.h"
 #include <boost/json.hpp>
 #include <fstream>
 #include <vector>
 #include <iostream>
-
-
-#include "Wrapper/CMSClientTestUnit.h"
-
+#include <Wrapper/CMSClientTestUnit.h>
 #include <ConfigurationParser/TestCaseReceiverConfigurationParser.h>
-
 #include <MessageReceiver/MessageReceiver.h>
 #include <MessageReceiver/MessageFileReceiver.h>
 #include <MessageReceiver/MessageCountingReceiver.h>
@@ -36,11 +31,10 @@
 #include <MessageReceiver/MessageDecoratingFileReceiver.h>
 #include <MessageReceiver/MessageCountingDecoratingReceiver.h>
 #include <MessageReceiver/MessageCountingDecoratingFileReceiver.h>
-
-#include "StdOutLogger/StdOutLogger.h"
-
 #include <Notifier/EventStatusObserver.h>
 #include <Notifier/TestNotifier.h>
+#include <StdOutLogger/StdOutLogger.h>
+
 
 
 boost::json::value valueFromFile(const std::string& configFile)

@@ -18,6 +18,7 @@
  */
 
 #pragma once
+
 #include <ostream>
 
 enum class DefaultTerminationMode 

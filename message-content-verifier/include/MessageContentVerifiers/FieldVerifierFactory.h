@@ -18,10 +18,11 @@
  */
 
 #pragma once
-#include "ExpectedField.h"
 
 #include <iostream>
 #include <cms/Message.h>
+#include "ExpectedField.h"
+
 
 class FieldVerifierFactory
 {

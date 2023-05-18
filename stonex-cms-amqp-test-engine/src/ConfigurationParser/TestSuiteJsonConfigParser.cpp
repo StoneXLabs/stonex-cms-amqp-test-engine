@@ -17,9 +17,9 @@
  * limitations under the License.
  */
 
+#include <fstream>
 #include <ConfigurationParser/TestSuiteJsonConfigParser.h>
 
-#include <fstream>
 
 TestSuiteJsonConfigParser::TestSuiteJsonConfigParser(const std::string& configFile)
 	:mConfigFilePath{ configFile }

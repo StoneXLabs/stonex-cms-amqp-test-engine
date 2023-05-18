@@ -16,11 +16,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#pragma once
-#include <boost/json.hpp>
 
-#include "..\Configuration\MessageSenderConfiguration.h"
+#pragma once
+
+#include <boost/json.hpp>
 #include <ConfigurationParser/MessageDecoratorConfigurationParser.h>
+#include "..\Configuration\MessageSenderConfiguration.h"
 
 class TestCaseProducerConfigurationParser : public MessageDecoratorConfigurationParser
 {

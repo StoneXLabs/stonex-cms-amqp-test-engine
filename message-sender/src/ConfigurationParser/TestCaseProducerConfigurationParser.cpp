@@ -16,6 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 #include <ConfigurationParser/TestCaseProducerConfigurationParser.h>
 #include <Configuration/FileMessageSenderConfiguration.h>
 #include <Configuration/MessageCountingSenderConfiguration.h>
@@ -24,7 +25,6 @@
 #include <Configuration/FileMessageDecoratingSenderConfiguration.h>
 #include <Configuration/MessageCountingDecoratingSenderConfiguration.h>
 #include <Configuration/FileMessageCountingDecoratingSenderConfiguration.h>
-
 
 MessageSenderConfiguration * TestCaseProducerConfigurationParser::createTestCaseProducerConfig(const std::string & configName, const boost::json::value & json) const
 {

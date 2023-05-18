@@ -16,6 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 #include <Configuration/FileMessageSenderConfiguration.h>
 
 FileMessageSenderConfiguration::FileMessageSenderConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& producerId, const std::string & message_file)

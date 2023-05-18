@@ -20,17 +20,15 @@
 #pragma once
 
 #include <functional>
-#include "TestCaseStatus.h"
 #include <string>
 #include <Configuration/TestCaseConfiguration.h>
-#include "TestCasePerformer.h"
-#include "TestCaseVerifier.h"
 #include <Wrapper/CMSClientTestUnit.h>
-
 #include <Notifier/TestNotifier.h>
 #include <MessageSender/MessageSenderFactory.h>
-
 #include "TestFunctionRegister.h"
+#include "TestCaseStatus.h"
+#include "TestCasePerformer.h"
+#include "TestCaseVerifier.h"
 
 class TestCase : public Notifier
 {

@@ -17,9 +17,9 @@
  * limitations under the License.
  */
 
-#include <Configuration/WrapperConfiguration.h>
 #include <sstream>
 #include <iterator>
+#include <Configuration/WrapperConfiguration.h>
 
 WrapperConfiguration::WrapperConfiguration(const std::vector<ConnectionConfiguration>& connectionConfiguration)
 	:mCMSConfig{connectionConfiguration }

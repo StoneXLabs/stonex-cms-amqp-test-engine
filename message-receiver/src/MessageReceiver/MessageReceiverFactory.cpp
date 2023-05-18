@@ -16,18 +16,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 #include <MessageReceiver/MessageReceiverFactory.h>
-
-#include <Configuration/MessageCountingReceiverConfiguration.h>
-#include <Configuration/MessageDecoratingReceiverConfiguration.h>
-#include <Configuration/FileMessageReceiverConfiguration.h>
-
-#include <Configuration/FileMessageCountingReceiverConfiguration.h>
-#include <Configuration/FileMessageDecoratingReceiverConfiguration.h>
-#include <Configuration/MessageCountingDecoratingReceiverConfiguration.h>
-
-#include <Configuration/FileMessageCountingDecoratingReceiverConfiguration.h>
-
 #include <MessageReceiver/MessageCountingReceiver.h>
 #include <MessageReceiver/MessageDecoratingReceiver.h>
 #include <MessageReceiver/MessageFileReceiver.h>
@@ -35,6 +25,13 @@
 #include <MessageReceiver/MessageDecoratingFileReceiver.h>
 #include <MessageReceiver/MessageCountingDecoratingReceiver.h>
 #include <MessageReceiver/MessageCountingDecoratingFileReceiver.h>
+#include <Configuration/MessageCountingReceiverConfiguration.h>
+#include <Configuration/MessageDecoratingReceiverConfiguration.h>
+#include <Configuration/FileMessageReceiverConfiguration.h>
+#include <Configuration/FileMessageCountingReceiverConfiguration.h>
+#include <Configuration/FileMessageDecoratingReceiverConfiguration.h>
+#include <Configuration/MessageCountingDecoratingReceiverConfiguration.h>
+#include <Configuration/FileMessageCountingDecoratingReceiverConfiguration.h>
 
 MessageReceiver * MessageReceiverFactory::create(const MessageReceiverConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, Notifier & parent) const
 {

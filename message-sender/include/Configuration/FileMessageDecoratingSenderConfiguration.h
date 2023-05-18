@@ -16,10 +16,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 #pragma once
-#include "MessageSenderConfiguration.h"
+
 #include <utils/MessageFile.h>
 #include <Configuration/MessageDecoratorConfiguration.h>
+#include "MessageSenderConfiguration.h"
 
 class FileMessageDecoratingSenderConfiguration : public MessageSenderConfiguration, public MessageFile, public MessageDecoratorConfiguration
 {

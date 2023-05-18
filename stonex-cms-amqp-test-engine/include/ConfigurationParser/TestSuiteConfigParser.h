@@ -18,6 +18,7 @@
  */
 
 #pragma once
+
 #include <Configuration/TestSuiteConfiguration.h>
 
 class TestSuiteConfigParser 

@@ -17,9 +17,8 @@
  * limitations under the License.
  */
 
-
-#include <TestSuite/TestCaseStatus.h>
 #include <sstream>
+#include <TestSuite/TestCaseStatus.h>
 
 std::ostream & operator<<(std::ostream & os, const TEST_CASE_STATUS & ts)
 {

@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-#include <Notifier/TestNotifier.h>
 #include <string>
+#include <Notifier/TestNotifier.h>
 
 Notifier::Notifier(TestObserver * reporter)
 	:mReporter{ reporter }

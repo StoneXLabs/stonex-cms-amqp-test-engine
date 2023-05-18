@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-#include <Notifier/StdOutTestObserver.h>
 #include <iterator>
+#include <Notifier/StdOutTestObserver.h>
 
 void StdOutTestObserver::onMessage(const NotifyMessage& report)
 {

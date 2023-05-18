@@ -16,7 +16,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 #pragma once
+
 #include "MessageSender.h"
 #include "..\Configuration\MessageDecoratingSenderConfiguration.h"
 #include "..\utils\MessageDecorator.h"

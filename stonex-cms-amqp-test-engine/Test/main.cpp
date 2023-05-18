@@ -21,8 +21,6 @@
 #include <fstream>
 #include <vector>
 #include <iostream>
-
-
 #include <MessageSender/MessageSender.h>
 #include <MessageSender/MessageFileSender.h>
 #include <MessageSender/MessageCountingSender.h>
@@ -31,7 +29,6 @@
 #include <MessageSender/MessageDecoratingFileSender.h>
 #include <MessageSender/MessageCountingDecoratingSender.h>
 #include <MessageSender/MessageCountingDecoratingFileSender.h>
-
 #include <MessageReceiver/MessageReceiver.h>
 #include <MessageReceiver/MessageFileReceiver.h>
 #include <MessageReceiver/MessageCountingReceiver.h>
@@ -40,17 +37,13 @@
 #include <MessageReceiver/MessageDecoratingFileReceiver.h>
 #include <MessageReceiver/MessageCountingDecoratingReceiver.h>
 #include <MessageReceiver/MessageCountingDecoratingFileReceiver.h>
-
 #include <TestSuite/TestCase.h>
-
-
 #include <ConfigurationParser/TestSuiteJsonConfigParser.h>
 #include <TestSuite/TestCasePerformer.h>
 #include <TestSuite/TestCaseVerifier.h>
-
 #include <Notifier/TestNotifier.h>
 #include <Notifier/StdOutTestObserver.h>
-#include "StdOutLogger/StdOutLogger.h"
+#include <StdOutLogger/StdOutLogger.h>
 
 class TestExceptionListener : public cms::ExceptionListener {
 public:

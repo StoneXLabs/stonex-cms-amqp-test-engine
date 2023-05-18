@@ -19,8 +19,6 @@
 
 #include <Configuration\MessageReceiverConfiguration.h>
 
-
-
 MessageReceiverConfiguration::MessageReceiverConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& consumerId)
 	:mConnectionId{ connectionId },
 	mSessionId{ sessionId },

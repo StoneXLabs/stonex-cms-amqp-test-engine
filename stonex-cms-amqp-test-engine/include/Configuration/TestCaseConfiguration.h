@@ -18,8 +18,8 @@
  */
 
 #pragma once
-#include <string>
 
+#include <string>
 #include <Configuration/WrapperConfiguration.h>
 #include <Configuration/TestCasePerformerConfiguration.h>
 #include <Configuration/TestCaseVerifierConfiguration.h>

@@ -19,23 +19,18 @@
 
 #pragma once
 
-#include <cms\MessageProducer.h>
-#include <cms\Session.h>
 #include <algorithm>
 #include <thread>
 #include <map>
-
-#include "Configuration/MessageSenderConfiguration.h"
-#include "Configuration/TestCasePerformerConfiguration.h"
-#include "Wrapper/CMSClientTestUnit.h"
-
-#include "MessageSender/MessageSenderFactory.h"
-
+#include <cms\MessageProducer.h>
+#include <cms\Session.h>
+#include <Wrapper/CMSClientTestUnit.h>
+#include <Configuration/MessageSenderConfiguration.h>
+#include <MessageSender/MessageSenderFactory.h>
+#include "../Configuration/TestCasePerformerConfiguration.h"
 
 class TestCasePerformer
 {
-
-
 public:
 	TestCasePerformer(const TestCasePerformerConfiguration& params, CMSClientTestUnit& client_params, Notifier& notifier, MessageSenderFactory* senderFactory);
 	virtual void sendAll(int msg_delay_ms = 0);

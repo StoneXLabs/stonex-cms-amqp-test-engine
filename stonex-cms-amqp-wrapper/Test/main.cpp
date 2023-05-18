@@ -17,14 +17,14 @@
  * limitations under the License.
  */
 
-#include "ConfigurationParser/WrapperConfigurationParser.h"
-#include "Wrapper/CMSClientTestUnit.h"
 #include <boost/json.hpp>
 #include <fstream>
 #include <vector>
 #include <iostream>
 
-#include "StdOutLogger/StdOutLogger.h"
+#include <ConfigurationParser/WrapperConfigurationParser.h>
+#include <Wrapper/CMSClientTestUnit.h>
+#include <StdOutLogger/StdOutLogger.h>
 
 boost::json::value valueFromFile(const std::string& configFile)
 {

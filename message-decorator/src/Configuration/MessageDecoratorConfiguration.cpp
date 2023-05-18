@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-#include <Configuration/MessageDecoratorConfiguration.h>
 #include <algorithm>
+#include <Configuration/MessageDecoratorConfiguration.h>
 
 MessageDecoratorConfiguration::MessageDecoratorConfiguration(const std::vector<MessageTestField*>& decorations)
 	:mMessageDecorations(std::move(decorations))

@@ -16,6 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 #include <utils/EventCounter.h>
 
 EventCounter::EventCounter(long long expected_message_count)

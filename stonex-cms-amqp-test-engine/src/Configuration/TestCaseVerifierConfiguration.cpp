@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-#include "Configuration/TestCaseVerifierConfiguration.h"
 #include <algorithm>
+#include "Configuration/TestCaseVerifierConfiguration.h"
 
 TestCaseVerifierConfiguration::TestCaseVerifierConfiguration(const std::vector<MessageReceiverConfiguration*>& receivers_config, const std::vector<ExceptionsConfiguration*>& exceptions_config)
 	:mReceiversConfig{ receivers_config },
