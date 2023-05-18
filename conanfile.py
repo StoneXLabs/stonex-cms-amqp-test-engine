@@ -41,25 +41,34 @@ class StonexCmsAmqpTestEngineConan(ConanFile):
 
 
     def package(self):
-        self.copy("*.h", dst="include",src="./CMSClientWrapper/include")
-        self.copy("*.h", dst="include",src="./common/include")
-        self.copy("*.h", dst="include",src="./Configuration/include")
-        self.copy("*.h", dst="include",src="./ConfigurationParser/include")
-        self.copy("*.h", dst="include",src="./MessageContent/include")
-        self.copy("*.h", dst="include",src="./MessageContentVerifiers/include")
-        self.copy("*.h", dst="include",src="./MessageDecorator/include")
-        self.copy("*.h", dst="include",src="./MessageReceiver/include")
-        self.copy("*.h", dst="include",src="./MessageSender/include")
-        self.copy("*.h", dst="include",src="./stonex-cms-amqp-test-engine/include")
-        self.copy("*.h", dst="include",src="./TestEventHandler/include")
-        self.copy("*.h", dst="include",src="./TestRaport/include")
-        self.copy("*.h", dst="include",src="./TestSuite/include")
-        self.copy("*.h", dst="include",src="./Verifier/include")
-        self.copy("*.h", dst="include",src="./TestNotifier/include")
-        
+        self.copy("*.h", dst="include",src="message-content/include")
+        self.copy("*.h", dst="include",src="message-content-verifier/include")
+        self.copy("*.h", dst="include",src="message-decorator/include")
+        self.copy("*.h", dst="include",src="message-receiver/include")
+        self.copy("*.h", dst="include",src="message-sender/include")
+        self.copy("*.h", dst="include",src="stonex-cms-amqp-test-engine/include")
+        self.copy("*.h", dst="include",src="stonex-cms-amqp-test-notifier/include")
+        self.copy("*.h", dst="include",src="stonex-cms-amqp-wrapper/include")
+        self.copy("*.h", dst="include",src="test-utils/include")
+        self.copy("*.h", dst="include",src="common/include")
         
         self.copy("*.lib", dst="lib",src="lib", keep_path=False)
         self.copy("*.pdb", dst="lib",src="lib", keep_path=False)
+        self.copy("*.exe", dst="bin",src="bin", keep_path=False)
+        
+        self.copy("*.config", dst="bin",src="message-content/Test")
+        self.copy("*.config", dst="bin",src="message-decorator/Test")
+        self.copy("*.config", dst="bin",src="message-receiver/Test")
+        self.copy("*.config", dst="bin",src="message-sender/Test")
+        self.copy("*.config", dst="bin",src="stonex-cms-amqp-test-engine/Test")
+        self.copy("*.config", dst="bin",src="stonex-cms-amqp-wrapper/Test")
+        
+        self.copy("*message*.txt", dst="bin",src="message-content/Test")
+        self.copy("*message*.txt", dst="bin",src="message-decorator/Test")
+        self.copy("*message*.txt", dst="bin",src="message-receiver/Test")
+        self.copy("*message*.txt", dst="bin",src="message-sender/Test")
+        self.copy("*message*.txt", dst="bin",src="stonex-cms-amqp-test-engine/Test")
+        self.copy("*message*.txt", dst="bin",src="stonex-cms-amqp-wrapper/Test")
 
     def package_info(self):
         self.cpp_info.libs = self.collect_libs()

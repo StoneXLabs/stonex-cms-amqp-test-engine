@@ -21,8 +21,7 @@
 #include <Notifier/EventStatus.h>
 
 MessageReceiver::MessageReceiver(const MessageReceiverConfiguration& params, CMSClientTestUnit & client_params)
-	:/*mSession{ client_params.session(params.connectionId(), params.sessionId()) },*/
-	mConsumer{ client_params.consumer(params.connectionId(), params.sessionId(),params.consumerId()) },
+	:mConsumer{ client_params.consumer(params.connectionId(), params.sessionId(),params.consumerId()) },
 	mId{params.consumerId()}
 {
 	if (mConsumer)
