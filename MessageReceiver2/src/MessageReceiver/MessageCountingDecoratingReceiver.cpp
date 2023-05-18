@@ -1,9 +1,10 @@
 #include <MessageReceiver/MessageCountingDecoratingReceiver.h>
+#include <fmt/format.h>
 
-MessageCountingDecoratingReceiver::MessageCountingDecoratingReceiver(const MessageCountingDecoratingReceiverConfiguration & config, CMSClientTestUnit & client_params, EventStatusObserver & parent)
-	:MessageReceiver(config,client_params,parent),
-	ReceivedMessageCounter(config.expectedEventCount()),
-	MessageVerifier(config.decorations())
+MessageCountingDecoratingReceiver::MessageCountingDecoratingReceiver(const MessageCountingDecoratingReceiverConfiguration & config, CMSClientTestUnit & client_params, Notifier & parent)
+	:MessageReceiver(config,client_params),
+	ReceivedMessageCounter(id(), config.expectedEventCount(), parent),
+	MessageVerifier(config.consumerId(), config.decorations(), parent)
 {
 }
 

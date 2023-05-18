@@ -28,8 +28,8 @@
 #include "MessageContent/MessageProperties.h"
 
 
-std::ostream& operator<<(std::ostream& os, FIELD_TYPE ft);
-std::string fieldTypeToString(FIELD_TYPE ft);
+std::ostream& operator<<(std::ostream& os, const FIELD_TYPE& ft);
+std::string fieldTypeToString(const FIELD_TYPE& ft);
 
 class IExpectedField
 {

@@ -1,8 +1,8 @@
 #include <MessageReceiver/MessageCountingReceiver.h>
 
-MessageCountingReceiver::MessageCountingReceiver(const MessageCountingReceiverConfiguration & config, CMSClientTestUnit & client_params, EventStatusObserver & parent)
-	:MessageReceiver(config, client_params, parent),
-	ReceivedMessageCounter(config.expectedEventCount())
+MessageCountingReceiver::MessageCountingReceiver(const MessageCountingReceiverConfiguration & config, CMSClientTestUnit & client_params, Notifier & parent)
+	:MessageReceiver(config, client_params),
+	ReceivedMessageCounter(id(),config.expectedEventCount(), parent)
 
 {
 }

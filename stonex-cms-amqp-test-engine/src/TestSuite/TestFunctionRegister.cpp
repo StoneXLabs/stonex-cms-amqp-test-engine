@@ -24,7 +24,7 @@ void TestFunctionRegister::registerTestFunction(const std::string & func_name, c
 	mRegisteredTestFunctions.insert_or_assign(func_name, test_func);
 }
 
-test_method TestFunctionRegister::getTestFunction(const std::string & func_name)
+test_method TestFunctionRegister::getTestFunction(const std::string & func_name) const
 {
 	return mRegisteredTestFunctions.at(func_name);
 }

@@ -131,3 +131,117 @@ FIELD_TYPE fromKeyValue(const std::string key, const boost::json::value &val)
 	else
 		return fieldType;
 }
+
+std::string to_string(FIELD_TYPE ft)
+{
+	std::string ft_string;
+	switch (ft)
+	{
+	case FIELD_TYPE::CMS_CORRELATION_ID:
+		ft_string = "correlation_id";
+		break;
+	case FIELD_TYPE::CMS_DELIVERY_MODE:
+		ft_string = "delivery_mode";
+		break;
+	case FIELD_TYPE::CMS_DESTINATION:
+		ft_string = "destination";
+		break;
+	case FIELD_TYPE::CMS_EXPIRATION:
+		ft_string = "expiration";
+		break;
+	case FIELD_TYPE::CMS_MESSAGE_ID:
+		ft_string = "message_id";
+		break;
+	case FIELD_TYPE::CMS_PRIORITY:
+		ft_string = "priority";
+		break;
+	case FIELD_TYPE::CMS_REDELIVERED:
+		ft_string = "redelivered";
+		break;
+	case FIELD_TYPE::CMS_REPLY_TO:
+		ft_string = "reply_to";
+		break;
+	case FIELD_TYPE::CMS_TIMESTAMP:
+		ft_string = "timestamp";
+		break;
+	case FIELD_TYPE::CMS_TYPE:
+		ft_string = "type";
+		break;
+	case FIELD_TYPE::PROPERTY:
+		ft_string = "application property";
+		break;
+	case FIELD_TYPE::BOOLEANPROPERTY:
+		ft_string = "application boolean property";
+		break;
+	case FIELD_TYPE::DOUBLEPROPERTY:
+		ft_string = "application double property";
+		break;
+	case FIELD_TYPE::INTPROPERTY:
+		ft_string = "application int property";
+		break;
+	case FIELD_TYPE::STRINGPROPERTY:
+		ft_string = "application string property";
+		break;
+	default:
+		break;
+	}
+
+	return ft_string;
+}
+
+std::ostream& operator<< (std::ostream &os, const FIELD_TYPE& ob)
+{
+	switch (ob)
+	{
+	case FIELD_TYPE::CMS_CORRELATION_ID:
+		os << "correlation_id";
+		break;
+	case FIELD_TYPE::CMS_DELIVERY_MODE:
+		os << "delivery_mode";
+		break;
+	case FIELD_TYPE::CMS_DESTINATION:
+		os << "destination";
+		break;
+	case FIELD_TYPE::CMS_EXPIRATION:
+		os << "expiration";
+		break;
+	case FIELD_TYPE::CMS_MESSAGE_ID:
+		os << "message_id";
+		break;
+	case FIELD_TYPE::CMS_PRIORITY:
+		os << "priority";
+		break;
+	case FIELD_TYPE::CMS_REDELIVERED:
+		os << "redelivered";
+		break;
+	case FIELD_TYPE::CMS_REPLY_TO:
+		os << "reply_to";
+		break;
+	case FIELD_TYPE::CMS_TIMESTAMP:
+		os << "timestamp";
+		break;
+	case FIELD_TYPE::CMS_TYPE:
+		os << "type";
+		break;
+	case FIELD_TYPE::PROPERTY:
+		os << "application property";
+		break;
+	case FIELD_TYPE::BOOLEANPROPERTY:
+		os << "application boolean property";
+		break;
+	case FIELD_TYPE::DOUBLEPROPERTY:
+		os << "application double property";
+		break;
+	case FIELD_TYPE::INTPROPERTY:
+		os << "application int property";
+		break;
+	case FIELD_TYPE::STRINGPROPERTY:
+		os << "application string property";
+		break;
+	default:
+		break;
+	}	
+
+	return os;
+}
+

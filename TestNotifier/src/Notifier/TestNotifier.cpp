@@ -19,6 +19,8 @@
 
 #include <Notifier/TestNotifier.h>
 #include <string>
+
+
 //
 //TestNotifier::TestNotifier(const TestCaseConfiguration& config, TestObserver* reporter)
 //	:mConfiguration{ config },
@@ -62,7 +64,8 @@
 //	{
 //		if (!event.correct()) 
 //		{
-//			mErrorCount++;
+//			mReporter->onMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR, fmt));
+//
 //			mReporter->onMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR, mConfiguration.testName(), " [" + event.eventSource() + "] " + event.errorMessage()));
 //
 //		}
@@ -86,11 +89,16 @@ void Notifier::testEvent(const EventStatus & event)
 	if (mReporter)
 	{
 		if (!event.correct()) 
-		{
-			mReporter->onMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR, "mConfiguration.testName()", " [" + event.eventSource() + "] " + event.errorMessage()));
+			mReporter->onMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR,  " [" + event.eventSource() + "] " , event.errorMessage()));
 
-		}
+		
 	}
+}
+
+void Notifier::TestMessage(const NotifyMessage & message)
+{
+	if (mReporter)
+		mReporter->onMessage(message);
 }
 
 

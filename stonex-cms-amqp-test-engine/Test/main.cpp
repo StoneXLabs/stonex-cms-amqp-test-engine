@@ -23,12 +23,15 @@
 #include <MessageReceiver/MessageCountingDecoratingReceiver.h>
 #include <MessageReceiver/MessageCountingDecoratingFileReceiver.h>
 
+#include <TestSuite/TestCase.h>
 
 
 #include <ConfigurationParser/TestSuiteJsonConfigParser.h>
 #include <TestSuite/TestCasePerformer.h>
+#include <TestSuite/TestCaseVerifier.h>
 
 #include <Notifier/TestNotifier.h>
+#include <Notifier/StdOutTestObserver.h>
 #include "StdOutLogger/StdOutLogger.h"
 
 class TestExceptionListener : public cms::ExceptionListener {
@@ -54,7 +57,13 @@ boost::json::value valueFromFile(const std::string& configFile)
 	return  p.release();
 }
 
+///test fun
+TEST_CASE_STATUS test_fun(CMSClientTestUnit* a, TestCasePerformer* b) {
 
+	b->sendAll();
+	std::this_thread::sleep_for(std::chrono::seconds(1));
+	return TEST_CASE_STATUS::FINISHED;
+};
 
 int main()
 {
@@ -82,18 +91,6 @@ int main()
 
 		assert(test_case_performer == test_performer_config);
 	}
-	//test_case_all_senders.config
-	//{ 
-	//	TestCaseConfigurationParser parser;
-	//	boost::json::object::value_type test_case_performer_config_json = *valueFromFile("test_case.config").as_object().cbegin();
-	//	auto test_case_performer = parser.createTestCaseConfig(test_case_performer_config_json.key_c_str(), test_case_performer_config_json.value().as_object()).performerConfig();
-
-	//	MessageSenderConfiguration producer_config("connection1", "session1", "producer1");
-	//	TestCasePerformerConfiguration test_performer_config({ &producer_config });
-
-
-	//	assert(test_case_performer == test_performer_config);
-	//}
 
 	{
 		TestCaseConfigurationParser parser;
@@ -263,7 +260,7 @@ int main()
 		class TestSenderFactory : public MessageSenderFactory
 		{
 		public:
-			MessageSender * create_sender(const MessageSenderConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, EventStatusObserver & parent) const
+			MessageSender * create_sender(const MessageSenderConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, EventStatusObserver & parent) const override
 			{
 				
 				if (auto concrete_configuration = dynamic_cast<const MessageCountingSenderConfiguration*>(&sender_configuration)) {
@@ -288,7 +285,7 @@ int main()
 		TestCasePerformer test_performer(suite_config.testsBegin()->performerConfig(), test_client, test_notifier, sender_factory);
 		test_performer.sendAll();
 
-		std::this_thread::sleep_for(std::chrono::milliseconds(100));
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
 
 		//TO DO equality assert
 
@@ -297,66 +294,164 @@ int main()
 	/////////////////
 	{
 
-		auto consumer_config = ConsumerConfiguration("consumer1", "queue", "CMS_CLIENT_QUEUE", "close", "");
-		auto producer_config = ProducerConfiguration("producer1", "queue", "CMS_CLIENT_QUEUE", {});
-		auto session_config = SessionConfiguration("session1", true, false, { consumer_config }, { producer_config });
-		auto connection_config = ConnectionConfiguration("connection1", "failover:(localhost:5672)?maxReconnectAttempts=5", "admin", "admin", "", { session_config });
-		auto wrapper_config = WrapperConfiguration(std::vector< ConnectionConfiguration>({ connection_config }));
+		///test impl
 
-		MessageReceiverConfiguration receiver_config("connection1", "session1", "consumer1");
-		ExceptionsConfiguration exception_config("connection1", 0);
-		TestCaseVerifierConfiguration verifier_config({ &receiver_config }, { &exception_config });
+		class TestMessageSender : public MessageSender
+		{
+		public:
+			TestMessageSender(const MessageSenderConfiguration& config, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+				:MessageSender(config, client_params, parent)
+			{
+			}
+			std::string createMessageBody() { return "test message sender"; }
+		};
+		class TestMessageCountingSender : public MessageCountingSender
+		{
+		public:
+			TestMessageCountingSender(const MessageCountingSenderConfiguration& config, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+				:MessageCountingSender(config, client_params, parent)
+			{
+			}
+			std::string createMessageBody() { return "test message counting sender"; }
+		};
+		class TestMessageDecoratingSender : public MessageDecoratingSender {
+		public:
+			TestMessageDecoratingSender(const MessageDecoratingSenderConfiguration& config, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+				:MessageDecoratingSender(config, client_params, parent)
+			{
+			}
+			std::string createMessageBody() { return "test message decorating sender"; }
+		};
+		class TestMessageCountingDecoratingSender : public MessageCountingDecoratingSender
+		{
+		public:
+			TestMessageCountingDecoratingSender(const MessageCountingDecoratingSenderConfiguration& config, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+				:MessageCountingDecoratingSender(config, client_params, parent)
+			{
+			}
+			std::string createMessageBody() { return "test message counting decorating sender"; }
+		};
 
+		class TestSenderFactory : public MessageSenderFactory
+		{
+		public:
+			MessageSender * create_sender(const MessageSenderConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, EventStatusObserver & parent) const override
+			{
 
-		MessageSenderConfiguration sender_config("connection1", "session1", "producer1");
-		TestCasePerformerConfiguration test_performer_config({ &sender_config });
+				if (auto concrete_configuration = dynamic_cast<const MessageCountingSenderConfiguration*>(&sender_configuration))  {
+					return new TestMessageCountingSender(*concrete_configuration, client_configuration, parent);
+				}
+				else if (auto concrete_configuration = dynamic_cast<const MessageDecoratingSenderConfiguration*>(&sender_configuration)) {
+					return new TestMessageDecoratingSender(*concrete_configuration, client_configuration, parent);
+				}
+				else if (auto concrete_configuration = dynamic_cast<const MessageCountingDecoratingSenderConfiguration*>(&sender_configuration)) {
+					return new TestMessageCountingDecoratingSender(*concrete_configuration, client_configuration, parent);
+				}
+				else if (auto concrete_configuration = dynamic_cast<const MessageSenderConfiguration*>(&sender_configuration)) {
+					return new TestMessageSender(*concrete_configuration, client_configuration, parent);
+				}
+				else
+					return nullptr;
+			}
+		};
+		///
+		auto sender_factory = new TestSenderFactory();
 
-		TestCaseConfiguration test_case_config("test_case_1", "test_function_1", true, wrapper_config, test_performer_config, verifier_config);
-
-		TestSuiteConfiguration test_suite_config("test_suite.config", { test_case_config });
+		TestSuiteJsonConfigParser parser("test_case_all.config");
+		auto suite_config = parser.createConfiguration();
 
 
 		TestExceptionListener test_exception_listener;
 
 		auto logger = std::make_shared<StdOutLogger>();
-		CMSClientTestUnit test_client(wrapper_config, logger, "", &test_exception_listener, &test_exception_listener, &test_exception_listener);
+		CMSClientTestUnit test_client(suite_config.testsBegin()->uutConfig(), nullptr, "", &test_exception_listener, &test_exception_listener, &test_exception_listener);
 
 		Notifier test_notifier(nullptr);
 
-
-
-		TestCasePerformer test_performer(test_performer_config, test_client, test_notifier,nullptr);
+		TestCaseVerifier test_verifier(suite_config.testsBegin()->verifierConfig(), test_client, test_notifier);
+	
+		TestCasePerformer test_performer(suite_config.testsBegin()->performerConfig(), test_client, test_notifier, sender_factory);
+	
+		test_performer.sendAll();
+		
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
 	}
 
 	{
 
-		auto consumer_config = ConsumerConfiguration("consumer1", "queue", "CMS_CLIENT_QUEUE", "close", "");
-		auto producer_config = ProducerConfiguration("producer1", "queue", "CMS_CLIENT_QUEUE", {});
-		auto session_config = SessionConfiguration("session1", true, false, { consumer_config }, { producer_config });
-		auto connection_config = ConnectionConfiguration("connection1", "failover:(localhost:5672)?maxReconnectAttempts=5", "admin", "admin", "", { session_config });
-		auto wrapper_config = WrapperConfiguration(std::vector< ConnectionConfiguration>({ connection_config }));
+		///test impl
 
-		MessageReceiverConfiguration receiver_config("connection1", "session1", "consumer1");
-		ExceptionsConfiguration exception_config("connection1", 0);
-		TestCaseVerifierConfiguration verifier_config({ &receiver_config }, { &exception_config });
+		class TestMessageSender : public MessageSender
+		{
+		public:
+			TestMessageSender(const MessageSenderConfiguration& config, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+				:MessageSender(config, client_params, parent)
+			{
+			}
+			std::string createMessageBody() { return "test message sender"; }
+		};
+		class TestMessageCountingSender : public MessageCountingSender
+		{
+		public:
+			TestMessageCountingSender(const MessageCountingSenderConfiguration& config, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+				:MessageCountingSender(config, client_params, parent)
+			{
+			}
+			std::string createMessageBody() { return "test message counting sender"; }
+		};
+		class TestMessageDecoratingSender : public MessageDecoratingSender {
+		public:
+			TestMessageDecoratingSender(const MessageDecoratingSenderConfiguration& config, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+				:MessageDecoratingSender(config, client_params, parent)
+			{
+			}
+			std::string createMessageBody() { return "test message decorating sender"; }
+		};
+		class TestMessageCountingDecoratingSender : public MessageCountingDecoratingSender
+		{
+		public:
+			TestMessageCountingDecoratingSender(const MessageCountingDecoratingSenderConfiguration& config, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+				:MessageCountingDecoratingSender(config, client_params, parent)
+			{
+			}
+			std::string createMessageBody() { return "test message counting decorating sender"; }
+		};
 
+		class TestSenderFactory : public MessageSenderFactory
+		{
+		public:
+			MessageSender * create_sender(const MessageSenderConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, EventStatusObserver & parent) const override
+			{
 
-		MessageSenderConfiguration sender_config("connection1", "session1", "producer1");
-		TestCasePerformerConfiguration test_performer_config({ &sender_config });
+				if (auto concrete_configuration = dynamic_cast<const MessageCountingSenderConfiguration*>(&sender_configuration)) {
+					return new TestMessageCountingSender(*concrete_configuration, client_configuration, parent);
+				}
+				else if (auto concrete_configuration = dynamic_cast<const MessageDecoratingSenderConfiguration*>(&sender_configuration)) {
+					return new TestMessageDecoratingSender(*concrete_configuration, client_configuration, parent);
+				}
+				else if (auto concrete_configuration = dynamic_cast<const MessageCountingDecoratingSenderConfiguration*>(&sender_configuration)) {
+					return new TestMessageCountingDecoratingSender(*concrete_configuration, client_configuration, parent);
+				}
+				else if (auto concrete_configuration = dynamic_cast<const MessageSenderConfiguration*>(&sender_configuration)) {
+					return new TestMessageSender(*concrete_configuration, client_configuration, parent);
+				}
+				else
+					return nullptr;
+			}
+		};
+		///
+		auto sender_factory = new TestSenderFactory();
 
-		TestCaseConfiguration test_case_config("test_case_1", "test_function_1", true, wrapper_config, test_performer_config, verifier_config);
+		TestSuiteJsonConfigParser parser("test_case_all.config");
+		auto suite_config = parser.createConfiguration();
 
-		TestSuiteConfiguration test_suite_config("test_suite.config", { test_case_config });
-
-
-		TestExceptionListener test_exception_listener;
-
-		auto logger = std::make_shared<StdOutLogger>();
-		CMSClientTestUnit test_client(wrapper_config, logger, "", &test_exception_listener, &test_exception_listener, &test_exception_listener);
-
-		Notifier test_notifier(nullptr);
-
-		TestCasePerformer test_performer(test_performer_config, test_client, test_notifier, nullptr);
+		TestFunctionRegister test_register;
+		test_register.registerTestFunction("test_function_1", test_fun);		
+		
+		StdOutTestObserver testObserver;
+	
+		TestCase test_case(*suite_config.testsBegin(), sender_factory, test_register, &testObserver);
+		test_case.run();
 	}
 
 }

@@ -1,8 +1,11 @@
 #include <utils/MessageVerifier.h>
 #include <MessageDecorator/MessageDecoratorFactory.h>
 #include <TestEventWrapperFactory/EventWrapperFactory.h>
+#include <fmt/format.h>
 
-MessageVerifier::MessageVerifier(const MessageDecoratorConfiguration & decoratorConfig)
+MessageVerifier::MessageVerifier(const std::string &id, const MessageDecoratorConfiguration & decoratorConfig, Notifier & parent)
+	:mId{ id },
+	mParent{ parent }
 {
 	
 
@@ -20,6 +23,9 @@ void MessageVerifier::verify(const cms::Message* message) const
 	std::for_each(std::cbegin(mVerifiers), std::end(mVerifiers), [this, message](IExpectedField* item)
 	{
 		auto t = mVerifierFactory.create(message, item);
-		
+		if (!t)
+			mParent.testEvent(EventStatus(false, mId, fmt::format("expected message field missing {} {}", to_string(item->expectedField()), item->fieldName())));
+		else
+			delete t;
 	});
 }

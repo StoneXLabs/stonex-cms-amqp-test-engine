@@ -28,7 +28,7 @@ ProducerTestUnit::ProducerTestUnit(const ProducerConfiguration & params, std::sh
 	else
 		throw cms::CMSException("Session used to create producer do not exist");
 
-	if (auto log_source = dynamic_cast<StonexLogSource*>(mProducer); log_source != nullptr)
+	if (auto log_source = dynamic_cast<StonexLogSource*>(mProducer); log_source != nullptr && logger != nullptr)
 		logger->attach("session", log_source);
 }
 

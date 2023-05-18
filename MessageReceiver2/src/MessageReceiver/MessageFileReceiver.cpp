@@ -1,7 +1,7 @@
 #include <MessageReceiver/MessageFileReceiver.h>
 
-MessageFileReceiver::MessageFileReceiver(const FileMessageReceiverConfiguration & config, CMSClientTestUnit & client_params, EventStatusObserver & parent)
-	:MessageReceiver(config, client_params, parent),
+MessageFileReceiver::MessageFileReceiver(const FileMessageReceiverConfiguration & config, CMSClientTestUnit & client_params, Notifier & parent)
+	:MessageReceiver(config, client_params),
 	MessageFileDestination(config.filePath())
 {
 }

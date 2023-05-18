@@ -9,7 +9,7 @@
 class MessageCountingDecoratingFileReceiver : public MessageReceiver, public ReceivedMessageCounter, public MessageVerifier, public MessageFileDestination
 {
 public:
-	explicit MessageCountingDecoratingFileReceiver(const FileMessageCountingDecoratingReceiverConfiguration& config, CMSClientTestUnit & client_params, EventStatusObserver& parent);
+	explicit MessageCountingDecoratingFileReceiver(const FileMessageCountingDecoratingReceiverConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent);
 	void onMessage(const cms::Message* message) override;
 
 };

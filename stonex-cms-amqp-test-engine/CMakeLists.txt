@@ -16,6 +16,9 @@ file(GLOB sourceFiles
 #	${PROJECT_SOURCE_DIR}/src/VerifyingReceiverFactory/*.cpp
 #	${PROJECT_SOURCE_DIR}/src/TestEventWrapperFactory/*.cpp
 	${PROJECT_SOURCE_DIR}/src/TestSuite/TestCasePerformer*.cpp
+	${PROJECT_SOURCE_DIR}/src/TestSuite/TestCaseVerifier*.cpp
+	${PROJECT_SOURCE_DIR}/src/TestSuite/TestCase*.cpp
+	${PROJECT_SOURCE_DIR}/src/TestSuite/TestFunctionRegister*.cpp
 	)
 
 file(GLOB headerFiles 
@@ -27,6 +30,9 @@ file(GLOB headerFiles
 #	${PROJECT_SOURCE_DIR}/include/VerifyingReceiverFactory/*.h
 #	${PROJECT_SOURCE_DIR}/include/TestEventWrapperFactory/*.h
 	${PROJECT_SOURCE_DIR}/include/TestSuite/TestCasePerformer*.h
+	${PROJECT_SOURCE_DIR}/include/TestSuite/TestCaseVerifier*.h
+	${PROJECT_SOURCE_DIR}/include/TestSuite/TestCase*.h
+	${PROJECT_SOURCE_DIR}/include/TestSuite/TestFunctionRegister*.h
 	)
 
 

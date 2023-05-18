@@ -5,16 +5,19 @@
 #include <cms/Message.h>
 #include <MessageContentVerifiers/ExpectedField.h>
 #include <MessageContentVerifiers/FieldVerifierFactory.h>
+#include <Notifier/TestNotifier.h>
 
 class MessageVerifier
 {
 public:
-	explicit MessageVerifier(const MessageDecoratorConfiguration& decoratorConfig);
+	MessageVerifier(const std::string &id, const MessageDecoratorConfiguration& decoratorConfig, Notifier & parent);
 	void verify(const cms::Message* message) const;
 protected:
 	std::vector<IExpectedField*> mVerifiers;
 
 private:
 	FieldVerifierFactory mVerifierFactory;
+	const std::string mId;
+	Notifier &mParent;
 };
 

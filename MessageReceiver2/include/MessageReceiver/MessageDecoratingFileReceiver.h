@@ -7,7 +7,7 @@
 class MessageDecoratingFileReceiver : public MessageReceiver, public MessageFileDestination, public MessageVerifier
 {
 public:
-	explicit MessageDecoratingFileReceiver(const FileMessageDecoratingReceiverConfiguration& config, CMSClientTestUnit & client_params, EventStatusObserver& parent);
+	explicit MessageDecoratingFileReceiver(const FileMessageDecoratingReceiverConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent);
 
 	void onMessage(const cms::Message* message) override;
 

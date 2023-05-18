@@ -24,7 +24,7 @@
 
 #include "Configuration/MessageReceiverConfiguration.h"
 #include <Wrapper/CMSClientTestUnit.h>
-#include <Notifier/EventStatusObserver.h>
+#include <Notifier/TestNotifier.h>
 
 #include <utils/EventCounter.h>
 #include <utils/MessageFile.h>
@@ -32,7 +32,7 @@
 class MessageReceiver : public cms::MessageListener
 {
 public:
-	MessageReceiver(const MessageReceiverConfiguration& params, CMSClientTestUnit & client_params, EventStatusObserver& parent);
+	MessageReceiver(const MessageReceiverConfiguration& params, CMSClientTestUnit & client_params);
 
 	void setMessageListener(cms::MessageListener* listener);
 	std::string id() const;
@@ -43,5 +43,4 @@ protected:
 	cms::MessageListener* mListener{ nullptr };
 	cms::MessageConsumer* mConsumer{ nullptr };
 	const std::string mId{};
-	EventStatusObserver& mParent;
 };

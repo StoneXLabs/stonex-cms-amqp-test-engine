@@ -2,10 +2,11 @@
 
 
 
-MessageDecoratingFileReceiver::MessageDecoratingFileReceiver(const FileMessageDecoratingReceiverConfiguration & config, CMSClientTestUnit & client_params, EventStatusObserver & parent)
-	: MessageReceiver(config, client_params, parent),
+MessageDecoratingFileReceiver::MessageDecoratingFileReceiver(const FileMessageDecoratingReceiverConfiguration & config, CMSClientTestUnit & client_params, Notifier & parent)
+	: MessageReceiver(config, client_params),
 	MessageFileDestination(config.filePath()),
-	MessageVerifier(config.decorations())
+	MessageVerifier(config.consumerId(), config.decorations(), parent)
+
 {
 }
 

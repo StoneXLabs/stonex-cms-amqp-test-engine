@@ -7,7 +7,7 @@
 class MessageCountingDecoratingReceiver : public MessageReceiver, public ReceivedMessageCounter,public MessageVerifier
 {
 public:
-	explicit MessageCountingDecoratingReceiver(const MessageCountingDecoratingReceiverConfiguration& config, CMSClientTestUnit & client_params, EventStatusObserver& parent);
+	explicit MessageCountingDecoratingReceiver(const MessageCountingDecoratingReceiverConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent);
 	void onMessage(const cms::Message* message) override;
 
 

@@ -49,4 +49,7 @@ FIELD_TYPE from_boost_value_kind(const boost::json::kind& kind);
 const std::string values_string(const boost::json::value &val);
 FIELD_TYPE fromString(const std::string field_string);
 FIELD_TYPE fromKeyValue(const std::string key, const boost::json::value &val);
-//FIELD_TYPE fromObject(const boost::json::object::value_type field_object);
+
+std::string to_string(FIELD_TYPE ft);
+
+std::ostream& operator<< (std::ostream &os, const FIELD_TYPE& ob);

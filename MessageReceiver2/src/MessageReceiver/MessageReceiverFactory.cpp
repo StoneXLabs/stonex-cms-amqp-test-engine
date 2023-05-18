@@ -18,44 +18,10 @@
 #include <MessageReceiver/MessageCountingDecoratingReceiver.h>
 #include <MessageReceiver/MessageCountingDecoratingFileReceiver.h>
 
-MessageReceiver * MessageReceiverFactory::create(const MessageReceiverConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, EventStatusObserver & parent) const
+MessageReceiver * MessageReceiverFactory::create(const MessageReceiverConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, Notifier & parent) const
 {
-	if (auto sender = create_sender(sender_configuration, client_configuration, parent); sender == nullptr)
-	{
-		if (auto concrete_configuration = dynamic_cast<const MessageReceiverConfiguration*>(&sender_configuration)) {
-			return new MessageReceiver(*concrete_configuration, client_configuration, parent);
-		}
-		else if (auto concrete_configuration = dynamic_cast<const MessageCountingReceiverConfiguration*>(&sender_configuration)) {
-			return new MessageCountingReceiver(*concrete_configuration, client_configuration, parent);
-		}
-		else if (auto concrete_configuration = dynamic_cast<const MessageDecoratingReceiverConfiguration*>(&sender_configuration)) {
-			return new MessageDecoratingReceiver(*concrete_configuration, client_configuration, parent);
-		}
-		else if (auto concrete_configuration = dynamic_cast<const MessageCountingDecoratingReceiverConfiguration*>(&sender_configuration)) {
-			return new MessageCountingDecoratingReceiver(*concrete_configuration, client_configuration, parent);
-		}
-		else if (auto concrete_configuration = dynamic_cast<const FileMessageReceiverConfiguration*>(&sender_configuration)) {
-			return new MessageFileReceiver(*concrete_configuration, client_configuration, parent);
-		}
-		else if (auto concrete_configuration = dynamic_cast<const FileMessageCountingReceiverConfiguration*>(&sender_configuration)) {
-			return new MessageCountingFileReceiver(*concrete_configuration, client_configuration, parent);
-		}
-		else if (auto concrete_configuration = dynamic_cast<const FileMessageDecoratingReceiverConfiguration*>(&sender_configuration)) {
-			return new MessageDecoratingFileReceiver(*concrete_configuration, client_configuration, parent);
-		}
-		else if (auto concrete_configuration = dynamic_cast<const FileMessageCountingDecoratingReceiverConfiguration*>(&sender_configuration)) {
-			return new MessageCountingDecoratingFileReceiver(*concrete_configuration, client_configuration, parent);
-		}
-		return nullptr;
-	}
-}
 
-MessageReceiver * MessageReceiverFactory::create_sender(const MessageReceiverConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, EventStatusObserver & parent) const
-{
-	/*if (auto concrete_configuration = dynamic_cast<const MessageReceiverConfiguration*>(&sender_configuration)) {
-		return new MessageReceiver(*concrete_configuration, client_configuration, parent);
-	}
-	else if (auto concrete_configuration = dynamic_cast<const MessageCountingReceiverConfiguration*>(&sender_configuration)) {
+	if (auto concrete_configuration = dynamic_cast<const MessageCountingReceiverConfiguration*>(&sender_configuration)) {
 		return new MessageCountingReceiver(*concrete_configuration, client_configuration, parent);
 	}
 	else if (auto concrete_configuration = dynamic_cast<const MessageDecoratingReceiverConfiguration*>(&sender_configuration)) {
@@ -63,7 +29,27 @@ MessageReceiver * MessageReceiverFactory::create_sender(const MessageReceiverCon
 	}
 	else if (auto concrete_configuration = dynamic_cast<const MessageCountingDecoratingReceiverConfiguration*>(&sender_configuration)) {
 		return new MessageCountingDecoratingReceiver(*concrete_configuration, client_configuration, parent);
-	}*/
-
-	return nullptr;
+	}
+	else if (auto concrete_configuration = dynamic_cast<const FileMessageReceiverConfiguration*>(&sender_configuration)) {
+		return new MessageFileReceiver(*concrete_configuration, client_configuration, parent);
+	}
+	else if (auto concrete_configuration = dynamic_cast<const FileMessageCountingReceiverConfiguration*>(&sender_configuration)) {
+		return new MessageCountingFileReceiver(*concrete_configuration, client_configuration, parent);
+	}
+	else if (auto concrete_configuration = dynamic_cast<const FileMessageDecoratingReceiverConfiguration*>(&sender_configuration)) {
+		return new MessageDecoratingFileReceiver(*concrete_configuration, client_configuration, parent);
+	}
+	else if (auto concrete_configuration = dynamic_cast<const FileMessageCountingDecoratingReceiverConfiguration*>(&sender_configuration)) {
+		return new MessageCountingDecoratingFileReceiver(*concrete_configuration, client_configuration, parent);
+	}
+	else if (auto concrete_configuration = dynamic_cast<const MessageReceiverConfiguration*>(&sender_configuration)) {
+		return new MessageReceiver(*concrete_configuration, client_configuration);
+	}
+	else 
+	{
+		return nullptr;
+	}
+		
+	
+	
 }

@@ -33,7 +33,7 @@ ConnectionTestUnit::ConnectionTestUnit(const ConnectionConfiguration& params, st
 
 		auto factory = cms::amqp::CMSConnectionFactory::createCMSConnectionFactory(params.url());
 		
-		if (auto log_source = dynamic_cast<StonexLogSource*>(factory); log_source != nullptr)
+		if (auto log_source = dynamic_cast<StonexLogSource*>(factory); log_source != nullptr && logger != nullptr)
 			logger->attach("connection factory", log_source);
 		
 			
@@ -55,7 +55,7 @@ ConnectionTestUnit::ConnectionTestUnit(const ConnectionConfiguration& params, st
 
 			if (mConnection) {
 
-				if (auto log_source = dynamic_cast<StonexLogSource*>(mConnection); log_source != nullptr)
+				if (auto log_source = dynamic_cast<StonexLogSource*>(mConnection); log_source != nullptr && logger != nullptr)
 					logger->attach("connection", log_source);
 
 				mConnection->setExceptionListener(this);

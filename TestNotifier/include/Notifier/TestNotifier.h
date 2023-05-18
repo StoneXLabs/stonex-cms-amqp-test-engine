@@ -27,6 +27,7 @@ class Notifier {
 public:
 	Notifier(TestObserver* reporter);
 	virtual void testEvent(const EventStatus& event);
+	void TestMessage(const NotifyMessage& message);
 	friend std::ostream& operator<<(std::ostream& os, const Notifier& dt);
 private:
 	TestObserver* mReporter{ nullptr };

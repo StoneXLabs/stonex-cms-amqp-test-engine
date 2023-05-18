@@ -30,7 +30,7 @@ SessionTestUnit::SessionTestUnit(const SessionConfiguration* params, std::shared
 	if (conn) {
 		mSession = conn->createSession(params->autoAck() == true ? cms::Session::AcknowledgeMode::AUTO_ACKNOWLEDGE : cms::Session::AcknowledgeMode::CLIENT_ACKNOWLEDGE);
 		
-		if (auto log_source = dynamic_cast<StonexLogSource*>(mSession); log_source != nullptr)
+		if (auto log_source = dynamic_cast<StonexLogSource*>(mSession); log_source != nullptr && logger != nullptr)
 			logger->attach("session", log_source);
 	}
 	else

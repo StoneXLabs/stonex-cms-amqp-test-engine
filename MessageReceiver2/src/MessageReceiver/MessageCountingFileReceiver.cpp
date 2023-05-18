@@ -1,8 +1,8 @@
 #include <MessageReceiver/MessageCountingFileReceiver.h>
 
-MessageCountingFileReceiver::MessageCountingFileReceiver(const FileMessageCountingReceiverConfiguration & config, CMSClientTestUnit & client_params, EventStatusObserver & parent)
-	:MessageReceiver(config, client_params,parent),
-	ReceivedMessageCounter(config.expectedEventCount()),
+MessageCountingFileReceiver::MessageCountingFileReceiver(const FileMessageCountingReceiverConfiguration & config, CMSClientTestUnit & client_params, Notifier & parent)
+	:MessageReceiver(config, client_params),
+	ReceivedMessageCounter(id(), config.expectedEventCount(), parent),
 	MessageFileDestination(config.filePath())
 {
 }

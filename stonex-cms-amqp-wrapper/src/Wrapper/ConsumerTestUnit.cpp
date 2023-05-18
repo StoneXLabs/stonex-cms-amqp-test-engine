@@ -29,7 +29,7 @@ ConsumerTestUnit::ConsumerTestUnit(const ConsumerConfiguration & params, std::sh
 		else
 			mConsumer = session->createConsumer(mDestination, params.selector());
 	
-		if (auto log_source = dynamic_cast<StonexLogSource*>(mConsumer); log_source != nullptr)
+		if (auto log_source = dynamic_cast<StonexLogSource*>(mConsumer); log_source != nullptr && logger != nullptr)
 			logger->attach("session", log_source);
 	}
 	else

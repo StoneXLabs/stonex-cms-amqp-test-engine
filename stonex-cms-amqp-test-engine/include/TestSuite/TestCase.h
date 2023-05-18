@@ -21,14 +21,32 @@
 
 #include <functional>
 #include "TestCaseStatus.h"
+#include <string>
+#include <Configuration/TestCaseConfiguration.h>
+#include "TestCasePerformer.h"
+#include "TestCaseVerifier.h"
+#include <Wrapper/CMSClientTestUnit.h>
 
-class VerifierReport;
+#include <Notifier/TestNotifier.h>
+#include <MessageSender/MessageSenderFactory.h>
 
-class TestCase
+#include "TestFunctionRegister.h"
+
+class TestCase : public Notifier
 {
 public:
-	virtual TestCaseStatus run() = 0;
-	virtual std::string testName() const = 0;
+	TestCase(const TestCaseConfiguration& test_config, MessageSenderFactory* factory, const TestFunctionRegister& functionRegister, TestObserver* observer);
+	void run();
+	
+private:
+	void testEvent(const EventStatus& event) override;
 
+private:
+	CMSClientTestUnit mTestedObject;
+	TestCasePerformer mTestPerformer;
+	TestCaseVerifier mTestVerifier;
+	test_method mTestFunction;
+	const std::string mTestName;
+	bool mTestSuccess{ true };
 };
 
