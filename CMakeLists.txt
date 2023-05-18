@@ -21,7 +21,7 @@ add_subdirectory(MEssageDecorator)
 add_subdirectory(MessageContentVerifiers)
 add_subdirectory(stonex-cms-amqp-test-engine)
 add_subdirectory(TestEventHandler)
-add_subdirectory(Verifier)
+#add_subdirectory(Verifier)
 add_subdirectory(TestNotifier)
 
 

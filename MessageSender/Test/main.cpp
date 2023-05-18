@@ -154,7 +154,7 @@ int main()
 			class TestMessageSender : public MessageSender
 			{
 			public:
-				TestMessageSender(const MessageSenderConfiguration& params, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+				TestMessageSender(const MessageSenderConfiguration& params, CMSClientTestUnit & client_params, Notifier& parent)
 					:MessageSender(params, client_params, parent)
 				{
 				}
@@ -166,7 +166,7 @@ int main()
 			};
 
 			auto test_producer_config = MessageSenderConfiguration("connection1", "session1", "producer1");
-			TestMessageSender sender(test_producer_config, test_client, event_observer);
+			TestMessageSender sender(test_producer_config, test_client, event_notifier);
 			sender.sendMessage();
 		}
 
@@ -174,7 +174,7 @@ int main()
 			class TestMessageSender : public MessageCountingSender
 			{
 			public:
-				TestMessageSender(const MessageCountingSenderConfiguration& params, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+				TestMessageSender(const MessageCountingSenderConfiguration& params, CMSClientTestUnit & client_params, Notifier& parent)
 					:MessageCountingSender(params, client_params, parent)
 				{
 				}
@@ -186,14 +186,14 @@ int main()
 			};
 
 			auto test_producer_config = MessageCountingSenderConfiguration("connection1", "session1", "producer1",1);
-			TestMessageSender sender(test_producer_config, test_client, event_observer);
+			TestMessageSender sender(test_producer_config, test_client, event_notifier);
 			sender.sendMessage();
 			assert(sender.sentMessageCount() == 1);
 		}
 
 		{
 			auto test_producer_config = FileMessageSenderConfiguration("connection1", "session1", "producer1", "message_file.txt");
-			MessageFileSender sender(test_producer_config, test_client, event_observer);
+			MessageFileSender sender(test_producer_config, test_client, event_notifier);
 			sender.sendMessage();
 		}
 
@@ -201,7 +201,7 @@ int main()
 			class TestMessageSender : public MessageDecoratingSender
 			{
 			public:
-				TestMessageSender(const MessageDecoratingSenderConfiguration& params, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+				TestMessageSender(const MessageDecoratingSenderConfiguration& params, CMSClientTestUnit & client_params, Notifier& parent)
 					:MessageDecoratingSender(params, client_params, parent)
 				{
 				}
@@ -213,13 +213,13 @@ int main()
 			};
 
 			auto test_producer_config = MessageDecoratingSenderConfiguration("connection1", "session1", "producer1", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
-			TestMessageSender sender(test_producer_config, test_client, event_observer);
+			TestMessageSender sender(test_producer_config, test_client, event_notifier);
 			sender.sendMessage();
 		}
 
 		{
 			auto test_producer_config = FileMessageCountingSenderConfiguration("connection1", "session1", "producer1", "message_file.txt", 1);
-			MessageCountingFileSender sender(test_producer_config, test_client, event_observer);
+			MessageCountingFileSender sender(test_producer_config, test_client, event_notifier);
 			sender.sendMessage();
 			assert(sender.sentMessageCount() == 1);
 		}
@@ -228,7 +228,7 @@ int main()
 			class TestMessageSender : public MessageCountingDecoratingSender
 			{
 			public:
-				TestMessageSender(const MessageCountingDecoratingSenderConfiguration& params, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+				TestMessageSender(const MessageCountingDecoratingSenderConfiguration& params, CMSClientTestUnit & client_params, Notifier& parent)
 					:MessageCountingDecoratingSender(params, client_params, parent)
 				{
 				}
@@ -240,20 +240,20 @@ int main()
 			};
 
 			auto test_producer_config = MessageCountingDecoratingSenderConfiguration("connection1", "session1", "producer1", 1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
-			TestMessageSender sender(test_producer_config, test_client, event_observer);
+			TestMessageSender sender(test_producer_config, test_client, event_notifier);
 			sender.sendMessage();
 			assert(sender.sentMessageCount() == 1);
 		}
 
 		{
 			auto test_producer_config = FileMessageDecoratingSenderConfiguration("connection1", "session1", "producer1", "message_file.txt", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
-			MessageDecoratingFileSender sender(test_producer_config, test_client, event_observer);
+			MessageDecoratingFileSender sender(test_producer_config, test_client, event_notifier);
 			sender.sendMessage();
 		}
 
 		{
 			auto test_producer_config = FileMessageCountingDecoratingSenderConfiguration("connection1", "session1", "producer1", "message_file.txt", 1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
-			MessageCountingDecoratingFileSender sender(test_producer_config, test_client, event_observer);
+			MessageCountingDecoratingFileSender sender(test_producer_config, test_client, event_notifier);
 			sender.sendMessage();
 			assert(sender.sentMessageCount() == 1);
 		}

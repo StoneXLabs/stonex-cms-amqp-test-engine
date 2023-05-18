@@ -21,12 +21,12 @@
 
 #include "MessageSender.h"
 
-class EventStatusObserver;
+class Notifier;
 
 class MessageSenderFactory {
 public:
-	MessageSender* create(const MessageSenderConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, EventStatusObserver& parent)  const;
+	MessageSender* create(const MessageSenderConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, Notifier& parent)  const;
 protected:
-	virtual MessageSender* create_sender(const MessageSenderConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, EventStatusObserver& parent)  const;
+	virtual MessageSender* create_sender(const MessageSenderConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, Notifier& parent)  const;
 
 };

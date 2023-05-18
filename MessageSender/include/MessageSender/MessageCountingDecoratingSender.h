@@ -7,7 +7,7 @@
 class MessageCountingDecoratingSender : public MessageSender, public SentMessageCounter,public MessageDecorator
 {
 public:
-	explicit MessageCountingDecoratingSender(const MessageCountingDecoratingSenderConfiguration& config, CMSClientTestUnit & client_params, EventStatusObserver& parent);
+	explicit MessageCountingDecoratingSender(const MessageCountingDecoratingSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent);
 	bool send(int msg_delay_ms = 0) override;
 
 };

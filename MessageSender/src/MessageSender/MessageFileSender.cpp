@@ -1,6 +1,6 @@
 #include <MessageSender/MessageFileSender.h>
 
-MessageFileSender::MessageFileSender(const FileMessageSenderConfiguration & config, CMSClientTestUnit & client_params, EventStatusObserver & parent)
+MessageFileSender::MessageFileSender(const FileMessageSenderConfiguration & config, CMSClientTestUnit & client_params, Notifier & parent)
 	:MessageSender(config, client_params, parent),
 	MessageFileSource(config.filePath())
 {
@@ -18,7 +18,8 @@ bool MessageFileSender::send(int msg_delay_ms)
 		mProducer->send(mes);
 		return true;
 	}
-	return false;
+	else
+		return false;
 
 }
 

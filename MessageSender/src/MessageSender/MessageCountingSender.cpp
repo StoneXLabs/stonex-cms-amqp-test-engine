@@ -1,6 +1,6 @@
 #include <MessageSender/MessageCountingSender.h>
 
-MessageCountingSender::MessageCountingSender(const MessageCountingSenderConfiguration & config, CMSClientTestUnit & client_params, EventStatusObserver & parent)
+MessageCountingSender::MessageCountingSender(const MessageCountingSenderConfiguration & config, CMSClientTestUnit & client_params, Notifier & parent)
 	:MessageSender(config, client_params, parent),
 	SentMessageCounter(config.expectedEventCount())
 
@@ -21,7 +21,8 @@ bool MessageCountingSender::send(int msg_delay_ms)
 		incrementSentCount();
 		return true;
 	}
-	return false;
+	else
+		return false;
 
 }
 

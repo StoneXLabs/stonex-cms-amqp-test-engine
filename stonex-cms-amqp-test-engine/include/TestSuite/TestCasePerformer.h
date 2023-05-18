@@ -31,9 +31,8 @@
 
 #include "MessageSender/MessageSenderFactory.h"
 
-#include <Notifier/EventStatusObserver.h>
 
-class TestCasePerformer : public EventStatusObserver
+class TestCasePerformer
 {
 
 

@@ -1,6 +1,6 @@
 #include <MessageSender/MessageCountingFileSender.h>
 
-MessageCountingFileSender::MessageCountingFileSender(const FileMessageCountingSenderConfiguration & config, CMSClientTestUnit & client_params, EventStatusObserver & parent)
+MessageCountingFileSender::MessageCountingFileSender(const FileMessageCountingSenderConfiguration & config, CMSClientTestUnit & client_params, Notifier & parent)
 	:MessageSender(config, client_params,parent),
 	SentMessageCounter(config.expectedEventCount()),
 	MessageFileSource(config.filePath())
@@ -19,9 +19,10 @@ bool MessageCountingFileSender::send(int msg_delay_ms)
 		auto message = mSession->createTextMessage(message_body);
 		mProducer->send(message);
 		incrementSentCount();
-		return false;
+		return true;
 	}
-	return false;
+	else
+		return false;
 
 }
 

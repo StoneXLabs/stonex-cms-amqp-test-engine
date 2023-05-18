@@ -21,14 +21,14 @@
 
 #include "Configuration/MessageSenderConfiguration.h"
 #include <Wrapper/CMSClientTestUnit.h>
-#include <Notifier/EventStatusObserver.h>
+#include <Notifier/TestNotifier.h>
 
 #include <utils/EventCounter.h>
 #include <utils/MessageFile.h>
 class MessageSender
 {
 public:
-	MessageSender(const MessageSenderConfiguration& params, CMSClientTestUnit & client_params, EventStatusObserver& parent);
+	MessageSender(const MessageSenderConfiguration& params, CMSClientTestUnit & client_params, Notifier& parent);
 
 	bool sendMessage();
 	std::string id() const;
@@ -41,5 +41,5 @@ protected:
 	SessionTestUnit* mSession;
 	ProducerTestUnit* mProducer;
 	const std::string mId{};
-	EventStatusObserver& mParent;
+	Notifier& mParent;
 };

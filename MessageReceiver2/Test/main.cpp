@@ -7,6 +7,9 @@
 
 
 #include "Wrapper/CMSClientTestUnit.h"
+
+#include <ConfigurationParser/TestCaseReceiverConfigurationParser.h>
+
 #include <MessageReceiver/MessageReceiver.h>
 #include <MessageReceiver/MessageFileReceiver.h>
 #include <MessageReceiver/MessageCountingReceiver.h>
@@ -147,38 +150,37 @@ int main()
 		CMSClientTestUnit test_client(wrapper_config, logger);
 
 		Notifier event_notifier(nullptr);
-		EventStatusObserver event_observer(event_notifier);
 
 		{
 	
 			auto test_consumer_config = MessageReceiverConfiguration("connection1", "session1", "consumer1");
-			MessageReceiver receiver(test_consumer_config, test_client, event_observer);
+			MessageReceiver receiver(test_consumer_config, test_client);
 			
 		}
 
 		{
 			auto test_consumer_config = MessageCountingReceiverConfiguration("connection1", "session1", "consumer1",1);
-			MessageCountingReceiver receiver(test_consumer_config, test_client, event_observer);
+			MessageCountingReceiver receiver(test_consumer_config, test_client, event_notifier);
 			
 			//assert(receiver.receivedMessageCount() == 1);
 		}
 
 		{
 			auto test_consumer_config = FileMessageReceiverConfiguration("connection1", "session1", "consumer1", "message_file.txt");
-			MessageFileReceiver receiver(test_consumer_config, test_client, event_observer);
+			MessageFileReceiver receiver(test_consumer_config, test_client, event_notifier);
 			
 		}
 
 		{
 	
 			auto test_consumer_config = MessageDecoratingReceiverConfiguration("connection1", "session1", "consumer1", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
-			MessageDecoratingReceiver receiver(test_consumer_config, test_client, event_observer);
+			MessageDecoratingReceiver receiver(test_consumer_config, test_client, event_notifier);
 			
 		}
 
 		{
 			auto test_consumer_config = FileMessageCountingReceiverConfiguration("connection1", "session1", "consumer1", "message_file.txt", 1);
-			MessageCountingFileReceiver receiver(test_consumer_config, test_client, event_observer);
+			MessageCountingFileReceiver receiver(test_consumer_config, test_client, event_notifier);
 			
 			//assert(receiver.receivedMessageCount() == 1);
 		}
@@ -186,20 +188,20 @@ int main()
 		{
 	
 			auto test_consumer_config = MessageCountingDecoratingReceiverConfiguration("connection1", "session1", "consumer1", 1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
-			MessageCountingDecoratingReceiver receiver(test_consumer_config, test_client, event_observer);
+			MessageCountingDecoratingReceiver receiver(test_consumer_config, test_client, event_notifier);
 			
 			//assert(receiver.receivedMessageCount() == 1);
 		}
 
 		{
 			auto test_consumer_config = FileMessageDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "message_file.txt", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
-			MessageDecoratingFileReceiver receiver(test_consumer_config, test_client, event_observer);
+			MessageDecoratingFileReceiver receiver(test_consumer_config, test_client, event_notifier);
 			
 		}
 
 		{
 			auto test_consumer_config = FileMessageCountingDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "message_file.txt", 1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
-			MessageCountingDecoratingFileReceiver receiver(test_consumer_config, test_client, event_observer);
+			MessageCountingDecoratingFileReceiver receiver(test_consumer_config, test_client, event_notifier);
 			
 			//assert(receiver.receivedMessageCount() == 1);
 		}

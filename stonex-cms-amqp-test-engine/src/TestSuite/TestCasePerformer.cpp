@@ -24,10 +24,9 @@
 
 
 TestCasePerformer::TestCasePerformer(const TestCasePerformerConfiguration & params, CMSClientTestUnit & client_params, Notifier& notifier, MessageSenderFactory* senderFactory)
-	:EventStatusObserver(notifier)
 {
 	if(senderFactory)
-		std::transform(std::cbegin(params.senders()), std::cend(params.senders()), std::back_inserter(mSenders), [this,&client_params,&senderFactory](const MessageSenderConfiguration* item) { return senderFactory->create(*item, client_params, *this); });
+		std::transform(std::cbegin(params.senders()), std::cend(params.senders()), std::back_inserter(mSenders), [this,&client_params,&senderFactory, &notifier](const MessageSenderConfiguration* item) { return senderFactory->create(*item, client_params, notifier); });
 }
 
  void TestCasePerformer::sendAll(int msg_delay_ms)

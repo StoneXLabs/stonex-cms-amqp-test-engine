@@ -20,7 +20,7 @@
 #include <MessageSender/MessageSenderFactory.h>
 #include <Notifier/EventStatus.h>
 
-MessageSender::MessageSender(const MessageSenderConfiguration& params, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+MessageSender::MessageSender(const MessageSenderConfiguration& params, CMSClientTestUnit & client_params, Notifier& parent)
 	:mSession{ client_params.session(params.connectionId(), params.sessionId()) },
 	mProducer{ client_params.producer(params.connectionId(), params.sessionId(),params.producerId()) },
 	mId{params.producerId()},
@@ -35,12 +35,12 @@ bool MessageSender::sendMessage()
 	{
 		sent = send(0);
 		if (sent)
-			mParent.onEvent(EventStatus(sent, id(), ""));
+			mParent.testEvent(EventStatus(sent, id(), ""));
 		else
-			mParent.onEvent(EventStatus(sent, id(), "failed to send message"));
+			mParent.testEvent(EventStatus(sent, id(), "failed to send message"));
 	}
 	else
-		mParent.onEvent(EventStatus(sent, id(), "failed to send message. producer not initialized"));
+		mParent.testEvent(EventStatus(sent, id(), "failed to send message. producer not initialized"));
 	
 	return sent;
 }
@@ -62,6 +62,7 @@ bool MessageSender::send(int msg_delay_ms)
 		mProducer->send(mes);
 		return true;
 	}
-	return false;
+	else
+		return false;
 }
 

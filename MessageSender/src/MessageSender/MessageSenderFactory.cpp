@@ -18,7 +18,7 @@
 #include <MessageSender/MessageCountingDecoratingSender.h>
 #include <MessageSender/MessageCountingDecoratingFileSender.h>
 
-MessageSender * MessageSenderFactory::create(const MessageSenderConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, EventStatusObserver & parent) const
+MessageSender * MessageSenderFactory::create(const MessageSenderConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, Notifier & parent) const
 {
 
 	if (auto concrete_configuration = dynamic_cast<const FileMessageSenderConfiguration*>(&sender_configuration)) {
@@ -38,7 +38,7 @@ MessageSender * MessageSenderFactory::create(const MessageSenderConfiguration & 
 	
 }
 
-MessageSender * MessageSenderFactory::create_sender(const MessageSenderConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, EventStatusObserver & parent) const
+MessageSender * MessageSenderFactory::create_sender(const MessageSenderConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, Notifier & parent) const
 {
 	/*if (auto concrete_configuration = dynamic_cast<const MessageSenderConfiguration*>(&sender_configuration)) {
 		return new MessageSender(*concrete_configuration, client_configuration, parent);

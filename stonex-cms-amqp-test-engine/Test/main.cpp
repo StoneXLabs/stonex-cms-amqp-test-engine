@@ -224,7 +224,7 @@ int main()
 		class TestMessageSender : public MessageSender
 		{
 		public:
-			TestMessageSender(const MessageSenderConfiguration& config, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+			TestMessageSender(const MessageSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent)
 				:MessageSender(config, client_params, parent)
 			{
 			}
@@ -233,7 +233,7 @@ int main()
 		class TestMessageCountingSender : public MessageCountingSender
 		{
 		public:
-			TestMessageCountingSender(const MessageCountingSenderConfiguration& config, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+			TestMessageCountingSender(const MessageCountingSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent)
 				:MessageCountingSender(config, client_params, parent)
 			{
 			}
@@ -241,7 +241,7 @@ int main()
 		};
 		class TestMessageDecoratingSender : public MessageDecoratingSender {
 		public:
-			TestMessageDecoratingSender(const MessageDecoratingSenderConfiguration& config, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+			TestMessageDecoratingSender(const MessageDecoratingSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent)
 				:MessageDecoratingSender(config, client_params, parent)
 			{
 			}
@@ -250,7 +250,7 @@ int main()
 		class TestMessageCountingDecoratingSender : public MessageCountingDecoratingSender
 		{
 		public:
-			TestMessageCountingDecoratingSender(const MessageCountingDecoratingSenderConfiguration& config, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+			TestMessageCountingDecoratingSender(const MessageCountingDecoratingSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent)
 				:MessageCountingDecoratingSender(config, client_params, parent)
 			{
 			}
@@ -260,7 +260,7 @@ int main()
 		class TestSenderFactory : public MessageSenderFactory
 		{
 		public:
-			MessageSender * create_sender(const MessageSenderConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, EventStatusObserver & parent) const override
+			MessageSender * create_sender(const MessageSenderConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, Notifier & parent) const override
 			{
 				
 				if (auto concrete_configuration = dynamic_cast<const MessageCountingSenderConfiguration*>(&sender_configuration)) {
@@ -299,7 +299,7 @@ int main()
 		class TestMessageSender : public MessageSender
 		{
 		public:
-			TestMessageSender(const MessageSenderConfiguration& config, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+			TestMessageSender(const MessageSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent)
 				:MessageSender(config, client_params, parent)
 			{
 			}
@@ -308,7 +308,7 @@ int main()
 		class TestMessageCountingSender : public MessageCountingSender
 		{
 		public:
-			TestMessageCountingSender(const MessageCountingSenderConfiguration& config, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+			TestMessageCountingSender(const MessageCountingSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent)
 				:MessageCountingSender(config, client_params, parent)
 			{
 			}
@@ -316,7 +316,7 @@ int main()
 		};
 		class TestMessageDecoratingSender : public MessageDecoratingSender {
 		public:
-			TestMessageDecoratingSender(const MessageDecoratingSenderConfiguration& config, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+			TestMessageDecoratingSender(const MessageDecoratingSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent)
 				:MessageDecoratingSender(config, client_params, parent)
 			{
 			}
@@ -325,7 +325,7 @@ int main()
 		class TestMessageCountingDecoratingSender : public MessageCountingDecoratingSender
 		{
 		public:
-			TestMessageCountingDecoratingSender(const MessageCountingDecoratingSenderConfiguration& config, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+			TestMessageCountingDecoratingSender(const MessageCountingDecoratingSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent)
 				:MessageCountingDecoratingSender(config, client_params, parent)
 			{
 			}
@@ -335,7 +335,7 @@ int main()
 		class TestSenderFactory : public MessageSenderFactory
 		{
 		public:
-			MessageSender * create_sender(const MessageSenderConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, EventStatusObserver & parent) const override
+			MessageSender * create_sender(const MessageSenderConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, Notifier & parent) const override
 			{
 
 				if (auto concrete_configuration = dynamic_cast<const MessageCountingSenderConfiguration*>(&sender_configuration))  {
@@ -384,7 +384,7 @@ int main()
 		class TestMessageSender : public MessageSender
 		{
 		public:
-			TestMessageSender(const MessageSenderConfiguration& config, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+			TestMessageSender(const MessageSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent)
 				:MessageSender(config, client_params, parent)
 			{
 			}
@@ -393,7 +393,7 @@ int main()
 		class TestMessageCountingSender : public MessageCountingSender
 		{
 		public:
-			TestMessageCountingSender(const MessageCountingSenderConfiguration& config, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+			TestMessageCountingSender(const MessageCountingSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent)
 				:MessageCountingSender(config, client_params, parent)
 			{
 			}
@@ -401,7 +401,7 @@ int main()
 		};
 		class TestMessageDecoratingSender : public MessageDecoratingSender {
 		public:
-			TestMessageDecoratingSender(const MessageDecoratingSenderConfiguration& config, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+			TestMessageDecoratingSender(const MessageDecoratingSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent)
 				:MessageDecoratingSender(config, client_params, parent)
 			{
 			}
@@ -410,7 +410,7 @@ int main()
 		class TestMessageCountingDecoratingSender : public MessageCountingDecoratingSender
 		{
 		public:
-			TestMessageCountingDecoratingSender(const MessageCountingDecoratingSenderConfiguration& config, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+			TestMessageCountingDecoratingSender(const MessageCountingDecoratingSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent)
 				:MessageCountingDecoratingSender(config, client_params, parent)
 			{
 			}
@@ -420,7 +420,7 @@ int main()
 		class TestSenderFactory : public MessageSenderFactory
 		{
 		public:
-			MessageSender * create_sender(const MessageSenderConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, EventStatusObserver & parent) const override
+			MessageSender * create_sender(const MessageSenderConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, Notifier & parent) const override
 			{
 
 				if (auto concrete_configuration = dynamic_cast<const MessageCountingSenderConfiguration*>(&sender_configuration)) {

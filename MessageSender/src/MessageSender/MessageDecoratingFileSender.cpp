@@ -2,7 +2,7 @@
 
 
 
-MessageDecoratingFileSender::MessageDecoratingFileSender(const FileMessageDecoratingSenderConfiguration & config, CMSClientTestUnit & client_params, EventStatusObserver & parent)
+MessageDecoratingFileSender::MessageDecoratingFileSender(const FileMessageDecoratingSenderConfiguration & config, CMSClientTestUnit & client_params, Notifier & parent)
 	: MessageSender(config, client_params, parent),
 	MessageFileSource(config.filePath()),
 	MessageDecorator(config.decorations())
@@ -21,9 +21,10 @@ bool MessageDecoratingFileSender::send(int msg_delay_ms)
 		auto message = mSession->createTextMessage(message_body);
 		decorate(message, mSession);
 		mProducer->send(message);
-		return false;
+		return true;
 	}
-	return false;
+	else
+		return false;
 }
 
 std::string MessageDecoratingFileSender::createMessageBody()

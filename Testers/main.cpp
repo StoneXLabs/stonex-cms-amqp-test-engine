@@ -48,7 +48,7 @@
 class TestMessageSender : public MessageSender
 {
 public:
-	TestMessageSender(const MessageSenderConfiguration& params, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+	TestMessageSender(const MessageSenderConfiguration& params, CMSClientTestUnit & client_params, Notifier& parent)
 		:MessageSender(params, client_params, parent)
 	{
 	}
@@ -103,7 +103,7 @@ int main()
 			class TestMessageSender : public MessageSender
 			{
 			public:
-				TestMessageSender(const MessageSenderConfiguration& params, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+				TestMessageSender(const MessageSenderConfiguration& params, CMSClientTestUnit & client_params, Notifier& parent)
 					:MessageSender(params, client_params, parent)
 				{
 				}
@@ -115,10 +115,10 @@ int main()
 			};
 
 			auto test_producer_config = MessageSenderConfiguration("connection1", "session1", "producer1");
-			TestMessageSender sender(test_producer_config, test_client, event_observer);
+			TestMessageSender sender(test_producer_config, test_client, event_notifier);
 
 			auto test_consumer_config = MessageReceiverConfiguration("connection1", "session1", "consumer1");
-			MessageReceiver receiver(test_consumer_config, test_client, event_observer);
+			MessageReceiver receiver(test_consumer_config, test_client);
 
 			TestMessageListener test_listener;
 			receiver.setMessageListener(&test_listener);
@@ -134,7 +134,7 @@ int main()
 			class TestMessageSender : public MessageSender
 			{
 			public:
-				TestMessageSender(const MessageSenderConfiguration& params, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+				TestMessageSender(const MessageSenderConfiguration& params, CMSClientTestUnit & client_params, Notifier& parent)
 					:MessageSender(params, client_params, parent)
 				{
 				}
@@ -146,10 +146,10 @@ int main()
 			};
 
 			auto test_producer_config = MessageSenderConfiguration("connection1", "session1", "producer1");
-			TestMessageSender sender(test_producer_config, test_client, event_observer);
+			TestMessageSender sender(test_producer_config, test_client, event_notifier);
 
 			auto test_consumer_config = MessageCountingReceiverConfiguration("connection1", "session1", "consumer1", 1);
-			MessageCountingReceiver receiver(test_consumer_config, test_client, event_observer);
+			MessageCountingReceiver receiver(test_consumer_config, test_client, event_notifier);
 
 
 			assert(receiver.receivedMessageCount() == 0);
@@ -163,7 +163,7 @@ int main()
 			class TestMessageSender : public MessageSender
 			{
 			public:
-				TestMessageSender(const MessageSenderConfiguration& params, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+				TestMessageSender(const MessageSenderConfiguration& params, CMSClientTestUnit & client_params, Notifier& parent)
 					:MessageSender(params, client_params, parent)
 				{
 				}
@@ -175,10 +175,10 @@ int main()
 			};
 
 			auto test_producer_config = MessageSenderConfiguration("connection1", "session1", "producer1");
-			TestMessageSender sender(test_producer_config, test_client, event_observer);
+			TestMessageSender sender(test_producer_config, test_client, event_notifier);
 
 			auto test_consumer_config = FileMessageReceiverConfiguration("connection1", "session1", "consumer1", "test_message_out.txt");
-			MessageFileReceiver receiver(test_consumer_config, test_client, event_observer);
+			MessageFileReceiver receiver(test_consumer_config, test_client, event_notifier);
 
 
 			TestMessageListener test_listener;
@@ -195,7 +195,7 @@ int main()
 			class TestMessageSender : public MessageSender
 			{
 			public:
-				TestMessageSender(const MessageSenderConfiguration& params, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+				TestMessageSender(const MessageSenderConfiguration& params, CMSClientTestUnit & client_params, Notifier& parent)
 					:MessageSender(params, client_params, parent)
 				{
 				}
@@ -207,10 +207,10 @@ int main()
 			};
 
 			auto test_producer_config = MessageSenderConfiguration("connection1", "session1", "producer1");
-			TestMessageSender sender(test_producer_config, test_client, event_observer);
+			TestMessageSender sender(test_producer_config, test_client, event_notifier);
 
 			auto test_consumer_config = FileMessageCountingReceiverConfiguration("connection1", "session1", "consumer1", "test_message_out.txt", 1);
-			MessageCountingFileReceiver receiver(test_consumer_config, test_client, event_observer);
+			MessageCountingFileReceiver receiver(test_consumer_config, test_client, event_notifier);
 
 			assert(receiver.receivedMessageCount() == 0);
 			sender.sendMessage();
@@ -223,7 +223,7 @@ int main()
 			class TestMessageSender : public MessageSender
 			{
 			public:
-				TestMessageSender(const MessageSenderConfiguration& params, CMSClientTestUnit & client_params, EventStatusObserver& parent)
+				TestMessageSender(const MessageSenderConfiguration& params, CMSClientTestUnit & client_params, Notifier& parent)
 					:MessageSender(params, client_params, parent)
 				{
 				}
@@ -235,10 +235,10 @@ int main()
 			};
 
 			auto test_producer_config = MessageSenderConfiguration("connection1", "session1", "producer1");
-			TestMessageSender sender(test_producer_config, test_client, event_observer);
+			TestMessageSender sender(test_producer_config, test_client, event_notifier);
 
 			auto test_consumer_config = FileMessageCountingDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "test_message_out.txt", 1, {new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY, "property", "false")});
-			MessageCountingDecoratingFileReceiver receiver(test_consumer_config, test_client, event_observer);
+			MessageCountingDecoratingFileReceiver receiver(test_consumer_config, test_client, event_notifier);
 
 			assert(receiver.receivedMessageCount() == 0);
 			sender.sendMessage();

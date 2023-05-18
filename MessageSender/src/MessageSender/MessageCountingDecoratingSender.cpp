@@ -1,6 +1,6 @@
 #include <MessageSender/MessageCountingDecoratingSender.h>
 
-MessageCountingDecoratingSender::MessageCountingDecoratingSender(const MessageCountingDecoratingSenderConfiguration & config, CMSClientTestUnit & client_params, EventStatusObserver & parent)
+MessageCountingDecoratingSender::MessageCountingDecoratingSender(const MessageCountingDecoratingSenderConfiguration & config, CMSClientTestUnit & client_params, Notifier & parent)
 	:MessageSender(config,client_params,parent),
 	SentMessageCounter(config.expectedEventCount()),
 	MessageDecorator(config.decorations())
@@ -21,8 +21,9 @@ bool MessageCountingDecoratingSender::send(int msg_delay_ms)
 		decorate(message, mSession);
 		mProducer->send(message);
 		incrementSentCount();
-		return false;
+		return true;
 	}
-	return false;
+	else
+		return false;
 }
 
