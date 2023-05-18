@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(stonex-cms-amqp-message-sender-test LANGUAGES CXX DESCRIPTION "stonex cms client test configuration")
+project(message-sender-test LANGUAGES CXX DESCRIPTION "stonex cms client message sender lib tests")
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_CXX_STANDARD 20)
@@ -9,12 +9,12 @@ file(GLOB sourceFiles ${PROJECT_SOURCE_DIR}/*.cpp)
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${sourceFiles})
 
-add_executable(stonex-cms-amqp-message-sender-test main.cpp)              
+add_executable(message-sender-test main.cpp)              
 
-target_include_directories(stonex-cms-amqp-message-sender-test PUBLIC ${PROJECT_SOURCE_DIR}/main.cpp )
+target_include_directories(message-sender-test PUBLIC ${PROJECT_SOURCE_DIR}/main.cpp )
 
-target_link_libraries(stonex-cms-amqp-message-sender-test
-	stonex-cms-amqp-message-sender
+target_link_libraries(message-sender-test
+	message-sender
 	CONAN_PKG::boost
 	secur32 
 	crypt32 

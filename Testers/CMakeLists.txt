@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(stonex-cms-amqp-send-receive-test LANGUAGES CXX DESCRIPTION "stonex cms client test configuration")
+project(send-receive-test LANGUAGES CXX DESCRIPTION "stonex cms client send receive tests")
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_CXX_STANDARD 20)
@@ -16,15 +16,15 @@ file(GLOB headerFiles
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${sourceFiles} ${headerFiles})
 
-add_executable(stonex-cms-amqp-send-receive-test ${sourceFiles} ${headerFiles})              
+add_executable(send-receive-test ${sourceFiles} ${headerFiles})              
 
-target_include_directories(stonex-cms-amqp-send-receive-test 
+target_include_directories(send-receive-test 
 	PUBLIC ${PROJECT_SOURCE_DIR}/include
 	)
 
-target_link_libraries(stonex-cms-amqp-send-receive-test
-	stonex-cms-amqp-message-receiver
-	stonex-cms-amqp-message-sender
+target_link_libraries(send-receive-test
+	message-receiver
+	message-sender
 	secur32 
 	crypt32 
 	Ws2_32

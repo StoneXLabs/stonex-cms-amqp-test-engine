@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(stonex-cms-amqp-wrapper LANGUAGES CXX DESCRIPTION "stonex cms client test configuration")
+project(stonex-cms-amqp-wrapper LANGUAGES CXX DESCRIPTION "stonex cms amqp client wrapper lib")
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_CXX_STANDARD 20)

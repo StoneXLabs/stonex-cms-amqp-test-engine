@@ -1,6 +1,6 @@
 
 cmake_minimum_required(VERSION 3.16)
-project(stonex-cms-amqp-test-engine LANGUAGES CXX DESCRIPTION "stonex cms client test engine")
+project(stonex-cms-amqp-test-engine LANGUAGES CXX DESCRIPTION "stonex cms client test engine lib")
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_CXX_STANDARD 20)
@@ -31,8 +31,8 @@ target_include_directories(stonex-cms-amqp-test-engine
 target_link_libraries(stonex-cms-amqp-test-engine 
 	apache-cms-interface
 	stonex-cms-amqp-wrapper
-	stonex-cms-amqp-message-receiver
-	stonex-cms-amqp-message-sender
+	message-receiver
+	message-sender
 	stonex-cms-amqp-test-notifier
 	CONAN_PKG::boost
 	)

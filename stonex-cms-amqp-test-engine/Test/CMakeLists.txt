@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(stonex-cms-amqp-test-engne-test LANGUAGES CXX DESCRIPTION "stonex cms client test configuration")
+project(stonex-cms-amqp-test-engne-test LANGUAGES CXX DESCRIPTION "stonex cms client test engine lib tests")
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_CXX_STANDARD 20)
@@ -15,8 +15,8 @@ target_include_directories(stonex-cms-amqp-test-engne-test PUBLIC ${PROJECT_SOUR
 
 target_link_libraries(stonex-cms-amqp-test-engne-test
 	stonex-cms-amqp-test-engine
-	stonex-cms-amqp-message-receiver
-	stonex-cms-amqp-message-sender
+	message-receiver
+	message-sender
 	CONAN_PKG::boost
 	secur32 
 	crypt32 

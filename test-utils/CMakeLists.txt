@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(stonex-cms-amqp-test-utils LANGUAGES CXX DESCRIPTION "stonex cms client test configuration")
+project(test-utils LANGUAGES CXX DESCRIPTION "stonex cms client test engine utils")
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_CXX_STANDARD 20)
@@ -16,6 +16,6 @@ file(GLOB headerFiles
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${sourceFiles} ${headerFiles})
 
-add_library(stonex-cms-amqp-test-utils STATIC ${sourceFiles} ${headerFiles})              
+add_library(test-utils STATIC ${sourceFiles} ${headerFiles})              
 
-target_include_directories(stonex-cms-amqp-test-utils PUBLIC ${PROJECT_SOURCE_DIR}/include )
+target_include_directories(test-utils PUBLIC ${PROJECT_SOURCE_DIR}/include )
