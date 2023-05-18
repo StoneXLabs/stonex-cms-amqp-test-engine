@@ -23,7 +23,7 @@ target_include_directories(stonex-cms-amqp-send-receive-test
 	)
 
 target_link_libraries(stonex-cms-amqp-send-receive-test
-	stonex-cms-amqp-message-receiver2
+	stonex-cms-amqp-message-receiver
 	stonex-cms-amqp-message-sender
 	secur32 
 	crypt32 

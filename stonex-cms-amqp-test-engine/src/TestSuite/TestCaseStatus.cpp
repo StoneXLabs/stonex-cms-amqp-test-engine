@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+
 #include <TestSuite/TestCaseStatus.h>
 #include <sstream>
 
@@ -57,41 +58,4 @@ std::ostream & operator<<(std::ostream & os, const TEST_CASE_STATUS & ts)
 	 std::stringstream ss;
 	 ss << ts;
 	 return ss.str();
- }
-
- void TestCaseStatus::nextState(bool correctPath)
- {
-	 switch (mRunStatus)
-	 {
-	 case TEST_CASE_STATUS::WAITING:
-		 if(correctPath)
-			 mRunStatus = TEST_CASE_STATUS::INITIALIZED;
-		 else
-			 mRunStatus = TEST_CASE_STATUS::NOT_REGISTERED;
-		 break;
-	 case TEST_CASE_STATUS::INITIALIZED:
-		 if (correctPath)
-			 mRunStatus = TEST_CASE_STATUS::FINISHED;
-		 else
-			 mRunStatus = TEST_CASE_STATUS::DISABLED;
-		 break;
-	 case TEST_CASE_STATUS::ERROR:
-	 case TEST_CASE_STATUS::FAILED:
-	 case TEST_CASE_STATUS::UNKNOWN:
-		 mRunStatus = TEST_CASE_STATUS::WAITING;
-		 break;
-	 default:
-		 break;
-	 }
- }
-
-
- TEST_CASE_STATUS TestCaseStatus::currentState() const
- {
-	 return mRunStatus;
- }
-
- TEST_CASE_RESULT TestCaseStatus::result() const
- {
-	 return mTestCaseResult;
  }

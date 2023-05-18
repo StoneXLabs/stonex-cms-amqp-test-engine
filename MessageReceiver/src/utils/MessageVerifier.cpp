@@ -1,6 +1,5 @@
 #include <utils/MessageVerifier.h>
 #include <MessageDecorator/MessageDecoratorFactory.h>
-#include <TestEventWrapperFactory/EventWrapperFactory.h>
 #include <fmt/format.h>
 
 MessageVerifier::MessageVerifier(const std::string &id, const MessageDecoratorConfiguration & decoratorConfig, Notifier & parent)

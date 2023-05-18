@@ -24,7 +24,6 @@ enum class TEST_CASE_STATUS
 {
 	WAITING,
 	INITIALIZED,
-	RUNNING,
 	FINISHED,
 	DISABLED,
 	NOT_REGISTERED,
@@ -33,26 +32,6 @@ enum class TEST_CASE_STATUS
 	UNKNOWN
 };
 
-enum class TEST_CASE_RESULT
-{
-	SUCCESS,
-	ERROR,
-	FAILED,
-	UNKNOWN
-};
-
-class TestCaseStatus {
-public:
-	TEST_CASE_STATUS currentState() const;
-	TEST_CASE_RESULT result() const;
-	void nextState(bool correctPath = true);
-private:
-	TEST_CASE_STATUS mRunStatus{ TEST_CASE_STATUS::UNKNOWN};
-	TEST_CASE_RESULT mTestCaseResult{ TEST_CASE_RESULT::UNKNOWN };
-
-};
-
 std::ostream& operator<<(std::ostream& os, const TEST_CASE_STATUS& ts);
 
 std::string to_string(const TEST_CASE_STATUS& ts);
-

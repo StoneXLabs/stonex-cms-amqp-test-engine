@@ -1,18 +1,29 @@
 
+#include "Wrapper/CMSClientTestUnit.h"
 #include <boost/json.hpp>
 #include <fstream>
 #include <vector>
 #include <iostream>
 
-#include <ConfigurationParser/TestCaseMessageReceiverConfigurationParser.h>
+
+#include "Wrapper/CMSClientTestUnit.h"
+
+#include <ConfigurationParser/TestCaseReceiverConfigurationParser.h>
+
+#include <MessageReceiver/MessageReceiver.h>
+#include <MessageReceiver/MessageFileReceiver.h>
+#include <MessageReceiver/MessageCountingReceiver.h>
+#include <MessageReceiver/MessageDecoratingReceiver.h>
+#include <MessageReceiver/MessageCountingFileReceiver.h>
+#include <MessageReceiver/MessageDecoratingFileReceiver.h>
+#include <MessageReceiver/MessageCountingDecoratingReceiver.h>
+#include <MessageReceiver/MessageCountingDecoratingFileReceiver.h>
+
+#include "StdOutLogger/StdOutLogger.h"
 
 #include <Notifier/EventStatusObserver.h>
 #include <Notifier/TestNotifier.h>
 
-#include <StdOutLogger/StdOutLogger.h>
-
-#include <Wrapper/CMSClientTestUnit.h>
-#include <MessageReceiver/TestMessageReceiver.h>
 
 boost::json::value valueFromFile(const std::string& configFile)
 {
@@ -34,18 +45,98 @@ boost::json::value valueFromFile(const std::string& configFile)
 
 
 
+
+
+
 int main()
 {
-	TestCaseMessageReceiverConfigurationParser parser;
-	
-	{
-		boost::json::object::value_type message_sender_config_json = *valueFromFile("test_message_receiver.config").as_object().cbegin();
-		auto receiver = parser.createTestReceiverConfig(message_sender_config_json.key_c_str(), message_sender_config_json.value().as_object());
-		auto receiver_config = TestCaseMessageReceiverConfiguration("connection1", "session1", "consumer1");
+	TestCaseReceiverConfigurationParser parser;
 
-		assert(receiver != nullptr);
-		assert(*receiver == receiver_config);
+	{
+		boost::json::object::value_type message_receiver_config_json = *valueFromFile("test_message_receiver.config").as_object().cbegin();
+		auto consumer = parser.createTestCaseReceiverConfig(message_receiver_config_json.key_c_str(), message_receiver_config_json.value().as_object());
+		auto consumer_config = MessageReceiverConfiguration("connection1", "session1", "consumer1");
+
+		assert(consumer != nullptr);
+		assert(*consumer == consumer_config);
 	}
+
+	{
+		boost::json::object::value_type message_receiver_config_json = *valueFromFile("test_message_counting_receiver.config").as_object().cbegin();
+		auto consumer = parser.createTestCaseReceiverConfig(message_receiver_config_json.key_c_str(), message_receiver_config_json.value().as_object());
+		auto consumer_config = MessageCountingReceiverConfiguration("connection1", "session1", "consumer1", 1);
+
+		assert(consumer != nullptr);
+		assert(dynamic_cast<MessageCountingReceiverConfiguration*>(consumer) != nullptr);
+		assert(*dynamic_cast<MessageCountingReceiverConfiguration*>(consumer) == consumer_config);
+
+	}
+
+	{
+		boost::json::object::value_type message_receiver_config_json = *valueFromFile("test_message_receiver_to_file.config").as_object().cbegin();
+		auto consumer = parser.createTestCaseReceiverConfig(message_receiver_config_json.key_c_str(), message_receiver_config_json.value().as_object());
+		auto consumer_config = FileMessageReceiverConfiguration("connection1", "session1", "consumer1", "test_messages.txt");
+
+
+		assert(consumer != nullptr);
+		assert(dynamic_cast<FileMessageReceiverConfiguration*>(consumer) != nullptr);
+		assert(*dynamic_cast<FileMessageReceiverConfiguration*>(consumer) == consumer_config);
+	}
+
+	{
+		boost::json::object::value_type message_receiver_config_json = *valueFromFile("test_message_decorating_receiver.config").as_object().cbegin();
+		auto consumer = parser.createTestCaseReceiverConfig(message_receiver_config_json.key_c_str(), message_receiver_config_json.value().as_object());
+		auto consumer_config = MessageDecoratingReceiverConfiguration("connection1", "session1", "consumer1", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+
+		assert(consumer != nullptr);
+		assert(dynamic_cast<MessageDecoratingReceiverConfiguration*>(consumer) != nullptr);
+		assert(*dynamic_cast<MessageDecoratingReceiverConfiguration*>(consumer) == consumer_config);
+	}
+
+
+	{
+		boost::json::object::value_type message_receiver_config_json = *valueFromFile("test_message_decorating_receiver_to_file.config").as_object().cbegin();
+		auto consumer = parser.createTestCaseReceiverConfig(message_receiver_config_json.key_c_str(), message_receiver_config_json.value().as_object());
+		auto consumer_config = FileMessageDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "test_messages.txt", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+
+		assert(consumer != nullptr);
+		assert(dynamic_cast<FileMessageDecoratingReceiverConfiguration*>(consumer) != nullptr);
+		assert(*dynamic_cast<FileMessageDecoratingReceiverConfiguration*>(consumer) == consumer_config);
+	}
+
+	{
+		boost::json::object::value_type message_receiver_config_json = *valueFromFile("test_message_counting_receiver_to_file.config").as_object().cbegin();
+		auto consumer = parser.createTestCaseReceiverConfig(message_receiver_config_json.key_c_str(), message_receiver_config_json.value().as_object());
+		auto consumer_config = FileMessageCountingReceiverConfiguration("connection1", "session1", "consumer1", "test_messages.txt", 1);
+
+		assert(consumer != nullptr);
+		assert(dynamic_cast<FileMessageCountingReceiverConfiguration*>(consumer) != nullptr);
+		assert(*dynamic_cast<FileMessageCountingReceiverConfiguration*>(consumer) == consumer_config);
+	}
+
+	{
+		boost::json::object::value_type message_receiver_config_json = *valueFromFile("test_message_decorating_counting_receiver.config").as_object().cbegin();
+		auto consumer = parser.createTestCaseReceiverConfig(message_receiver_config_json.key_c_str(), message_receiver_config_json.value().as_object());
+		auto consumer_config = MessageCountingDecoratingReceiverConfiguration("connection1", "session1", "consumer1",  1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+
+		assert(consumer != nullptr);
+		assert(dynamic_cast<MessageCountingDecoratingReceiverConfiguration*>(consumer) != nullptr);
+		assert(*dynamic_cast<MessageCountingDecoratingReceiverConfiguration*>(consumer) == consumer_config);
+	}
+
+	{
+		boost::json::object::value_type message_receiver_config_json = *valueFromFile("test_message_decorating_counting_receiver_to_file.config").as_object().cbegin();
+		auto consumer = parser.createTestCaseReceiverConfig(message_receiver_config_json.key_c_str(), message_receiver_config_json.value().as_object());
+		auto consumer_config = FileMessageCountingDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "test_messages.txt", 1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+
+		assert(consumer != nullptr);
+		assert(dynamic_cast<FileMessageCountingDecoratingReceiverConfiguration*>(consumer) != nullptr);
+		assert(*dynamic_cast<FileMessageCountingDecoratingReceiverConfiguration*>(consumer) == consumer_config);
+	}
+	
+
+
+	
 
 	{
 
@@ -59,14 +150,69 @@ int main()
 		CMSClientTestUnit test_client(wrapper_config, logger);
 
 		Notifier event_notifier(nullptr);
-		EventStatusObserver event_observer(event_notifier);
 
-		TestCaseMessageReceiverConfiguration test_consumer_config("connection1","session1","consumer1");
+		{
+	
+			auto test_consumer_config = MessageReceiverConfiguration("connection1", "session1", "consumer1");
+			MessageReceiver receiver(test_consumer_config, test_client);
+			
+		}
+
+		{
+			auto test_consumer_config = MessageCountingReceiverConfiguration("connection1", "session1", "consumer1",1);
+			MessageCountingReceiver receiver(test_consumer_config, test_client, event_notifier);
+			
+			//assert(receiver.receivedMessageCount() == 1);
+		}
+
+		{
+			auto test_consumer_config = FileMessageReceiverConfiguration("connection1", "session1", "consumer1", "message_file.txt");
+			MessageFileReceiver receiver(test_consumer_config, test_client, event_notifier);
+			
+		}
+
+		{
+	
+			auto test_consumer_config = MessageDecoratingReceiverConfiguration("connection1", "session1", "consumer1", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+			MessageDecoratingReceiver receiver(test_consumer_config, test_client, event_notifier);
+			
+		}
+
+		{
+			auto test_consumer_config = FileMessageCountingReceiverConfiguration("connection1", "session1", "consumer1", "message_file.txt", 1);
+			MessageCountingFileReceiver receiver(test_consumer_config, test_client, event_notifier);
+			
+			//assert(receiver.receivedMessageCount() == 1);
+		}
+
+		{
+	
+			auto test_consumer_config = MessageCountingDecoratingReceiverConfiguration("connection1", "session1", "consumer1", 1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+			MessageCountingDecoratingReceiver receiver(test_consumer_config, test_client, event_notifier);
+			
+			//assert(receiver.receivedMessageCount() == 1);
+		}
+
+		{
+			auto test_consumer_config = FileMessageDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "message_file.txt", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+			MessageDecoratingFileReceiver receiver(test_consumer_config, test_client, event_notifier);
+			
+		}
+
+		{
+			auto test_consumer_config = FileMessageCountingDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "message_file.txt", 1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+			MessageCountingDecoratingFileReceiver receiver(test_consumer_config, test_client, event_notifier);
+			
+			//assert(receiver.receivedMessageCount() == 1);
+		}
+
+
 		
 
-		TestMessageReceiver receiver(test_consumer_config, test_client, event_notifier);
-	
 	}
+
+	return 0;
+	
 }
 
 

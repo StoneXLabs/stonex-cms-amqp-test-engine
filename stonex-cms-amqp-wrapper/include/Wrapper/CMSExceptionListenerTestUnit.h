@@ -20,7 +20,6 @@
 #pragma once
 
 #include <cms/ExceptionListener.h>
-#include <TestEventWrapperFactory/EventWrapperFactory.h>
 
 class CMSExceptionTestUnit : public cms::CMSException
 {

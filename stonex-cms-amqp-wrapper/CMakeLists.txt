@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
 project(stonex-cms-amqp-wrapper LANGUAGES CXX DESCRIPTION "stonex cms client test configuration")
-#include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-#conan_basic_setup(TARGETS)
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_CXX_STANDARD 20)
@@ -19,7 +17,6 @@ target_include_directories(stonex-cms-amqp-wrapper PUBLIC ${PROJECT_SOURCE_DIR}/
 
 target_link_libraries(stonex-cms-amqp-wrapper 
 	apache-cms-interface
-	stonex-cms-amqp-event-handler
 	CONAN_PKG::stonex-cms-amqp-lib
 	CONAN_PKG::boost
 	)

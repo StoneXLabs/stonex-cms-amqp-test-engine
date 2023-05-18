@@ -18,15 +18,13 @@
  */
 
 #include <TestSuite/TestRunner.h>
-#include <TestSuite/SingleTest.h>
+#include <TestSuite/TestCase.h>
 
-TestRunner::TestRunner(TestSuiteConfigParser & configurationParser, TestFunctionRegister & functionRegister, MessageReceiverFactory & receiverFactory,  MessageSenderFactory & senderFactory, TestVerifierFactory & verifierFactory, TestObserver * reporter, ExceptionListenerFactory& exceptionListenerFactory, std::shared_ptr<StonexLogger> logger)
+TestRunner::TestRunner(TestSuiteConfigParser & configurationParser, TestFunctionRegister & functionRegister, MessageReceiverFactory & receiverFactory,  MessageSenderFactory & senderFactory, TestObserver * reporter, std::shared_ptr<StonexLogger> logger)
 	:mRegister{ functionRegister },
 	mReceiverFactory{ receiverFactory },
 	mSenderFactory{ senderFactory },
-	mVeifierFactory{ verifierFactory },
 	mTestReporter{ reporter },
-	mExceptionListenerFactory{&exceptionListenerFactory},
 	mLogger{logger}
  {
 	 mSuiteConfiguration = configurationParser.createConfiguration();
@@ -53,13 +51,17 @@ TestRunner::TestRunner(TestSuiteConfigParser & configurationParser, TestFunction
 		 }
 
 		 // use test status
-		 TestCaseStatus status;
+		///* TestCaseStatus status;
+		// {
+		//	 SingleTest single_test(test, mRegister, mReceiverFactory, mSenderFactory, *mExceptionListenerFactory, mTestReporter, mLogger);
+		//	 status = single_test.run();
+		// }
+		// */
 		 {
-			 SingleTest single_test(test, mRegister, mReceiverFactory, mSenderFactory, *mExceptionListenerFactory, mTestReporter, mLogger);
-			 status = single_test.run();
+			 TestCase testCase(test, nullptr, mRegister, mTestReporter);
+			 testCase.run();
 		 }
 		 
-
 		 if (mTestReporter)
 			 mTestReporter->onMessage({ REPORT_MESSAGE_SEVERITY::TRACE, REPORT_MESSAGE_TYPE::GENERAL, test.testName(), "Test result verification" });
 

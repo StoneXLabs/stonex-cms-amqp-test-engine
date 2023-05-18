@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
 project(stonex-cms-amqp-message-content-verifier LANGUAGES CXX DESCRIPTION "stonex cms client test configuration")
-#include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-#conan_basic_setup(TARGETS)
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_CXX_STANDARD 20)

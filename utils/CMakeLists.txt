@@ -19,8 +19,3 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${sourceFiles} ${headerFiles
 add_library(stonex-cms-amqp-test-utils STATIC ${sourceFiles} ${headerFiles})              
 
 target_include_directories(stonex-cms-amqp-test-utils PUBLIC ${PROJECT_SOURCE_DIR}/include )
-
-
-#target_link_libraries(stonex-cms-amqp-test-utils 
-#	stonex-cms-amqp-event-handler
-#	)
