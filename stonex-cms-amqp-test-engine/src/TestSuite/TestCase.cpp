@@ -20,9 +20,9 @@
 #include <chrono>
 #include <TestSuite/TestCase.h>
 
-TestCase::TestCase(const TestCaseConfiguration& test_config, MessageSenderFactory* factory, const TestFunctionRegister& functionRegister, TestObserver* observer)
+TestCase::TestCase(const TestCaseConfiguration& test_config, MessageSenderFactory* factory, const TestFunctionRegister& functionRegister, TestObserver* observer, std::shared_ptr<StonexLogger> logger)
 	:Notifier(observer),
-	mTestedObject(test_config.uutConfig(), nullptr,""),
+	mTestedObject(test_config.uutConfig(), logger,""),
 	mTestPerformer(test_config.performerConfig(), mTestedObject,*this, factory ),
 	mTestVerifier(test_config.verifierConfig(), mTestedObject,*this),
 	mTestName{test_config.testName()}
@@ -52,11 +52,8 @@ void TestCase::run()
 		else
 			TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR, " [" + mTestName + "] ", "test failed"));
 
-		auto test_duration_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
-
-		TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_END, " [" + mTestName + "] ",std::to_string(test_duration_ms) + " [ms]"));
+		TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_END, " [" + mTestName + "] ",std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()) + " [ms]"));
 	}
-
 
 }
 

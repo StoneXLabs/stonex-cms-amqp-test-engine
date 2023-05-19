@@ -51,7 +51,13 @@ TestRunner::TestRunner(TestSuiteConfigParser & configurationParser, TestFunction
 		 }
 
 		 {
-			 TestCase testCase(test, &mSenderFactory, mRegister, mTestReporter);
+			 auto start = std::chrono::high_resolution_clock::now();
+			 TestCase testCase(test, &mSenderFactory, mRegister, mTestReporter, mLogger);
+			 auto end = std::chrono::high_resolution_clock::now();
+
+			 if (mTestReporter)
+				 mTestReporter->onMessage({REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::GENERAL, " [" + test.testName() + "] ", "Test initialization duration " + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()) + " [ms]"});
+			
 			 testCase.run();
 		 }
 		 

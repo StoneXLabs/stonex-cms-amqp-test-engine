@@ -461,7 +461,7 @@ int main()
 		
 		StdOutTestObserver testObserver;
 	
-		TestCase test_case(*suite_config.testsBegin(), sender_factory, test_register, &testObserver);
+		TestCase test_case(*suite_config.testsBegin(), sender_factory, test_register, &testObserver,nullptr);
 		test_case.run();
 	}
 
