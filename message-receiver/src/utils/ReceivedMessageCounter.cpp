@@ -32,6 +32,8 @@ ReceivedMessageCounter::~ReceivedMessageCounter()
 {
 	if (expectedEventCount() == mReceivedMessagesCount)
 		mParent.testEvent(EventStatus(true, mId, fmt::format("expected message count reached [{}/{}]", receivedMessageCount(), expectedEventCount())));
+	else if (expectedEventCount() < mReceivedMessagesCount)
+		mParent.testEvent(EventStatus(false, mId, fmt::format("missing {} messages. received [{}/{}]", expectedEventCount() - receivedMessageCount(), receivedMessageCount(), expectedEventCount())));
 
 }
 
@@ -43,6 +45,6 @@ long long ReceivedMessageCounter::receivedMessageCount() const
 void ReceivedMessageCounter::incrementReceivedCount()
 {
 	mReceivedMessagesCount++;
-	if (expectedEventCount() > mReceivedMessagesCount)
+	if (mReceivedMessagesCount > expectedEventCount())
 		mParent.testEvent(EventStatus(false, mId, fmt::format("expected message count exceeded [{}/{}]", receivedMessageCount(), expectedEventCount())));
 }

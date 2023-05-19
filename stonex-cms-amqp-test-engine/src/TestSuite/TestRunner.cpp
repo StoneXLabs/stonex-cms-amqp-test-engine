@@ -51,7 +51,7 @@ TestRunner::TestRunner(TestSuiteConfigParser & configurationParser, TestFunction
 		 }
 
 		 {
-			 TestCase testCase(test, nullptr, mRegister, mTestReporter);
+			 TestCase testCase(test, &mSenderFactory, mRegister, mTestReporter);
 			 testCase.run();
 		 }
 		 
