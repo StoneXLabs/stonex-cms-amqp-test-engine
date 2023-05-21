@@ -18,6 +18,7 @@
  */
 
 #include <cms/BytesMessage.h>
+#include <cms/TextMessage.h>
 #include <utils/MessageParser.h>
 #include <sstream>
 #include <iomanip>
@@ -39,6 +40,15 @@ std::string MessageParser::toString(const cms::Message * message)
 		{
 			ss << std::setw(2) << static_cast<int>(*data_ptr++);
 		}
+		return ss.str();
+
 	}
-	return ss.str();
+	else if (auto text_message = dynamic_cast<const cms::TextMessage*>(message))
+	{
+		return text_message->getText();
+	}
+	else {
+		ss << message;
+		return ss.str();
+	}
 }

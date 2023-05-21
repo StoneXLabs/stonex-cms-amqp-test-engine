@@ -51,6 +51,7 @@ public:
 	void reset();
 	void getMessage(const cms::Message* message) override;
 	bool mInitialized{ false };
+	MessageParser mParser;
 };
 
 

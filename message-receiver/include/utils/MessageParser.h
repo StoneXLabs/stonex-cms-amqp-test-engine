@@ -20,7 +20,6 @@
 #pragma once
 #include <cms/BytesMessage.h>
 
-template< class T>
 class MessageParser
 {
 public:

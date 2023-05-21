@@ -53,8 +53,7 @@ std::ostream & operator<<(std::ostream & os, const cms::StreamMessage & message)
 
 std::ostream & operator<<(std::ostream & os, const cms::BytesMessage & message)
 {
-	MessageParser p;
-	os << p.toString(&message);//"BytesMessage << operator not implemented";
+	//"BytesMessage << operator not implemented";
 	return os;
 }
 
