@@ -18,6 +18,7 @@
  */
 
 #include <utils/MessageDestination.h>
+#include <utils/MessageParser.h>
 
 std::ostream & operator<<(std::ostream & os, const cms::Message* message)
 {
@@ -52,7 +53,8 @@ std::ostream & operator<<(std::ostream & os, const cms::StreamMessage & message)
 
 std::ostream & operator<<(std::ostream & os, const cms::BytesMessage & message)
 {
-	os << "BytesMessage << operator not implemented";
+	MessageParser p;
+	os << p.toString(&message);//"BytesMessage << operator not implemented";
 	return os;
 }
 

@@ -25,6 +25,7 @@ MessageCountingDecoratingFileSender::MessageCountingDecoratingFileSender(const F
 	MessageDecorator(config.decorations()),
 	MessageFileSource(config.filePath())
 {
+
 	
 }
 
