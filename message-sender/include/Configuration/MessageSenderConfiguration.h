@@ -25,16 +25,20 @@
 class MessageSenderConfiguration 
 {
 public:
-	MessageSenderConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& producerId);
+	MessageSenderConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& producerId, const std::string& messageType, const std::string& senderType);
 	virtual ~MessageSenderConfiguration() = default;
 	std::string connectionId() const;
 	std::string sessionId() const;
 	std::string producerId() const;
+	std::string messageType() const;
+	std::string senderType() const;
 	friend bool operator== (const MessageSenderConfiguration& lhs, const MessageSenderConfiguration& rhs);
 	
 private:
 	const std::string mConnectionId;
 	const std::string mSessionId;
 	const std::string mProducerId;
+	const std::string mMessageType;
+	const std::string mSenderType;
 };
 

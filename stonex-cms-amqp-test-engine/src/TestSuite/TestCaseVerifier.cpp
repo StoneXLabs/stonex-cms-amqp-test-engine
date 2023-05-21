@@ -33,3 +33,8 @@ TestCaseVerifier::TestCaseVerifier(const TestCaseVerifierConfiguration & params,
 	});
 
 }
+
+TestCaseVerifier::~TestCaseVerifier() 
+{
+	std::for_each(std::begin(mReceivers), std::end(mReceivers), [](MessageReceiver* item) {delete item; item = nullptr; });
+}

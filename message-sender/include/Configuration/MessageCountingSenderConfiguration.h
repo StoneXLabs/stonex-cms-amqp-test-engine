@@ -25,7 +25,7 @@
 class MessageCountingSenderConfiguration : public MessageSenderConfiguration, public EventCounter
 {
 public:
-	MessageCountingSenderConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& producerId, long long message_count);
+	MessageCountingSenderConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& producerId, const std::string& messageType, const std::string& senderType, long long message_count);
 	friend bool operator== (const MessageCountingSenderConfiguration& lhs, const MessageCountingSenderConfiguration& rhs);
 };
 

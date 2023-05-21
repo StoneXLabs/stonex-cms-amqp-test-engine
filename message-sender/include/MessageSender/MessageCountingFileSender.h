@@ -28,7 +28,10 @@ class MessageCountingFileSender : public MessageSender, public SentMessageCounte
 {
 public:
 	explicit MessageCountingFileSender(const FileMessageCountingSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent);
-	bool send(int msg_delay_ms = 0) override;
+	virtual bool send_text(int msg_delay_ms = 0) override;
+	virtual bool send_bytes(int msg_delay_ms = 0) override;
+	virtual bool send_stream(int msg_delay_ms = 0) override;
+	virtual bool send_map(int msg_delay_ms = 0) override;
 	std::string createMessageBody() override;
 };
 

@@ -26,7 +26,7 @@ MessageCountingFileSender::MessageCountingFileSender(const FileMessageCountingSe
 {
 }
 
-bool MessageCountingFileSender::send(int msg_delay_ms)
+bool MessageCountingFileSender::send_text(int msg_delay_ms)
 {
 	auto message_body = createMessageBody();
 	if (message_body.empty())
@@ -42,7 +42,33 @@ bool MessageCountingFileSender::send(int msg_delay_ms)
 	}
 	else
 		return false;
+}
 
+bool MessageCountingFileSender::send_bytes(int msg_delay_ms)
+{
+	auto message_body = createMessageBody();
+	if (message_body.empty())
+		return false;
+
+	if (mSession && mProducer)
+	{
+		auto message = mSession->createBytesMessage((const unsigned char*)message_body.c_str(), message_body.size());
+		mProducer->send(message);
+		incrementSentCount();
+		return true;
+	}
+	else
+		return false;
+}
+
+bool MessageCountingFileSender::send_stream(int msg_delay_ms)
+{
+	return false;
+}
+
+bool MessageCountingFileSender::send_map(int msg_delay_ms)
+{
+	return false;
 }
 
 std::string MessageCountingFileSender::createMessageBody()

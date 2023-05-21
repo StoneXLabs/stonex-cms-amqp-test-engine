@@ -27,7 +27,6 @@ class MessageFileSender : public MessageSender, public MessageFileSource
 {
 public:
 	explicit MessageFileSender(const FileMessageSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent);
-	bool send(int msg_delay_ms = 0) override;
 	std::string createMessageBody() override;
 };
 

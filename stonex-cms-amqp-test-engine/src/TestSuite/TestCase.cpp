@@ -20,20 +20,19 @@
 #include <chrono>
 #include <TestSuite/TestCase.h>
 
-TestCase::TestCase(const TestCaseConfiguration& test_config, MessageSenderFactory* factory, const TestFunctionRegister& functionRegister, TestObserver* observer, std::shared_ptr<StonexLogger> logger)
-	:Notifier(observer),
-	mTestedObject(test_config.uutConfig(), logger,""),
-	mTestPerformer(test_config.performerConfig(), mTestedObject,*this, factory ),
-	mTestVerifier(test_config.verifierConfig(), mTestedObject,*this),
-	mTestName{test_config.testName()}
+ITestCase::ITestCase(const std::string& testName, TestObserver * observer)
+	:mTestName{testName},
+	Notifier(observer)
 {
-	if (test_config.enabled()) {
-		mTestFunction = functionRegister.getTestFunction(test_config.testFunctionName());
-		if (!mTestFunction)
-			TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR, " [" + mTestName + "] ", test_config.testFunctionName() + "not found"));
-	}
+}
+
+ITestCase::~ITestCase() {
+	if (mTestSuccess)
+		TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_SUCCESS, " [" + mTestName + "] ", ""));
 	else
-		TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR, " [" + mTestName + "] ", "test disabled by configuration"));
+		TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR, " [" + mTestName + "] ", "test failed"));
+
+	TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_END, " [" + mTestName + "] ", std::to_string(mTestDuration.count()) + " [ms]"));
 
 }
 
@@ -47,19 +46,35 @@ void TestCase::run()
 		mTestFunction(&mTestedObject, &mTestPerformer);
 		auto end = std::chrono::high_resolution_clock::now();
 
-		if (mTestSuccess)
-			TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_SUCCESS, " [" + mTestName + "] ", ""));
-		else
-			TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR, " [" + mTestName + "] ", "test failed"));
+		mTestDuration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
-		TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_END, " [" + mTestName + "] ",std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()) + " [ms]"));
 	}
 
 }
 
-void TestCase::testEvent(const EventStatus & event)
+void ITestCase::testEvent(const EventStatus & event)
 {
 	Notifier::testEvent(event);
 	if (mTestSuccess)
 		mTestSuccess = event.correct();
 }
+
+
+
+
+TestCase::TestCase(const TestCaseConfiguration& test_config, MessageSenderFactory* factory, const TestFunctionRegister& functionRegister, TestObserver* observer, std::shared_ptr<StonexLogger> logger)
+	:ITestCase(test_config.testName(), observer),
+	mTestedObject(test_config.uutConfig(), logger,""),
+	mTestPerformer(test_config.performerConfig(), mTestedObject,*this, factory ),
+	mTestVerifier(test_config.verifierConfig(), mTestedObject,*this)
+{
+	if (test_config.enabled()) {
+		mTestFunction = functionRegister.getTestFunction(test_config.testFunctionName());
+		if (!mTestFunction)
+			TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR, " [" + mTestName + "] ", test_config.testFunctionName() + "not found"));
+	}
+	else
+		TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR, " [" + mTestName + "] ", "test disabled by configuration"));
+
+}
+

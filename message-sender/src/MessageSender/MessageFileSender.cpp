@@ -25,23 +25,6 @@ MessageFileSender::MessageFileSender(const FileMessageSenderConfiguration & conf
 {
 }
 
-bool MessageFileSender::send(int msg_delay_ms)
-{
-	auto message_body = createMessageBody();
-	if (message_body.empty())
-		return false;
-
-	if (mSession && mProducer)
-	{
-		auto mes = mSession->createTextMessage(message_body);
-		mProducer->send(mes);
-		return true;
-	}
-	else
-		return false;
-
-}
-
 std::string MessageFileSender::createMessageBody()
 {
 	return getMessage();

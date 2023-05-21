@@ -36,16 +36,16 @@
 MessageSender * MessageSenderFactory::create(const MessageSenderConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, Notifier & parent) const
 {
 
-	if (auto concrete_configuration = dynamic_cast<const FileMessageSenderConfiguration*>(&sender_configuration)) {
+	if (auto concrete_configuration = dynamic_cast<const FileMessageSenderConfiguration*>(&sender_configuration); concrete_configuration && acceptedSenderType(sender_configuration.senderType())) {
 		return new MessageFileSender(*concrete_configuration, client_configuration, parent);
 	}
-	else if (auto concrete_configuration = dynamic_cast<const FileMessageCountingSenderConfiguration*>(&sender_configuration)) {
+	else if (auto concrete_configuration = dynamic_cast<const FileMessageCountingSenderConfiguration*>(&sender_configuration); concrete_configuration && acceptedSenderType(sender_configuration.senderType())) {
 		return new MessageCountingFileSender(*concrete_configuration, client_configuration, parent);
 	}
-	else if (auto concrete_configuration = dynamic_cast<const FileMessageDecoratingSenderConfiguration*>(&sender_configuration)) {
+	else if (auto concrete_configuration = dynamic_cast<const FileMessageDecoratingSenderConfiguration*>(&sender_configuration); concrete_configuration && acceptedSenderType(sender_configuration.senderType())) {
 		return new MessageDecoratingFileSender(*concrete_configuration, client_configuration, parent);
 	}
-	else if (auto concrete_configuration = dynamic_cast<const FileMessageCountingDecoratingSenderConfiguration*>(&sender_configuration)) {
+	else if (auto concrete_configuration = dynamic_cast<const FileMessageCountingDecoratingSenderConfiguration*>(&sender_configuration); concrete_configuration && acceptedSenderType(sender_configuration.senderType())) {
 		return new MessageCountingDecoratingFileSender(*concrete_configuration, client_configuration, parent);
 	}
 	else
@@ -69,4 +69,9 @@ MessageSender * MessageSenderFactory::create_sender(const MessageSenderConfigura
 	}*/
 
 	return nullptr;
+}
+
+bool MessageSenderFactory::acceptedSenderType(const std::string &type) const
+{
+	return true;
 }

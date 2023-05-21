@@ -32,7 +32,7 @@ ReceivedMessageCounter::~ReceivedMessageCounter()
 {
 	if (expectedEventCount() == mReceivedMessagesCount)
 		mParent.testEvent(EventStatus(true, mId, fmt::format("expected message count reached [{}/{}]", receivedMessageCount(), expectedEventCount())));
-	else if (expectedEventCount() < mReceivedMessagesCount)
+	else if (expectedEventCount() > mReceivedMessagesCount)
 		mParent.testEvent(EventStatus(false, mId, fmt::format("missing {} messages. received [{}/{}]", expectedEventCount() - receivedMessageCount(), receivedMessageCount(), expectedEventCount())));
 
 }

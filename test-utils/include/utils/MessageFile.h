@@ -25,6 +25,7 @@ class MessageFile
 {
 public:
 	explicit MessageFile(const std::string& file_path);
+	virtual ~MessageFile() = default;
 	const std::string& filePath() const;
 	friend bool operator== (const MessageFile& lhs, const MessageFile& rhs);
 	bool operator == (const MessageFile& other);

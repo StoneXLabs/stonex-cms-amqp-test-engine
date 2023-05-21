@@ -19,8 +19,8 @@
 
 #include <Configuration/FileMessageCountingSenderConfiguration.h>
 
-FileMessageCountingSenderConfiguration::FileMessageCountingSenderConfiguration(const std::string & connectionId, const std::string & sessionId, const std::string & producerId, const std::string & messageFile, long long message_count)
-	:MessageSenderConfiguration(connectionId, sessionId, producerId),
+FileMessageCountingSenderConfiguration::FileMessageCountingSenderConfiguration(const std::string & connectionId, const std::string & sessionId, const std::string & producerId, const std::string& messageType, const std::string& senderType, const std::string & messageFile, long long message_count)
+	:MessageSenderConfiguration(connectionId, sessionId, producerId, messageType, senderType),
 	EventCounter(message_count),
 	MessageFile(messageFile)
 {
@@ -31,6 +31,8 @@ bool operator==(const FileMessageCountingSenderConfiguration & lhs, const FileMe
 	return lhs.connectionId() == rhs.connectionId() &&
 		lhs.sessionId() == rhs.sessionId() &&
 		lhs.producerId() == rhs.producerId() &&
+		lhs.messageType() == rhs.messageType() &&
+		lhs.senderType() == rhs.senderType() &&
 		rhs.expectedEventCount() == lhs.expectedEventCount() &&
 		rhs.filePath() == lhs.filePath();
 }

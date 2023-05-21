@@ -24,6 +24,7 @@ class EventCounter
 public:
 	explicit EventCounter(long long expected_message_count);
 	EventCounter(const EventCounter& other);
+	virtual ~EventCounter() = default;
 	long long expectedEventCount() const;
 	friend bool operator== (const EventCounter& lhs, const EventCounter& rhs);
 	

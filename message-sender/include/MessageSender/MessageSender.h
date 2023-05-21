@@ -19,11 +19,20 @@
 
 #pragma once
 
+#include <functional>
 #include <Wrapper/CMSClientTestUnit.h>
 #include <Notifier/TestNotifier.h>
 #include <utils/EventCounter.h>
 #include <utils/MessageFile.h>
 #include "Configuration/MessageSenderConfiguration.h"
+
+enum class MESSAGE_TYPE {
+	TEXT_MESSAGE,
+	BYTES_MESSAGE,
+	STREAM_MESSAGE,
+	MAP_MESSAGE,
+	UNKNOWN_TYPE
+};
 
 class MessageSender
 {
@@ -34,12 +43,19 @@ public:
 	std::string id() const;
 
 protected:
-	virtual bool send(int msg_delay_ms = 0);
+	bool send(int msg_delay_ms = 0);
+	virtual bool send_text(int msg_delay_ms = 0);
+	virtual bool send_bytes(int msg_delay_ms = 0);
+	virtual bool send_stream(int msg_delay_ms = 0);
+	virtual bool send_map(int msg_delay_ms = 0);
 	virtual std::string createMessageBody() = 0;
+	MESSAGE_TYPE fromString(const std::string& message_type_string);
 
 protected:
 	SessionTestUnit* mSession;
 	ProducerTestUnit* mProducer;
 	const std::string mId{};
 	Notifier& mParent;
+	const MESSAGE_TYPE mMessageType;
+	std::function<bool(int)> mSendFunction = [](int) {return false; };
 };

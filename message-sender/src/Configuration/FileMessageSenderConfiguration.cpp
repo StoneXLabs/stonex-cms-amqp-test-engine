@@ -19,8 +19,8 @@
 
 #include <Configuration/FileMessageSenderConfiguration.h>
 
-FileMessageSenderConfiguration::FileMessageSenderConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& producerId, const std::string & message_file)
-	:MessageSenderConfiguration(connectionId, sessionId, producerId),
+FileMessageSenderConfiguration::FileMessageSenderConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& producerId, const std::string& messageType, const std::string& senderType, const std::string & message_file)
+	:MessageSenderConfiguration(connectionId, sessionId, producerId, messageType, senderType),
 	MessageFile(message_file)
 {
 }
@@ -30,5 +30,7 @@ bool operator==(const FileMessageSenderConfiguration & lhs, const FileMessageSen
 	return lhs.connectionId() == rhs.connectionId() &&
 		lhs.sessionId() == rhs.sessionId() &&
 		lhs.producerId() == rhs.producerId() &&
+		lhs.messageType() == rhs.messageType() &&
+		lhs.senderType() == rhs.senderType() &&
 		rhs.filePath() == lhs.filePath();
 }

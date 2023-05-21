@@ -29,7 +29,7 @@ class TestCaseVerifier
 
 public:
 	TestCaseVerifier(const TestCaseVerifierConfiguration& params, CMSClientTestUnit& client_params, Notifier& notifier);
-	
+	~TestCaseVerifier();
 
 private:
 	std::vector<MessageReceiver*> mReceivers;

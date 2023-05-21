@@ -29,6 +29,7 @@ class MessageCountingDecoratingFileReceiver : public MessageReceiver, public Rec
 {
 public:
 	explicit MessageCountingDecoratingFileReceiver(const FileMessageCountingDecoratingReceiverConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent);
+	virtual ~MessageCountingDecoratingFileReceiver() = default;
 	void onMessage(const cms::Message* message) override;
 
 };

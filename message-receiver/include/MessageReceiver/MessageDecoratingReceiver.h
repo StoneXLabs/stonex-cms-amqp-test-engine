@@ -27,6 +27,7 @@ class MessageDecoratingReceiver : public MessageReceiver, public MessageVerifier
 {
 public:
 	explicit MessageDecoratingReceiver(const MessageDecoratingReceiverConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent);
+	virtual ~MessageDecoratingReceiver() = default;
 
 	void onMessage(const cms::Message* message) override;
 

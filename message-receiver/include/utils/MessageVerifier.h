@@ -30,6 +30,7 @@ class MessageVerifier
 {
 public:
 	MessageVerifier(const std::string &id, const MessageDecoratorConfiguration& decoratorConfig, Notifier & parent);
+	virtual ~MessageVerifier() = default;
 	void verify(const cms::Message* message) const;
 protected:
 	std::vector<IExpectedField*> mVerifiers;

@@ -19,15 +19,18 @@
 
 #include <Configuration/MessageCountingSenderConfiguration.h>
 
-MessageCountingSenderConfiguration::MessageCountingSenderConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& producerId, long long message_count)
-	:MessageSenderConfiguration(connectionId, sessionId,producerId),
+MessageCountingSenderConfiguration::MessageCountingSenderConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& producerId, const std::string& messageType, const std::string& senderType, long long message_count)
+	:MessageSenderConfiguration(connectionId, sessionId, producerId, messageType, senderType),
 	EventCounter(message_count)
 {
 }
 
 bool operator==(const MessageCountingSenderConfiguration & lhs, const MessageCountingSenderConfiguration & rhs)
 {
-	return rhs.producerId() == lhs.producerId() &&
-		rhs.sessionId() == lhs.sessionId() &&
+	return lhs.connectionId() == rhs.connectionId() &&
+		lhs.sessionId() == rhs.sessionId() &&
+		lhs.producerId() == rhs.producerId() &&
+		lhs.messageType() == rhs.messageType() &&
+		lhs.senderType() == rhs.senderType() &&
 		rhs.expectedEventCount() == lhs.expectedEventCount();
 }

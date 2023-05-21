@@ -44,6 +44,7 @@ class MessageFileDestination : public MessageDestination
 {
 public:
 	MessageFileDestination(const std::string& file);
+	virtual ~MessageFileDestination() = default;
 	std::ofstream fHandler;
 
 	bool closeFHandler();

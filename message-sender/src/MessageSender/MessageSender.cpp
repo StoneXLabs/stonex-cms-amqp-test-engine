@@ -24,8 +24,26 @@ MessageSender::MessageSender(const MessageSenderConfiguration& params, CMSClient
 	:mSession{ client_params.session(params.connectionId(), params.sessionId()) },
 	mProducer{ client_params.producer(params.connectionId(), params.sessionId(),params.producerId()) },
 	mId{params.producerId()},
-	mParent{parent}
+	mParent{parent},
+	mMessageType{fromString(params.messageType())}	
 {
+	switch (mMessageType)
+	{
+	case MESSAGE_TYPE::TEXT_MESSAGE:
+		mSendFunction = std::bind(&MessageSender::send_text, this, std::placeholders::_1);
+		break;
+	case MESSAGE_TYPE::BYTES_MESSAGE:
+		mSendFunction = std::bind(&MessageSender::send_bytes, this, std::placeholders::_1);
+		break;
+	case MESSAGE_TYPE::STREAM_MESSAGE:
+		mSendFunction = std::bind(&MessageSender::send_map, this, std::placeholders::_1);
+		break;
+	case MESSAGE_TYPE::MAP_MESSAGE:
+		mSendFunction = std::bind(&MessageSender::send_stream, this, std::placeholders::_1);
+		break;
+	default:
+		break;
+	}
 }
 
 bool MessageSender::sendMessage()
@@ -52,17 +70,63 @@ std::string MessageSender::id() const
 
 bool MessageSender::send(int msg_delay_ms)
 {
+	return mSendFunction(msg_delay_ms);
+}
+
+bool MessageSender::send_text(int msg_delay_ms)
+{
 	auto message_body = createMessageBody();
 	if (message_body.empty())
 		return false;
 
 	if (mSession && mProducer)
 	{
-		auto mes = mSession->createTextMessage(message_body);
-		mProducer->send(mes);
+		auto message = mSession->createTextMessage(message_body);
+		mProducer->send(message);
 		return true;
 	}
 	else
 		return false;
+}
+
+bool MessageSender::send_bytes(int msg_delay_ms)
+{
+	auto message_body = createMessageBody();
+	if (message_body.empty())
+		return false;
+
+	if (mSession && mProducer)
+	{
+		auto message = mSession->createBytesMessage((const unsigned char*)message_body.c_str(),message_body.size());
+		mProducer->send(message);
+		return true;
+	}
+	else
+		return false;
+}
+
+bool MessageSender::send_stream(int msg_delay_ms)
+{
+	return false;
+}
+
+bool MessageSender::send_map(int msg_delay_ms)
+{
+	return false;
+}
+
+MESSAGE_TYPE MessageSender::fromString(const std::string & message_type_string)
+{
+
+	if (message_type_string == "text")
+		return MESSAGE_TYPE::TEXT_MESSAGE;
+	else if (message_type_string == "binary")
+		return MESSAGE_TYPE::BYTES_MESSAGE;
+	else if (message_type_string == "stream")
+		return MESSAGE_TYPE::STREAM_MESSAGE;
+	else if (message_type_string == "map")
+		return MESSAGE_TYPE::MAP_MESSAGE;
+	else
+		return MESSAGE_TYPE::UNKNOWN_TYPE;
 }
 

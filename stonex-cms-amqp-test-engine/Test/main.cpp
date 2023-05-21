@@ -96,7 +96,7 @@ int main()
 		boost::json::object::value_type test_case_performer_config_json = *valueFromFile("test_case.config").as_object().cbegin();
 		auto test_case_performer = parser.createTestCaseConfig(test_case_performer_config_json.key_c_str(), test_case_performer_config_json.value().as_object()).performerConfig();
 
-		MessageSenderConfiguration producer_config("connection1", "session1", "producer1");
+		MessageSenderConfiguration producer_config("connection1", "session1", "producer1", "text", "engine");
 		TestCasePerformerConfiguration test_performer_config({ &producer_config });
 
 
@@ -119,7 +119,7 @@ int main()
 		TestCaseVerifierConfiguration verifier_config({ &receiver_config }, { &exception_config });
 
 
-		MessageSenderConfiguration sender_config("connection1", "session1", "producer1");
+		MessageSenderConfiguration sender_config("connection1", "session1", "producer1", "text", "engine");
 		TestCasePerformerConfiguration test_performer_config({ &sender_config });
 
 		TestCaseConfiguration test_case_config("test_case_1", "test_function_1", true, wrapper_config, test_performer_config, verifier_config);
@@ -142,7 +142,7 @@ int main()
 		TestCaseVerifierConfiguration verifier_config({ &receiver_config }, { &exception_config });
 
 
-		MessageSenderConfiguration sender_config("connection1", "session1", "producer1");
+		MessageSenderConfiguration sender_config("connection1", "session1", "producer1", "text", "engine");
 		TestCasePerformerConfiguration test_performer_config({ &sender_config });
 
 		TestCaseConfiguration test_case_config("test_case_1", "test_function_1", true, wrapper_config, test_performer_config, verifier_config);
@@ -197,14 +197,14 @@ int main()
 		ExceptionsConfiguration exception_config("connection1", 0);
 	
 	
-		MessageSenderConfiguration sender1_config("connection1", "session1", "producer1");
-		MessageCountingSenderConfiguration sender2_config("connection1", "session1", "producer2", 1);
-		FileMessageSenderConfiguration sender3_config("connection1", "session1", "producer3", "test_message_file1.txt");
-		MessageDecoratingSenderConfiguration sender4_config("connection1", "session1", "producer4", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
-		FileMessageDecoratingSenderConfiguration sender5_config("connection1", "session1", "producer5", "test_message_file2.txt", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
-		FileMessageCountingSenderConfiguration sender6_config("connection1", "session1", "producer6", "test_message_file3.txt", 1);
-		MessageCountingDecoratingSenderConfiguration sender7_config("connection1", "session1", "producer7", 1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
-		FileMessageCountingDecoratingSenderConfiguration sender8_config("connection1", "session1", "producer8", "test_message_file4.txt", 1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+		MessageSenderConfiguration sender1_config("connection1", "session1", "producer1", "text", "engine");
+		MessageCountingSenderConfiguration sender2_config("connection1", "session1", "producer2", "text", "engine", 1);
+		FileMessageSenderConfiguration sender3_config("connection1", "session1", "producer3", "text", "engine", "test_message_file1.txt");
+		MessageDecoratingSenderConfiguration sender4_config("connection1", "session1", "producer4", "text", "engine", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+		FileMessageDecoratingSenderConfiguration sender5_config("connection1", "session1", "producer5", "text", "engine", "test_message_file2.txt", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+		FileMessageCountingSenderConfiguration sender6_config("connection1", "session1", "producer6", "text", "engine", "test_message_file3.txt", 1);
+		MessageCountingDecoratingSenderConfiguration sender7_config("connection1", "session1", "producer7", "text", "engine", 1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+		FileMessageCountingDecoratingSenderConfiguration sender8_config("connection1", "session1", "producer8", "text", "engine", "test_message_file4.txt", 1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
 		
 
 		TestCaseVerifierConfiguration verifier_config({ &receiver1_config, &receiver2_config, &receiver3_config, &receiver4_config, &receiver5_config, &receiver6_config, &receiver7_config, &receiver8_config }, { &exception_config });

@@ -26,7 +26,7 @@ MessageDecoratingSender::MessageDecoratingSender(const MessageDecoratingSenderCo
 {
 }
 
-bool MessageDecoratingSender::send(int msg_delay_ms)
+bool MessageDecoratingSender::send_text(int msg_delay_ms)
 {
 	auto message_body = createMessageBody();
 	if (message_body.empty())
@@ -42,6 +42,33 @@ bool MessageDecoratingSender::send(int msg_delay_ms)
 	}
 	else
 		return false;
-
 }
+
+bool MessageDecoratingSender::send_bytes(int msg_delay_ms)
+{
+	auto message_body = createMessageBody();
+	if (message_body.empty())
+		return false;
+
+	if (mSession && mProducer)
+	{
+		auto message = mSession->createBytesMessage((const unsigned char*)message_body.c_str(), message_body.size());
+		decorate(message, mSession);
+		mProducer->send(message);
+		return true;
+	}
+	else
+		return false;
+}
+
+bool MessageDecoratingSender::send_stream(int msg_delay_ms)
+{
+	return false;
+}
+
+bool MessageDecoratingSender::send_map(int msg_delay_ms)
+{
+	return false;
+}
+
 

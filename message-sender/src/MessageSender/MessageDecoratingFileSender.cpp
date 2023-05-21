@@ -26,7 +26,12 @@ MessageDecoratingFileSender::MessageDecoratingFileSender(const FileMessageDecora
 {
 }
 
-bool MessageDecoratingFileSender::send(int msg_delay_ms)
+std::string MessageDecoratingFileSender::createMessageBody()
+{
+	return getMessage();
+}
+
+bool MessageDecoratingFileSender::send_text(int msg_delay_ms)
 {
 	auto message_body = createMessageBody();
 	if (message_body.empty())
@@ -44,7 +49,29 @@ bool MessageDecoratingFileSender::send(int msg_delay_ms)
 		return false;
 }
 
-std::string MessageDecoratingFileSender::createMessageBody()
+bool MessageDecoratingFileSender::send_bytes(int msg_delay_ms)
 {
-	return getMessage();
+	auto message_body = createMessageBody();
+	if (message_body.empty())
+		return false;
+
+	if (mSession && mProducer)
+	{
+		auto message = mSession->createBytesMessage((const unsigned char*)message_body.c_str(), message_body.size());
+		decorate(message, mSession);
+		mProducer->send(message);
+		return true;
+	}
+	else
+		return false;
+}
+
+bool MessageDecoratingFileSender::send_stream(int msg_delay_ms)
+{
+	return false;
+}
+
+bool MessageDecoratingFileSender::send_map(int msg_delay_ms)
+{
+	return false;
 }

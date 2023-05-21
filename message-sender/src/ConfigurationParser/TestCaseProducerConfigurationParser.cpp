@@ -30,11 +30,13 @@ MessageSenderConfiguration * TestCaseProducerConfigurationParser::createTestCase
 {
 	if (json.is_object())
 	{
-		if (json.as_object().size() < 2)
+		if (json.as_object().size() < 4)
 			return nullptr;
 
 		std::string message_factory;
 		std::string session_factory;
+		std::string message_type;
+		std::string sender_type;
 
 
 
@@ -48,36 +50,46 @@ MessageSenderConfiguration * TestCaseProducerConfigurationParser::createTestCase
 		else
 			return nullptr;
 
-		if (json.as_object().size() == 2)
+		if (auto message_type_id = json.as_object().if_contains("message_type"); message_type_id && message_type_id->is_string())
+			message_type = message_type_id->as_string().c_str();
+		else
+			return nullptr;
+
+		if (auto sender_type_id = json.as_object().if_contains("sender_type"); sender_type_id && sender_type_id->is_string())
+			sender_type = sender_type_id->as_string().c_str();
+		else
+			return nullptr;
+
+		if (json.as_object().size() == 4)
 		{
 								
-			return new MessageSenderConfiguration(session_factory, message_factory, configName);
+			return new MessageSenderConfiguration(session_factory, message_factory, configName, message_type, sender_type);
 		} 
-		else if (json.as_object().size() == 3)
+		else if (json.as_object().size() == 5)
 		{
 
 			if (auto tmp_message_file = json.as_object().if_contains("message_file"); tmp_message_file && tmp_message_file->is_string()) {
 
 				std::string message_file;
 				message_file = tmp_message_file->as_string().c_str();
-				return new FileMessageSenderConfiguration(session_factory, message_factory, configName, message_file);
+				return new FileMessageSenderConfiguration(session_factory, message_factory, configName, message_type, sender_type, message_file);
 			}
 			else if (auto tmp_message_count = json.as_object().if_contains("message_count"); tmp_message_count && tmp_message_count->is_int64())
 			{
 				int message_count{ 0 };
 				message_count = tmp_message_count->as_int64();
-				return new MessageCountingSenderConfiguration(session_factory, message_factory, configName, message_count);
+				return new MessageCountingSenderConfiguration(session_factory, message_factory, configName, message_type, sender_type, message_count);
 			}
 			else if (auto tmp_message_properties = json.as_object().if_contains("properties"); tmp_message_properties && tmp_message_properties->is_object())
 			{
 				auto decorator_configuration = createMessgeDecoratorConfiguration("properties", *tmp_message_properties);
-				return new MessageDecoratingSenderConfiguration(session_factory, message_factory, configName, decorator_configuration.decorations());
+				return new MessageDecoratingSenderConfiguration(session_factory, message_factory, configName, message_type, sender_type, decorator_configuration.decorations());
 			}
 			else
 				return nullptr;
 
 		}
-		else if (json.as_object().size() == 4)
+		else if (json.as_object().size() == 6)
 		{
 			
 
@@ -88,12 +100,12 @@ MessageSenderConfiguration * TestCaseProducerConfigurationParser::createTestCase
 				if (auto tmp_message_count = json.as_object().if_contains("message_count"); tmp_message_count && tmp_message_count->is_int64())
 				{
 					int message_count = tmp_message_count->as_int64();
-					return new FileMessageCountingSenderConfiguration(session_factory, message_factory, configName, message_file, message_count);
+					return new FileMessageCountingSenderConfiguration(session_factory, message_factory, configName, message_type, sender_type, message_file, message_count);
 				}
 				else if (auto tmp_message_properties = json.as_object().if_contains("properties"); tmp_message_properties && tmp_message_properties->is_object())
 				{
 					auto decorator_configuration = createMessgeDecoratorConfiguration("properties", *tmp_message_properties);
-					return new FileMessageDecoratingSenderConfiguration(session_factory, message_factory, configName, message_file, decorator_configuration.decorations());
+					return new FileMessageDecoratingSenderConfiguration(session_factory, message_factory, configName, message_type, sender_type, message_file, decorator_configuration.decorations());
 
 				}
 			}
@@ -104,13 +116,13 @@ MessageSenderConfiguration * TestCaseProducerConfigurationParser::createTestCase
 				if (auto tmp_message_properties = json.as_object().if_contains("properties"); tmp_message_properties && tmp_message_properties->is_object())
 				{
 					auto decorator_configuration = createMessgeDecoratorConfiguration("properties", *tmp_message_properties);
-					return new MessageCountingDecoratingSenderConfiguration(session_factory, message_factory, configName, message_count, decorator_configuration.decorations());
+					return new MessageCountingDecoratingSenderConfiguration(session_factory, message_factory, configName, message_type, sender_type, message_count, decorator_configuration.decorations());
 				}
 			}
 			else
 				return nullptr;
 			}
-			else if (json.as_object().size() == 5)
+			else if (json.as_object().size() == 7)
 			{
 				std::string message_file;
 				int message_count{ 0 };
@@ -128,7 +140,7 @@ MessageSenderConfiguration * TestCaseProducerConfigurationParser::createTestCase
 				if (auto tmp_message_properties = json.as_object().if_contains("properties"); tmp_message_properties && tmp_message_properties->is_object())
 				{
 					auto decorator_configuration = createMessgeDecoratorConfiguration("properties", *tmp_message_properties);
-					return new FileMessageCountingDecoratingSenderConfiguration(session_factory, message_factory, configName, message_file, message_count, decorator_configuration.decorations());
+					return new FileMessageCountingDecoratingSenderConfiguration(session_factory, message_factory, configName, message_type, sender_type, message_file, message_count, decorator_configuration.decorations());
 				}
 				else
 					return nullptr;

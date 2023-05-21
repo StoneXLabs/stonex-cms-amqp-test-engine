@@ -27,6 +27,7 @@ class MessageCountingReceiver : public MessageReceiver, public ReceivedMessageCo
 {
 public:
 	explicit MessageCountingReceiver(const MessageCountingReceiverConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent);
+	virtual ~MessageCountingReceiver() = default;
 
 	void onMessage(const cms::Message* message) override;
 

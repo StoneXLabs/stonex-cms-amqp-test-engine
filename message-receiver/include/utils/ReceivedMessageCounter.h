@@ -27,7 +27,7 @@ class ReceivedMessageCounter : public EventCounter
 {
 public:
 	ReceivedMessageCounter(const std::string &id, long long expected_message_count, Notifier & parent);
-	~ReceivedMessageCounter();
+	virtual ~ReceivedMessageCounter();
 	long long receivedMessageCount() const;
 	void incrementReceivedCount();
 private:

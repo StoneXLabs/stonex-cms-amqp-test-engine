@@ -28,7 +28,10 @@ class MessageCountingDecoratingSender : public MessageSender, public SentMessage
 {
 public:
 	explicit MessageCountingDecoratingSender(const MessageCountingDecoratingSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent);
-	bool send(int msg_delay_ms = 0) override;
+	virtual bool send_text(int msg_delay_ms = 0) override;
+	virtual bool send_bytes(int msg_delay_ms = 0) override;
+	virtual bool send_stream(int msg_delay_ms = 0) override;
+	virtual bool send_map(int msg_delay_ms = 0) override;
 
 };
 

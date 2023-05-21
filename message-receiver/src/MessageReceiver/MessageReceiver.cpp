@@ -28,6 +28,12 @@ MessageReceiver::MessageReceiver(const MessageReceiverConfiguration& params, CMS
 		mConsumer->setMessageListener(this);
 }
 
+MessageReceiver::~MessageReceiver() 
+{
+	if (mConsumer)
+		mConsumer->setMessageListener(nullptr);
+}
+
 std::string MessageReceiver::id() const
 {
 	return mId;

@@ -32,6 +32,7 @@ class MessageReceiver : public cms::MessageListener
 {
 public:
 	MessageReceiver(const MessageReceiverConfiguration& params, CMSClientTestUnit & client_params);
+	virtual ~MessageReceiver();
 
 	void setMessageListener(cms::MessageListener* listener);
 	std::string id() const;

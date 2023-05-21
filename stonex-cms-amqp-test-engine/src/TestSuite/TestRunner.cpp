@@ -43,6 +43,7 @@ TestRunner::TestRunner(TestSuiteConfigParser & configurationParser, TestFunction
 	 std::for_each(mSuiteConfiguration.testsBegin(), mSuiteConfiguration.testsEnd(), [this](const TestCaseConfiguration& test) {
 
 		 mCurrentTestNumber++;
+		 
 
 		 if (mTestReporter) 
 		 {

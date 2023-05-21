@@ -28,6 +28,7 @@ class MessageDecoratingFileReceiver : public MessageReceiver, public MessageFile
 {
 public:
 	explicit MessageDecoratingFileReceiver(const FileMessageDecoratingReceiverConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent);
+	virtual ~MessageDecoratingFileReceiver() = default;
 
 	void onMessage(const cms::Message* message) override;
 

@@ -19,10 +19,12 @@
 
 #include <Configuration\MessageSenderConfiguration.h>
 
-MessageSenderConfiguration::MessageSenderConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& producerId)
+MessageSenderConfiguration::MessageSenderConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& producerId, const std::string& messageType, const std::string& senderType)
 	:mConnectionId{ connectionId },
 	mSessionId{ sessionId },
-	mProducerId{ producerId }
+	mProducerId{ producerId },
+	mMessageType{ messageType },
+	mSenderType{ senderType }
 {}
 
 std::string MessageSenderConfiguration::connectionId() const
@@ -38,11 +40,23 @@ std::string MessageSenderConfiguration::producerId() const
 	return mProducerId; 
 }
 
+std::string MessageSenderConfiguration::messageType() const
+{
+	return mMessageType;
+}
+
+std::string MessageSenderConfiguration::senderType() const
+{
+	return mSenderType;
+}
+
 
 bool operator==(const MessageSenderConfiguration & lhs, const MessageSenderConfiguration & rhs)
 {
-	return lhs.connectionId() == rhs.connectionId() &&
-		lhs.sessionId() == rhs.sessionId() &&
-		lhs.producerId() == rhs.producerId();
+	return lhs.mConnectionId == rhs.mConnectionId &&
+		lhs.mSessionId == rhs.mSessionId &&
+		lhs.mProducerId == rhs.mProducerId &&
+		lhs.mMessageType == rhs.mMessageType &&
+		lhs.mSenderType == rhs.mSenderType;
 		
 }
