@@ -24,15 +24,8 @@
 #include <Notifier/TestNotifier.h>
 #include <utils/EventCounter.h>
 #include <utils/MessageFile.h>
+#include <utils/MessageType.h>
 #include "Configuration/MessageSenderConfiguration.h"
-
-enum class MESSAGE_TYPE {
-	TEXT_MESSAGE,
-	BYTES_MESSAGE,
-	STREAM_MESSAGE,
-	MAP_MESSAGE,
-	UNKNOWN_TYPE
-};
 
 class MessageSender
 {

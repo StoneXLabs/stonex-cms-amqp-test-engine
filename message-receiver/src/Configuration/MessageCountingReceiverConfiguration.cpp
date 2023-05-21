@@ -19,8 +19,8 @@
 
 #include <Configuration/MessageCountingReceiverConfiguration.h>
 
-MessageCountingReceiverConfiguration::MessageCountingReceiverConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& consumerId, long long message_count)
-	:MessageReceiverConfiguration(connectionId, sessionId,consumerId),
+MessageCountingReceiverConfiguration::MessageCountingReceiverConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& consumerId, const std::string& messageType, const std::string& receiverType, long long message_count)
+	:MessageReceiverConfiguration(connectionId, sessionId,consumerId, messageType, receiverType),
 	EventCounter(message_count)
 {
 }
@@ -29,5 +29,7 @@ bool operator==(const MessageCountingReceiverConfiguration & lhs, const MessageC
 {
 	return rhs.consumerId() == lhs.consumerId() &&
 		rhs.sessionId() == lhs.sessionId() &&
+		lhs.messageType() == rhs.messageType() &&
+		lhs.receiverType() == rhs.receiverType() &&
 		rhs.expectedEventCount() == lhs.expectedEventCount();
 }

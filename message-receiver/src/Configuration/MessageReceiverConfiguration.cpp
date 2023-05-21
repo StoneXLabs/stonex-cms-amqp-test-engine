@@ -19,10 +19,12 @@
 
 #include <Configuration\MessageReceiverConfiguration.h>
 
-MessageReceiverConfiguration::MessageReceiverConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& consumerId)
+MessageReceiverConfiguration::MessageReceiverConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& consumerId, const std::string& messageType, const std::string& receiverType)
 	:mConnectionId{ connectionId },
 	mSessionId{ sessionId },
-	mConsumerId{ consumerId }
+	mConsumerId{ consumerId },
+	mMessageType{ messageType },
+	mReceiverType{ receiverType }
 {}
 
 std::string MessageReceiverConfiguration::connectionId() const
@@ -38,11 +40,23 @@ std::string MessageReceiverConfiguration::consumerId() const
 	return mConsumerId; 
 }
 
+std::string MessageReceiverConfiguration::messageType() const
+{
+	return mMessageType;
+}
+
+std::string MessageReceiverConfiguration::receiverType() const
+{
+	return mReceiverType;
+}
+
 
 bool operator==(const MessageReceiverConfiguration & lhs, const MessageReceiverConfiguration & rhs)
 {
-	return lhs.connectionId() == rhs.connectionId() &&
-		lhs.sessionId() == rhs.sessionId() &&
-		lhs.consumerId() == rhs.consumerId();
+	return lhs.mConnectionId == rhs.mConnectionId &&
+		lhs.mSessionId == rhs.mSessionId &&
+		lhs.mConsumerId == rhs.mConsumerId &&
+		lhs.mMessageType == rhs.mMessageType &&
+		lhs.mReceiverType == rhs.mReceiverType;
 		
 }

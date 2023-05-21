@@ -26,6 +26,7 @@
 #include <Notifier/TestNotifier.h>
 #include <utils/EventCounter.h>
 #include <utils/MessageFile.h>
+#include <utils/MessageType.h>
 #include "Configuration/MessageReceiverConfiguration.h"
 
 class MessageReceiver : public cms::MessageListener
@@ -40,7 +41,11 @@ public:
 	virtual void onMessage(const cms::Message* message) override;
 
 protected:
+	MESSAGE_TYPE fromString(const std::string& message_type_string);
+
+protected:
 	cms::MessageListener* mListener{ nullptr };
 	cms::MessageConsumer* mConsumer{ nullptr };
 	const std::string mId{};
+	const MESSAGE_TYPE mMessageType;
 };

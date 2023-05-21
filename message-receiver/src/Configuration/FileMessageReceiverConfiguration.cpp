@@ -19,8 +19,8 @@
 
 #include <Configuration/FileMessageReceiverConfiguration.h>
 
-FileMessageReceiverConfiguration::FileMessageReceiverConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& consumerId, const std::string & message_file)
-	:MessageReceiverConfiguration(connectionId, sessionId, consumerId),
+FileMessageReceiverConfiguration::FileMessageReceiverConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& consumerId, const std::string& messageType, const std::string& receiverType, const std::string & message_file)
+	:MessageReceiverConfiguration(connectionId, sessionId, consumerId, messageType, receiverType),
 	MessageFile(message_file)
 {
 }
@@ -30,5 +30,7 @@ bool operator==(const FileMessageReceiverConfiguration & lhs, const FileMessageR
 	return lhs.connectionId() == rhs.connectionId() &&
 		lhs.sessionId() == rhs.sessionId() &&
 		lhs.consumerId() == rhs.consumerId() &&
+		lhs.messageType() == rhs.messageType() &&
+		lhs.receiverType() == rhs.receiverType() &&
 		rhs.filePath() == lhs.filePath();
 }

@@ -126,7 +126,7 @@ int main()
 			auto test_producer_config = MessageSenderConfiguration("connection1", "session1", "producer1", "text", "engine");
 			TestMessageSender sender(test_producer_config, test_client, event_notifier);
 
-			auto test_consumer_config = MessageReceiverConfiguration("connection1", "session1", "consumer1");
+			auto test_consumer_config = MessageReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine");
 			MessageReceiver receiver(test_consumer_config, test_client);
 
 			TestMessageListener test_listener;
@@ -157,7 +157,7 @@ int main()
 			auto test_producer_config = MessageSenderConfiguration("connection1", "session1", "producer1", "text", "engine");
 			TestMessageSender sender(test_producer_config, test_client, event_notifier);
 
-			auto test_consumer_config = MessageCountingReceiverConfiguration("connection1", "session1", "consumer1", 1);
+			auto test_consumer_config = MessageCountingReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine", 1);
 			MessageCountingReceiver receiver(test_consumer_config, test_client, event_notifier);
 
 
@@ -186,7 +186,7 @@ int main()
 			auto test_producer_config = MessageSenderConfiguration("connection1", "session1", "producer1", "text", "engine");
 			TestMessageSender sender(test_producer_config, test_client, event_notifier);
 
-			auto test_consumer_config = FileMessageReceiverConfiguration("connection1", "session1", "consumer1", "test_message_out.txt");
+			auto test_consumer_config = FileMessageReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine", "test_message_out.txt");
 			MessageFileReceiver receiver(test_consumer_config, test_client, event_notifier);
 
 
@@ -218,7 +218,7 @@ int main()
 			auto test_producer_config = MessageSenderConfiguration("connection1", "session1", "producer1", "text", "engine");
 			TestMessageSender sender(test_producer_config, test_client, event_notifier);
 
-			auto test_consumer_config = FileMessageCountingReceiverConfiguration("connection1", "session1", "consumer1", "test_message_out.txt", 1);
+			auto test_consumer_config = FileMessageCountingReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine", "test_message_out.txt", 1);
 			MessageCountingFileReceiver receiver(test_consumer_config, test_client, event_notifier);
 
 			assert(receiver.receivedMessageCount() == 0);
@@ -246,7 +246,7 @@ int main()
 			auto test_producer_config = MessageSenderConfiguration("connection1", "session1", "producer1", "text", "engine");
 			TestMessageSender sender(test_producer_config, test_client, event_notifier);
 
-			auto test_consumer_config = FileMessageCountingDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "test_message_out.txt", 1, {new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY, "property", "false")});
+			auto test_consumer_config = FileMessageCountingDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine", "test_message_out.txt", 1, {new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY, "property", "false")});
 			MessageCountingDecoratingFileReceiver receiver(test_consumer_config, test_client, event_notifier);
 
 			assert(receiver.receivedMessageCount() == 0);

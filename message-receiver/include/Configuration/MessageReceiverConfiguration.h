@@ -26,16 +26,20 @@
 class MessageReceiverConfiguration 
 {
 public:
-	MessageReceiverConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& consumerId);
+	MessageReceiverConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& consumerId, const std::string& messageType, const std::string& receiverType);
 	virtual ~MessageReceiverConfiguration() = default;
 	std::string connectionId() const;
 	std::string sessionId() const;
 	std::string consumerId() const;
+	std::string messageType() const;
+	std::string receiverType() const;
 	friend bool operator== (const MessageReceiverConfiguration& lhs, const MessageReceiverConfiguration& rhs);
 	
 private:
 	const std::string mConnectionId;
 	const std::string mSessionId;
 	const std::string mConsumerId;
+	const std::string mMessageType;
+	const std::string mReceiverType;
 };
 

@@ -27,4 +27,7 @@ class MessageReceiverFactory {
 public:
 	MessageReceiver* create(const MessageReceiverConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, Notifier& parent)  const;
 
+protected:
+	virtual MessageReceiver* create_receiver(const MessageReceiverConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, Notifier& parent)  const;
+	virtual bool acceptedReceiverTypeType(const std::string &type) const;
 };

@@ -117,7 +117,6 @@ bool MessageSender::send_map(int msg_delay_ms)
 
 MESSAGE_TYPE MessageSender::fromString(const std::string & message_type_string)
 {
-
 	if (message_type_string == "text")
 		return MESSAGE_TYPE::TEXT_MESSAGE;
 	else if (message_type_string == "binary")

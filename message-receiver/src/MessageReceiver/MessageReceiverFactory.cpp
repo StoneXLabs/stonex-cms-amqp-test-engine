@@ -68,3 +68,13 @@ MessageReceiver * MessageReceiverFactory::create(const MessageReceiverConfigurat
 	
 	
 }
+
+MessageReceiver * MessageReceiverFactory::create_receiver(const MessageReceiverConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, Notifier & parent) const
+{
+	return nullptr;
+}
+
+bool MessageReceiverFactory::acceptedReceiverTypeType(const std::string & type) const
+{
+	return true;
+}

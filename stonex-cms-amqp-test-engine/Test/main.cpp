@@ -83,7 +83,7 @@ int main()
 		boost::json::object::value_type test_case_receiver_config_json = *valueFromFile("test_case.config").as_object().cbegin();
 		auto test_case_verifier = parser.createTestCaseConfig(test_case_receiver_config_json.key_c_str(), test_case_receiver_config_json.value().as_object()).verifierConfig();
 
-		MessageReceiverConfiguration receiver_config("connection1", "session1", "consumer1");
+		MessageReceiverConfiguration receiver_config("connection1", "session1", "consumer1", "text", "engine");
 		ExceptionsConfiguration exception_config("connection1", 0);
 		TestCaseVerifierConfiguration verifier_config({ &receiver_config }, { &exception_config });
 
@@ -114,7 +114,7 @@ int main()
 		auto connection_config = ConnectionConfiguration("connection1", "failover:(localhost:5672)?maxReconnectAttempts=5", "admin", "admin", "", { session_config });
 		auto wrapper_config = WrapperConfiguration(std::vector< ConnectionConfiguration>({ connection_config }));
 
-		MessageReceiverConfiguration receiver_config("connection1", "session1", "consumer1");
+		MessageReceiverConfiguration receiver_config("connection1", "session1", "consumer1", "text", "engine");
 		ExceptionsConfiguration exception_config("connection1", 0);
 		TestCaseVerifierConfiguration verifier_config({ &receiver_config }, { &exception_config });
 
@@ -137,7 +137,7 @@ int main()
 		auto connection_config = ConnectionConfiguration("connection1", "failover:(localhost:5672)?maxReconnectAttempts=5", "admin", "admin", "", { session_config });
 		auto wrapper_config = WrapperConfiguration(std::vector< ConnectionConfiguration>({ connection_config }));
 
-		MessageReceiverConfiguration receiver_config("connection1", "session1", "consumer1");
+		MessageReceiverConfiguration receiver_config("connection1", "session1", "consumer1", "text", "engine");
 		ExceptionsConfiguration exception_config("connection1", 0);
 		TestCaseVerifierConfiguration verifier_config({ &receiver_config }, { &exception_config });
 
@@ -183,14 +183,14 @@ int main()
 		auto wrapper_config = WrapperConfiguration(std::vector< ConnectionConfiguration>({ connection_config }));
 
 
-		MessageReceiverConfiguration receiver1_config("connection1", "session1", "consumer1");
-		MessageCountingReceiverConfiguration receiver2_config("connection1", "session1", "consumer2", 1);
-		FileMessageReceiverConfiguration receiver3_config("connection1", "session1", "consumer3", "message_file.txt");
-		MessageDecoratingReceiverConfiguration receiver4_config("connection1", "session1", "consumer4", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
-		FileMessageCountingReceiverConfiguration receiver5_config("connection1", "session1", "consumer5", "message_file.txt", 1);
-		MessageCountingDecoratingReceiverConfiguration receiver6_config("connection1", "session1", "consumer6", 1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
-		FileMessageDecoratingReceiverConfiguration receiver7_config("connection1", "session1", "consumer7", "message_file.txt", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
-		FileMessageCountingDecoratingReceiverConfiguration receiver8_config("connection1", "session1", "consumer8", "message_file.txt", 1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+		MessageReceiverConfiguration receiver1_config("connection1", "session1", "consumer1", "text", "engine");
+		MessageCountingReceiverConfiguration receiver2_config("connection1", "session1", "consumer2", "text", "engine", 1);
+		FileMessageReceiverConfiguration receiver3_config("connection1", "session1", "consumer3", "text", "engine", "message_file.txt");
+		MessageDecoratingReceiverConfiguration receiver4_config("connection1", "session1", "consumer4", "text", "engine", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+		FileMessageCountingReceiverConfiguration receiver5_config("connection1", "session1", "consumer5", "text", "engine", "message_file.txt", 1);
+		MessageCountingDecoratingReceiverConfiguration receiver6_config("connection1", "session1", "consumer6", "text", "engine", 1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+		FileMessageDecoratingReceiverConfiguration receiver7_config("connection1", "session1", "consumer7", "text", "engine", "message_file.txt", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+		FileMessageCountingDecoratingReceiverConfiguration receiver8_config("connection1", "session1", "consumer8", "text", "engine", "message_file.txt", 1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
 
 
 
