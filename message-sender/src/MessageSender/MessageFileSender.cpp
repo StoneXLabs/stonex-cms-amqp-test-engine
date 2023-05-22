@@ -18,6 +18,7 @@
  */
 
 #include <MessageSender/MessageFileSender.h>
+#include <fmt/format.h>
 
 MessageFileSender::MessageFileSender(const FileMessageSenderConfiguration & config, CMSClientTestUnit & client_params, Notifier & parent)
 	:MessageSender(config, client_params, parent),
@@ -27,5 +28,14 @@ MessageFileSender::MessageFileSender(const FileMessageSenderConfiguration & conf
 
 std::string MessageFileSender::createMessageBody()
 {
-	return getMessage();
+	try
+	{
+		return getMessage();
+	}
+	catch (const std::exception&)
+	{
+		mParent.testEvent(EventStatus(false, mId, fmt::format("can not read line from file")));
+	}
+
+	return "";
 }

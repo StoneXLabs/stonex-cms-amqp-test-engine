@@ -18,6 +18,7 @@
  */
 
 #include <MessageSender/MessageDecoratingFileSender.h>
+#include <fmt/format.h>
 
 MessageDecoratingFileSender::MessageDecoratingFileSender(const FileMessageDecoratingSenderConfiguration & config, CMSClientTestUnit & client_params, Notifier & parent)
 	: MessageSender(config, client_params, parent),
@@ -28,7 +29,16 @@ MessageDecoratingFileSender::MessageDecoratingFileSender(const FileMessageDecora
 
 std::string MessageDecoratingFileSender::createMessageBody()
 {
-	return getMessage();
+	try
+	{
+		return getMessage();
+	}
+	catch (const std::exception&)
+	{
+		mParent.testEvent(EventStatus(false, mId, fmt::format("can not read line from file")));
+	}
+
+	return "";
 }
 
 MESSAGE_SEND_STATUS MessageDecoratingFileSender::send_text(int msg_delay_ms)

@@ -18,6 +18,7 @@
  */
 
 #include <MessageSender/MessageCountingDecoratingFileSender.h>
+#include <fmt/format.h>
 
 MessageCountingDecoratingFileSender::MessageCountingDecoratingFileSender(const FileMessageCountingDecoratingSenderConfiguration & config, CMSClientTestUnit & client_params, Notifier & parent)
 	:MessageSender(config, client_params, parent),
@@ -93,5 +94,15 @@ MESSAGE_SEND_STATUS MessageCountingDecoratingFileSender::send_map(int msg_delay_
 
 std::string MessageCountingDecoratingFileSender::createMessageBody()
 {
-	return getMessage();
+	try
+	{
+		return getMessage();
+	}
+	catch (const std::exception&)
+	{
+		mParent.testEvent(EventStatus(false, mId, fmt::format("can not read line from file")));
+
+	}
+
+	return "";
 }
