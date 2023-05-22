@@ -25,7 +25,16 @@
 #include <utils/EventCounter.h>
 #include <utils/MessageFile.h>
 #include <utils/MessageType.h>
+#include <utils/SessionHandler.h>
+#include <utils/ProducerHandler.h>
 #include "Configuration/MessageSenderConfiguration.h"
+
+enum class MESSAGE_SEND_STATUS {
+	SUCCESS,
+	FAILED,
+	ALL_SENT,
+	ERROR,
+};
 
 class MessageSender
 {
@@ -34,13 +43,16 @@ public:
 
 	bool sendMessage();
 	std::string id() const;
+	std::string sessionId() const;
+	SessionHandler* getSessionHandler(const std::string& session_id) const;
+	ProducerHandler* getProducerHandler() const;
 
 protected:
-	bool send(int msg_delay_ms = 0);
-	virtual bool send_text(int msg_delay_ms = 0);
-	virtual bool send_bytes(int msg_delay_ms = 0);
-	virtual bool send_stream(int msg_delay_ms = 0);
-	virtual bool send_map(int msg_delay_ms = 0);
+	MESSAGE_SEND_STATUS send(int msg_delay_ms = 0);
+	virtual MESSAGE_SEND_STATUS send_text(int msg_delay_ms = 0);
+	virtual MESSAGE_SEND_STATUS send_bytes(int msg_delay_ms = 0);
+	virtual MESSAGE_SEND_STATUS send_stream(int msg_delay_ms = 0);
+	virtual MESSAGE_SEND_STATUS send_map(int msg_delay_ms = 0);
 	virtual std::string createMessageBody() = 0;
 	MESSAGE_TYPE fromString(const std::string& message_type_string);
 
@@ -48,7 +60,8 @@ protected:
 	SessionTestUnit* mSession;
 	ProducerTestUnit* mProducer;
 	const std::string mId{};
+	const std::string mSessionId{};
 	Notifier& mParent;
 	const MESSAGE_TYPE mMessageType;
-	std::function<bool(int)> mSendFunction = [](int) {return false; };
+	std::function<MESSAGE_SEND_STATUS(int)> mSendFunction = [](int) {return MESSAGE_SEND_STATUS::ALL_SENT; };
 };

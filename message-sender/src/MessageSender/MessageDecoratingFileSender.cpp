@@ -31,11 +31,11 @@ std::string MessageDecoratingFileSender::createMessageBody()
 	return getMessage();
 }
 
-bool MessageDecoratingFileSender::send_text(int msg_delay_ms)
+MESSAGE_SEND_STATUS MessageDecoratingFileSender::send_text(int msg_delay_ms)
 {
 	auto message_body = createMessageBody();
 	if (message_body.empty())
-		return false;
+		return MESSAGE_SEND_STATUS::FAILED;
 
 
 	if (mSession && mProducer)
@@ -43,35 +43,35 @@ bool MessageDecoratingFileSender::send_text(int msg_delay_ms)
 		auto message = mSession->createTextMessage(message_body);
 		decorate(message, mSession);
 		mProducer->send(message);
-		return true;
+		return MESSAGE_SEND_STATUS::ALL_SENT;
 	}
 	else
-		return false;
+		return MESSAGE_SEND_STATUS::FAILED;
 }
 
-bool MessageDecoratingFileSender::send_bytes(int msg_delay_ms)
+MESSAGE_SEND_STATUS MessageDecoratingFileSender::send_bytes(int msg_delay_ms)
 {
 	auto message_body = createMessageBody();
 	if (message_body.empty())
-		return false;
+		return MESSAGE_SEND_STATUS::FAILED;
 
 	if (mSession && mProducer)
 	{
 		auto message = mSession->createBytesMessage((const unsigned char*)message_body.c_str(), message_body.size());
 		decorate(message, mSession);
 		mProducer->send(message);
-		return true;
+		return MESSAGE_SEND_STATUS::ALL_SENT;
 	}
 	else
-		return false;
+		return MESSAGE_SEND_STATUS::FAILED;
 }
 
-bool MessageDecoratingFileSender::send_stream(int msg_delay_ms)
+MESSAGE_SEND_STATUS MessageDecoratingFileSender::send_stream(int msg_delay_ms)
 {
-	return false;
+	return MESSAGE_SEND_STATUS::ERROR;
 }
 
-bool MessageDecoratingFileSender::send_map(int msg_delay_ms)
+MESSAGE_SEND_STATUS MessageDecoratingFileSender::send_map(int msg_delay_ms)
 {
-	return false;
+	return MESSAGE_SEND_STATUS::ERROR;
 }

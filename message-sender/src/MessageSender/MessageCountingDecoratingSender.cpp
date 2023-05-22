@@ -26,12 +26,14 @@ MessageCountingDecoratingSender::MessageCountingDecoratingSender(const MessageCo
 {
 }
 
-bool MessageCountingDecoratingSender::send_text(int msg_delay_ms)
+MESSAGE_SEND_STATUS MessageCountingDecoratingSender::send_text(int msg_delay_ms)
 {
+	if (expectedEventCount() == sentMessageCount())
+		return MESSAGE_SEND_STATUS::ALL_SENT;
+
 	auto message_body = createMessageBody();
 	if (message_body.empty())
-		return false;
-
+		return MESSAGE_SEND_STATUS::FAILED;
 
 	if (mSession && mProducer)
 	{
@@ -39,17 +41,25 @@ bool MessageCountingDecoratingSender::send_text(int msg_delay_ms)
 		decorate(message, mSession);
 		mProducer->send(message);
 		incrementSentCount();
-		return true;
+		if (expectedEventCount() == sentMessageCount())
+			return MESSAGE_SEND_STATUS::ALL_SENT;
+		else if (expectedEventCount() < sentMessageCount())
+			return MESSAGE_SEND_STATUS::ERROR;
+		else
+			return MESSAGE_SEND_STATUS::SUCCESS;
 	}
 	else
-		return false;
+		return MESSAGE_SEND_STATUS::FAILED;
 }
 
-bool MessageCountingDecoratingSender::send_bytes(int msg_delay_ms)
+MESSAGE_SEND_STATUS MessageCountingDecoratingSender::send_bytes(int msg_delay_ms)
 {
+	if (expectedEventCount() == sentMessageCount())
+		return MESSAGE_SEND_STATUS::ALL_SENT;
+
 	auto message_body = createMessageBody();
 	if (message_body.empty())
-		return false;
+		return MESSAGE_SEND_STATUS::FAILED;
 
 	if (mSession && mProducer)
 	{
@@ -57,19 +67,24 @@ bool MessageCountingDecoratingSender::send_bytes(int msg_delay_ms)
 		decorate(message, mSession);
 		mProducer->send(message);
 		incrementSentCount();
-		return true;
+		if (expectedEventCount() == sentMessageCount())
+			return MESSAGE_SEND_STATUS::ALL_SENT;
+		else if (expectedEventCount() < sentMessageCount())
+			return MESSAGE_SEND_STATUS::ERROR;
+		else
+			return MESSAGE_SEND_STATUS::SUCCESS;
 	}
 	else
-		return false;
+		return MESSAGE_SEND_STATUS::FAILED;
 }
 
-bool MessageCountingDecoratingSender::send_stream(int msg_delay_ms)
+MESSAGE_SEND_STATUS MessageCountingDecoratingSender::send_stream(int msg_delay_ms)
 {
-	return false;
+	return MESSAGE_SEND_STATUS::ERROR;
 }
 
-bool MessageCountingDecoratingSender::send_map(int msg_delay_ms)
+MESSAGE_SEND_STATUS MessageCountingDecoratingSender::send_map(int msg_delay_ms)
 {
-	return false;
+	return MESSAGE_SEND_STATUS::ERROR;
 }
 

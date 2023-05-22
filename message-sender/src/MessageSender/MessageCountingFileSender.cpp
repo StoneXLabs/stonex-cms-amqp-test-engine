@@ -26,49 +26,64 @@ MessageCountingFileSender::MessageCountingFileSender(const FileMessageCountingSe
 {
 }
 
-bool MessageCountingFileSender::send_text(int msg_delay_ms)
+MESSAGE_SEND_STATUS MessageCountingFileSender::send_text(int msg_delay_ms)
 {
+	if (expectedEventCount() == sentMessageCount())
+		return MESSAGE_SEND_STATUS::ALL_SENT;
+
 	auto message_body = createMessageBody();
 	if (message_body.empty())
-		return false;
-
+		return MESSAGE_SEND_STATUS::FAILED;
 
 	if (mSession && mProducer)
 	{
 		auto message = mSession->createTextMessage(message_body);
 		mProducer->send(message);
 		incrementSentCount();
-		return true;
+		if (expectedEventCount() == sentMessageCount())
+			return MESSAGE_SEND_STATUS::ALL_SENT;
+		else if (expectedEventCount() < sentMessageCount())
+			return MESSAGE_SEND_STATUS::ERROR;
+		else
+			return MESSAGE_SEND_STATUS::SUCCESS;
 	}
 	else
-		return false;
+		return MESSAGE_SEND_STATUS::FAILED;
 }
 
-bool MessageCountingFileSender::send_bytes(int msg_delay_ms)
+MESSAGE_SEND_STATUS MessageCountingFileSender::send_bytes(int msg_delay_ms)
 {
+	if (expectedEventCount() == sentMessageCount())
+		return MESSAGE_SEND_STATUS::ALL_SENT;
+
 	auto message_body = createMessageBody();
 	if (message_body.empty())
-		return false;
+		return MESSAGE_SEND_STATUS::FAILED;
 
 	if (mSession && mProducer)
 	{
 		auto message = mSession->createBytesMessage((const unsigned char*)message_body.c_str(), message_body.size());
 		mProducer->send(message);
 		incrementSentCount();
-		return true;
+		if (expectedEventCount() == sentMessageCount())
+			return MESSAGE_SEND_STATUS::ALL_SENT;
+		else if (expectedEventCount() < sentMessageCount())
+			return MESSAGE_SEND_STATUS::ERROR;
+		else
+			return MESSAGE_SEND_STATUS::SUCCESS;
 	}
 	else
-		return false;
+		return MESSAGE_SEND_STATUS::FAILED;
 }
 
-bool MessageCountingFileSender::send_stream(int msg_delay_ms)
+MESSAGE_SEND_STATUS MessageCountingFileSender::send_stream(int msg_delay_ms)
 {
-	return false;
+	return MESSAGE_SEND_STATUS::ERROR;
 }
 
-bool MessageCountingFileSender::send_map(int msg_delay_ms)
+MESSAGE_SEND_STATUS MessageCountingFileSender::send_map(int msg_delay_ms)
 {
-	return false;
+	return MESSAGE_SEND_STATUS::ERROR;
 }
 
 std::string MessageCountingFileSender::createMessageBody()

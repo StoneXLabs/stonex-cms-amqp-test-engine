@@ -29,18 +29,127 @@ TestCasePerformer::TestCasePerformer(const TestCasePerformerConfiguration & para
 		std::transform(std::cbegin(params.senders()), std::cend(params.senders()), std::back_inserter(mSenders), [this,&client_params,&senderFactory, &notifier](const MessageSenderConfiguration* item) { return senderFactory->create(*item, client_params, notifier); });
 }
 
- void TestCasePerformer::sendAll(int msg_delay_ms)
+ void TestCasePerformer::sendAll(int msg_delay_ms, const std::string &producerId, const std::string &sessionId)
 {
+	 if (producerId.empty() == true && sessionId.empty() == true)
+	 {
+		 int _continueSend{ 0 };
+		 do {
+			 _continueSend = 0;
+			 _continueSend = std::count_if(std::begin(mSenders), std::end(mSenders), [this, msg_delay_ms](MessageSender* sender) {
+				 if (sender)
+					return sender->sendMessage();
+				 else
+					return false;
+			 });
 
-		std::for_each(std::begin(mSenders), std::end(mSenders), [ msg_delay_ms](MessageSender* sender) {
-			if (sender) {
-					sender->sendMessage();
-			}
+		 } while (_continueSend > 0);
 
-		});
+
+	 }
+	 else if (producerId.empty())
+	 {
+		 int _continueSend{ 0 };
+		 do {
+			 _continueSend = 0;
+			 _continueSend = std::count_if(std::begin(mSenders), std::end(mSenders), [this, msg_delay_ms, sessionId](MessageSender* sender) {
+				 if (sender) {
+					 if (sender->sessionId() == sessionId)
+						 return sender->sendMessage();
+					 else
+						 return false;
+				 }
+				 else
+					 return false;
+			 });
+
+		 } while (_continueSend > 0);
+
+		
+	 }
+	 else if (sessionId.empty())
+	 {
+		 int _continueSend{ 0 };
+		 do {
+			 _continueSend = 0;
+			 _continueSend = std::count_if(std::begin(mSenders), std::end(mSenders), [this, msg_delay_ms, producerId](MessageSender* sender) {
+				 if (sender) {
+					 if (sender->id() == producerId)
+						 return sender->sendMessage();
+					 else
+						 return false;
+				 }
+				 else
+					 return false;
+			 });
+
+		 } while (_continueSend > 0);
+
+
+	 }
+	 else 
+	 {
+		 int _continueSend{ 0 };
+		 do {
+			 _continueSend = 0;
+			 _continueSend = std::count_if(std::begin(mSenders), std::end(mSenders), [this, msg_delay_ms, producerId, sessionId](MessageSender* sender) {
+				 if (sender) {
+					 if (sender->id() == producerId && sender->sessionId() == sessionId)
+						 return sender->sendMessage();
+					 else
+						 return false;
+				 }
+				 else
+					 return false;
+			 });
+
+		 } while (_continueSend > 0);
+
+	 }
+
 
 
 }
+
+ SessionHandler * TestCasePerformer::getSessionHandler(const std::string &session_id)
+ {
+	 auto object_ptr = std::find_if(std::begin(mSenders), std::end(mSenders), [&session_id](MessageSender *item) {
+		 if (item)
+			 return item->getSessionHandler(session_id) != nullptr;
+		 else
+			 return false;
+	 });
+
+	 if (object_ptr != std::end(mSenders) && *object_ptr)
+		 return (*object_ptr)->getSessionHandler(session_id);
+	 else
+		 return nullptr;
+ }
+
+ ProducerHandler * TestCasePerformer::getProducerHandler(const std::string &session_id, const std::string &producer_id)
+ {
+	 auto object_ptr = std::find_if(std::begin(mSenders), std::end(mSenders), [&session_id](MessageSender *item) {
+		 if (item)
+			 return item->id() == session_id;
+		 else
+			 return false;
+	 });
+
+	 if (object_ptr != std::end(mSenders) && *object_ptr) 
+	 {	
+		 if((*object_ptr)->id() == producer_id)
+			return (*object_ptr)->getProducerHandler();
+		 else 
+			 return nullptr;
+	 }
+	 else
+		 return nullptr;
+ }
+
+ bool TestCasePerformer::stopSend(int stopAfter)
+ {
+	 return true;
+ }
 
 
 

@@ -19,19 +19,23 @@
 
 #pragma once
 
-#include <MessageSender/MessageSender.h>
-#include "..\Configuration\FileMessageCountingSenderConfiguration.h"
-#include "..\utils\MessageSource.h"
-#include "..\utils\SentMessageCounter.h"
+#include <cms/MessageProducer.h>
 
-class MessageCountingFileSender : public MessageSender, public SentMessageCounter, public MessageFileSource
+class ProducerHandler
 {
 public:
-	explicit MessageCountingFileSender(const FileMessageCountingSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent);
-	virtual MESSAGE_SEND_STATUS send_text(int msg_delay_ms = 0) override;
-	virtual MESSAGE_SEND_STATUS send_bytes(int msg_delay_ms = 0) override;
-	virtual MESSAGE_SEND_STATUS send_stream(int msg_delay_ms = 0) override;
-	virtual MESSAGE_SEND_STATUS send_map(int msg_delay_ms = 0) override;
-	std::string createMessageBody() override;
+	explicit ProducerHandler(cms::MessageProducer* object);
+	int getDeliveryMode() const;
+	void setDeliveryMode(int mode);
+	void setDisableMessageID(bool value);
+	bool getDisableMessageID() const;
+	void setDisableMessageTimeStamp(bool value);
+	bool getDisableMessageTimeStamp() const;
+	void setPriority(int priority);
+	int getPriority() const;
+	void setTimeToLive(long long time);
+	long long getTimeToLive() const;
+private:
+	cms::MessageProducer* mObject{ nullptr };
 };
 

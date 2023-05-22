@@ -24,6 +24,7 @@ MessageSender::MessageSender(const MessageSenderConfiguration& params, CMSClient
 	:mSession{ client_params.session(params.connectionId(), params.sessionId()) },
 	mProducer{ client_params.producer(params.connectionId(), params.sessionId(),params.producerId()) },
 	mId{params.producerId()},
+	mSessionId{mSession->id()},
 	mParent{parent},
 	mMessageType{fromString(params.messageType())}	
 {
@@ -48,19 +49,34 @@ MessageSender::MessageSender(const MessageSenderConfiguration& params, CMSClient
 
 bool MessageSender::sendMessage()
 {
-	bool sent{ false };
+	MESSAGE_SEND_STATUS sent;
 	if (mProducer) 
 	{
 		sent = send(0);
-		if (sent)
-			mParent.testEvent(EventStatus(sent, id(), ""));
-		else
-			mParent.testEvent(EventStatus(sent, id(), "failed to send message"));
+
+		switch (sent)
+		{
+		case MESSAGE_SEND_STATUS::SUCCESS:
+			mParent.testEvent(EventStatus(true, id(), ""));
+			break;
+		case MESSAGE_SEND_STATUS::FAILED:
+			mParent.testEvent(EventStatus(false, id(), "failed to send message"));
+			break;
+		case MESSAGE_SEND_STATUS::ALL_SENT:
+			mParent.testEvent(EventStatus(true, id(), ""));
+			break;
+		case MESSAGE_SEND_STATUS::ERROR:
+			mParent.testEvent(EventStatus(false, id(), "sender error"));
+			break;
+		default:
+			break;
+		}
+
 	}
 	else
-		mParent.testEvent(EventStatus(sent, id(), "failed to send message. producer not initialized"));
+		mParent.testEvent(EventStatus(false, id(), "failed to send message. producer not initialized"));
 	
-	return sent;
+	return sent == MESSAGE_SEND_STATUS::SUCCESS;
 }
 
 std::string MessageSender::id() const
@@ -68,51 +84,69 @@ std::string MessageSender::id() const
 	return mId;
 }
 
-bool MessageSender::send(int msg_delay_ms)
+std::string MessageSender::sessionId() const
+{
+	return mSessionId;
+}
+
+SessionHandler * MessageSender::getSessionHandler(const std::string& session_id) const
+{
+	if (mSession->id() == session_id)
+		return new SessionHandler(mSession);
+	else
+		return false;
+}
+
+ProducerHandler * MessageSender::getProducerHandler() const
+{
+	return new ProducerHandler(mProducer);
+}
+
+MESSAGE_SEND_STATUS MessageSender::send(int msg_delay_ms)
 {
 	return mSendFunction(msg_delay_ms);
 }
 
-bool MessageSender::send_text(int msg_delay_ms)
+MESSAGE_SEND_STATUS MessageSender::send_text(int msg_delay_ms)
 {
 	auto message_body = createMessageBody();
 	if (message_body.empty())
-		return false;
+		return MESSAGE_SEND_STATUS::FAILED;
 
 	if (mSession && mProducer)
 	{
 		auto message = mSession->createTextMessage(message_body);
 		mProducer->send(message);
-		return true;
+		return MESSAGE_SEND_STATUS::ALL_SENT;
 	}
 	else
-		return false;
+		return MESSAGE_SEND_STATUS::ERROR;
 }
 
-bool MessageSender::send_bytes(int msg_delay_ms)
+MESSAGE_SEND_STATUS MessageSender::send_bytes(int msg_delay_ms)
 {
 	auto message_body = createMessageBody();
 	if (message_body.empty())
-		return false;
+		return MESSAGE_SEND_STATUS::FAILED;
 
 	if (mSession && mProducer)
 	{
 		auto message = mSession->createBytesMessage((const unsigned char*)message_body.c_str(),message_body.size());
 		mProducer->send(message);
-		return true;
+		return MESSAGE_SEND_STATUS::ALL_SENT;
 	}
 	else
-		return false;
+		return MESSAGE_SEND_STATUS::FAILED;
 }
 
-bool MessageSender::send_stream(int msg_delay_ms)
+MESSAGE_SEND_STATUS MessageSender::send_stream(int msg_delay_ms)
 {
-	return false;
+	return MESSAGE_SEND_STATUS::ERROR;
 }
 
-bool MessageSender::send_map(int msg_delay_ms)
+MESSAGE_SEND_STATUS MessageSender::send_map(int msg_delay_ms)
 {
-	return false;
+	return MESSAGE_SEND_STATUS::ERROR;
 }
 
 MESSAGE_TYPE MessageSender::fromString(const std::string & message_type_string)

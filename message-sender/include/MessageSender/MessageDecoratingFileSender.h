@@ -29,10 +29,10 @@ class MessageDecoratingFileSender : public MessageSender, public MessageFileSour
 public:
 	explicit MessageDecoratingFileSender(const FileMessageDecoratingSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent);
 	std::string createMessageBody() override;
-	virtual bool send_text(int msg_delay_ms = 0) override;
-	virtual bool send_bytes(int msg_delay_ms = 0) override;
-	virtual bool send_stream(int msg_delay_ms = 0) override;
-	virtual bool send_map(int msg_delay_ms = 0) override;
+	virtual MESSAGE_SEND_STATUS send_text(int msg_delay_ms = 0) override;
+	virtual MESSAGE_SEND_STATUS send_bytes(int msg_delay_ms = 0) override;
+	virtual MESSAGE_SEND_STATUS send_stream(int msg_delay_ms = 0) override;
+	virtual MESSAGE_SEND_STATUS send_map(int msg_delay_ms = 0) override;
 
 };
 

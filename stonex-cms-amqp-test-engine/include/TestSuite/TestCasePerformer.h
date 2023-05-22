@@ -27,14 +27,19 @@
 #include <Wrapper/CMSClientTestUnit.h>
 #include <Configuration/MessageSenderConfiguration.h>
 #include <MessageSender/MessageSenderFactory.h>
+#include <utils/SessionHandler.h>
+#include <utils/ProducerHandler.h>
 #include "../Configuration/TestCasePerformerConfiguration.h"
 
 class TestCasePerformer
 {
 public:
 	TestCasePerformer(const TestCasePerformerConfiguration& params, CMSClientTestUnit& client_params, Notifier& notifier, MessageSenderFactory* senderFactory);
-	virtual void sendAll(int msg_delay_ms = 0);
-
+	void sendAll(int msg_delay_ms = 0, const std::string &producerId = "", const std::string &sessionId = "");
+	SessionHandler* getSessionHandler(const std::string &session_id);
+	ProducerHandler* getProducerHandler(const std::string &session_id,const std::string &producer_id);
+private:
+	bool stopSend(int stopAfter);
 private:
 	std::vector<MessageSender*> mSenders;
 };

@@ -71,7 +71,8 @@ boost::json::value valueFromFile(const std::string& configFile)
 ///test fun
 TEST_CASE_STATUS test_fun(CMSClientTestUnit* a, TestCasePerformer* b) {
 
-	b->sendAll();
+//	b->sendAll();
+	b->sendAll(0,"producer2","session1");
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 	return TEST_CASE_STATUS::FINISHED;
 };
