@@ -36,6 +36,7 @@ class TestCasePerformer
 public:
 	TestCasePerformer(const TestCasePerformerConfiguration& params, CMSClientTestUnit& client_params, Notifier& notifier, MessageSenderFactory* senderFactory);
 	void sendAll(int msg_delay_ms = 0, const std::string &producerId = "", const std::string &sessionId = "");
+	void send(int message_count = 0,int msg_delay_ms = 0, const std::string &producerId = "", const std::string &sessionId = "");
 	SessionHandler* getSessionHandler(const std::string &session_id);
 	ProducerHandler* getProducerHandler(const std::string &session_id,const std::string &producer_id);
 private:

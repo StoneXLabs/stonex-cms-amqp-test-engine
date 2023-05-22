@@ -106,10 +106,65 @@ TestCasePerformer::TestCasePerformer(const TestCasePerformerConfiguration & para
 		 } while (_continueSend > 0);
 
 	 }
-
-
-
 }
+
+ void TestCasePerformer::send(int message_count, int msg_delay_ms, const std::string & producerId, const std::string & sessionId)
+ {
+	 while (message_count > 0)
+	 {
+		 if (producerId.empty() == true && sessionId.empty() == true)
+		 {
+			 std::for_each(std::begin(mSenders), std::end(mSenders), [this, msg_delay_ms](MessageSender* sender) {
+				 if (sender)
+					 return sender->sendMessage();
+				 else
+					 return false;
+			 });
+		 }
+		 else if (producerId.empty())
+		 {
+			 std::for_each(std::begin(mSenders), std::end(mSenders), [this, msg_delay_ms, sessionId](MessageSender* sender) {
+				 if (sender) {
+					 if (sender->sessionId() == sessionId)
+						 return sender->sendMessage();
+					 else
+						 return false;
+				 }
+				 else
+					 return false;
+			 });
+		 }
+		 else if (sessionId.empty())
+		 {
+			 std::for_each(std::begin(mSenders), std::end(mSenders), [this, msg_delay_ms, producerId](MessageSender* sender) {
+				 if (sender) {
+					 if (sender->id() == producerId)
+						 return sender->sendMessage();
+					 else
+						 return false;
+				 }
+				 else
+					 return false;
+			 });
+		 }
+		 else
+		 {
+			 std::for_each(std::begin(mSenders), std::end(mSenders), [this, msg_delay_ms, producerId, sessionId](MessageSender* sender) {
+				 if (sender) {
+					 if (sender->id() == producerId && sender->sessionId() == sessionId)
+						 return sender->sendMessage();
+					 else
+						 return false;
+				 }
+				 else
+					 return false;
+			 });
+		 }
+
+		 message_count--;
+	 }
+	 
+ }
 
  SessionHandler * TestCasePerformer::getSessionHandler(const std::string &session_id)
  {
