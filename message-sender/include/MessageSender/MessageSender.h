@@ -33,7 +33,7 @@ enum class MESSAGE_SEND_STATUS {
 	SUCCESS,
 	FAILED,
 	ALL_SENT,
-	ERROR,
+	SEND_ERROR
 };
 
 class MessageSender

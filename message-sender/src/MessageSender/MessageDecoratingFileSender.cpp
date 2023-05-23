@@ -78,10 +78,10 @@ MESSAGE_SEND_STATUS MessageDecoratingFileSender::send_bytes(int msg_delay_ms)
 
 MESSAGE_SEND_STATUS MessageDecoratingFileSender::send_stream(int msg_delay_ms)
 {
-	return MESSAGE_SEND_STATUS::ERROR;
+	return MESSAGE_SEND_STATUS::SEND_ERROR;
 }
 
 MESSAGE_SEND_STATUS MessageDecoratingFileSender::send_map(int msg_delay_ms)
 {
-	return MESSAGE_SEND_STATUS::ERROR;
+	return MESSAGE_SEND_STATUS::SEND_ERROR;
 }

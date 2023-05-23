@@ -91,5 +91,5 @@ void MessageFileDestination::getMessage(const cms::Message * message)
 
 	}
 	else
-		std::cout << "MESSAGE WRITE ERROR msg: " << message << std::endl;
+		std::cout << "MESSAGE WRITE SEND_ERROR msg: " << message << std::endl;
 }

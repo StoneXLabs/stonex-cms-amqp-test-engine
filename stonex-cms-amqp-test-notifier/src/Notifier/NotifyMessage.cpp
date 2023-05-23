@@ -30,8 +30,8 @@ std::ostream & operator<<(std::ostream & os, const REPORT_MESSAGE_SEVERITY & vr)
 	case REPORT_MESSAGE_SEVERITY::WARNING:
 		os << "WARNING";
 		break;
-	case REPORT_MESSAGE_SEVERITY::ERROR:
-		os << "ERROR";
+	case REPORT_MESSAGE_SEVERITY::SEND_ERROR:
+		os << "SEND_ERROR";
 		break;
 	case REPORT_MESSAGE_SEVERITY::CRITICAL:
 		os << "CRITICAL";

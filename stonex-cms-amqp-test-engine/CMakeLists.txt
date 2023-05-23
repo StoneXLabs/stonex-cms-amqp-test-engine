@@ -9,14 +9,12 @@ file(GLOB sourceFiles
 	${PROJECT_SOURCE_DIR}/src/Configuration/*.cpp
 	${PROJECT_SOURCE_DIR}/src/ConfigurationParser/*.cpp 
 	${PROJECT_SOURCE_DIR}/src/TestSuite/*.cpp
-	${PROJECT_SOURCE_DIR}/src/TestHandler/*.cpp
 	)
 
 file(GLOB headerFiles 
 	${PROJECT_SOURCE_DIR}/include/Configuration/*.h 
 	${PROJECT_SOURCE_DIR}/include/ConfigurationParser/*.h 
 	${PROJECT_SOURCE_DIR}/include/TestSuite/*.h
-	${PROJECT_SOURCE_DIR}/include/TestHandler/*.h
 	)
 
 

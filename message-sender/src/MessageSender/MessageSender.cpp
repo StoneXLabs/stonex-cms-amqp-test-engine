@@ -65,7 +65,7 @@ bool MessageSender::sendMessage()
 		case MESSAGE_SEND_STATUS::ALL_SENT:
 			mParent.testEvent(EventStatus(true, id(), ""));
 			break;
-		case MESSAGE_SEND_STATUS::ERROR:
+		case MESSAGE_SEND_STATUS::SEND_ERROR:
 			mParent.testEvent(EventStatus(false, id(), "sender error"));
 			break;
 		default:
@@ -120,7 +120,7 @@ MESSAGE_SEND_STATUS MessageSender::send_text(int msg_delay_ms)
 		return MESSAGE_SEND_STATUS::ALL_SENT;
 	}
 	else
-		return MESSAGE_SEND_STATUS::ERROR;
+		return MESSAGE_SEND_STATUS::SEND_ERROR;
 }
 
 MESSAGE_SEND_STATUS MessageSender::send_bytes(int msg_delay_ms)
@@ -141,12 +141,12 @@ MESSAGE_SEND_STATUS MessageSender::send_bytes(int msg_delay_ms)
 
 MESSAGE_SEND_STATUS MessageSender::send_stream(int msg_delay_ms)
 {
-	return MESSAGE_SEND_STATUS::ERROR;
+	return MESSAGE_SEND_STATUS::SEND_ERROR;
 }
 
 MESSAGE_SEND_STATUS MessageSender::send_map(int msg_delay_ms)
 {
-	return MESSAGE_SEND_STATUS::ERROR;
+	return MESSAGE_SEND_STATUS::SEND_ERROR;
 }
 
 MESSAGE_TYPE MessageSender::fromString(const std::string & message_type_string)

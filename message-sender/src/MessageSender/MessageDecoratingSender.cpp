@@ -63,12 +63,12 @@ MESSAGE_SEND_STATUS MessageDecoratingSender::send_bytes(int msg_delay_ms)
 
 MESSAGE_SEND_STATUS MessageDecoratingSender::send_stream(int msg_delay_ms)
 {
-	return MESSAGE_SEND_STATUS::ERROR;
+	return MESSAGE_SEND_STATUS::SEND_ERROR;
 }
 
 MESSAGE_SEND_STATUS MessageDecoratingSender::send_map(int msg_delay_ms)
 {
-	return MESSAGE_SEND_STATUS::ERROR;
+	return MESSAGE_SEND_STATUS::SEND_ERROR;
 }
 
 

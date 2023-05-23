@@ -34,8 +34,8 @@ std::ostream & operator<<(std::ostream & os, const TEST_CASE_STATUS & ts)
 	case TEST_CASE_STATUS::DISABLED:
 		os << "DISABLED";
 		break;
-	case TEST_CASE_STATUS::ERROR:
-		os << "ERROR";
+	case TEST_CASE_STATUS::SEND_ERROR:
+		os << "SEND_ERROR";
 		break;
 	case TEST_CASE_STATUS::UNKNOWN:
 		os << "UNKNOWN";

@@ -44,7 +44,7 @@ MESSAGE_SEND_STATUS MessageCountingFileSender::send_text(int msg_delay_ms)
 		if (expectedEventCount() == sentMessageCount())
 			return MESSAGE_SEND_STATUS::ALL_SENT;
 		else if (expectedEventCount() < sentMessageCount())
-			return MESSAGE_SEND_STATUS::ERROR;
+			return MESSAGE_SEND_STATUS::SEND_ERROR;
 		else
 			return MESSAGE_SEND_STATUS::SUCCESS;
 	}
@@ -69,7 +69,7 @@ MESSAGE_SEND_STATUS MessageCountingFileSender::send_bytes(int msg_delay_ms)
 		if (expectedEventCount() == sentMessageCount())
 			return MESSAGE_SEND_STATUS::ALL_SENT;
 		else if (expectedEventCount() < sentMessageCount())
-			return MESSAGE_SEND_STATUS::ERROR;
+			return MESSAGE_SEND_STATUS::SEND_ERROR;
 		else
 			return MESSAGE_SEND_STATUS::SUCCESS;
 	}
@@ -79,12 +79,12 @@ MESSAGE_SEND_STATUS MessageCountingFileSender::send_bytes(int msg_delay_ms)
 
 MESSAGE_SEND_STATUS MessageCountingFileSender::send_stream(int msg_delay_ms)
 {
-	return MESSAGE_SEND_STATUS::ERROR;
+	return MESSAGE_SEND_STATUS::SEND_ERROR;
 }
 
 MESSAGE_SEND_STATUS MessageCountingFileSender::send_map(int msg_delay_ms)
 {
-	return MESSAGE_SEND_STATUS::ERROR;
+	return MESSAGE_SEND_STATUS::SEND_ERROR;
 }
 
 std::string MessageCountingFileSender::createMessageBody()
