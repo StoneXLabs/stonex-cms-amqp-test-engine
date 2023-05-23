@@ -42,9 +42,9 @@ target_link_libraries(
 	PUBLIC message-decorator
 	PUBLIC test-utils
 	PUBLIC stonex-cms-amqp-test-notifier
+	PUBLIC message-content-verifier
 	PRIVATE stonex-cms-amqp-wrapper
 	PRIVATE message-content
-	PRIVATE message-content-verifier
 	)
 
 add_subdirectory(Test)

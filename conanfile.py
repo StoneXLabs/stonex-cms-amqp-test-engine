@@ -41,16 +41,16 @@ class StonexCmsAmqpTestEngineConan(ConanFile):
 
 
     def package(self):
-        #self.copy("*.h", dst="include",src="message-content/include")
-        #self.copy("*.h", dst="include",src="message-content-verifier/include")
-        #self.copy("*.h", dst="include",src="message-decorator/include")
-        #self.copy("*.h", dst="include",src="message-receiver/include")
-        #self.copy("*.h", dst="include",src="message-sender/include")
+        self.copy("*.h", dst="include",src="message-content/include")
+        self.copy("*.h", dst="include",src="message-content-verifier/include")
+        self.copy("*.h", dst="include",src="message-decorator/include")
+        self.copy("*.h", dst="include",src="message-receiver/include")
+        self.copy("*.h", dst="include",src="message-sender/include")
         self.copy("*.h", dst="include",src="stonex-cms-amqp-test-engine/include")
-        #self.copy("*.h", dst="include",src="stonex-cms-amqp-test-notifier/include")
-        #self.copy("*.h", dst="include",src="stonex-cms-amqp-wrapper/include")
-        #self.copy("*.h", dst="include",src="test-utils/include")
-        #self.copy("*.h", dst="include",src="common/include")
+        self.copy("*.h", dst="include",src="stonex-cms-amqp-test-notifier/include")
+        self.copy("*.h", dst="include",src="stonex-cms-amqp-wrapper/include")
+        self.copy("*.h", dst="include",src="test-utils/include")
+        self.copy("*.h", dst="include",src="common/include")
         
         self.copy("*.lib", dst="lib",src="lib", keep_path=False)
         self.copy("*.pdb", dst="lib",src="lib", keep_path=False)
