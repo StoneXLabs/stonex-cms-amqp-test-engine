@@ -19,14 +19,17 @@
 
 #pragma once
 
-#include <utils/EventCounter.h>
-#include <utils/MessageFile.h>
-#include "MessageReceiverConfiguration.h"
+#include <MessageReceiver/MessageReceiver.h>
+#include <Notifier/TestNotifier.h>
+#include <utils\MessageDestination.h>
+#include "..\Configuration\FileMessageReceiverConfiguration.h"
 
-class FileMessageCountingReceiverConfiguration : public MessageReceiverConfiguration, public EventCounter, public MessageFile
+class MessageFileReceiver : public MessageReceiver, public MessageFileDestination
 {
 public:
-	FileMessageCountingReceiverConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& consumerId, const std::string& messageType, const std::string& receiverType, const std::string& messageFile, long long message_count);
-	friend bool operator== (const FileMessageCountingReceiverConfiguration& lhs, const FileMessageCountingReceiverConfiguration& rhs);
+	explicit MessageFileReceiver(const FileMessageReceiverConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent);
+	virtual ~MessageFileReceiver() = default;
+
+	void onMessage(const cms::Message* message) override;
 };
 

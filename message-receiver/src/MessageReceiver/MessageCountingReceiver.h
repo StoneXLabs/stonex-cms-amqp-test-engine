@@ -20,15 +20,14 @@
 #pragma once
 
 #include <MessageReceiver/MessageReceiver.h>
-#include "..\Configuration\FileMessageDecoratingReceiverConfiguration.h"
-#include "..\utils\MessageDestination.h"
-#include "..\utils\MessageVerifier.h"
+#include <utils/ReceivedMessageCounter.h>
+#include "../Configuration/MessageCountingReceiverConfiguration.h"
 
-class MessageDecoratingFileReceiver : public MessageReceiver, public MessageFileDestination, public MessageVerifier
+class MessageCountingReceiver : public MessageReceiver, public ReceivedMessageCounter
 {
 public:
-	explicit MessageDecoratingFileReceiver(const FileMessageDecoratingReceiverConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent);
-	virtual ~MessageDecoratingFileReceiver() = default;
+	explicit MessageCountingReceiver(const MessageCountingReceiverConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent);
+	virtual ~MessageCountingReceiver() = default;
 
 	void onMessage(const cms::Message* message) override;
 

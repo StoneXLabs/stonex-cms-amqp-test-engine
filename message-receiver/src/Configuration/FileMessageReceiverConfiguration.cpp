@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-#include <Configuration/FileMessageReceiverConfiguration.h>
+#include "FileMessageReceiverConfiguration.h"
 
 FileMessageReceiverConfiguration::FileMessageReceiverConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& consumerId, const std::string& messageType, const std::string& receiverType, const std::string & message_file)
 	:MessageReceiverConfiguration(connectionId, sessionId, consumerId, messageType, receiverType),

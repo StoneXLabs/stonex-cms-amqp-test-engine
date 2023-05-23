@@ -19,18 +19,14 @@
 
 #pragma once
 
-#include <MessageReceiver/MessageReceiver.h>
-#include "..\Configuration\MessageCountingDecoratingReceiverConfiguration.h"
-#include "..\utils\ReceivedMessageCounter.h"
-#include "..\utils\MessageVerifier.h"
+#include <utils/EventCounter.h>
+#include <Configuration/MessageDecoratorConfiguration.h>
+#include <Configuration/MessageReceiverConfiguration.h>
 
-class MessageCountingDecoratingReceiver : public MessageReceiver, public ReceivedMessageCounter,public MessageVerifier
+class MessageCountingDecoratingReceiverConfiguration : public MessageReceiverConfiguration, public EventCounter, public MessageDecoratorConfiguration
 {
 public:
-	explicit MessageCountingDecoratingReceiver(const MessageCountingDecoratingReceiverConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent);
-	virtual ~MessageCountingDecoratingReceiver() = default;
-	void onMessage(const cms::Message* message) override;
-
-
+	MessageCountingDecoratingReceiverConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& consumerId, const std::string& messageType, const std::string& receiverType, long long message_count, const std::vector<MessageTestField*>& decorations);
+	friend bool operator== (const MessageCountingDecoratingReceiverConfiguration& lhs, const MessageCountingDecoratingReceiverConfiguration& rhs);
 };
 

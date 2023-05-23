@@ -18,20 +18,20 @@
  */
 
 #include <MessageReceiver/MessageReceiverFactory.h>
-#include <MessageReceiver/MessageCountingReceiver.h>
-#include <MessageReceiver/MessageDecoratingReceiver.h>
-#include <MessageReceiver/MessageFileReceiver.h>
-#include <MessageReceiver/MessageCountingFileReceiver.h>
-#include <MessageReceiver/MessageDecoratingFileReceiver.h>
-#include <MessageReceiver/MessageCountingDecoratingReceiver.h>
-#include <MessageReceiver/MessageCountingDecoratingFileReceiver.h>
-#include <Configuration/MessageCountingReceiverConfiguration.h>
-#include <Configuration/MessageDecoratingReceiverConfiguration.h>
-#include <Configuration/FileMessageReceiverConfiguration.h>
-#include <Configuration/FileMessageCountingReceiverConfiguration.h>
-#include <Configuration/FileMessageDecoratingReceiverConfiguration.h>
-#include <Configuration/MessageCountingDecoratingReceiverConfiguration.h>
-#include <Configuration/FileMessageCountingDecoratingReceiverConfiguration.h>
+#include "MessageCountingReceiver.h"
+#include "MessageDecoratingReceiver.h"
+#include "MessageFileReceiver.h"
+#include "MessageCountingFileReceiver.h"
+#include "MessageDecoratingFileReceiver.h"
+#include "MessageCountingDecoratingReceiver.h"
+#include "MessageCountingDecoratingFileReceiver.h"
+#include "../Configuration/MessageCountingReceiverConfiguration.h"
+#include "../Configuration/MessageDecoratingReceiverConfiguration.h"
+#include "../Configuration/FileMessageReceiverConfiguration.h"
+#include "../Configuration/FileMessageCountingReceiverConfiguration.h"
+#include "../Configuration/FileMessageDecoratingReceiverConfiguration.h"
+#include "../Configuration/MessageCountingDecoratingReceiverConfiguration.h"
+#include "../Configuration/FileMessageCountingDecoratingReceiverConfiguration.h"
 
 MessageReceiver * MessageReceiverFactory::create(const MessageReceiverConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, Notifier & parent) const
 {

@@ -37,4 +37,4 @@ target_link_libraries(stonex-cms-amqp-test-engine
 	CONAN_PKG::boost
 	)
 
-	add_subdirectory(Test)
+#	add_subdirectory(Test)

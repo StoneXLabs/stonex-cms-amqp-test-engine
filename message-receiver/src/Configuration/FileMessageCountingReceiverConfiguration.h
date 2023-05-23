@@ -21,14 +21,12 @@
 
 #include <utils/EventCounter.h>
 #include <utils/MessageFile.h>
-#include <Configuration/MessageDecoratorConfiguration.h>
-#include "MessageReceiverConfiguration.h"
+#include <Configuration/MessageReceiverConfiguration.h>
 
-class FileMessageCountingDecoratingReceiverConfiguration : public MessageReceiverConfiguration, public MessageFile, public EventCounter, public MessageDecoratorConfiguration
+class FileMessageCountingReceiverConfiguration : public MessageReceiverConfiguration, public EventCounter, public MessageFile
 {
 public:
-	FileMessageCountingDecoratingReceiverConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& consumerId, const std::string& messageType, const std::string& receiverType, const std::string& file_path, long long message_count, const std::vector<MessageTestField*>& decorations);
-	friend bool operator== (const FileMessageCountingDecoratingReceiverConfiguration& lhs, const FileMessageCountingDecoratingReceiverConfiguration& rhs);
-
+	FileMessageCountingReceiverConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& consumerId, const std::string& messageType, const std::string& receiverType, const std::string& messageFile, long long message_count);
+	friend bool operator== (const FileMessageCountingReceiverConfiguration& lhs, const FileMessageCountingReceiverConfiguration& rhs);
 };
 

@@ -16,6 +16,7 @@ target_include_directories(message-receiver-test PUBLIC ${PROJECT_SOURCE_DIR}/ma
 target_link_libraries(message-receiver-test
 	message-receiver
 	message-content-verifier
+	stonex-cms-amqp-wrapper
 	CONAN_PKG::boost
 	secur32 
 	crypt32 

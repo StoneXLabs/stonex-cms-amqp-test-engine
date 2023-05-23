@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-#include <MessageReceiver/MessageFileReceiver.h>
+#include "MessageFileReceiver.h"
 
 MessageFileReceiver::MessageFileReceiver(const FileMessageReceiverConfiguration & config, CMSClientTestUnit & client_params, Notifier & parent)
 	:MessageReceiver(config, client_params),

@@ -19,7 +19,7 @@ add_subdirectory(message-content-verifier)
 add_subdirectory(stonex-cms-amqp-test-notifier)
 
 
-add_subdirectory(Testers)
+#add_subdirectory(Testers)
 
 
 

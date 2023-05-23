@@ -18,7 +18,7 @@
  */
 
 #include <fmt/format.h>
-#include <MessageReceiver/MessageCountingDecoratingFileReceiver.h>
+#include "MessageCountingDecoratingFileReceiver.h"
 
 MessageCountingDecoratingFileReceiver::MessageCountingDecoratingFileReceiver(const FileMessageCountingDecoratingReceiverConfiguration & config, CMSClientTestUnit & client_params, Notifier & parent)
 	:MessageReceiver(config, client_params),

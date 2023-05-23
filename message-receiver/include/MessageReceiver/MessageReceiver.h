@@ -23,9 +23,6 @@
 #include <cms/Message.h>
 #include <cms/MessageConsumer.h>
 #include <Wrapper/CMSClientTestUnit.h>
-#include <Notifier/TestNotifier.h>
-#include <utils/EventCounter.h>
-#include <utils/MessageFile.h>
 #include <utils/MessageType.h>
 #include "Configuration/MessageReceiverConfiguration.h"
 

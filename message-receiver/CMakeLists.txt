@@ -7,7 +7,9 @@ set(CMAKE_CXX_STANDARD 20)
 
 
 file(GLOB sourceFiles 
+	${PROJECT_SOURCE_DIR}/src/MessageReceiver/*.h 
 	${PROJECT_SOURCE_DIR}/src/MessageReceiver/*.cpp  
+	${PROJECT_SOURCE_DIR}/src/Configuration/*.h
 	${PROJECT_SOURCE_DIR}/src/Configuration/*.cpp
 	${PROJECT_SOURCE_DIR}/src/ConfigurationParser/*.cpp
 	${PROJECT_SOURCE_DIR}/src/utils/*.cpp
@@ -22,18 +24,27 @@ file(GLOB headerFiles
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${sourceFiles} ${headerFiles})
 
-add_library(message-receiver STATIC ${sourceFiles} ${headerFiles})              
+add_library(message-receiver STATIC)    
 
-target_include_directories(message-receiver PUBLIC ${PROJECT_SOURCE_DIR}/include )
+target_sources(message-receiver
+    PRIVATE ${sourceFiles}
+	PUBLIC ${headerFiles}
+)
+
+target_include_directories(message-receiver 
+	PUBLIC ${PROJECT_SOURCE_DIR}/include
+	PRIVATE ${PROJECT_SOURCE_DIR}/src
+	)
+
 
 target_link_libraries(
 	message-receiver
+	PUBLIC message-decorator
+	PUBLIC test-utils
+	PUBLIC stonex-cms-amqp-test-notifier
 	PRIVATE stonex-cms-amqp-wrapper
 	PRIVATE message-content
-	PRIVATE message-decorator
-	PRIVATE test-utils
 	PRIVATE message-content-verifier
-	PRIVATE stonex-cms-amqp-test-notifier
 	)
 
 add_subdirectory(Test)

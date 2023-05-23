@@ -19,14 +19,16 @@
 
 #pragma once
 
+#include <utils/EventCounter.h>
 #include <utils/MessageFile.h>
 #include <Configuration/MessageDecoratorConfiguration.h>
-#include "MessageReceiverConfiguration.h"
+#include <Configuration/MessageReceiverConfiguration.h>
 
-class FileMessageDecoratingReceiverConfiguration : public MessageReceiverConfiguration, public MessageFile, public MessageDecoratorConfiguration
+class FileMessageCountingDecoratingReceiverConfiguration : public MessageReceiverConfiguration, public MessageFile, public EventCounter, public MessageDecoratorConfiguration
 {
 public:
-	FileMessageDecoratingReceiverConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& consumerId, const std::string& messageType, const std::string& receiverType, const std::string& message_file, const std::vector<MessageTestField*>& decorations);
-	friend bool operator== (const FileMessageDecoratingReceiverConfiguration& lhs, const FileMessageDecoratingReceiverConfiguration& rhs);
+	FileMessageCountingDecoratingReceiverConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& consumerId, const std::string& messageType, const std::string& receiverType, const std::string& file_path, long long message_count, const std::vector<MessageTestField*>& decorations);
+	friend bool operator== (const FileMessageCountingDecoratingReceiverConfiguration& lhs, const FileMessageCountingDecoratingReceiverConfiguration& rhs);
 
 };
+

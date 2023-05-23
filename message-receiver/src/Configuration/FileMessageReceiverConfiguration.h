@@ -18,14 +18,14 @@
  */
 
 #pragma once
+#include <Configuration/MessageReceiverConfiguration.h>
+#include <utils/MessageFile.h>
 
-#include <Configuration/MessageDecoratorConfiguration.h>
-#include "MessageReceiverConfiguration.h"
-
-class MessageDecoratingReceiverConfiguration : public MessageReceiverConfiguration, public MessageDecoratorConfiguration
+class FileMessageReceiverConfiguration : public MessageReceiverConfiguration, public MessageFile
 {
 public:
-	MessageDecoratingReceiverConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& consumerId, const std::string& messageType, const std::string& receiverType, const std::vector<MessageTestField*>& decorations);
-	friend bool operator== (const MessageDecoratingReceiverConfiguration& lhs, const MessageDecoratingReceiverConfiguration& rhs);
+	FileMessageReceiverConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& consumerId, const std::string& messageType, const std::string& receiverType, const std::string& message_file);
+	friend bool operator== (const FileMessageReceiverConfiguration& lhs, const FileMessageReceiverConfiguration& rhs);
 
 };
+
