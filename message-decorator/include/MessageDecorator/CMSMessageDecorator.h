@@ -20,13 +20,9 @@
 #pragma once
 
 #include <string>
+#include <cms/Session.h>
+#include <cms/Message.h>
 #include <MessageContent/MessageTestField.h>
-
-namespace cms {
-
-	class Message;
-	class Session;
-}
 
 class CMSMessageDecorator : protected MessageTestField
 {

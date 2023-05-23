@@ -19,9 +19,8 @@
 
 #include <algorithm>
 #include <MessageDecorator/MessageDecoratorFactory.h>
-#include <MessageDecorator/ApplicationPropertyDecorator.h>
-#include <MessageDecorator/CMSPropertyDecorator.h>
-#include <MessageDecorator/ApplicationPropertyDecorator.h>
+#include "ApplicationPropertyDecorator.h"
+#include "CMSPropertyDecorator.h"
 
 CMSMessageDecorator * MessageDecoratorFactory::create(const MessageDecoratorConfiguration& config)
 {

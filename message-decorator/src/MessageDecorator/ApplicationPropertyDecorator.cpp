@@ -18,7 +18,7 @@
  */
 
 #include <cms/Message.h>
-#include <MessageDecorator/ApplicationPropertyDecorator.h>
+#include "ApplicationPropertyDecorator.h"
 
 ApplicationPropertyDecorator::ApplicationPropertyDecorator(const MessageTestField& field)
 	:CMSMessageDecorator(field)

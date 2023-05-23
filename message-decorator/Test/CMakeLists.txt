@@ -15,6 +15,7 @@ target_include_directories(message-decorator-test PUBLIC ${PROJECT_SOURCE_DIR}/m
 
 target_link_libraries(message-decorator-test
 	message-decorator
+	CONAN_PKG::boost
 	secur32 
 	crypt32 
 	Ws2_32

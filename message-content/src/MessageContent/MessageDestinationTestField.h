@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "MessageTestField.h"
+#include <MessageContent/MessageTestField.h>
 
 class MessageDestinationTestField : public virtual MessageTestField
 {

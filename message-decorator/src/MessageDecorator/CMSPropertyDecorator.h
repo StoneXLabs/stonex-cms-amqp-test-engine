@@ -19,12 +19,18 @@
 
 #pragma once
 
-#include "CMSMessageDecorator.h"
+#include <MessageDecorator/CMSMessageDecorator.h>
+#include <cms/Destination.h>
 
-class ApplicationPropertyDecorator : public CMSMessageDecorator
+
+class CMSPropertyDecorator : public CMSMessageDecorator
 {
 public:
-	ApplicationPropertyDecorator(const MessageTestField& field);
+	CMSPropertyDecorator(const MessageTestField& field);
 	void decorate(cms::Message* mes, cms::Session* sess) const override;
+
+private:
+	cms::Destination* destinationFromValueString(cms::Session * sess) const;
+
 };
 

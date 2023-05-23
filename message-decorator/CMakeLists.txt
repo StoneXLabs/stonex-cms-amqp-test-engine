@@ -8,6 +8,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 file(GLOB sourceFiles 
 	${PROJECT_SOURCE_DIR}/src/MessageDecorator/*.cpp
+	${PROJECT_SOURCE_DIR}/src/MessageDecorator/*.h
 	${PROJECT_SOURCE_DIR}/src/Configuration/*.cpp
 	${PROJECT_SOURCE_DIR}/src/ConfigurationParser/*.cpp
 	)
@@ -20,13 +21,22 @@ file(GLOB headerFiles
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${sourceFiles} ${headerFiles})
 
-add_library(message-decorator STATIC ${sourceFiles} ${headerFiles})              
+add_library(message-decorator STATIC)    
 
-target_include_directories(message-decorator PUBLIC ${PROJECT_SOURCE_DIR}/include )
+target_sources(message-decorator
+    PRIVATE ${sourceFiles}
+	PUBLIC ${headerFiles}
+)
+
+target_include_directories(message-decorator 
+	PUBLIC ${PROJECT_SOURCE_DIR}/include
+	PRIVATE ${PROJECT_SOURCE_DIR}/src
+	)
 
 target_link_libraries(message-decorator
-	message-content
-	stonex-cms-amqp-wrapper
+	PUBLIC apache-cms-interface
+	PUBLIC message-content
+	PRIVATE stonex-cms-amqp-wrapper
 	)
 
 add_subdirectory(Test)

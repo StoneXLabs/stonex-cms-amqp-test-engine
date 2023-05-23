@@ -28,12 +28,12 @@ target_include_directories(message-receiver PUBLIC ${PROJECT_SOURCE_DIR}/include
 
 target_link_libraries(
 	message-receiver
-	stonex-cms-amqp-wrapper
-	message-content
-	message-decorator
-	test-utils
-	message-content-verifier
-	stonex-cms-amqp-test-notifier
+	PRIVATE stonex-cms-amqp-wrapper
+	PRIVATE message-content
+	PRIVATE message-decorator
+	PRIVATE test-utils
+	PRIVATE message-content-verifier
+	PRIVATE stonex-cms-amqp-test-notifier
 	)
 
 add_subdirectory(Test)

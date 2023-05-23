@@ -19,7 +19,7 @@
 
 #include <cms/Message.h>
 #include <cms/Session.h>
-#include <MessageDecorator/CMSPropertyDecorator.h>
+#include "CMSPropertyDecorator.h"
 
 CMSPropertyDecorator::CMSPropertyDecorator(const MessageTestField & field)
 	:CMSMessageDecorator(field)

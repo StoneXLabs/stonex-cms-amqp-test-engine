@@ -15,6 +15,7 @@ target_include_directories(message-content-test PUBLIC ${PROJECT_SOURCE_DIR}/mai
 
 target_link_libraries(message-content-test
 	message-content
+	CONAN_PKG::boost
 	secur32 
 	crypt32 
 	Ws2_32
