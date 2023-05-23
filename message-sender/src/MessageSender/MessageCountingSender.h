@@ -20,8 +20,8 @@
 #pragma once
 
 #include <MessageSender/MessageSender.h>
-#include "..\Configuration\MessageCountingSenderConfiguration.h"
-#include "..\utils\SentMessageCounter.h"
+#include <Configuration/MessageCountingSenderConfiguration.h>
+#include <utils/SentMessageCounter.h>
 
 class MessageCountingSender : public MessageSender, public SentMessageCounter
 {

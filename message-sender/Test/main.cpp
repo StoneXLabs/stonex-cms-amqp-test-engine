@@ -27,13 +27,13 @@
 
 #include "Wrapper/CMSClientTestUnit.h"
 #include <MessageSender/MessageSender.h>
-#include <MessageSender/MessageFileSender.h>
-#include <MessageSender/MessageCountingSender.h>
-#include <MessageSender/MessageDecoratingSender.h>
-#include <MessageSender/MessageCountingFileSender.h>
-#include <MessageSender/MessageDecoratingFileSender.h>
-#include <MessageSender/MessageCountingDecoratingSender.h>
-#include <MessageSender/MessageCountingDecoratingFileSender.h>
+#include "../src/MessageSender/MessageFileSender.h"
+#include "../src/MessageSender/MessageCountingSender.h"
+#include "../src/MessageSender/MessageDecoratingSender.h"
+#include "../src/MessageSender/MessageCountingFileSender.h"
+#include "../src/MessageSender/MessageDecoratingFileSender.h"
+#include "../src/MessageSender/MessageCountingDecoratingSender.h"
+#include "../src/MessageSender/MessageCountingDecoratingFileSender.h"
 
 #include "StdOutLogger/StdOutLogger.h"
 

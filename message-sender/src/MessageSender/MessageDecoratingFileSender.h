@@ -20,18 +20,19 @@
 #pragma once
 
 #include <MessageSender/MessageSender.h>
-#include "..\Configuration\FileMessageCountingSenderConfiguration.h"
-#include "..\utils\MessageSource.h"
-#include "..\utils\SentMessageCounter.h"
+#include <Configuration/FileMessageDecoratingSenderConfiguration.h>
+#include <utils/MessageSource.h>
+#include <utils/MessageDecorator.h>
 
-class MessageCountingFileSender : public MessageSender, public SentMessageCounter, public MessageFileSource
+class MessageDecoratingFileSender : public MessageSender, public MessageFileSource, public MessageDecorator
 {
 public:
-	explicit MessageCountingFileSender(const FileMessageCountingSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent);
+	explicit MessageDecoratingFileSender(const FileMessageDecoratingSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent);
+	std::string createMessageBody() override;
 	virtual MESSAGE_SEND_STATUS send_text(int msg_delay_ms = 0) override;
 	virtual MESSAGE_SEND_STATUS send_bytes(int msg_delay_ms = 0) override;
 	virtual MESSAGE_SEND_STATUS send_stream(int msg_delay_ms = 0) override;
 	virtual MESSAGE_SEND_STATUS send_map(int msg_delay_ms = 0) override;
-	std::string createMessageBody() override;
+
 };
 

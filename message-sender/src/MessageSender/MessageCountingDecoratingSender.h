@@ -20,9 +20,9 @@
 #pragma once
 
 #include <MessageSender/MessageSender.h>
-#include "..\Configuration\MessageCountingDecoratingSenderConfiguration.h"
-#include "..\utils\SentMessageCounter.h"
-#include "..\utils\MessageDecorator.h"
+#include <Configuration/MessageCountingDecoratingSenderConfiguration.h>
+#include <utils/SentMessageCounter.h>
+#include <utils/MessageDecorator.h>
 
 class MessageCountingDecoratingSender : public MessageSender, public SentMessageCounter,public MessageDecorator
 {
