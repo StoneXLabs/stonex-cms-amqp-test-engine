@@ -17,7 +17,10 @@
  * limitations under the License.
  */
 
+#include <algorithm>
+#include <iterator>
 #include <Configuration\TestSuiteConfiguration.h>
+#include <fmt/format.h>
 
 TestSuiteConfiguration::TestSuiteConfiguration(const std::string suiteName, const std::list<TestCaseConfiguration>& testCaseConfigs)
 	:mTestSuiteName{ suiteName },
@@ -58,4 +61,13 @@ bool operator==(const TestSuiteConfiguration & lhs, const TestSuiteConfiguration
 	return 	lhs.mTestSuiteName == rhs.mTestSuiteName &&
 		std::equal(std::cbegin(lhs.mTests), std::cend(lhs.mTests), std::cbegin(rhs.mTests));
 
+}
+
+std::ostream & operator<<(std::ostream & os, const TestSuiteConfiguration & dt)
+{
+	os << fmt::format("Test suite configuration file {}\nTest Case count {}\n", dt.mTestSuiteName, dt.testCaseCount());
+
+	std::copy(std::begin(dt.mTests), std::end(dt.mTests), std::ostream_iterator<TestCaseConfiguration>(os, "\n"));
+
+	return os;
 }

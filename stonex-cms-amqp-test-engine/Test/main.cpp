@@ -37,10 +37,11 @@
 #include "../src/MessageReceiver/MessageDecoratingFileReceiver.h"
 #include "../src/MessageReceiver/MessageCountingDecoratingReceiver.h"
 #include "../src/MessageReceiver/MessageCountingDecoratingFileReceiver.h"
-#include <TestSuite/TestCase.h>
 #include <ConfigurationParser/TestSuiteJsonConfigParser.h>
+#include <TestSuite/TestCase.h>
 #include <TestSuite/TestCasePerformer.h>
 #include <TestSuite/TestCaseVerifier.h>
+#include <TestSuite/TestRunner.h>
 #include <Notifier/TestNotifier.h>
 #include <Notifier/StdOutTestObserver.h>
 #include <StdOutLogger/StdOutLogger.h>
@@ -72,7 +73,7 @@ boost::json::value valueFromFile(const std::string& configFile)
 TEST_CASE_STATUS test_fun(CMSClientTestUnit* a, TestCasePerformer* b) {
 
 //	b->sendAll();
-	b->send(7);
+	b->send(10);
 //	b->sendAll(0,"producer2","session1");
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 	return TEST_CASE_STATUS::FINISHED;
@@ -465,6 +466,158 @@ int main()
 	
 		TestCase test_case(*suite_config.testsBegin(), sender_factory, test_register, &testObserver,nullptr);
 		test_case.run();
+	}
+
+	{
+
+		class TestMessageSender : public MessageSender
+		{
+		public:
+			TestMessageSender(const MessageSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent)
+				:MessageSender(config, client_params, parent)
+			{
+			}
+			std::string createMessageBody() { return "test message sender"; }
+		};
+		class TestMessageCountingSender : public MessageCountingSender
+		{
+		public:
+			TestMessageCountingSender(const MessageCountingSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent)
+				:MessageCountingSender(config, client_params, parent)
+			{
+			}
+			std::string createMessageBody() { return "test message counting sender"; }
+		};
+		class TestMessageDecoratingSender : public MessageDecoratingSender {
+		public:
+			TestMessageDecoratingSender(const MessageDecoratingSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent)
+				:MessageDecoratingSender(config, client_params, parent)
+			{
+			}
+			std::string createMessageBody() { return "test message decorating sender"; }
+		};
+		class TestMessageCountingDecoratingSender : public MessageCountingDecoratingSender
+		{
+		public:
+			TestMessageCountingDecoratingSender(const MessageCountingDecoratingSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent)
+				:MessageCountingDecoratingSender(config, client_params, parent)
+			{
+			}
+			std::string createMessageBody() { return "test message counting decorating sender"; }
+		};
+
+		class TestSenderFactory : public MessageSenderFactory
+		{
+		public:
+			MessageSender * create_sender(const MessageSenderConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, Notifier & parent) const override
+			{
+
+				if (auto concrete_configuration = dynamic_cast<const MessageCountingSenderConfiguration*>(&sender_configuration)) {
+					return new TestMessageCountingSender(*concrete_configuration, client_configuration, parent);
+				}
+				else if (auto concrete_configuration = dynamic_cast<const MessageDecoratingSenderConfiguration*>(&sender_configuration)) {
+					return new TestMessageDecoratingSender(*concrete_configuration, client_configuration, parent);
+				}
+				else if (auto concrete_configuration = dynamic_cast<const MessageCountingDecoratingSenderConfiguration*>(&sender_configuration)) {
+					return new TestMessageCountingDecoratingSender(*concrete_configuration, client_configuration, parent);
+				}
+				else if (auto concrete_configuration = dynamic_cast<const MessageSenderConfiguration*>(&sender_configuration)) {
+					return new TestMessageSender(*concrete_configuration, client_configuration, parent);
+				}
+				else
+					return nullptr;
+			}
+		};
+		///
+		auto sender_factory = new TestSenderFactory();
+
+		TestSuiteJsonConfigParser parser("developer_test.config");
+		auto suite_config = parser.createConfiguration();
+
+		TestFunctionRegister test_register;
+		test_register.registerTestFunction("test_function_1", test_fun);
+
+		StdOutTestObserver testObserver;
+
+		TestCase test_case(*suite_config.testsBegin(), sender_factory, test_register, &testObserver, nullptr);
+		test_case.run();
+	}
+
+	{
+
+		class TestMessageSender : public MessageSender
+		{
+		public:
+			TestMessageSender(const MessageSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent)
+				:MessageSender(config, client_params, parent)
+			{
+			}
+			std::string createMessageBody() { return "test message sender"; }
+		};
+		class TestMessageCountingSender : public MessageCountingSender
+		{
+		public:
+			TestMessageCountingSender(const MessageCountingSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent)
+				:MessageCountingSender(config, client_params, parent)
+			{
+			}
+			std::string createMessageBody() { return "test message counting sender"; }
+		};
+		class TestMessageDecoratingSender : public MessageDecoratingSender {
+		public:
+			TestMessageDecoratingSender(const MessageDecoratingSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent)
+				:MessageDecoratingSender(config, client_params, parent)
+			{
+			}
+			std::string createMessageBody() { return "test message decorating sender"; }
+		};
+		class TestMessageCountingDecoratingSender : public MessageCountingDecoratingSender
+		{
+		public:
+			TestMessageCountingDecoratingSender(const MessageCountingDecoratingSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent)
+				:MessageCountingDecoratingSender(config, client_params, parent)
+			{
+			}
+			std::string createMessageBody() { return "test message counting decorating sender"; }
+		};
+
+		class TestSenderFactory : public MessageSenderFactory
+		{
+		public:
+			MessageSender * create_sender(const MessageSenderConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, Notifier & parent) const override
+			{
+
+				if (auto concrete_configuration = dynamic_cast<const MessageCountingSenderConfiguration*>(&sender_configuration)) {
+					return new TestMessageCountingSender(*concrete_configuration, client_configuration, parent);
+				}
+				else if (auto concrete_configuration = dynamic_cast<const MessageDecoratingSenderConfiguration*>(&sender_configuration)) {
+					return new TestMessageDecoratingSender(*concrete_configuration, client_configuration, parent);
+				}
+				else if (auto concrete_configuration = dynamic_cast<const MessageCountingDecoratingSenderConfiguration*>(&sender_configuration)) {
+					return new TestMessageCountingDecoratingSender(*concrete_configuration, client_configuration, parent);
+				}
+				else if (auto concrete_configuration = dynamic_cast<const MessageSenderConfiguration*>(&sender_configuration)) {
+					return new TestMessageSender(*concrete_configuration, client_configuration, parent);
+				}
+				else
+					return nullptr;
+			}
+		};
+		///
+		TestSenderFactory sender_factory;
+		MessageReceiverFactory receiver_factory;
+
+		TestSuiteJsonConfigParser parser("developer_test.config");
+
+		TestFunctionRegister test_register;
+		test_register.registerTestFunction("test_function_1", test_fun);
+
+		StdOutTestObserver testObserver;
+
+		auto logger = std::make_shared<StdOutLogger>();
+
+		TestRunner test_runner(parser, test_register, receiver_factory, sender_factory,  &testObserver, logger);
+		test_runner.run();
 	}
 
 }

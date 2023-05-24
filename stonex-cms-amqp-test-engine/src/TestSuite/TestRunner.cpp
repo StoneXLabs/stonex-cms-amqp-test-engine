@@ -19,6 +19,7 @@
 
 #include <TestSuite/TestRunner.h>
 #include <TestSuite/TestCase.h>
+#include <fmt/format.h>
 
 TestRunner::TestRunner(TestSuiteConfigParser & configurationParser, TestFunctionRegister & functionRegister, MessageReceiverFactory & receiverFactory,  MessageSenderFactory & senderFactory, TestObserver * reporter, std::shared_ptr<StonexLogger> logger)
 	:mRegister{ functionRegister },
@@ -28,6 +29,7 @@ TestRunner::TestRunner(TestSuiteConfigParser & configurationParser, TestFunction
 	mLogger{logger}
  {
 	 mSuiteConfiguration = configurationParser.createConfiguration();
+	 info("Test Runner", fmt::format("Test suite {} configured /n "));
  }
 
 

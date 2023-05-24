@@ -26,8 +26,9 @@
 #include <MessageSender/MessageSenderFactory.h>
 #include <Notifier/TestObserver.h>
 #include <logger/StoneXLogger.h>
+#include <logger/StonexLogSource.h>
 
-class TestRunner
+class TestRunner : public StonexLogSource
 {
 
 public:

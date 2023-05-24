@@ -40,6 +40,7 @@ public:
 
 
 	friend bool operator== (const TestSuiteConfiguration& lhs, const TestSuiteConfiguration& rhs);
+	friend std::ostream& operator<<(std::ostream& os, const TestSuiteConfiguration& dt);
 
 private:
 	std::string mTestSuiteName;

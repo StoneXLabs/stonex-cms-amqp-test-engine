@@ -24,7 +24,7 @@ MessageSender::MessageSender(const MessageSenderConfiguration& params, CMSClient
 	:mSession{ client_params.session(params.connectionId(), params.sessionId()) },
 	mProducer{ client_params.producer(params.connectionId(), params.sessionId(),params.producerId()) },
 	mId{params.producerId()},
-	mSessionId{mSession->id()},
+	mSessionId{ params.sessionId() },
 	mParent{parent},
 	mMessageType{fromString(params.messageType())}	
 {
