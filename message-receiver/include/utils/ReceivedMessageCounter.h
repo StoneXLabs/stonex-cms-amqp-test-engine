@@ -20,20 +20,26 @@
 #pragma once
 
 #include <string>
+#include <functional>
+#include <mutex>
 #include <utils/EventCounter.h>
 #include <Notifier/TestNotifier.h>
+
 
 class ReceivedMessageCounter : public EventCounter
 {
 public:
 	ReceivedMessageCounter(const std::string &id, long long expected_message_count, Notifier & parent);
+	ReceivedMessageCounter(const ReceivedMessageCounter& other);
+	ReceivedMessageCounter(ReceivedMessageCounter&& other);
 	virtual ~ReceivedMessageCounter();
 	long long receivedMessageCount() const;
 	void incrementReceivedCount();
+	void registerCallback(std::function<void(void)> callback);
 private:
 	long long mReceivedMessagesCount{ 0 };
 	const std::string mId;
 	Notifier &mParent;
-
+	std::function<void(void)> mReceivedAllCallback = []() {};
 };
 

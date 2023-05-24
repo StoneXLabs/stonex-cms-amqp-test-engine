@@ -23,8 +23,26 @@
 
 ReceivedMessageCounter::ReceivedMessageCounter(const std::string &id, long long expected_message_count, Notifier & parent)
 	:EventCounter(expected_message_count),
-	mParent{ parent },
+	mParent( parent ),
 	mId{id}
+{
+}
+
+ReceivedMessageCounter::ReceivedMessageCounter(const ReceivedMessageCounter & other)
+	:EventCounter(other),
+	mParent( other.mParent ),
+	mId{ other.mId },
+	mReceivedMessagesCount{ other.mReceivedMessagesCount },
+	mReceivedAllCallback{other.mReceivedAllCallback}
+{
+}
+
+ReceivedMessageCounter::ReceivedMessageCounter(ReceivedMessageCounter && other)
+	:EventCounter(other),
+	mParent{ other.mParent },
+	mId{ other.mId },
+	mReceivedMessagesCount{ other.mReceivedMessagesCount },
+	mReceivedAllCallback{ other.mReceivedAllCallback }
 {
 }
 
@@ -45,6 +63,18 @@ long long ReceivedMessageCounter::receivedMessageCount() const
 void ReceivedMessageCounter::incrementReceivedCount()
 {
 	mReceivedMessagesCount++;
-	if (mReceivedMessagesCount > expectedEventCount())
+	if (mReceivedMessagesCount == expectedEventCount())
+		std::thread(mReceivedAllCallback).detach();
+	else if (mReceivedMessagesCount > expectedEventCount())
+	{
 		mParent.testEvent(EventStatus(false, mId, fmt::format("expected message count exceeded [{}/{}]", receivedMessageCount(), expectedEventCount())));
+		std::thread(mReceivedAllCallback).detach();
+	}
+}
+
+void ReceivedMessageCounter::registerCallback(std::function<void(void)> callback)
+{
+	mReceivedAllCallback = callback;
+	if (mReceivedMessagesCount >= expectedEventCount())
+		callback();
 }

@@ -24,6 +24,7 @@ MessageCountingFileReceiver::MessageCountingFileReceiver(const FileMessageCounti
 	ReceivedMessageCounter(id(), config.expectedEventCount(), parent),
 	MessageFileDestination(config.filePath())
 {
+	registerCallback(std::bind(&MessageCountingFileReceiver::closeConsumer, this));
 }
 
 
@@ -31,6 +32,7 @@ void MessageCountingFileReceiver::onMessage(const cms::Message* message)
 {
 	getMessage(message);
 	incrementReceivedCount();
+
 	if (mListener)
 		mListener->onMessage(message);
 	else

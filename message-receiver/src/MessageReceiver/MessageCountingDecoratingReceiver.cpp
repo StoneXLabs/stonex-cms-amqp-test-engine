@@ -24,12 +24,14 @@ MessageCountingDecoratingReceiver::MessageCountingDecoratingReceiver(const Messa
 	ReceivedMessageCounter(id(), config.expectedEventCount(), parent),
 	MessageVerifier(config.consumerId(), config.decorations(), parent)
 {
+	registerCallback(std::bind(&MessageCountingDecoratingReceiver::closeConsumer, this));
 }
 
 void MessageCountingDecoratingReceiver::onMessage(const cms::Message* message)
 {
 	verify(message);
 	incrementReceivedCount();
+
 	if (mListener)
 		mListener->onMessage(message);
 	else

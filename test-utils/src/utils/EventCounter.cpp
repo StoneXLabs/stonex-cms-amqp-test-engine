@@ -29,6 +29,11 @@ EventCounter::EventCounter(const EventCounter & other)
 	mExpectedEventCount = other.mExpectedEventCount;
 }
 
+EventCounter::EventCounter(EventCounter&& other)
+{
+	mExpectedEventCount = other.mExpectedEventCount;
+}
+
 long long EventCounter::expectedEventCount() const
 {
 	return mExpectedEventCount;

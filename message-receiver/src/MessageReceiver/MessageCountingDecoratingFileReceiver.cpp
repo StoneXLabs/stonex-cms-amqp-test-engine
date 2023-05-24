@@ -26,15 +26,15 @@ MessageCountingDecoratingFileReceiver::MessageCountingDecoratingFileReceiver(con
 	MessageVerifier(config.consumerId(), config.decorations(), parent),
 	MessageFileDestination(config.filePath())
 {
+	registerCallback(std::bind(&MessageCountingDecoratingFileReceiver::closeConsumer, this));
 }
 
 
 void MessageCountingDecoratingFileReceiver::onMessage(const cms::Message* message)
 {
+	incrementReceivedCount();
 	getMessage(message);
 	verify(message);
-	incrementReceivedCount();
-
 
 	if (mListener)
 		mListener->onMessage(message);

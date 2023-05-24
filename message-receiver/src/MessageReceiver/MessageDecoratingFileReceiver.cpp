@@ -31,6 +31,7 @@ void MessageDecoratingFileReceiver::onMessage(const cms::Message* message)
 {
 	getMessage(message);
 	verify(message);
+
 	if (mListener)
 		mListener->onMessage(message);
 	else

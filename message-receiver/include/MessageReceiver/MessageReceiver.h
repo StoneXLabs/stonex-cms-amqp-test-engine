@@ -24,6 +24,7 @@
 #include <cms/MessageConsumer.h>
 #include <Wrapper/CMSClientTestUnit.h>
 #include <utils/MessageType.h>
+
 #include "Configuration/MessageReceiverConfiguration.h"
 
 class MessageReceiver : public cms::MessageListener
@@ -36,9 +37,11 @@ public:
 	std::string id() const;
 
 	virtual void onMessage(const cms::Message* message) override;
+	
 
 protected:
 	MESSAGE_TYPE fromString(const std::string& message_type_string);
+	void closeConsumer();
 
 protected:
 	cms::MessageListener* mListener{ nullptr };

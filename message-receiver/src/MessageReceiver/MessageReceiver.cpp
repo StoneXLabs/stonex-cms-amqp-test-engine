@@ -41,7 +41,7 @@ std::string MessageReceiver::id() const
 }
 
 void MessageReceiver::onMessage(const cms::Message* message) {
-
+	
 	if (mListener)
 		mListener->onMessage(message);
 	else
@@ -60,6 +60,12 @@ MESSAGE_TYPE MessageReceiver::fromString(const std::string & message_type_string
 		return MESSAGE_TYPE::MAP_MESSAGE;
 	else
 		return MESSAGE_TYPE::UNKNOWN_TYPE;
+}
+
+void MessageReceiver::closeConsumer()
+{
+	if (mConsumer)
+		mConsumer->close();
 }
 
 void MessageReceiver::setMessageListener(cms::MessageListener* listener)

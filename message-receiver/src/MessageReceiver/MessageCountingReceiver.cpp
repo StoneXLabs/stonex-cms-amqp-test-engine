@@ -22,17 +22,16 @@
 MessageCountingReceiver::MessageCountingReceiver(const MessageCountingReceiverConfiguration & config, CMSClientTestUnit & client_params, Notifier & parent)
 	:MessageReceiver(config, client_params),
 	ReceivedMessageCounter(id(),config.expectedEventCount(), parent)
-
 {
+	registerCallback(std::bind(&MessageCountingReceiver::closeConsumer, this));
 }
 
 void MessageCountingReceiver::onMessage(const cms::Message* message)
 {
 	incrementReceivedCount();
+
 	if (mListener)
 		mListener->onMessage(message);
 	else
 		delete message;
-
 }
-
