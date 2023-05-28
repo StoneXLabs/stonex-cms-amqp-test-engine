@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <Notifier/TestNotifier.h>
+#include <Notifier/Notifier.h>
 #include <Wrapper/CMSClientTestUnit.h>
 #include <MessageReceiver/MessageReceiver.h>
 #include "../Configuration/TestCaseVerifierConfiguration.h"

@@ -18,6 +18,7 @@
  */
 
 #include <algorithm>
+#include <iterator>
 #include "Configuration/TestCaseVerifierConfiguration.h"
 
 TestCaseVerifierConfiguration::TestCaseVerifierConfiguration(const std::vector<MessageReceiverConfiguration*>& receivers_config, const std::vector<ExceptionsConfiguration*>& exceptions_config)

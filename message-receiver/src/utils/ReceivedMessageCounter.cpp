@@ -18,7 +18,7 @@
  */
 
 #include <utils/ReceivedMessageCounter.h>
-#include <Notifier/TestNotifier.h>
+#include <Notifier/Notifier.h>
 #include <fmt/format.h>
 
 ReceivedMessageCounter::ReceivedMessageCounter(const std::string &id, long long expected_message_count, Notifier & parent)

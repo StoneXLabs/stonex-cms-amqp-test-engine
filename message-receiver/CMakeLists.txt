@@ -39,12 +39,14 @@ target_include_directories(message-receiver
 
 target_link_libraries(
 	message-receiver
-	PUBLIC message-decorator
-	PUBLIC test-utils
-	PUBLIC stonex-cms-amqp-test-notifier
-	PUBLIC message-content-verifier
-	PRIVATE stonex-cms-amqp-wrapper
-	PRIVATE message-content
+	PUBLIC
+	message-decorator
+	test-utils
+	stonex-cms-amqp-test-notifier
+	message-content-verifier
+	stonex-cms-amqp-wrapper
+	PRIVATE 
+	message-content
 	)
 
 add_subdirectory(Test)

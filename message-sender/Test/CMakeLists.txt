@@ -15,6 +15,8 @@ target_include_directories(message-sender-test PUBLIC ${PROJECT_SOURCE_DIR}/main
 
 target_link_libraries(message-sender-test
 	message-sender
+	stonex-cms-amqp-wrapper
+	message-decorator
 	CONAN_PKG::boost
 	secur32 
 	crypt32 

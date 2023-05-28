@@ -17,33 +17,23 @@
  * limitations under the License.
  */
 
-#include <string>
-#include <Notifier/TestNotifier.h>
+#pragma once
 
-Notifier::Notifier(TestObserver * reporter)
-	:mReporter{ reporter }
-{
-}
+#include "MessageSenderConfiguration.h"
+#include <vector>
 
-void Notifier::testEvent(const EventStatus & event)
-{
-	if (mReporter)
-	{
-		if (!event.correct()) 
-			mReporter->onMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR,  " [" + event.eventSource() + "] " , event.errorMessage()));
+namespace stonex {
+	namespace test {
+		namespace performer {
+			namespace configuration {
+
+				class SenderConfiguration
+				{
+				public:
+					virtual ~SenderConfiguration() = default;
+					const virtual std::vector<MessageSenderConfiguration*>& senders() const = 0;
+				};
+			}
+		}
 	}
-}
-
-void Notifier::TestMessage(const NotifyMessage & message)
-{
-	if (mReporter)
-		mReporter->onMessage(message);
-}
-
-
-std::ostream & operator<<(std::ostream & os, const Notifier & dt)
-{
-//	os << "[" << std::chrono::system_clock::to_time_t(dt.mEnd) << "]";
-//	os << "Test Case\n" << dt.mConfiguration;
-	return os;
 }

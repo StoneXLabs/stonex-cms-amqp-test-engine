@@ -25,7 +25,6 @@
 
 #include <ConfigurationParser/TestCaseProducerConfigurationParser.h>
 
-#include "Wrapper/CMSClientTestUnit.h"
 #include <MessageSender/MessageSender.h>
 #include "../src/MessageSender/MessageFileSender.h"
 #include "../src/MessageSender/MessageCountingSender.h"
@@ -38,7 +37,7 @@
 #include "StdOutLogger/StdOutLogger.h"
 
 #include <Notifier/EventStatusObserver.h>
-#include <Notifier/TestNotifier.h>
+#include <Notifier/Notifier.h>
 
 
 boost::json::value valueFromFile(const std::string& configFile)

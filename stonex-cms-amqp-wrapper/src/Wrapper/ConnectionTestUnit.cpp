@@ -20,6 +20,7 @@
 #include <algorithm>
 #include <Wrapper/ConnectionTestUnit.h>
 #include <API/CMSConnectionFactory.h>
+#include <logger/StonexLogSource.h>
 
 ConnectionTestUnit::ConnectionTestUnit(const ConnectionConfiguration& params, std::shared_ptr<StonexLogger> logger, cms::ExceptionListener* factoryExceptionListener, cms::ExceptionListener* connectionExceptionListener, cms::ExceptionListener* sessionExceptionListener)
 	:CMSExceptionListenerTestUnit(params.key()),

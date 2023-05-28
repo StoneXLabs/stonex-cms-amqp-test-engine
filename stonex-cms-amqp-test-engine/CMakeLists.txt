@@ -29,11 +29,14 @@ target_include_directories(stonex-cms-amqp-test-engine
 )
 
 target_link_libraries(stonex-cms-amqp-test-engine 
+	INTERFACE	
 	apache-cms-interface
-	stonex-cms-amqp-wrapper
+	PUBLIC
 	message-receiver
 	message-sender
+	PRIVATE
 	stonex-cms-amqp-test-notifier
+	CONAN_PKG::fmt
 	CONAN_PKG::boost
 	)
 

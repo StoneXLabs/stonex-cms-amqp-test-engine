@@ -42,7 +42,7 @@
 #include <TestSuite/TestCasePerformer.h>
 #include <TestSuite/TestCaseVerifier.h>
 #include <TestSuite/TestRunner.h>
-#include <Notifier/TestNotifier.h>
+#include <Notifier/Notifier.h>
 #include <Notifier/StdOutTestObserver.h>
 #include <StdOutLogger/StdOutLogger.h>
 

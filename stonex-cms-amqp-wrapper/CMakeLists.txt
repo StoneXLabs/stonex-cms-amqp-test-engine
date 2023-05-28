@@ -16,9 +16,13 @@ add_library(stonex-cms-amqp-wrapper STATIC ${sourceFiles} ${headerFiles})
 target_include_directories(stonex-cms-amqp-wrapper PUBLIC ${PROJECT_SOURCE_DIR}/include/ )
 
 target_link_libraries(stonex-cms-amqp-wrapper 
+	INTERFACE
 	apache-cms-interface
-	CONAN_PKG::stonex-cms-amqp-lib
+	PUBLIC
 	CONAN_PKG::boost
+	CONAN_PKG::stonex-logger-wrapper
+	PRIVATE	
+	CONAN_PKG::stonex-cms-amqp-lib
 	)
 
 add_subdirectory(Test)

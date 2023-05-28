@@ -32,7 +32,7 @@
 #include "../src/MessageReceiver/MessageCountingDecoratingReceiver.h"
 #include "../src/MessageReceiver/MessageCountingDecoratingFileReceiver.h"
 #include <Notifier/EventStatusObserver.h>
-#include <Notifier/TestNotifier.h>
+#include <Notifier/Notifier.h>
 #include <StdOutLogger/StdOutLogger.h>
 
 

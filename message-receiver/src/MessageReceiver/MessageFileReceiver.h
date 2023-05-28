@@ -20,7 +20,7 @@
 #pragma once
 
 #include <MessageReceiver/MessageReceiver.h>
-#include <Notifier/TestNotifier.h>
+#include <Notifier/Notifier.h>
 #include <utils\MessageDestination.h>
 #include "..\Configuration\FileMessageReceiverConfiguration.h"
 

@@ -23,7 +23,7 @@
 #include <functional>
 #include <mutex>
 #include <utils/EventCounter.h>
-#include <Notifier/TestNotifier.h>
+#include <Notifier/Notifier.h>
 
 
 class ReceivedMessageCounter : public EventCounter

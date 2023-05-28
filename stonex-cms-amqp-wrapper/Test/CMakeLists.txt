@@ -15,7 +15,9 @@ target_include_directories(stonex-cms-amqp-wrapper-test PUBLIC ${PROJECT_SOURCE_
 
 target_link_libraries(stonex-cms-amqp-wrapper-test
 	stonex-cms-amqp-wrapper
+	CONAN_PKG::stonex-cms-amqp-lib
 	CONAN_PKG::stonex-logger-wrapper
+	CONAN_PKG::boost
 	secur32 
 	crypt32 
 	Ws2_32

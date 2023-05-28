@@ -21,7 +21,7 @@
 
 #include <functional>
 #include <Wrapper/CMSClientTestUnit.h>
-#include <Notifier/TestNotifier.h>
+#include <Notifier/Notifier.h>
 #include <utils/EventCounter.h>
 #include <utils/MessageFile.h>
 #include <utils/MessageType.h>

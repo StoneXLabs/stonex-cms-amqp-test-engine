@@ -94,7 +94,7 @@ SessionHandler * MessageSender::getSessionHandler(const std::string& session_id)
 	if (mSession->id() == session_id)
 		return new SessionHandler(mSession);
 	else
-		return false;
+		return nullptr;
 }
 
 ProducerHandler * MessageSender::getProducerHandler() const

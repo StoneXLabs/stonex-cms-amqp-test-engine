@@ -20,7 +20,7 @@
 #pragma once
 
 #include "EventStatus.h"
-#include "TestNotifier.h"
+#include "Notifier.h"
 
 class EventStatusObserver
 {

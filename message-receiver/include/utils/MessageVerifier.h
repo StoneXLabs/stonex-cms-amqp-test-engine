@@ -24,7 +24,7 @@
 #include <Configuration/MessageDecoratorConfiguration.h>
 #include <MessageContentVerifiers/ExpectedField.h>
 #include <MessageContentVerifiers/FieldVerifierFactory.h>
-#include <Notifier/TestNotifier.h>
+#include <Notifier/Notifier.h>
 
 class MessageVerifier
 {
