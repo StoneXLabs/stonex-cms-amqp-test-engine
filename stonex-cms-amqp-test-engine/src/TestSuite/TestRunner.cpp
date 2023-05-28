@@ -29,7 +29,6 @@ TestRunner::TestRunner(TestSuiteConfigParser & configurationParser, TestFunction
 	mLogger{logger}
  {
 	 mSuiteConfiguration = configurationParser.createConfiguration();
-	 info("Test Runner", fmt::format("Test suite {} configured /n "));
  }
 
 

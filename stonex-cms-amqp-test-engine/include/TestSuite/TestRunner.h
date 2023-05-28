@@ -28,7 +28,7 @@
 #include <logger/StoneXLogger.h>
 #include <logger/StonexLogSource.h>
 
-class TestRunner : public StonexLogSource
+class TestRunner
 {
 
 public:
