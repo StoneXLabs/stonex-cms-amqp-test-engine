@@ -18,7 +18,7 @@ class StonexCmsAmqpTestEngineConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False], "fPIC": [True, False]}
     default_options = {"shared": False, "fPIC": True}
-    requires = ["stonex-cms-amqp-lib/0.3.0@enterprise_messaging/test","boost/1.78.0@enterprise_messaging/stable"]
+    requires = ["stonex-cms-amqp-lib/0.2.2@enterprise_messaging/test","boost/1.78.0@enterprise_messaging/stable","stonex-logger-wrapper/0.0.2@enterprise_messaging/test"]
     generators = "cmake"
 
     def config_options(self):
