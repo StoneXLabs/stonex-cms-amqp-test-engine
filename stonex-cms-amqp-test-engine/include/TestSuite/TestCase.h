@@ -29,6 +29,7 @@
 #include "TestCaseStatus.h"
 #include "TestCasePerformer.h"
 #include "TestCaseVerifier.h"
+#include "TestCaseExceptionVerifier.h"
 
 class ITestCase : public Notifier
 {
@@ -52,6 +53,7 @@ public:
 	~TestCase() = default;
 	void run() override;
 private:
+	TestCaseExceptionVerifier mTestExceptionVerifier;
 	CMSClientTestUnit mTestedObject;
 	TestCasePerformer mTestPerformer;
 	TestCaseVerifier mTestVerifier;

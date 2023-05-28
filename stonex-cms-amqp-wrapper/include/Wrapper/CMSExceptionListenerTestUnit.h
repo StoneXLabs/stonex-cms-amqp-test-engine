@@ -55,6 +55,7 @@ public:
 			return "[" + mSourceId + "] " + CMSException::getMessage();
 		};
 
+		std::string id() const { return mSourceId; };
 
 private:
 	const std::string mSourceId;

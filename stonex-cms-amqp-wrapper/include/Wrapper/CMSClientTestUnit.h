@@ -20,17 +20,18 @@
 #pragma once
 
 #include <logger/StoneXLogger.h>
+#include <cms/ExceptionListener.h>
 #include "ConnectionTestUnit.h"
 #include "../Configuration/WrapperConfiguration.h"
-
-
+#include "CMSExceptionListenerTestUnit.h"
 
 class CMSClientTestUnit
 {
 public:
 	explicit CMSClientTestUnit(const std::string userIdentifier = "");
 	CMSClientTestUnit(const WrapperConfiguration &config, std::shared_ptr<StonexLogger> logger, const std::string userIdentifier = "", cms::ExceptionListener* factoryExceptionListener = nullptr, cms::ExceptionListener* connectionExceptionListener = nullptr, cms::ExceptionListener* sessionExceptionListener = nullptr);
-
+	CMSClientTestUnit(CMSClientTestUnit&& other) = delete;
+	CMSClientTestUnit(const CMSClientTestUnit& other) = delete;
 	~CMSClientTestUnit();
 
 	void addConnection(const ConnectionConfiguration* params, std::shared_ptr<StonexLogger> logger, cms::ExceptionListener* factoryExceptionListener, cms::ExceptionListener* connectionExceptionListener, cms::ExceptionListener* sessionExceptionListener);
@@ -47,7 +48,6 @@ public:
 	ConsumerTestUnit* const consumer(const std::string &connectionId,const std::string &sessionId,const std::string &id);
 	ProducerTestUnit* const producer(const std::string &connectionId,const std::string &sessionId,const std::string &id);
 	
-
 private:
 	std::vector<ConnectionTestUnit> mConnections;
 };

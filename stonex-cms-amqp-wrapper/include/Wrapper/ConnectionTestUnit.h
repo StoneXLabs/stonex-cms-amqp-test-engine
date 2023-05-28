@@ -30,6 +30,7 @@ class ConnectionTestUnit :  public cms::Connection, public CMSExceptionListenerT
 {
 public:
 	ConnectionTestUnit(const ConnectionConfiguration& params, std::shared_ptr<StonexLogger> logger, cms::ExceptionListener* factoryExceptionListener, cms::ExceptionListener* connectionExceptionListener, cms::ExceptionListener* sessionExceptionListener);
+	ConnectionTestUnit(const ConnectionTestUnit& other) = delete;
 	ConnectionTestUnit(ConnectionTestUnit&& other);
 	~ConnectionTestUnit();
 	

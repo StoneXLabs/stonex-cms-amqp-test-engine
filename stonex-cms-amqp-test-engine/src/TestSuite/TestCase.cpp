@@ -64,7 +64,8 @@ void ITestCase::testEvent(const EventStatus & event)
 
 TestCase::TestCase(const TestCaseConfiguration& test_config, MessageSenderFactory* factory, const TestFunctionRegister& functionRegister, TestObserver* observer, std::shared_ptr<StonexLogger> logger)
 	:ITestCase(test_config.testName(), observer),
-	mTestedObject(test_config.uutConfig(), logger,""),
+	mTestExceptionVerifier(test_config.verifierConfig(),*this),
+	mTestedObject(test_config.uutConfig(), logger,"",&mTestExceptionVerifier, &mTestExceptionVerifier, &mTestExceptionVerifier),
 	mTestPerformer(test_config.performerConfig(), mTestedObject,*this, factory ),
 	mTestVerifier(test_config.verifierConfig(), mTestedObject,*this)
 {

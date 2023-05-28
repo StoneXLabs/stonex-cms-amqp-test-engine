@@ -26,14 +26,14 @@ CMSExceptionListenerTestUnit::CMSExceptionListenerTestUnit(const std::string& id
 }
 
 CMSExceptionListenerTestUnit::CMSExceptionListenerTestUnit(CMSExceptionListenerTestUnit&& other)
-	: mId{std::move(other.mId)},
+	:mId{std::move(other.mId)},
 	mListener{other.mListener}
 {
 	other.mListener = nullptr;
 }
 
 CMSExceptionListenerTestUnit::CMSExceptionListenerTestUnit(const CMSExceptionListenerTestUnit& other)
-	: mId{ other.mId },
+	:mId{ other.mId },
 	mListener{ other.mListener }
 {
 	

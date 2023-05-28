@@ -30,6 +30,7 @@ class ConsumerTestUnit : public ClientTestUnit, public cms::MessageConsumer
 {
 public:
 	ConsumerTestUnit(const ConsumerConfiguration& params, std::shared_ptr<StonexLogger> logger, cms::Session* session);
+	ConsumerTestUnit(const ConsumerTestUnit& other) = delete;
 	ConsumerTestUnit(ConsumerTestUnit&& other);
 	~ConsumerTestUnit();
 

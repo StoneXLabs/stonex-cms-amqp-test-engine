@@ -36,11 +36,11 @@ class SessionTestUnit : public cms::Session, public CMSExceptionListenerTestUnit
 public:
 	SessionTestUnit(const SessionConfiguration* configuration, std::shared_ptr<StonexLogger> logger, cms::Connection* conn, cms::ExceptionListener* exceptionListener);
 	SessionTestUnit(SessionTestUnit&& other);
-	SessionTestUnit(const SessionTestUnit* other) = delete;
+	SessionTestUnit(const SessionTestUnit& other) = delete;
 	~SessionTestUnit();
 
-	SessionTestUnit* operator=(const SessionTestUnit* other) = delete;
-	SessionTestUnit* operator=(SessionTestUnit*& other) = delete;
+	SessionTestUnit* operator=(const SessionTestUnit& other) = delete;
+	SessionTestUnit* operator=(SessionTestUnit&& other) = delete;
 
 
 	std::string id() const;

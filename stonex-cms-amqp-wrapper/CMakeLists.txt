@@ -19,6 +19,7 @@ target_link_libraries(stonex-cms-amqp-wrapper
 	INTERFACE
 	apache-cms-interface
 	PUBLIC
+	test-utils
 	CONAN_PKG::boost
 	CONAN_PKG::stonex-logger-wrapper
 	PRIVATE	
