@@ -20,7 +20,7 @@
 #pragma once
 
 #include <utils/EventCounter.h>
-#include "MessageFile.h"
+#include <utils/MessageFile.h>
 #include "MessageSenderConfiguration.h"
 
 class FileMessageCountingSenderDecoratingConfiguration : public MessageSenderConfiguration, public MessageFile, public EventCounter
