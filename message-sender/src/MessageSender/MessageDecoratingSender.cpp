@@ -38,6 +38,7 @@ MESSAGE_SEND_STATUS MessageDecoratingSender::send_text(int msg_delay_ms)
 		auto message = mSession->createTextMessage(message_body);
 		decorate(message, mSession);
 		mProducer->send(message);
+		delete message;
 		return MESSAGE_SEND_STATUS::ALL_SENT;
 	}
 	else
@@ -55,6 +56,7 @@ MESSAGE_SEND_STATUS MessageDecoratingSender::send_bytes(int msg_delay_ms)
 		auto message = mSession->createBytesMessage((const unsigned char*)message_body.c_str(), message_body.size());
 		decorate(message, mSession);
 		mProducer->send(message);
+		delete message;
 		return MESSAGE_SEND_STATUS::ALL_SENT;
 	}
 	else

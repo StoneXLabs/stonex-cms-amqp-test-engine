@@ -73,8 +73,10 @@ bool MessageSender::sendMessage()
 		}
 
 	}
-	else
+	else {
 		mParent.testEvent(EventStatus(false, id(), "failed to send message. producer not initialized"));
+		sent = MESSAGE_SEND_STATUS::SEND_ERROR;
+	}
 	
 	return sent == MESSAGE_SEND_STATUS::SUCCESS;
 }
@@ -117,6 +119,7 @@ MESSAGE_SEND_STATUS MessageSender::send_text(int msg_delay_ms)
 	{
 		auto message = mSession->createTextMessage(message_body);
 		mProducer->send(message);
+		delete message;
 		return MESSAGE_SEND_STATUS::ALL_SENT;
 	}
 	else
@@ -133,6 +136,7 @@ MESSAGE_SEND_STATUS MessageSender::send_bytes(int msg_delay_ms)
 	{
 		auto message = mSession->createBytesMessage((const unsigned char*)message_body.c_str(),message_body.size());
 		mProducer->send(message);
+		delete message;
 		return MESSAGE_SEND_STATUS::ALL_SENT;
 	}
 	else

@@ -45,6 +45,7 @@ MESSAGE_SEND_STATUS MessageCountingDecoratingFileSender::send_text(int msg_delay
 		decorate(message, mSession);
 		mProducer->send(message);
 		incrementSentCount();
+		delete message;
 		if (expectedEventCount() == sentMessageCount())
 			return MESSAGE_SEND_STATUS::ALL_SENT;
 		else if (expectedEventCount() < sentMessageCount())
@@ -71,6 +72,7 @@ MESSAGE_SEND_STATUS MessageCountingDecoratingFileSender::send_bytes(int msg_dela
 		decorate(message, mSession);
 		mProducer->send(message);
 		incrementSentCount();
+		delete message;
 		if (expectedEventCount() == sentMessageCount())
 			return MESSAGE_SEND_STATUS::ALL_SENT;
 		else if (expectedEventCount() < sentMessageCount())

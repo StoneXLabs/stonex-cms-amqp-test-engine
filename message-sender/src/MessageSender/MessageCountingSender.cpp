@@ -37,8 +37,9 @@ MESSAGE_SEND_STATUS MessageCountingSender::send_text(int msg_delay_ms)
 
 	if (mSession && mProducer)
 	{
-		auto mes = mSession->createTextMessage(message_body);
-		mProducer->send(mes);
+		auto message = mSession->createTextMessage(message_body);
+		mProducer->send(message);
+		delete message;
 		incrementSentCount();
 		if (expectedEventCount() == sentMessageCount())
 			return MESSAGE_SEND_STATUS::ALL_SENT;
@@ -65,6 +66,7 @@ MESSAGE_SEND_STATUS MessageCountingSender::send_bytes(int msg_delay_ms)
 		auto message = mSession->createBytesMessage((const unsigned char*)message_body.c_str(), message_body.size());
 		mProducer->send(message);
 		incrementSentCount();
+		delete message;
 		if (expectedEventCount() == sentMessageCount())
 			return MESSAGE_SEND_STATUS::ALL_SENT;
 		else if (expectedEventCount() < sentMessageCount())
