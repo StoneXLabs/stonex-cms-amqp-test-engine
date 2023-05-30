@@ -24,7 +24,7 @@
 class ApplicationPropertyDecorator : public CMSMessageDecorator
 {
 public:
-	ApplicationPropertyDecorator(const MessageTestField& field);
+	ApplicationPropertyDecorator(const MessageField& field);
 	void decorate(cms::Message* mes, cms::Session* sess) const override;
 };
 

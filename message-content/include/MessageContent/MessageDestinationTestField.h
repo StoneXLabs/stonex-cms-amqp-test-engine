@@ -17,22 +17,24 @@
  * limitations under the License.
  */
 
-#include <MessageContent/MessageDestinationField.h>
+#pragma once
 
-stonex::test::engine::message::content::MessageDestinationField::MessageDestinationField(FIELD_TYPE ft, const std::string & dest_type, const std::string & dest_address)
-	:MessageField(ft, {}, {}),
-	mDestType(FIELD_TYPE::STRINGPROPERTY, "dest_type", dest_type),
-	mAddress(FIELD_TYPE::STRINGPROPERTY, "address", dest_address)
+#include <MessageContent/MessageField.h>
+
+class MessageDestinationTestField : public virtual MessageField
 {
+public:
+	MessageDestinationTestField(FIELD_TYPE ft, const std::string& dest_type, const std::string& dest_address);
 
-}
+	std::string name() const override;
+	FIELD_TYPE destType() const;
+	std::string destAddress() const;
 
-std::string stonex::test::engine::message::content::MessageDestinationField::name() const
-{
-	return mAddress.valueString();
-}
+	friend bool operator== (const MessageDestinationTestField& lhs, const MessageDestinationTestField& rhs);
 
-std::string stonex::test::engine::message::content::MessageDestinationField::valueString() const
-{ 
-	return mDestType.valueString();
-}
+private:
+	FIELD_TYPE mDestType;
+	const std::string mAddress;
+};
+
+

@@ -20,21 +20,48 @@
 #include <MessageContent/MessageDestinationTestField.h>
 
 MessageDestinationTestField::MessageDestinationTestField(FIELD_TYPE ft, const std::string & dest_type, const std::string & dest_address)
-	:MessageTestField(ft, {}, {}),
-	mDestType(FIELD_TYPE::STRINGPROPERTY, "dest_type", dest_type),
-	mAddress(FIELD_TYPE::STRINGPROPERTY, "address", dest_address)
+	:MessageField(ft, {}, { dest_address })
 {
-
+	if (dest_type == "queue")
+		mDestType = FIELD_TYPE::CMS_QUEUE;
+	else if (dest_type == "temporary-queue")
+		mDestType = FIELD_TYPE::CMS_TEMPORARY_QUEUE;
+	else if (dest_type == "topic")
+		mDestType = FIELD_TYPE::CMS_TOPIC;
+	else if (dest_type == "temporary-topic")
+		mDestType = FIELD_TYPE::CMS_TEMPORARY_TOPIC;
 }
 
 std::string MessageDestinationTestField::name() const
 {
-	return mAddress.valueString();
+	std::string _name;
+		switch (mDestType)
+		{
+		case FIELD_TYPE::CMS_QUEUE:
+			_name = "queue";
+			break;
+		case FIELD_TYPE::CMS_TEMPORARY_QUEUE:
+			_name = "temporary-queue";
+			break;
+		case FIELD_TYPE::CMS_TOPIC:
+			_name = "topic";
+			break;
+		case FIELD_TYPE::CMS_TEMPORARY_TOPIC:
+			_name = "temporary-topic";
+			break;
+		}
+	return _name;
 }
 
-std::string MessageDestinationTestField::valueString() const
-{ 
-	return mDestType.valueString();
+
+FIELD_TYPE MessageDestinationTestField::destType() const
+{
+	return mDestType;
+}
+
+std::string MessageDestinationTestField::destAddress() const
+{
+	return mAddress;
 }
 
 bool operator==(const MessageDestinationTestField & lhs, const MessageDestinationTestField & rhs)
@@ -43,5 +70,5 @@ bool operator==(const MessageDestinationTestField & lhs, const MessageDestinatio
 		lhs.mFieldType == rhs.mFieldType &&
 		lhs.mValueString == rhs.mValueString &&
 		lhs.mDestType == rhs.mDestType &&
-		lhs.mAddress == rhs.mDestType;
+		lhs.mAddress == rhs.mAddress;
 }

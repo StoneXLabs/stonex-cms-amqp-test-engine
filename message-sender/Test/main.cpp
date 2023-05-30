@@ -101,7 +101,7 @@ int main()
 	{
 		boost::json::object::value_type message_sender_config_json = *valueFromFile("test_message_decorating_sender.config").as_object().cbegin();
 		auto producer = parser.createTestCaseProducerConfig(message_sender_config_json.key_c_str(), message_sender_config_json.value().as_object());
-		auto producer_config = MessageDecoratingSenderConfiguration("connection1", "session1", "producer1", "text", "engine", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+		auto producer_config = MessageDecoratingSenderConfiguration("connection1", "session1", "producer1", "text", "engine", { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
 
 		assert(producer != nullptr);
 		assert(dynamic_cast<MessageDecoratingSenderConfiguration*>(producer) != nullptr);
@@ -112,7 +112,7 @@ int main()
 	{
 		boost::json::object::value_type message_sender_config_json = *valueFromFile("test_message_decorating_sender_from_file.config").as_object().cbegin();
 		auto producer = parser.createTestCaseProducerConfig(message_sender_config_json.key_c_str(), message_sender_config_json.value().as_object());
-		auto producer_config = FileMessageDecoratingSenderConfiguration("connection1", "session1", "producer1", "text", "engine", "test_messages.txt", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+		auto producer_config = FileMessageDecoratingSenderConfiguration("connection1", "session1", "producer1", "text", "engine", "test_messages.txt", { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
 
 		assert(producer != nullptr);
 		assert(dynamic_cast<FileMessageDecoratingSenderConfiguration*>(producer) != nullptr);
@@ -132,7 +132,7 @@ int main()
 	{
 		boost::json::object::value_type message_sender_config_json = *valueFromFile("test_message_decorating_counting_sender.config").as_object().cbegin();
 		auto producer = parser.createTestCaseProducerConfig(message_sender_config_json.key_c_str(), message_sender_config_json.value().as_object());
-		auto producer_config = MessageCountingDecoratingSenderConfiguration("connection1", "session1", "producer1", "text", "engine",  1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+		auto producer_config = MessageCountingDecoratingSenderConfiguration("connection1", "session1", "producer1", "text", "engine",  1, { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
 
 		assert(producer != nullptr);
 		assert(dynamic_cast<MessageCountingDecoratingSenderConfiguration*>(producer) != nullptr);
@@ -142,7 +142,7 @@ int main()
 	{
 		boost::json::object::value_type message_sender_config_json = *valueFromFile("test_message_decorating_counting_sender_from_file.config").as_object().cbegin();
 		auto producer = parser.createTestCaseProducerConfig(message_sender_config_json.key_c_str(), message_sender_config_json.value().as_object());
-		auto producer_config = FileMessageCountingDecoratingSenderConfiguration("connection1", "session1", "producer1", "text", "engine", "test_messages.txt", 1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+		auto producer_config = FileMessageCountingDecoratingSenderConfiguration("connection1", "session1", "producer1", "text", "engine", "test_messages.txt", 1, { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
 
 		assert(producer != nullptr);
 		assert(dynamic_cast<FileMessageCountingDecoratingSenderConfiguration*>(producer) != nullptr);
@@ -229,7 +229,7 @@ int main()
 				}
 			};
 
-			auto test_producer_config = MessageDecoratingSenderConfiguration("connection1", "session1", "producer1", "text", "engine", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+			auto test_producer_config = MessageDecoratingSenderConfiguration("connection1", "session1", "producer1", "text", "engine", { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
 			TestMessageSender sender(test_producer_config, test_client, event_notifier);
 			sender.sendMessage();
 		}
@@ -256,20 +256,20 @@ int main()
 				}
 			};
 
-			auto test_producer_config = MessageCountingDecoratingSenderConfiguration("connection1", "session1", "producer1", "text", "engine", 1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+			auto test_producer_config = MessageCountingDecoratingSenderConfiguration("connection1", "session1", "producer1", "text", "engine", 1, { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
 			TestMessageSender sender(test_producer_config, test_client, event_notifier);
 			sender.sendMessage();
 			assert(sender.sentMessageCount() == 1);
 		}
 
 		{
-			auto test_producer_config = FileMessageDecoratingSenderConfiguration("connection1", "session1", "producer1", "text", "engine", "message_file.txt", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+			auto test_producer_config = FileMessageDecoratingSenderConfiguration("connection1", "session1", "producer1", "text", "engine", "message_file.txt", { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
 			MessageDecoratingFileSender sender(test_producer_config, test_client, event_notifier);
 			sender.sendMessage();
 		}
 
 		{
-			auto test_producer_config = FileMessageCountingDecoratingSenderConfiguration("connection1", "session1", "producer1", "text", "engine", "message_file.txt", 1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+			auto test_producer_config = FileMessageCountingDecoratingSenderConfiguration("connection1", "session1", "producer1", "text", "engine", "message_file.txt", 1, { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
 			MessageCountingDecoratingFileSender sender(test_producer_config, test_client, event_notifier);
 			sender.sendMessage();
 			assert(sender.sentMessageCount() == 1);

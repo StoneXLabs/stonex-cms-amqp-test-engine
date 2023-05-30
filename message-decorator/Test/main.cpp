@@ -50,9 +50,9 @@ int main()
 
 	{
 
-		auto bool_config = new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY, "property_bool", "false");
-		auto int_config = new MessageTestField(FIELD_TYPE::INTPROPERTY, "property_int", "123");
-		auto double_config = new MessageTestField(FIELD_TYPE::DOUBLEPROPERTY, "property_double", "123.123");
+		auto bool_config = new MessageField(FIELD_TYPE::BOOLEANPROPERTY, "property_bool", "false");
+		auto int_config = new MessageField(FIELD_TYPE::INTPROPERTY, "property_int", "123");
+		auto double_config = new MessageField(FIELD_TYPE::DOUBLEPROPERTY, "property_double", "123.123");
 
 		MessageDecoratorConfiguration decorator({ bool_config, int_config, double_config });
 
@@ -79,9 +79,9 @@ int main()
 		boost::json::object::value_type message_content_config_json = *valueFromFile("test_message_decorator.config").as_object().cbegin();
 		auto property = parser.createMessgeDecoratorConfiguration(message_content_config_json.key_c_str(), message_content_config_json.value());
 
-		auto bool_config = new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property_bool","false");
-		auto int_config = new MessageTestField(FIELD_TYPE::INTPROPERTY, "property_int", "123");
-		auto double_config = new MessageTestField(FIELD_TYPE::DOUBLEPROPERTY, "property_double", "123.123");
+		auto bool_config = new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property_bool","false");
+		auto int_config = new MessageField(FIELD_TYPE::INTPROPERTY, "property_int", "123");
+		auto double_config = new MessageField(FIELD_TYPE::DOUBLEPROPERTY, "property_double", "123.123");
 
 		MessageDecoratorConfiguration compare({ bool_config, int_config, double_config });
 

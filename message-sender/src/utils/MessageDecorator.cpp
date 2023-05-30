@@ -28,5 +28,6 @@ MessageDecorator::MessageDecorator(const MessageDecoratorConfiguration & decorat
 
 void MessageDecorator::decorate(cms::Message* message, cms::Session* session) const
 {
-	mDecorator->decorate(message, session);
+	if(mDecorator)
+		mDecorator->decorate(message, session);
 }

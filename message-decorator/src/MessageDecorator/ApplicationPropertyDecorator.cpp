@@ -20,13 +20,16 @@
 #include <cms/Message.h>
 #include "ApplicationPropertyDecorator.h"
 
-ApplicationPropertyDecorator::ApplicationPropertyDecorator(const MessageTestField& field)
+ApplicationPropertyDecorator::ApplicationPropertyDecorator(const MessageField& field)
 	:CMSMessageDecorator(field)
 {
 }
 
 void ApplicationPropertyDecorator::decorate(cms::Message * mes, cms::Session * sess) const
 {
+	if (!mes)
+		CMSMessageDecorator::decorate(mes, sess);
+
 	switch (mFieldType)
 	{
 	case FIELD_TYPE::BOOLEANPROPERTY:

@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+#include <iostream>
 #include <ConfigurationParser/WrapperConfigurationParser.h>
 
 

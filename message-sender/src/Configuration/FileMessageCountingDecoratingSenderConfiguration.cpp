@@ -19,7 +19,7 @@
 
 #include <Configuration/FileMessageCountingDecoratingSenderConfiguration.h>
 
-FileMessageCountingDecoratingSenderConfiguration::FileMessageCountingDecoratingSenderConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& producerId, const std::string& messageType, const std::string& senderType, const std::string& file_path, long long message_count, const std::vector<MessageTestField*>& decorations)
+FileMessageCountingDecoratingSenderConfiguration::FileMessageCountingDecoratingSenderConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& producerId, const std::string& messageType, const std::string& senderType, const std::string& file_path, long long message_count, const std::vector<MessageField*>& decorations)
 	:MessageSenderConfiguration(connectionId, sessionId, producerId, messageType, senderType),
 	MessageFile(file_path),
 	EventCounter(message_count),
@@ -36,6 +36,6 @@ bool operator==(const FileMessageCountingDecoratingSenderConfiguration & lhs, co
 		lhs.senderType() == rhs.senderType() &&
 		rhs.expectedEventCount() == lhs.expectedEventCount() &&
 		rhs.filePath() == lhs.filePath() &&
-		std::equal(std::cbegin(lhs.decorations()), std::cend(lhs.decorations()), std::cbegin(rhs.decorations()), std::cend(rhs.decorations()), [](const MessageTestField* lhs_item, const MessageTestField* rhs_item) {return *lhs_item == *rhs_item; });
+		std::equal(std::cbegin(lhs.decorations()), std::cend(lhs.decorations()), std::cbegin(rhs.decorations()), std::cend(rhs.decorations()), [](const MessageField* lhs_item, const MessageField* rhs_item) {return *lhs_item == *rhs_item; });
 
 }

@@ -22,15 +22,10 @@
 #include <MessageDecorator/CMSMessageDecorator.h>
 #include <cms/Destination.h>
 
-
 class CMSPropertyDecorator : public CMSMessageDecorator
 {
 public:
-	CMSPropertyDecorator(const MessageTestField& field);
+	CMSPropertyDecorator(const MessageField& field);
 	void decorate(cms::Message* mes, cms::Session* sess) const override;
-
-private:
-	cms::Destination* destinationFromValueString(cms::Session * sess) const;
-
 };
 

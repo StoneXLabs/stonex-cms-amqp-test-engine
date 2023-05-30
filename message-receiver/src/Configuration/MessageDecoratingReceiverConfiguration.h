@@ -25,7 +25,7 @@
 class MessageDecoratingReceiverConfiguration : public MessageReceiverConfiguration, public MessageDecoratorConfiguration
 {
 public:
-	MessageDecoratingReceiverConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& consumerId, const std::string& messageType, const std::string& receiverType, const std::vector<MessageTestField*>& decorations);
+	MessageDecoratingReceiverConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& consumerId, const std::string& messageType, const std::string& receiverType, const std::vector<MessageField*>& decorations);
 	friend bool operator== (const MessageDecoratingReceiverConfiguration& lhs, const MessageDecoratingReceiverConfiguration& rhs);
 
 };

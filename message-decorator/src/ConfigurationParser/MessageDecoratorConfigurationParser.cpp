@@ -24,7 +24,7 @@ MessageDecoratorConfiguration MessageDecoratorConfigurationParser::createMessgeD
 {
 	if (configName == "properties")
 	{
-		std::vector<MessageTestField*> property_vector;
+		std::vector<MessageField*> property_vector;
 		if (json.is_object())
 		{
 			auto property_json = json.as_object();

@@ -21,11 +21,12 @@
 #include <MessageDecorator/MessageDecoratorFactory.h>
 #include "ApplicationPropertyDecorator.h"
 #include "CMSPropertyDecorator.h"
+#include "CMSDestinationDecorator.h"
 
 CMSMessageDecorator * MessageDecoratorFactory::create(const MessageDecoratorConfiguration& config)
 {
 	CMSMessageDecorator* decorator{ nullptr };
-	std::for_each(std::cbegin(config.decorations()), std::cend(config.decorations()), [&decorator](const MessageTestField* item) {
+	std::for_each(std::cbegin(config.decorations()), std::cend(config.decorations()), [&decorator](const MessageField* item) {
 	
 		CMSMessageDecorator* current_item{ nullptr };
 		
@@ -44,15 +45,17 @@ CMSMessageDecorator * MessageDecoratorFactory::create(const MessageDecoratorConf
 		break;
 		case FIELD_TYPE::CMS_CORRELATION_ID:
 		case FIELD_TYPE::CMS_DELIVERY_MODE:
-		case FIELD_TYPE::CMS_DESTINATION:
 		case FIELD_TYPE::CMS_EXPIRATION:
 		case FIELD_TYPE::CMS_MESSAGE_ID:
 		case FIELD_TYPE::CMS_PRIORITY:
 		case FIELD_TYPE::CMS_REDELIVERED:
-		case FIELD_TYPE::CMS_REPLY_TO:
 		case FIELD_TYPE::CMS_TIMESTAMP:
 		case FIELD_TYPE::CMS_TYPE:
 			current_item = new CMSPropertyDecorator(*item);
+			break;
+		case FIELD_TYPE::CMS_DESTINATION:
+		case FIELD_TYPE::CMS_REPLY_TO:
+			current_item = new CMSDestinationDecorator(*item);
 			break;
 		default:
 			break;

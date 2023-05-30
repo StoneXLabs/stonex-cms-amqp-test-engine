@@ -19,7 +19,7 @@
 
 #include <Configuration/MessageDecoratingSenderConfiguration.h>
 
-MessageDecoratingSenderConfiguration::MessageDecoratingSenderConfiguration(const std::string & connectionId, const std::string & sessionId, const std::string & producerId, const std::string& messageType, const std::string& senderType, const std::vector<MessageTestField*>& decorations)
+MessageDecoratingSenderConfiguration::MessageDecoratingSenderConfiguration(const std::string & connectionId, const std::string & sessionId, const std::string & producerId, const std::string& messageType, const std::string& senderType, const std::vector<MessageField*>& decorations)
 	:MessageSenderConfiguration(connectionId, sessionId, producerId, messageType, senderType),
 	MessageDecoratorConfiguration(decorations)
 {
@@ -32,5 +32,5 @@ bool operator==(const MessageDecoratingSenderConfiguration & lhs, const MessageD
 		lhs.producerId() == rhs.producerId() &&
 		lhs.messageType() == rhs.messageType() &&
 		lhs.senderType() == rhs.senderType() &&
-		std::equal(std::cbegin(lhs.decorations()), std::cend(lhs.decorations()), std::cbegin(rhs.decorations()), std::cend(rhs.decorations()), [](const MessageTestField* lhs_item, const MessageTestField* rhs_item) {return *lhs_item == *rhs_item; });
+		std::equal(std::cbegin(lhs.decorations()), std::cend(lhs.decorations()), std::cbegin(rhs.decorations()), std::cend(rhs.decorations()), [](const MessageField* lhs_item, const MessageField* rhs_item) {return *lhs_item == *rhs_item; });
 }

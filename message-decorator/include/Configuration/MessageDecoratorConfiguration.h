@@ -20,15 +20,15 @@
 #pragma once
 
 #include <vector>
-#include <MessageContent/MessageTestField.h>
+#include <MessageContent/MessageField.h>
 
 class MessageDecoratorConfiguration
 {
 public:
-	MessageDecoratorConfiguration(const std::vector<MessageTestField*>& decorations);
+	MessageDecoratorConfiguration(const std::vector<MessageField*>& decorations);
 	friend bool operator== (const MessageDecoratorConfiguration& lhs, const MessageDecoratorConfiguration& rhs);
-	const std::vector<MessageTestField*>& decorations() const;
+	const std::vector<MessageField*>& decorations() const;
 private:
-	std::vector <MessageTestField*> mMessageDecorations;
+	std::vector <MessageField*> mMessageDecorations;
 };
 

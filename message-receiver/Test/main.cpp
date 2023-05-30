@@ -98,7 +98,7 @@ int main()
 	{
 		boost::json::object::value_type message_receiver_config_json = *valueFromFile("test_message_decorating_receiver.config").as_object().cbegin();
 		auto consumer = parser.createTestCaseReceiverConfig(message_receiver_config_json.key_c_str(), message_receiver_config_json.value().as_object());
-		auto consumer_config = MessageDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+		auto consumer_config = MessageDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine", { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
 
 		assert(consumer != nullptr);
 		assert(dynamic_cast<MessageDecoratingReceiverConfiguration*>(consumer) != nullptr);
@@ -109,7 +109,7 @@ int main()
 	{
 		boost::json::object::value_type message_receiver_config_json = *valueFromFile("test_message_decorating_receiver_to_file.config").as_object().cbegin();
 		auto consumer = parser.createTestCaseReceiverConfig(message_receiver_config_json.key_c_str(), message_receiver_config_json.value().as_object());
-		auto consumer_config = FileMessageDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine", "test_messages.txt", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+		auto consumer_config = FileMessageDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine", "test_messages.txt", { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
 
 		assert(consumer != nullptr);
 		assert(dynamic_cast<FileMessageDecoratingReceiverConfiguration*>(consumer) != nullptr);
@@ -129,7 +129,7 @@ int main()
 	{
 		boost::json::object::value_type message_receiver_config_json = *valueFromFile("test_message_decorating_counting_receiver.config").as_object().cbegin();
 		auto consumer = parser.createTestCaseReceiverConfig(message_receiver_config_json.key_c_str(), message_receiver_config_json.value().as_object());
-		auto consumer_config = MessageCountingDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine",  1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+		auto consumer_config = MessageCountingDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine",  1, { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
 
 		assert(consumer != nullptr);
 		assert(dynamic_cast<MessageCountingDecoratingReceiverConfiguration*>(consumer) != nullptr);
@@ -139,7 +139,7 @@ int main()
 	{
 		boost::json::object::value_type message_receiver_config_json = *valueFromFile("test_message_decorating_counting_receiver_to_file.config").as_object().cbegin();
 		auto consumer = parser.createTestCaseReceiverConfig(message_receiver_config_json.key_c_str(), message_receiver_config_json.value().as_object());
-		auto consumer_config = FileMessageCountingDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine", "test_messages.txt", 1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+		auto consumer_config = FileMessageCountingDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine", "test_messages.txt", 1, { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
 
 		assert(consumer != nullptr);
 		assert(dynamic_cast<FileMessageCountingDecoratingReceiverConfiguration*>(consumer) != nullptr);
@@ -185,7 +185,7 @@ int main()
 
 		{
 	
-			auto test_consumer_config = MessageDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+			auto test_consumer_config = MessageDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine", { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
 			MessageDecoratingReceiver receiver(test_consumer_config, test_client, event_notifier);
 			
 		}
@@ -199,20 +199,20 @@ int main()
 
 		{
 	
-			auto test_consumer_config = MessageCountingDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine", 1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+			auto test_consumer_config = MessageCountingDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine", 1, { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
 			MessageCountingDecoratingReceiver receiver(test_consumer_config, test_client, event_notifier);
 			
 			//assert(receiver.receivedMessageCount() == 1);
 		}
 
 		{
-			auto test_consumer_config = FileMessageDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine", "message_file.txt", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+			auto test_consumer_config = FileMessageDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine", "message_file.txt", { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
 			MessageDecoratingFileReceiver receiver(test_consumer_config, test_client, event_notifier);
 			
 		}
 
 		{
-			auto test_consumer_config = FileMessageCountingDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine", "message_file.txt", 1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+			auto test_consumer_config = FileMessageCountingDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine", "message_file.txt", 1, { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
 			MessageCountingDecoratingFileReceiver receiver(test_consumer_config, test_client, event_notifier);
 			
 			//assert(receiver.receivedMessageCount() == 1);

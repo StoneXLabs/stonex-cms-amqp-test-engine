@@ -41,17 +41,57 @@ MessageField::MessageField(MessageField&& other)
 }
 
 
-FIELD_TYPE MessageField::type() const
+FIELD_TYPE MessageField::type() const 
 {
 	return mFieldType;
 }
 
-std::string MessageField::name() const
+std::string MessageField::name() const 
 {
 	return mName;
 }
 
-std::string MessageField::valueString() const
+std::string MessageField::valueString() const 
 {
 	return mValueString; 
+}
+
+bool operator==(const MessageField & lhs, const MessageField & rhs)
+{
+	if (lhs.mName == rhs.mName &&
+		lhs.mFieldType == rhs.mFieldType)
+	{
+		switch (lhs.mFieldType)
+		{
+		case FIELD_TYPE::BOOLEANPROPERTY:
+			return  std::atoi(lhs.mValueString.c_str()) == std::atoi(rhs.mValueString.c_str());
+			break;
+		case FIELD_TYPE::BYTEPROPERTY:
+			return lhs.mValueString == rhs.mValueString;
+			break;
+		case FIELD_TYPE::DOUBLEPROPERTY:
+			return std::stod(lhs.mValueString.c_str()) == std::stod(rhs.mValueString.c_str());
+			break;
+		case FIELD_TYPE::FLOATPROPERTY:
+			return std::stof(lhs.mValueString.c_str()) == std::stof(rhs.mValueString.c_str());
+			break;
+		case FIELD_TYPE::INTPROPERTY:
+			return std::atoi(lhs.mValueString.c_str()) == std::atoi(rhs.mValueString.c_str());
+			break;
+		case FIELD_TYPE::LONGPROPERTY:
+			return std::stod(lhs.mValueString.c_str()) == std::stod(rhs.mValueString.c_str());
+			break;
+		case FIELD_TYPE::SHORTPROPERTY:
+			return std::atoi(lhs.mValueString.c_str()) == std::atoi(rhs.mValueString.c_str());
+			break;
+		case FIELD_TYPE::STRINGPROPERTY:
+			return lhs.mValueString == rhs.mValueString;
+			break;
+		default:
+			return false;
+			break;
+		}
+	}
+	else
+		return false;
 }

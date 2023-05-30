@@ -19,8 +19,8 @@
 
 #include <MessageDecorator/CMSMessageDecorator.h>
 
-CMSMessageDecorator::CMSMessageDecorator(MessageTestField other)
-	:MessageTestField(other)
+CMSMessageDecorator::CMSMessageDecorator(const MessageField& messageField)
+	:MessageField(messageField)
 {
 }
 

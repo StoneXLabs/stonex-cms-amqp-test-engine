@@ -19,26 +19,14 @@
 
 #pragma once
 
-#include "MessageProperties.h"
+#include <MessageDecorator/CMSMessageDecorator.h>
 
-class MessageTestField
+class CMSDestinationDecorator : public CMSMessageDecorator 
 {
 public:
-	MessageTestField(FIELD_TYPE ft, const std::string& name, const std::string& valueString);
-	MessageTestField(const MessageTestField& other);
-	MessageTestField(MessageTestField&& other);
+	CMSDestinationDecorator(const MessageField& field);
+	void decorate(cms::Message* mes, cms::Session* sess) const override;
 
-	MessageTestField& operator =(const MessageTestField& other) = delete;
-	MessageTestField& operator =(MessageTestField&& other) = delete;
-	friend bool operator== (const MessageTestField& lhs, const MessageTestField& rhs);
-
-public:
-	FIELD_TYPE type() const;
-	virtual std::string name() const;
-	virtual std::string valueString() const;
-
-protected:
-	FIELD_TYPE mFieldType{ FIELD_TYPE::UNKNOWN };
-	const std::string mName{};
-	const std::string mValueString{};
+private:
+	FIELD_TYPE mDestType;
 };

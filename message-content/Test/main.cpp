@@ -53,7 +53,7 @@ int main()
 	{
 		boost::json::object::value_type message_content_config_json = *valueFromFile("test_message_property_bool.config").as_object().cbegin();
 		auto property = parser.createMessageFieldConfig(message_content_config_json.key_c_str(), message_content_config_json.value());
-		auto property_config = MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false");
+		auto property_config = MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false");
 
 		assert(property != nullptr);
 		assert(property->valueString() == property_config.valueString());
@@ -62,7 +62,7 @@ int main()
 	{
 		boost::json::object::value_type message_content_config_json = *valueFromFile("test_message_property_byte.config").as_object().cbegin();
 		auto property = parser.createMessageFieldConfig(message_content_config_json.key_c_str(), message_content_config_json.value());
-		auto property_config = MessageTestField(FIELD_TYPE::BYTEPROPERTY, "property", "127");
+		auto property_config = MessageField(FIELD_TYPE::BYTEPROPERTY, "property", "127");
 
 		assert(property != nullptr);
 		assert(property->valueString() == property_config.valueString());
@@ -71,7 +71,7 @@ int main()
 	{
 		boost::json::object::value_type message_content_config_json = *valueFromFile("test_message_property_double.config").as_object().cbegin();
 		auto property = parser.createMessageFieldConfig(message_content_config_json.key_c_str(), message_content_config_json.value());
-		auto property_config = MessageTestField(FIELD_TYPE::DOUBLEPROPERTY, "property", "127");
+		auto property_config = MessageField(FIELD_TYPE::DOUBLEPROPERTY, "property", "127");
 
 		assert(property != nullptr);
 		assert(property->valueString() == property_config.valueString());
@@ -80,7 +80,7 @@ int main()
 	{
 		boost::json::object::value_type message_content_config_json = *valueFromFile("test_message_property_float.config").as_object().cbegin();
 		auto property = parser.createMessageFieldConfig(message_content_config_json.key_c_str(), message_content_config_json.value());
-		auto property_config = MessageTestField(FIELD_TYPE::FLOATPROPERTY, "property", "127.11");
+		auto property_config = MessageField(FIELD_TYPE::FLOATPROPERTY, "property", "127.11");
 
 		assert(property != nullptr);
 //		assert(property->valueString() == property_config.valueString());
@@ -89,7 +89,7 @@ int main()
 	{
 		boost::json::object::value_type message_content_config_json = *valueFromFile("test_message_property_int.config").as_object().cbegin();
 		auto property = parser.createMessageFieldConfig(message_content_config_json.key_c_str(), message_content_config_json.value());
-		auto property_config = MessageTestField(FIELD_TYPE::INTPROPERTY, "property", "127");
+		auto property_config = MessageField(FIELD_TYPE::INTPROPERTY, "property", "127");
 
 		assert(property != nullptr);
 		assert(property->valueString() == property_config.valueString());
@@ -98,7 +98,7 @@ int main()
 	{
 		boost::json::object::value_type message_content_config_json = *valueFromFile("test_message_property_long.config").as_object().cbegin();
 		auto property = parser.createMessageFieldConfig(message_content_config_json.key_c_str(), message_content_config_json.value());
-		auto property_config = MessageTestField(FIELD_TYPE::LONGPROPERTY, "property", "127");
+		auto property_config = MessageField(FIELD_TYPE::LONGPROPERTY, "property", "127");
 
 		assert(property != nullptr);
 		assert(property->valueString() == property_config.valueString());
@@ -107,7 +107,7 @@ int main()
 	{
 		boost::json::object::value_type message_content_config_json = *valueFromFile("test_message_property_short.config").as_object().cbegin();
 		auto property = parser.createMessageFieldConfig(message_content_config_json.key_c_str(), message_content_config_json.value());
-		auto property_config = MessageTestField(FIELD_TYPE::SHORTPROPERTY, "property", "127");
+		auto property_config = MessageField(FIELD_TYPE::SHORTPROPERTY, "property", "127");
 
 		assert(property != nullptr);
 		assert(property->valueString() == property_config.valueString());

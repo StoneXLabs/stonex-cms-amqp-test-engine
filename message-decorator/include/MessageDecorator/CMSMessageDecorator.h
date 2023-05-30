@@ -22,12 +22,12 @@
 #include <string>
 #include <cms/Session.h>
 #include <cms/Message.h>
-#include <MessageContent/MessageTestField.h>
+#include <MessageContent/MessageField.h>
 
-class CMSMessageDecorator : protected MessageTestField
+class CMSMessageDecorator : protected MessageField
 {
 public:
-	CMSMessageDecorator(MessageTestField other);
+	CMSMessageDecorator(const MessageField& messageField);
 	virtual void decorate(cms::Message* mes, cms::Session* sess) const;
 	void addNext(CMSMessageDecorator* next);
 

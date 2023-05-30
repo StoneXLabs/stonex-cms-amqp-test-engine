@@ -28,7 +28,7 @@ MessageVerifier::MessageVerifier(const std::string &id, const MessageDecoratorCo
 	
 
 	std::transform(std::cbegin(decoratorConfig.decorations()), std::cend(decoratorConfig.decorations()), std::back_inserter(mVerifiers), 
-		[this](MessageTestField* item) {
+		[this](MessageField* item) {
 		return mVerifierFactory.create(item->type(), true, false, item->valueString(), item->name());
 	});
 
@@ -40,10 +40,16 @@ void MessageVerifier::verify(const cms::Message* message) const
 
 	std::for_each(std::cbegin(mVerifiers), std::end(mVerifiers), [this, message](IExpectedField* item)
 	{
-		auto t = mVerifierFactory.create(message, item);
-		if (!t)
-			mParent.testEvent(EventStatus(false, mId, fmt::format("expected message field missing {} {}", to_string(item->expectedField()), item->fieldName())));
-		else
-			delete t;
+		if (item) 
+		{
+			auto t = mVerifierFactory.create(message, item);
+			if (!t)
+				mParent.testEvent(EventStatus(false, mId, fmt::format("expected message field missing {} {}", to_string(item->expectedField()), item->fieldName())));
+			else
+				delete t;
+		}
+		else 
+			mParent.testEvent(EventStatus(false, mId, fmt::format("not initialized verifier")));
+
 	});
 }

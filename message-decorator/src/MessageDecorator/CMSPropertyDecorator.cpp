@@ -21,13 +21,16 @@
 #include <cms/Session.h>
 #include "CMSPropertyDecorator.h"
 
-CMSPropertyDecorator::CMSPropertyDecorator(const MessageTestField & field)
+CMSPropertyDecorator::CMSPropertyDecorator(const MessageField & field)
 	:CMSMessageDecorator(field)
 {
 }
 
 void CMSPropertyDecorator::decorate(cms::Message * mes, cms::Session * sess) const
 {
+	if (!mes)
+		CMSMessageDecorator::decorate(mes, sess);
+
 	switch (mFieldType)
 	{
 	case FIELD_TYPE::CMS_CORRELATION_ID:
@@ -35,11 +38,6 @@ void CMSPropertyDecorator::decorate(cms::Message * mes, cms::Session * sess) con
 		break;
 	case FIELD_TYPE::CMS_DELIVERY_MODE:
 		mes->setCMSDeliveryMode(std::atoi(mValueString.c_str()));  //to do enum
-		break;
-	case FIELD_TYPE::CMS_DESTINATION:
-		if (auto dest = destinationFromValueString(sess); dest != nullptr)
-			mes->setCMSDestination(dest);
-		break;
 	case FIELD_TYPE::CMS_EXPIRATION:
 		mes->setCMSExpiration(std::atoll(mValueString.c_str()));
 		break;
@@ -51,10 +49,6 @@ void CMSPropertyDecorator::decorate(cms::Message * mes, cms::Session * sess) con
 		break;
 	case FIELD_TYPE::CMS_REDELIVERED:
 		mes->setCMSRedelivered(std::atoi(mValueString.c_str()));
-		break;
-	case FIELD_TYPE::CMS_REPLY_TO:
-		if (auto dest = destinationFromValueString(sess); dest != nullptr)
-			mes->setCMSReplyTo(dest);
 		break;
 	case FIELD_TYPE::CMS_TIMESTAMP:
 		mes->setCMSTimestamp(atoll(mValueString.c_str()));
@@ -69,10 +63,3 @@ void CMSPropertyDecorator::decorate(cms::Message * mes, cms::Session * sess) con
 	CMSMessageDecorator::decorate(mes, sess);
 }
 
-cms::Destination * CMSPropertyDecorator::destinationFromValueString(cms::Session * sess) const {
-	auto it = mValueString.find(":");
-	auto type = mValueString.substr(0, it);
-	it += 2;
-	auto address = mValueString.substr(it);
-	return nullptr;
-}

@@ -189,11 +189,11 @@ int main()
 		MessageReceiverConfiguration receiver1_config("connection1", "session1", "consumer1", "text", "engine");
 		MessageCountingReceiverConfiguration receiver2_config("connection1", "session1", "consumer2", "text", "engine", 1);
 		FileMessageReceiverConfiguration receiver3_config("connection1", "session1", "consumer3", "text", "engine", "message_file.txt");
-		MessageDecoratingReceiverConfiguration receiver4_config("connection1", "session1", "consumer4", "text", "engine", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+		MessageDecoratingReceiverConfiguration receiver4_config("connection1", "session1", "consumer4", "text", "engine", { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
 		FileMessageCountingReceiverConfiguration receiver5_config("connection1", "session1", "consumer5", "text", "engine", "message_file.txt", 1);
-		MessageCountingDecoratingReceiverConfiguration receiver6_config("connection1", "session1", "consumer6", "text", "engine", 1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
-		FileMessageDecoratingReceiverConfiguration receiver7_config("connection1", "session1", "consumer7", "text", "engine", "message_file.txt", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
-		FileMessageCountingDecoratingReceiverConfiguration receiver8_config("connection1", "session1", "consumer8", "text", "engine", "message_file.txt", 1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+		MessageCountingDecoratingReceiverConfiguration receiver6_config("connection1", "session1", "consumer6", "text", "engine", 1, { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+		FileMessageDecoratingReceiverConfiguration receiver7_config("connection1", "session1", "consumer7", "text", "engine", "message_file.txt", { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+		FileMessageCountingDecoratingReceiverConfiguration receiver8_config("connection1", "session1", "consumer8", "text", "engine", "message_file.txt", 1, { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
 
 
 
@@ -203,11 +203,11 @@ int main()
 		MessageSenderConfiguration sender1_config("connection1", "session1", "producer1", "text", "engine");
 		MessageCountingSenderConfiguration sender2_config("connection1", "session1", "producer2", "text", "engine", 1);
 		FileMessageSenderConfiguration sender3_config("connection1", "session1", "producer3", "text", "engine", "test_message_file1.txt");
-		MessageDecoratingSenderConfiguration sender4_config("connection1", "session1", "producer4", "text", "engine", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
-		FileMessageDecoratingSenderConfiguration sender5_config("connection1", "session1", "producer5", "text", "engine", "test_message_file2.txt", { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+		MessageDecoratingSenderConfiguration sender4_config("connection1", "session1", "producer4", "text", "engine", { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+		FileMessageDecoratingSenderConfiguration sender5_config("connection1", "session1", "producer5", "text", "engine", "test_message_file2.txt", { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
 		FileMessageCountingSenderConfiguration sender6_config("connection1", "session1", "producer6", "text", "engine", "test_message_file3.txt", 1);
-		MessageCountingDecoratingSenderConfiguration sender7_config("connection1", "session1", "producer7", "text", "engine", 1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
-		FileMessageCountingDecoratingSenderConfiguration sender8_config("connection1", "session1", "producer8", "text", "engine", "test_message_file4.txt", 1, { new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+		MessageCountingDecoratingSenderConfiguration sender7_config("connection1", "session1", "producer7", "text", "engine", 1, { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+		FileMessageCountingDecoratingSenderConfiguration sender8_config("connection1", "session1", "producer8", "text", "engine", "test_message_file4.txt", 1, { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
 		
 
 		TestCaseVerifierConfiguration verifier_config({ &receiver1_config, &receiver2_config, &receiver3_config, &receiver4_config, &receiver5_config, &receiver6_config, &receiver7_config, &receiver8_config }, { &exception_config });
@@ -531,7 +531,7 @@ int main()
 		///
 		auto sender_factory = new TestSenderFactory();
 
-		TestSuiteJsonConfigParser parser("developer_test.config");
+		TestSuiteJsonConfigParser parser("test_case_all.config");
 		auto suite_config = parser.createConfiguration();
 
 		TestFunctionRegister test_register;
@@ -607,7 +607,7 @@ int main()
 		TestSenderFactory sender_factory;
 		MessageReceiverFactory receiver_factory;
 
-		TestSuiteJsonConfigParser parser("developer_test.config");
+		TestSuiteJsonConfigParser parser("durable_subscription.config");
 
 		TestFunctionRegister test_register;
 		test_register.registerTestFunction("test_function_1", test_fun);

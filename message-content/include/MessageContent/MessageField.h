@@ -30,6 +30,7 @@ public:
 
 	MessageField& operator =(const MessageField& other) = delete;
 	MessageField& operator =(MessageField&& other) = delete;
+	friend bool operator== (const MessageField& lhs, const MessageField& rhs);
 
 public:
 	FIELD_TYPE type() const;

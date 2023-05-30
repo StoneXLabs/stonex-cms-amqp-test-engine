@@ -20,11 +20,11 @@
 #pragma once
 
 #include <string>
-#include "../MessageContent/MessageTestField.h"
+#include "../MessageContent/MessageField.h"
 
 class MessageFieldConfigParser
 {
 public:
-	MessageTestField* createMessageFieldConfig(const std::string & configName, const boost::json::value & json) const;
+	MessageField* createMessageFieldConfig(const std::string & configName, const boost::json::value & json) const;
 };
 

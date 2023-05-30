@@ -21,7 +21,7 @@
 #include <MessageContent/MessageProperties.h>
 #include <MessageContent/MessageDestinationTestField.h>
 
-MessageTestField * MessageFieldConfigParser::createMessageFieldConfig(const std::string & configName, const boost::json::value & json) const
+MessageField * MessageFieldConfigParser::createMessageFieldConfig(const std::string & configName, const boost::json::value & json) const
 {
 
 	{
@@ -47,7 +47,7 @@ MessageTestField * MessageFieldConfigParser::createMessageFieldConfig(const std:
 		}
 		else
 		{
-			return new MessageTestField(fromKeyValue(configName, json), configName, values_string(json));
+			return new MessageField(fromKeyValue(configName, json), configName, values_string(json));
 		}
 
 
