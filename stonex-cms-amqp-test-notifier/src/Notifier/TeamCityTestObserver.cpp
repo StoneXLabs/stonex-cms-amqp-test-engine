@@ -38,6 +38,7 @@ void TeamCityTestObserver::onMessage(const NotifyMessage& report)
 		break;
 	case REPORT_MESSAGE_TYPE::TEST_ERROR:
 		std::cout << "##teamcity[testFailed name='" << report.source() << "' message='"<<report.message()<<"' details='message and stack trace']" << std::endl;
+		mErrorCount++;
 		break;
 	case REPORT_MESSAGE_TYPE::TEST_SUCCESS:
 		std::cout << "##teamcity[testFinished name='" << report.source() << "' duration='<test_duration_in_milliseconds>']" << std::endl;
@@ -54,5 +55,10 @@ void TeamCityTestObserver::onMessage(const NotifyMessage& report)
 	default:
 		break;
 	}
+}
+
+long long TeamCityTestObserver::errorCount() const
+{
+	return mErrorCount;
 }
 

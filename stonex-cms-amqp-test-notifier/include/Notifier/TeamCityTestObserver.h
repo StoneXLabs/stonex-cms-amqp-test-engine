@@ -27,7 +27,9 @@ class TeamCityTestObserver : public TestObserver
 {
 public:
 	void onMessage(const NotifyMessage& report) override;
-	
+	long long errorCount() const override;
 
+private:
+	long long mErrorCount{0};
 };
 

@@ -26,5 +26,6 @@ class TestObserver
 {
 public:
 	virtual void onMessage(const NotifyMessage& report) = 0;
+	virtual long long errorCount() const = 0;
 };
 

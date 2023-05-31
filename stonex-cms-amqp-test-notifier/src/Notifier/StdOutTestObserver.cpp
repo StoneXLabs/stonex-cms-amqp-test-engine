@@ -23,6 +23,13 @@
 void StdOutTestObserver::onMessage(const NotifyMessage& report)
 {
 	std::cout << report << std::endl;
+	if(report.messageType() == REPORT_MESSAGE_TYPE::TEST_ERROR)
+		mErrorCount++;
+}
+
+long long StdOutTestObserver::errorCount() const
+{
+	return mErrorCount;
 }
 
 
