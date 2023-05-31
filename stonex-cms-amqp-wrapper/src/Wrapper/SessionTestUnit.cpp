@@ -41,16 +41,6 @@ SessionTestUnit::SessionTestUnit(const SessionConfiguration* params, std::shared
 	attachListener(exceptionListener);
 
 
-	std::for_each(std::cbegin(params->consumerConfiguration()), std::cend(params->consumerConfiguration()), [this, logger](const ConsumerConfiguration& item) {
-		try
-		{
-			mConsumers.push_back(ConsumerTestUnit(item, logger, mSession));
-		}
-		catch (const cms::CMSException & ex)
-		{
-			onException(ex);
-		}
-	});
 
 	std::for_each(std::cbegin(params->producerConfiguration()), std::cend(params->producerConfiguration()), [this, logger](const ProducerConfiguration& item) {
 		try
@@ -63,6 +53,16 @@ SessionTestUnit::SessionTestUnit(const SessionConfiguration* params, std::shared
 		}
 	});
 
+	std::for_each(std::cbegin(params->consumerConfiguration()), std::cend(params->consumerConfiguration()), [this, logger](const ConsumerConfiguration& item) {
+		try
+		{
+			mConsumers.push_back(ConsumerTestUnit(item, logger, mSession));
+		}
+		catch (const cms::CMSException & ex)
+		{
+			onException(ex);
+		}
+	});
 }
 
 SessionTestUnit::SessionTestUnit(SessionTestUnit && other)
