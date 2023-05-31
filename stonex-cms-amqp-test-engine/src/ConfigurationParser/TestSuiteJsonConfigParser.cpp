@@ -18,6 +18,7 @@
  */
 
 #include <fstream>
+#include <boost/json.hpp>
 #include <ConfigurationParser/TestSuiteJsonConfigParser.h>
 
 
