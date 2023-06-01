@@ -35,6 +35,9 @@
 
 MessageSender * MessageSenderFactory::create(const MessageSenderConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, Notifier & parent) const
 {
+	MessageSender* _sender = create_sender(sender_configuration, client_configuration, parent);
+	if (_sender)
+		return _sender;
 
 	if (auto concrete_configuration = dynamic_cast<const FileMessageSenderConfiguration*>(&sender_configuration); concrete_configuration && acceptedSenderType(sender_configuration.senderType())) {
 		return new MessageFileSender(*concrete_configuration, client_configuration, parent);
@@ -47,27 +50,13 @@ MessageSender * MessageSenderFactory::create(const MessageSenderConfiguration & 
 	}
 	else if (auto concrete_configuration = dynamic_cast<const FileMessageCountingDecoratingSenderConfiguration*>(&sender_configuration); concrete_configuration && acceptedSenderType(sender_configuration.senderType())) {
 		return new MessageCountingDecoratingFileSender(*concrete_configuration, client_configuration, parent);
-	}
+	}	
 	else
-		return create_sender(sender_configuration, client_configuration, parent);
-	
+		return _sender;
 }
 
 MessageSender * MessageSenderFactory::create_sender(const MessageSenderConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, Notifier & parent) const
 {
-	/*if (auto concrete_configuration = dynamic_cast<const MessageSenderConfiguration*>(&sender_configuration)) {
-		return new MessageSender(*concrete_configuration, client_configuration, parent);
-	}
-	else if (auto concrete_configuration = dynamic_cast<const MessageCountingSenderConfiguration*>(&sender_configuration)) {
-		return new MessageCountingSender(*concrete_configuration, client_configuration, parent);
-	}
-	else if (auto concrete_configuration = dynamic_cast<const MessageDecoratingSenderConfiguration*>(&sender_configuration)) {
-		return new MessageDecoratingSender(*concrete_configuration, client_configuration, parent);
-	}
-	else if (auto concrete_configuration = dynamic_cast<const MessageCountingDecoratingSenderConfiguration*>(&sender_configuration)) {
-		return new MessageCountingDecoratingSender(*concrete_configuration, client_configuration, parent);
-	}*/
-
 	return nullptr;
 }
 
