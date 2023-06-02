@@ -76,5 +76,4 @@ class StonexCmsAmqpTestEngineConan(ConanFile):
 
     def package_info(self):
         self.cpp_info.libs = self.collect_libs()
-        pass
 

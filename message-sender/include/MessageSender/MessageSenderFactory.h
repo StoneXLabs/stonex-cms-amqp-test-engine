@@ -29,5 +29,6 @@ public:
 	MessageSender* create(const MessageSenderConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, Notifier& parent)  const;
 protected:
 	virtual MessageSender* create_sender(const MessageSenderConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, Notifier& parent)  const;
+private:
 	const std::string mProduceType;
 };
