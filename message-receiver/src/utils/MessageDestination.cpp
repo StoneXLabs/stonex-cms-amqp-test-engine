@@ -18,7 +18,6 @@
  */
 
 #include <utils/MessageDestination.h>
-#include <utils/MessageParser.h>
 
 std::ostream & operator<<(std::ostream & os, const cms::Message* message)
 {
@@ -82,7 +81,7 @@ void MessageFileDestination::getMessage(const cms::Message * message)
 {
 	if (mInitialized)
 	{
-		fHandler << message << std::endl;
+		fHandler << toString(message) << std::endl;
 		/*std::string line;
 		if (std::getline(fHandler, line))
 			return line;

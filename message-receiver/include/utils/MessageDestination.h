@@ -25,6 +25,7 @@
 #include <cms/BytesMessage.h>
 #include <cms/StreamMessage.h>
 #include <cms/MapMessage.h>
+#include <utils/MessageParser.h>
 
 class MessageDestination {
 public:
@@ -40,7 +41,7 @@ std::ostream& operator<<(std::ostream& os, const cms::BytesMessage& message);
 
 
 
-class MessageFileDestination : public MessageDestination
+class MessageFileDestination : public MessageDestination, public MessageParser
 {
 public:
 	MessageFileDestination(const std::string& file);
