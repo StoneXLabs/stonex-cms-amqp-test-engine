@@ -25,9 +25,9 @@ class Notifier;
 
 class MessageSenderFactory {
 public:
+	MessageSenderFactory();
 	MessageSender* create(const MessageSenderConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, Notifier& parent)  const;
 protected:
 	virtual MessageSender* create_sender(const MessageSenderConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, Notifier& parent)  const;
-	virtual bool acceptedSenderType(const std::string &type) const;
-
+	const std::string mProduceType;
 };

@@ -1,3 +1,4 @@
+#include "..\..\include\MessageSender\MessageSenderFactory.h"
 /*
  * Copyright 2022 StoneX Financial Ltd.
  *
@@ -33,26 +34,30 @@
 #include <MessageSender/MessageCountingDecoratingSender.h>
 #include <MessageSender/MessageCountingDecoratingFileSender.h>
 
+MessageSenderFactory::MessageSenderFactory()
+	:mProduceType("engine")
+{
+}
+
 MessageSender * MessageSenderFactory::create(const MessageSenderConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, Notifier & parent) const
 {
-	MessageSender* _sender = create_sender(sender_configuration, client_configuration, parent);
-	if (_sender)
-		return _sender;
-
-	if (auto concrete_configuration = dynamic_cast<const FileMessageSenderConfiguration*>(&sender_configuration); concrete_configuration && acceptedSenderType(sender_configuration.senderType())) {
-		return new MessageFileSender(*concrete_configuration, client_configuration, parent);
-	}
-	else if (auto concrete_configuration = dynamic_cast<const FileMessageCountingSenderConfiguration*>(&sender_configuration); concrete_configuration && acceptedSenderType(sender_configuration.senderType())) {
-		return new MessageCountingFileSender(*concrete_configuration, client_configuration, parent);
-	}
-	else if (auto concrete_configuration = dynamic_cast<const FileMessageDecoratingSenderConfiguration*>(&sender_configuration); concrete_configuration && acceptedSenderType(sender_configuration.senderType())) {
-		return new MessageDecoratingFileSender(*concrete_configuration, client_configuration, parent);
-	}
-	else if (auto concrete_configuration = dynamic_cast<const FileMessageCountingDecoratingSenderConfiguration*>(&sender_configuration); concrete_configuration && acceptedSenderType(sender_configuration.senderType())) {
-		return new MessageCountingDecoratingFileSender(*concrete_configuration, client_configuration, parent);
+	if (sender_configuration.senderType() == mProduceType)
+	{
+		if (auto concrete_configuration = dynamic_cast<const FileMessageSenderConfiguration*>(&sender_configuration)) {
+			return new MessageFileSender(*concrete_configuration, client_configuration, parent);
+		}
+		else if (auto concrete_configuration = dynamic_cast<const FileMessageCountingSenderConfiguration*>(&sender_configuration)) {
+			return new MessageCountingFileSender(*concrete_configuration, client_configuration, parent);
+		}
+		else if (auto concrete_configuration = dynamic_cast<const FileMessageDecoratingSenderConfiguration*>(&sender_configuration)) {
+			return new MessageDecoratingFileSender(*concrete_configuration, client_configuration, parent);
+		}
+		else if (auto concrete_configuration = dynamic_cast<const FileMessageCountingDecoratingSenderConfiguration*>(&sender_configuration)) {
+			return new MessageCountingDecoratingFileSender(*concrete_configuration, client_configuration, parent);
+		}
 	}	
 	else
-		return _sender;
+		return create_sender(sender_configuration, client_configuration, parent);
 }
 
 MessageSender * MessageSenderFactory::create_sender(const MessageSenderConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, Notifier & parent) const
@@ -60,7 +65,3 @@ MessageSender * MessageSenderFactory::create_sender(const MessageSenderConfigura
 	return nullptr;
 }
 
-bool MessageSenderFactory::acceptedSenderType(const std::string &type) const
-{
-	return true;
-}

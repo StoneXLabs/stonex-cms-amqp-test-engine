@@ -5,13 +5,14 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_CXX_STANDARD 20)
 
 
-file(GLOB sourceFiles ${PROJECT_SOURCE_DIR}/*.cpp)
+file(GLOB sourceFiles ${PROJECT_SOURCE_DIR}/*.cpp ${PROJECT_SOURCE_DIR}/test_utils/*cpp)
+file(GLOB headerFiles ${PROJECT_SOURCE_DIR}/*.h ${PROJECT_SOURCE_DIR}/test_utils/*h)
 
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${sourceFiles})
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${sourceFiles} ${headerFiles})
 
-add_executable(stonex-cms-amqp-test-engne-test main.cpp)              
+add_executable(stonex-cms-amqp-test-engne-test main.cpp ${sourceFiles} ${headerFiles})              
 
-target_include_directories(stonex-cms-amqp-test-engne-test PUBLIC ${PROJECT_SOURCE_DIR}/main.cpp )
+target_include_directories(stonex-cms-amqp-test-engne-test PUBLIC ${PROJECT_SOURCE_DIR} )
 
 target_link_libraries(stonex-cms-amqp-test-engne-test
 	stonex-cms-amqp-test-engine
