@@ -20,15 +20,43 @@
 #pragma once
 
 #include <functional>
+#include <string>
+#include <Configuration/TestCaseConfiguration.h>
+#include <Wrapper/CMSClientTestUnit.h>
+#include <Notifier/Notifier.h>
+#include <MessageSender/MessageSenderFactory.h>
+#include "TestFunctionRegister.h"
 #include "TestCaseStatus.h"
+#include "TestCasePerformer.h"
+#include "TestCaseVerifier.h"
+#include "TestCaseExceptionVerifier.h"
 
-class VerifierReport;
-
-class TestCase
+class ITestCase : public Notifier
 {
 public:
-	virtual TestCaseStatus run() = 0;
-	virtual std::string testName() const = 0;
+	ITestCase(const std::string& testName, TestObserver* observer);
+	~ITestCase();
+	virtual void run() = 0;
 
+protected:
+	void testEvent(const EventStatus& event) override;
+protected:
+	const std::string mTestName;
+	bool mTestSuccess{ true };
+	std::chrono::milliseconds mTestDuration;
+};
+
+class TestCase : public ITestCase
+{
+public:
+	TestCase(const TestCaseConfiguration& test_config, MessageSenderFactory* factory, const TestFunctionRegister& functionRegister, TestObserver* observer, std::shared_ptr<StonexLogger> logger);
+	~TestCase() = default;
+	void run() override;
+private:
+	TestCaseExceptionVerifier mTestExceptionVerifier;
+	CMSClientTestUnit mTestedObject;
+	TestCasePerformer mTestPerformer;
+	TestCaseVerifier mTestVerifier;
+	test_method mTestFunction;
 };
 

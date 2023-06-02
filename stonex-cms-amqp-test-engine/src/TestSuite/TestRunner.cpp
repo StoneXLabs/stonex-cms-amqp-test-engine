@@ -18,15 +18,15 @@
  */
 
 #include <TestSuite/TestRunner.h>
-#include <TestSuite/SingleTest.h>
+#include <TestSuite/TestCase.h>
+#include <fmt/format.h>
 
-TestRunner::TestRunner(TestSuiteConfigParser & configurationParser, TestFunctionRegister & functionRegister, MessageReceiverFactory & receiverFactory,  MessageSenderFactory & senderFactory, TestVerifierFactory & verifierFactory, TestObserver * reporter, ExceptionListenerFactory& exceptionListenerFactory)
+TestRunner::TestRunner(TestSuiteConfigParser & configurationParser, TestFunctionRegister & functionRegister, MessageReceiverFactory & receiverFactory,  MessageSenderFactory & senderFactory, TestObserver * reporter, std::shared_ptr<StonexLogger> logger)
 	:mRegister{ functionRegister },
 	mReceiverFactory{ receiverFactory },
 	mSenderFactory{ senderFactory },
-	mVeifierFactory{ verifierFactory },
 	mTestReporter{ reporter },
-	mExceptionListenerFactory{&exceptionListenerFactory}
+	mLogger{logger}
  {
 	 mSuiteConfiguration = configurationParser.createConfiguration();
  }
@@ -34,6 +34,7 @@ TestRunner::TestRunner(TestSuiteConfigParser & configurationParser, TestFunction
 
  void TestRunner::run()
  {
+
 	 mCurrentTestNumber = 0;
 
 	 if (mTestReporter)
@@ -43,6 +44,7 @@ TestRunner::TestRunner(TestSuiteConfigParser & configurationParser, TestFunction
 	 std::for_each(mSuiteConfiguration.testsBegin(), mSuiteConfiguration.testsEnd(), [this](const TestCaseConfiguration& test) {
 
 		 mCurrentTestNumber++;
+		 
 
 		 if (mTestReporter) 
 		 {
@@ -50,14 +52,17 @@ TestRunner::TestRunner(TestSuiteConfigParser & configurationParser, TestFunction
 			 mTestReporter->onMessage({ REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::GENERAL, test.testName(), "Initializing test [" + std::to_string(mCurrentTestNumber) + "/" + std::to_string(mSuiteConfiguration.testCaseCount()) + "] : " + test.testFunctionName() });
 		 }
 
-		 // use test status
-		 TestCaseStatus status;
 		 {
-			 SingleTest single_test(test, mRegister, mReceiverFactory, mSenderFactory, *mExceptionListenerFactory, mTestReporter);
-			 status = single_test.run();
+			 auto start = std::chrono::high_resolution_clock::now();
+			 TestCase testCase(test, &mSenderFactory, mRegister, mTestReporter, mLogger);
+			 auto end = std::chrono::high_resolution_clock::now();
+
+			 if (mTestReporter)
+				 mTestReporter->onMessage({REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::GENERAL, " [" + test.testName() + "] ", "Test initialization duration " + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()) + " [ms]"});
+			
+			 testCase.run();
 		 }
 		 
-
 		 if (mTestReporter)
 			 mTestReporter->onMessage({ REPORT_MESSAGE_SEVERITY::TRACE, REPORT_MESSAGE_TYPE::GENERAL, test.testName(), "Test result verification" });
 

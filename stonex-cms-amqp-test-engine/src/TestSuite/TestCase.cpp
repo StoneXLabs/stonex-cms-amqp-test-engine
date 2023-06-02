@@ -17,5 +17,65 @@
  * limitations under the License.
  */
 
-
+#include <chrono>
 #include <TestSuite/TestCase.h>
+
+ITestCase::ITestCase(const std::string& testName, TestObserver * observer)
+	:mTestName{testName},
+	Notifier(observer)
+{
+}
+
+ITestCase::~ITestCase() {
+	if (mTestSuccess)
+		TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_SUCCESS, " [" + mTestName + "] ", ""));
+	else
+		TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR, " [" + mTestName + "] ", "test failed"));
+
+	TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_END, " [" + mTestName + "] ", std::to_string(mTestDuration.count()) + " [ms]"));
+
+}
+
+void TestCase::run()
+{
+	if (mTestFunction) {
+
+		TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_START, mTestName, ""));
+
+		auto start = std::chrono::high_resolution_clock::now();
+		mTestFunction(&mTestedObject, &mTestPerformer);
+		auto end = std::chrono::high_resolution_clock::now();
+
+		mTestDuration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+
+	}
+
+}
+
+void ITestCase::testEvent(const EventStatus & event)
+{
+	Notifier::testEvent(event);
+	if (mTestSuccess)
+		mTestSuccess = event.correct();
+}
+
+
+
+
+TestCase::TestCase(const TestCaseConfiguration& test_config, MessageSenderFactory* factory, const TestFunctionRegister& functionRegister, TestObserver* observer, std::shared_ptr<StonexLogger> logger)
+	:ITestCase(test_config.testName(), observer),
+	mTestExceptionVerifier(test_config.verifierConfig(),*this),
+	mTestedObject(test_config.uutConfig(), logger,"",&mTestExceptionVerifier, &mTestExceptionVerifier, &mTestExceptionVerifier),
+	mTestPerformer(test_config.performerConfig(), mTestedObject,*this, factory ),
+	mTestVerifier(test_config.verifierConfig(), mTestedObject,*this)
+{
+	if (test_config.enabled()) {
+		mTestFunction = functionRegister.getTestFunction(test_config.testFunctionName());
+		if (!mTestFunction)
+			TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR, " [" + mTestName + "] ", test_config.testFunctionName() + "not found"));
+	}
+	else
+		TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR, " [" + mTestName + "] ", "test disabled by configuration"));
+
+}
+

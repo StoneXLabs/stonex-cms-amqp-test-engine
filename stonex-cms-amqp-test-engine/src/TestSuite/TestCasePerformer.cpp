@@ -17,40 +17,194 @@
  * limitations under the License.
  */
 
-#include <TestSuite/TestCasePerformer.h>
 #include <algorithm>
-#include <Verifier/EventStatus.h>
+#include <TestSuite/TestCasePerformer.h>
+#include <Notifier/EventStatus.h>
+#include <MessageSender/MessageSenderFactory.h>
 
 
-TestCasePerformer::TestCasePerformer(const TestCasePerformerConfiguration & params, CMSClientTestUnit & client_params, TestNotifier& notifier, const MessageSenderFactory& sender_factory)
-	:EventStatusObserver(notifier)
+TestCasePerformer::TestCasePerformer(const TestCasePerformerConfiguration & params, CMSClientTestUnit & client_params, Notifier& notifier, MessageSenderFactory* senderFactory)
 {
-		 std::transform(std::cbegin(params.senders()), std::cend(params.senders()), std::back_inserter(mSenders), [this,&client_params, &sender_factory](const TestCaseProducerConfiguration* item) { return sender_factory.create(*item, client_params, *this); });
+	if(senderFactory)
+		std::transform(std::cbegin(params.senders()), std::cend(params.senders()), std::back_inserter(mSenders), [this,&client_params,&senderFactory, &notifier](const MessageSenderConfiguration* item) { return senderFactory->create(*item, client_params, notifier); });
 }
 
- void TestCasePerformer::sendAll(int msg_delay_ms)
+ void TestCasePerformer::sendAll(int msg_delay_ms, const std::string &producerId, const std::string &sessionId)
 {
-	bool needToSend{ false };
+	 if (producerId.empty() == true && sessionId.empty() == true)
+	 {
+		 int _continueSend{ 0 };
+		 do {
+			 _continueSend = 0;
+			 _continueSend = std::count_if(std::begin(mSenders), std::end(mSenders), [this, msg_delay_ms](MessageSender* sender) {
+				 if (sender)
+					return sender->sendMessage();
+				 else
+					return false;
+			 });
 
-	do
-	{
-		needToSend = false;
-		std::for_each(std::begin(mSenders), std::end(mSenders), [&needToSend, msg_delay_ms](MessageSender* sender) {
-			if (sender) {
-				if(sender->messageAvailable())
-				{
-					sender->sendMessage();
-					needToSend = true;
-				}
-			}
-			else
-				needToSend = false;
-
-		});
-	} while (needToSend);
+		 } while (_continueSend > 0);
 
 
+	 }
+	 else if (producerId.empty())
+	 {
+		 int _continueSend{ 0 };
+		 do {
+			 _continueSend = 0;
+			 _continueSend = std::count_if(std::begin(mSenders), std::end(mSenders), [this, msg_delay_ms, sessionId](MessageSender* sender) {
+				 if (sender) {
+					 if (sender->sessionId() == sessionId)
+						 return sender->sendMessage();
+					 else
+						 return false;
+				 }
+				 else
+					 return false;
+			 });
+
+		 } while (_continueSend > 0);
+
+		
+	 }
+	 else if (sessionId.empty())
+	 {
+		 int _continueSend{ 0 };
+		 do {
+			 _continueSend = 0;
+			 _continueSend = std::count_if(std::begin(mSenders), std::end(mSenders), [this, msg_delay_ms, producerId](MessageSender* sender) {
+				 if (sender) {
+					 if (sender->id() == producerId)
+						 return sender->sendMessage();
+					 else
+						 return false;
+				 }
+				 else
+					 return false;
+			 });
+
+		 } while (_continueSend > 0);
+
+
+	 }
+	 else 
+	 {
+		 int _continueSend{ 0 };
+		 do {
+			 _continueSend = 0;
+			 _continueSend = std::count_if(std::begin(mSenders), std::end(mSenders), [this, msg_delay_ms, producerId, sessionId](MessageSender* sender) {
+				 if (sender) {
+					 if (sender->id() == producerId && sender->sessionId() == sessionId)
+						 return sender->sendMessage();
+					 else
+						 return false;
+				 }
+				 else
+					 return false;
+			 });
+
+		 } while (_continueSend > 0);
+
+	 }
 }
+
+ void TestCasePerformer::send(int message_count, int msg_delay_ms, const std::string & producerId, const std::string & sessionId)
+ {
+	 while (message_count > 0)
+	 {
+		 if (producerId.empty() == true && sessionId.empty() == true)
+		 {
+			 std::for_each(std::begin(mSenders), std::end(mSenders), [this, msg_delay_ms](MessageSender* sender) {
+				 if (sender)
+					 return sender->sendMessage();
+				 else
+					 return false;
+			 });
+		 }
+		 else if (producerId.empty())
+		 {
+			 std::for_each(std::begin(mSenders), std::end(mSenders), [this, msg_delay_ms, sessionId](MessageSender* sender) {
+				 if (sender) {
+					 if (sender->sessionId() == sessionId)
+						 return sender->sendMessage();
+					 else
+						 return false;
+				 }
+				 else
+					 return false;
+			 });
+		 }
+		 else if (sessionId.empty())
+		 {
+			 std::for_each(std::begin(mSenders), std::end(mSenders), [this, msg_delay_ms, producerId](MessageSender* sender) {
+				 if (sender) {
+					 if (sender->id() == producerId)
+						 return sender->sendMessage();
+					 else
+						 return false;
+				 }
+				 else
+					 return false;
+			 });
+		 }
+		 else
+		 {
+			 std::for_each(std::begin(mSenders), std::end(mSenders), [this, msg_delay_ms, producerId, sessionId](MessageSender* sender) {
+				 if (sender) {
+					 if (sender->id() == producerId && sender->sessionId() == sessionId)
+						 return sender->sendMessage();
+					 else
+						 return false;
+				 }
+				 else
+					 return false;
+			 });
+		 }
+
+		 message_count--;
+	 }
+	 
+ }
+
+ SessionHandler * TestCasePerformer::getSessionHandler(const std::string &session_id)
+ {
+	 auto object_ptr = std::find_if(std::begin(mSenders), std::end(mSenders), [&session_id](MessageSender *item) {
+		 if (item)
+			 return item->getSessionHandler(session_id) != nullptr;
+		 else
+			 return false;
+	 });
+
+	 if (object_ptr != std::end(mSenders) && *object_ptr)
+		 return (*object_ptr)->getSessionHandler(session_id);
+	 else
+		 return nullptr;
+ }
+
+ ProducerHandler * TestCasePerformer::getProducerHandler(const std::string &session_id, const std::string &producer_id)
+ {
+	 auto object_ptr = std::find_if(std::begin(mSenders), std::end(mSenders), [&session_id](MessageSender *item) {
+		 if (item)
+			 return item->id() == session_id;
+		 else
+			 return false;
+	 });
+
+	 if (object_ptr != std::end(mSenders) && *object_ptr) 
+	 {	
+		 if((*object_ptr)->id() == producer_id)
+			return (*object_ptr)->getProducerHandler();
+		 else 
+			 return nullptr;
+	 }
+	 else
+		 return nullptr;
+ }
+
+ bool TestCasePerformer::stopSend(int stopAfter)
+ {
+	 return true;
+ }
 
 
 

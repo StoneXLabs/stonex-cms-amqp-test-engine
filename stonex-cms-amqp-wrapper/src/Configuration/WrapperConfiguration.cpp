@@ -1,0 +1,53 @@
+/*
+ * Copyright 2022 StoneX Financial Ltd.
+ *
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#include <sstream>
+#include <iterator>
+#include <Configuration/WrapperConfiguration.h>
+
+WrapperConfiguration::WrapperConfiguration(const std::vector<ConnectionConfiguration>& connectionConfiguration)
+	:mCMSConfig{connectionConfiguration }
+ {
+ }
+
+
+
+void WrapperConfiguration::addConnectionParam(const ConnectionConfiguration & params)
+{
+	mCMSConfig.push_back(std::move(params));
+}
+
+const std::vector<ConnectionConfiguration>& WrapperConfiguration::config() const
+{
+	return mCMSConfig;
+}
+
+std::ostream & operator<<(std::ostream & os, const WrapperConfiguration & other)
+{
+	os << "cms client configuration :\n";
+	os << "cms client connections :\n";
+
+	std::copy(std::begin(other.mCMSConfig), std::end(other.mCMSConfig), std::ostream_iterator<ConnectionConfiguration>(os,"\n"));
+	return os;
+}
+
+bool operator==(const WrapperConfiguration & lhs, const WrapperConfiguration & rhs)
+{
+	return std::equal(std::cbegin(lhs.mCMSConfig), std::cend(lhs.mCMSConfig), std::cbegin(rhs.mCMSConfig)) == true;
+}

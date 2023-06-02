@@ -18,15 +18,19 @@ class StonexCmsAmqpTestEngineConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False], "fPIC": [True, False]}
     default_options = {"shared": False, "fPIC": True}
-    requires = ["red-hat-amq-clients-c++/2.10.4@enterprise_messaging/test","jsoncpp/1.9.5@enterprise_messaging/test","stonex-cms-amqp-lib/0.1.0@enterprise_messaging/test","boost/1.78.0@enterprise_messaging/stable"]
     generators = "cmake"
 
+    def build_requirements(self):
+        self.build_requires("stonex-cms-amqp-lib/0.2.2@enterprise_messaging/test")
+        self.build_requires("boost/1.78.0@enterprise_messaging/stable")
+        self.build_requires("stonex-logger-wrapper/0.0.2@enterprise_messaging/test")
+        
     def config_options(self):
         if self.settings.os == "Windows":
             del self.options.fPIC
 
     def source(self):
-        pass
+         self.run("git clone https://github.com/StoneXLabs/stonex-cms-amqp-test-engine.git")
         #self.run("git clone https://github.com/conan-io/hello.git")
         # This small hack might be useful to guarantee proper /MT /MD linkage
         # in MSVC if the packaged project doesn't have variables to set it
@@ -41,27 +45,35 @@ class StonexCmsAmqpTestEngineConan(ConanFile):
 
 
     def package(self):
-        self.copy("*.h", dst="include",src="./CMSClientWrapper/include")
-        self.copy("*.h", dst="include",src="./common/include")
-        self.copy("*.h", dst="include",src="./Configuration/include")
-        self.copy("*.h", dst="include",src="./ConfigurationParser/include")
-        self.copy("*.h", dst="include",src="./MessageContent/include")
-        self.copy("*.h", dst="include",src="./MessageContentVerifiers/include")
-        self.copy("*.h", dst="include",src="./MessageDecorator/include")
-        self.copy("*.h", dst="include",src="./MessageReceiver/include")
-        self.copy("*.h", dst="include",src="./MessageSender/include")
-        self.copy("*.h", dst="include",src="./stonex-cms-amqp-test-engine/include")
-        self.copy("*.h", dst="include",src="./TestEventHandler/include")
-        self.copy("*.h", dst="include",src="./TestRaport/include")
-        self.copy("*.h", dst="include",src="./TestSuite/include")
-        self.copy("*.h", dst="include",src="./Verifier/include")
-        self.copy("*.h", dst="include",src="./TestNotifier/include")
-        
+        self.copy("*.h", dst="include",src="message-content/include")
+        self.copy("*.h", dst="include",src="message-content-verifier/include")
+        self.copy("*.h", dst="include",src="message-decorator/include")
+        self.copy("*.h", dst="include",src="message-receiver/include")
+        self.copy("*.h", dst="include",src="message-sender/include")
+        self.copy("*.h", dst="include",src="stonex-cms-amqp-test-engine/include")
+        self.copy("*.h", dst="include",src="stonex-cms-amqp-test-notifier/include")
+        self.copy("*.h", dst="include",src="stonex-cms-amqp-wrapper/include")
+        self.copy("*.h", dst="include",src="test-utils/include")
+        self.copy("*.h", dst="include",src="common/activemq-cpp/src/main")
         
         self.copy("*.lib", dst="lib",src="lib", keep_path=False)
         self.copy("*.pdb", dst="lib",src="lib", keep_path=False)
+        self.copy("*.exe", dst="bin",src="bin", keep_path=False)
+        
+        self.copy("*.config", dst="bin",src="message-content/Test")
+        self.copy("*.config", dst="bin",src="message-decorator/Test")
+        self.copy("*.config", dst="bin",src="message-receiver/Test")
+        self.copy("*.config", dst="bin",src="message-sender/Test")
+        self.copy("*.config", dst="bin",src="stonex-cms-amqp-test-engine/Test")
+        self.copy("*.config", dst="bin",src="stonex-cms-amqp-wrapper/Test")
+        
+        self.copy("*message*.txt", dst="bin",src="message-content/Test")
+        self.copy("*message*.txt", dst="bin",src="message-decorator/Test")
+        self.copy("*message*.txt", dst="bin",src="message-receiver/Test")
+        self.copy("*message*.txt", dst="bin",src="message-sender/Test")
+        self.copy("*message*.txt", dst="bin",src="stonex-cms-amqp-test-engine/Test")
+        self.copy("*message*.txt", dst="bin",src="stonex-cms-amqp-wrapper/Test")
 
     def package_info(self):
         self.cpp_info.libs = self.collect_libs()
-        pass
 

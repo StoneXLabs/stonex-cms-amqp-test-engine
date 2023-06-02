@@ -7,19 +7,19 @@ conan_basic_setup(TARGETS)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_CXX_STANDARD 20)
 
-
-add_subdirectory(CMSClientWrapper)
 add_subdirectory(common)
-add_subdirectory(Configuration)
-add_subdirectory(ConfigurationParser)
-add_subdirectory(MessageContent)
-add_subdirectory(MessageContentVerifiers)
-add_subdirectory(MessageReceiver)
-add_subdirectory(MessageSender)
 add_subdirectory(stonex-cms-amqp-test-engine)
-add_subdirectory(TestEventHandler)
-add_subdirectory(Verifier)
-add_subdirectory(TestNotifier)
+add_subdirectory(stonex-cms-amqp-wrapper)
+add_subdirectory(test-utils)
+add_subdirectory(message-sender)
+add_subdirectory(message-receiver)
+add_subdirectory(message-content)
+add_subdirectory(message-decorator)
+add_subdirectory(message-content-verifier)
+add_subdirectory(stonex-cms-amqp-test-notifier)
+
+
+#add_subdirectory(Testers)
 
 
 

@@ -28,13 +28,13 @@ class CMSClientTestUnit;
 class TestCasePerformer;
 class TestMessageReceiver;
 
-using test_method = std::function<TEST_CASE_STATUS(CMSClientTestUnit*, TestCasePerformer*, TestMessageReceiver*)>;
+using test_method = std::function<TEST_CASE_STATUS(CMSClientTestUnit*, TestCasePerformer*)>;
 
 class TestFunctionRegister
 {
 public:
 	void registerTestFunction(const std::string& func_name,const test_method test_func);
-	test_method  getTestFunction(const std::string& func_name);
+	test_method  getTestFunction(const std::string& func_name) const;
 
 	std::map<const std::string, test_method> mRegisteredTestFunctions;
 };

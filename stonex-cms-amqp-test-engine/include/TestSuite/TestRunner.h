@@ -18,33 +18,29 @@
  */
 
 #pragma once
+
 #include "TestFunctionRegister.h"
 #include <ConfigurationParser/TestSuiteConfigParser.h>
 #include <Configuration/TestSuiteConfiguration.h>
-
 #include <MessageReceiver/MessageReceiverFactory.h>
 #include <MessageSender/MessageSenderFactory.h>
-
-#include <Verifier/TestVerifierFactory.h>
-
 #include <Notifier/TestObserver.h>
-
-#include <TestEventListenerFactory/ExceptionListenerFactory.h>
+#include <logger/StoneXLogger.h>
+#include <logger/StonexLogSource.h>
 
 class TestRunner
 {
 
 public:
-	TestRunner(TestSuiteConfigParser& configurationParser, TestFunctionRegister& functionRegister, MessageReceiverFactory& receiverFactory,  MessageSenderFactory& senderFactory, TestVerifierFactory& verifierFactory, TestObserver* reporter, ExceptionListenerFactory& exceptionListenerFactory);
+	TestRunner(TestSuiteConfigParser& configurationParser, TestFunctionRegister& functionRegister, MessageReceiverFactory& receiverFactory,  MessageSenderFactory& senderFactory, TestObserver* reporter, std::shared_ptr<StonexLogger> logger);
 	void run();
 private:
 	TestSuiteConfiguration mSuiteConfiguration;
 	TestFunctionRegister& mRegister;
 	MessageReceiverFactory& mReceiverFactory;
 	MessageSenderFactory& mSenderFactory;
-	TestVerifierFactory& mVeifierFactory;
 	TestObserver* mTestReporter{ nullptr };
-	ExceptionListenerFactory* mExceptionListenerFactory;
 	int mCurrentTestNumber{ 0 };
+	std::shared_ptr<StonexLogger> mLogger;
 };
 
