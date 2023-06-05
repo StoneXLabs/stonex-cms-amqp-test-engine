@@ -30,13 +30,7 @@ class StonexCmsAmqpTestEngineConan(ConanFile):
             del self.options.fPIC
 
     def source(self):
-         self.run("git clone https://github.com/StoneXLabs/stonex-cms-amqp-test-engine.git")
-        #self.run("git clone https://github.com/conan-io/hello.git")
-        # This small hack might be useful to guarantee proper /MT /MD linkage
-        # in MSVC if the packaged project doesn't have variables to set it
-        # properly
-        #tools.replace_in_file("hello/CMakeLists.txt", "PROJECT(HelloWorld)",
-  
+         self.run("git clone https://github.com/StoneXLabs/stonex-cms-amqp-test-engine.git")  
 
     def build(self):
         cmake = CMake(self)
