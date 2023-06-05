@@ -21,7 +21,7 @@ class StonexCmsAmqpTestEngineConan(ConanFile):
     generators = "cmake"
 
     def build_requirements(self):
-        self.build_requires("stonex-cms-amqp-lib/0.2.2@enterprise_messaging/test")
+        self.build_requires("stonex-cms-amqp-lib/0.2.3@enterprise_messaging/test")
         self.build_requires("boost/1.78.0@enterprise_messaging/stable")
         self.build_requires("stonex-logger-wrapper/0.0.2@enterprise_messaging/test")
         
