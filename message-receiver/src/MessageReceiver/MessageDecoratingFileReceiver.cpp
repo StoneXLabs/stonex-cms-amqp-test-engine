@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-#include "MessageDecoratingFileReceiver.h"
+#include <MessageReceiver/MessageDecoratingFileReceiver.h>
 
 MessageDecoratingFileReceiver::MessageDecoratingFileReceiver(const FileMessageDecoratingReceiverConfiguration & config, CMSClientTestUnit & client_params, Notifier & parent)
 	: MessageReceiver(config, client_params),

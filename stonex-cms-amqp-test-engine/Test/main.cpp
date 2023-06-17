@@ -33,13 +33,13 @@
 
 
 #include <MessageReceiver/MessageReceiver.h>
-#include "../src/MessageReceiver/MessageFileReceiver.h"
-#include "../src/MessageReceiver/MessageCountingReceiver.h"
-#include "../src/MessageReceiver/MessageDecoratingReceiver.h"
-#include "../src/MessageReceiver/MessageCountingFileReceiver.h"
-#include "../src/MessageReceiver/MessageDecoratingFileReceiver.h"
-#include "../src/MessageReceiver/MessageCountingDecoratingReceiver.h"
-#include "../src/MessageReceiver/MessageCountingDecoratingFileReceiver.h"
+#include <MessageReceiver/MessageFileReceiver.h>
+#include <MessageReceiver/MessageCountingReceiver.h>
+#include <MessageReceiver/MessageDecoratingReceiver.h>
+#include <MessageReceiver/MessageCountingFileReceiver.h>
+#include <MessageReceiver/MessageDecoratingFileReceiver.h>
+#include <MessageReceiver/MessageCountingDecoratingReceiver.h>
+#include <MessageReceiver/MessageCountingDecoratingFileReceiver.h>
 #include <ConfigurationParser/TestSuiteJsonConfigParser.h>
 #include <TestSuite/TestCase.h>
 #include <TestSuite/TestCasePerformer.h>

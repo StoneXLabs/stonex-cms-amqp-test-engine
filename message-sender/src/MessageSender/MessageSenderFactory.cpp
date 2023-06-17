@@ -55,6 +55,8 @@ MessageSender * MessageSenderFactory::create(const MessageSenderConfiguration & 
 		else if (auto concrete_configuration = dynamic_cast<const FileMessageCountingDecoratingSenderConfiguration*>(&sender_configuration)) {
 			return new MessageCountingDecoratingFileSender(*concrete_configuration, client_configuration, parent);
 		}
+		else
+			return nullptr;
 	}	
 	else
 		return create_sender(sender_configuration, client_configuration, parent);

@@ -22,7 +22,7 @@
 #include <MessageReceiver/MessageReceiver.h>
 #include <Notifier/Notifier.h>
 #include <utils\MessageDestination.h>
-#include "..\Configuration\FileMessageReceiverConfiguration.h"
+#include <Configuration\FileMessageReceiverConfiguration.h>
 
 class MessageFileReceiver : public MessageReceiver, public MessageFileDestination
 {
