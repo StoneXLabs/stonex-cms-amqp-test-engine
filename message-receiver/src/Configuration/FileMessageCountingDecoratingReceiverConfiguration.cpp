@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-#include "FileMessageCountingDecoratingReceiverConfiguration.h"
+#include <Configuration/FileMessageCountingDecoratingReceiverConfiguration.h>
 
 FileMessageCountingDecoratingReceiverConfiguration::FileMessageCountingDecoratingReceiverConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& consumerId, const std::string& messageType, const std::string& receiverType, const std::string& file_path, long long message_count, const std::vector<MessageField*>& decorations)
 	:MessageReceiverConfiguration(connectionId, sessionId, consumerId, messageType, receiverType),

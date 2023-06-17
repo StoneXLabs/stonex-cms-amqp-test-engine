@@ -29,7 +29,7 @@ public:
 	explicit MessageDecoratingReceiver(const MessageDecoratingReceiverConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent);
 	virtual ~MessageDecoratingReceiver() = default;
 
-	void onMessage(const cms::Message* message) override;
+	virtual void onMessage(const cms::Message* message) override;
 
 
 };
