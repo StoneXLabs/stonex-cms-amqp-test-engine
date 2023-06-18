@@ -22,7 +22,7 @@
 #include <MessageReceiver/MessageReceiver.h>
 #include <utils\ReceivedMessageCounter.h>
 #include <utils\MessageVerifier.h>
-#include "..\Configuration\MessageCountingDecoratingReceiverConfiguration.h"
+#include <Configuration\MessageCountingDecoratingReceiverConfiguration.h>
 
 class MessageCountingDecoratingReceiver : public MessageReceiver, public ReceivedMessageCounter,public MessageVerifier
 {

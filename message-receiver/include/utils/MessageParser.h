@@ -23,6 +23,6 @@
 class MessageParser
 {
 public:
-	std::string toString(const cms::Message* message);
+	virtual std::string toString(const cms::Message* message);
 };
 
