@@ -29,3 +29,11 @@ configure_file(${PROJECT_SOURCE_DIR}/test_message_property_float.config ${CMAKE_
 configure_file(${PROJECT_SOURCE_DIR}/test_message_property_int.config ${CMAKE_CURRENT_BINARY_DIR}/test_message_property_int.config COPYONLY)    
 configure_file(${PROJECT_SOURCE_DIR}/test_message_property_long.config ${CMAKE_CURRENT_BINARY_DIR}/test_message_property_long.config COPYONLY)    
 configure_file(${PROJECT_SOURCE_DIR}/test_message_property_short.config ${CMAKE_CURRENT_BINARY_DIR}/test_message_property_short.config COPYONLY)    
+
+configure_file(${PROJECT_SOURCE_DIR}/test_message_property_bool.config ${CMAKE_CURRENT_BINARY_DIR}/../../bin/test_message_property_bool.config COPYONLY)    
+configure_file(${PROJECT_SOURCE_DIR}/test_message_property_byte.config ${CMAKE_CURRENT_BINARY_DIR}/../../bin/test_message_property_byte.config COPYONLY)    
+configure_file(${PROJECT_SOURCE_DIR}/test_message_property_double.config ${CMAKE_CURRENT_BINARY_DIR}/../../bin/test_message_property_double.config COPYONLY)    
+configure_file(${PROJECT_SOURCE_DIR}/test_message_property_float.config ${CMAKE_CURRENT_BINARY_DIR}/../../bin/test_message_property_float.config COPYONLY)    
+configure_file(${PROJECT_SOURCE_DIR}/test_message_property_int.config ${CMAKE_CURRENT_BINARY_DIR}/../../bin/test_message_property_int.config COPYONLY)    
+configure_file(${PROJECT_SOURCE_DIR}/test_message_property_long.config ${CMAKE_CURRENT_BINARY_DIR}/../../bin/test_message_property_long.config COPYONLY)    
+configure_file(${PROJECT_SOURCE_DIR}/test_message_property_short.config ${CMAKE_CURRENT_BINARY_DIR}/../../bin/test_message_property_short.config COPYONLY)    
