@@ -22,13 +22,14 @@
 #include <Notifier/Notifier.h>
 #include <Wrapper/CMSClientTestUnit.h>
 #include <MessageReceiver/MessageReceiver.h>
+#include <MessageReceiver/MessageReceiverFactory.h>
 #include "../Configuration/TestCaseVerifierConfiguration.h"
 
 class TestCaseVerifier 
 {
 
 public:
-	TestCaseVerifier(const TestCaseVerifierConfiguration& params, CMSClientTestUnit& client_params, Notifier& notifier);
+	TestCaseVerifier(const TestCaseVerifierConfiguration& params, CMSClientTestUnit& client_params, Notifier& notifier, MessageReceiverFactory* receiverFactory);
 	~TestCaseVerifier();
 
 private:

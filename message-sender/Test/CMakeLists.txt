@@ -5,13 +5,14 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_CXX_STANDARD 20)
 
 
-file(GLOB sourceFiles ${PROJECT_SOURCE_DIR}/*.cpp)
+file(GLOB sourceFiles ${PROJECT_SOURCE_DIR}/*.cpp ${PROJECT_SOURCE_DIR}/test_utils/*.cpp)
+file(GLOB headerFiles ${PROJECT_SOURCE_DIR}/test_utils/*.h)
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${sourceFiles})
 
 add_executable(message-sender-test main.cpp)              
 
-target_include_directories(message-sender-test PUBLIC ${PROJECT_SOURCE_DIR}/main.cpp )
+target_include_directories(message-sender-test PUBLIC ${PROJECT_SOURCE_DIR} )
 
 target_link_libraries(message-sender-test
 	message-sender

@@ -22,7 +22,12 @@
 MessageCountingSender::MessageCountingSender(const MessageCountingSenderConfiguration & config, CMSClientTestUnit & client_params, Notifier & parent)
 	:MessageSender(config, client_params, parent),
 	SentMessageCounter(config.expectedEventCount())
+{
+}
 
+MessageCountingSender::MessageCountingSender(MessageCountingSender&& other)
+	: MessageSender(std::move(other)),
+	SentMessageCounter(std::move(other))
 {
 }
 
@@ -87,3 +92,8 @@ MESSAGE_SEND_STATUS MessageCountingSender::send_map(int msg_delay_ms)
 {
 	return MESSAGE_SEND_STATUS::SEND_ERROR;
 }
+
+//bool MessageCountingSender::operator==(const MessageCountingSender& other)
+//{
+//	return false;
+//}

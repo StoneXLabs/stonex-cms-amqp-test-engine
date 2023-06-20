@@ -27,10 +27,14 @@ class MessageDecoratingSender : public MessageSender, public MessageDecorator
 {
 public:
 	explicit MessageDecoratingSender(const MessageDecoratingSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent);
+	MessageDecoratingSender(const MessageDecoratingSender& other) = delete;
+	MessageDecoratingSender(MessageDecoratingSender&& other);
 	virtual MESSAGE_SEND_STATUS send_text(int msg_delay_ms = 0) override;
 	virtual MESSAGE_SEND_STATUS send_bytes(int msg_delay_ms = 0) override;
 	virtual MESSAGE_SEND_STATUS send_stream(int msg_delay_ms = 0) override;
 	virtual MESSAGE_SEND_STATUS send_map(int msg_delay_ms = 0) override;
+
+	//bool operator == (const MessageDecoratingSender& other);
 
 
 };

@@ -28,11 +28,15 @@ class MessageDecoratingFileSender : public MessageSender, public MessageFileSour
 {
 public:
 	explicit MessageDecoratingFileSender(const FileMessageDecoratingSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent);
+	MessageDecoratingFileSender(const MessageDecoratingFileSender& other) = delete;
+	MessageDecoratingFileSender(MessageDecoratingFileSender&& other);
 	std::string createMessageBody() override;
 	virtual MESSAGE_SEND_STATUS send_text(int msg_delay_ms = 0) override;
 	virtual MESSAGE_SEND_STATUS send_bytes(int msg_delay_ms = 0) override;
 	virtual MESSAGE_SEND_STATUS send_stream(int msg_delay_ms = 0) override;
 	virtual MESSAGE_SEND_STATUS send_map(int msg_delay_ms = 0) override;
+
+	//bool operator == (const MessageDecoratingFileSender& other);
 
 };
 

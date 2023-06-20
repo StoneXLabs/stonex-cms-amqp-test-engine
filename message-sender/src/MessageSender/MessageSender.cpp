@@ -47,6 +47,20 @@ MessageSender::MessageSender(const MessageSenderConfiguration& params, CMSClient
 	}
 }
 
+
+MessageSender::MessageSender(MessageSender&& other)
+	:mSession{ other.mSession },
+	mProducer{ other.mProducer },
+	mId{ other.mId },
+	mSessionId{ other.mSessionId },
+	mParent{ other.mParent },
+	mMessageType{ other.mMessageType }
+{
+	other.mSession = nullptr;
+	other.mProducer = nullptr;
+	other.mParent = nullptr;
+}
+
 bool MessageSender::sendMessage()
 {
 	MESSAGE_SEND_STATUS sent;
@@ -103,6 +117,11 @@ ProducerHandler * MessageSender::getProducerHandler() const
 {
 	return new ProducerHandler(mProducer);
 }
+
+//bool MessageSender::operator==(const MessageSender& other)
+//{
+//	return false;
+//}
 
 MESSAGE_SEND_STATUS MessageSender::send(int msg_delay_ms)
 {

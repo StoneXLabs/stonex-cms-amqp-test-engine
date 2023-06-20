@@ -26,8 +26,19 @@ MessageDecorator::MessageDecorator(const MessageDecoratorConfiguration & decorat
 	mDecorator = decorator_factory.create(decoratorConfig);
 }
 
+MessageDecorator::MessageDecorator(MessageDecorator&& other)
+	: mDecorator(std::move(other.mDecorator))
+{
+	other.mDecorator = nullptr;
+}
+
 void MessageDecorator::decorate(cms::Message* message, cms::Session* session) const
 {
 	if(mDecorator)
 		mDecorator->decorate(message, session);
+}
+
+bool MessageDecorator::operator==(const MessageDecorator& other)
+{
+	return mDecorator == other.mDecorator;
 }

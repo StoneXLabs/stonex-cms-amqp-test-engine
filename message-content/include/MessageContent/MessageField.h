@@ -39,6 +39,6 @@ public:
 
 protected:
 	FIELD_TYPE mFieldType{ FIELD_TYPE::UNKNOWN };
-	const std::string mName{};
 	const std::string mValueString{};
+	const std::string mName{};
 };

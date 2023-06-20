@@ -27,6 +27,10 @@ class MessageFileSender : public MessageSender, public MessageFileSource
 {
 public:
 	explicit MessageFileSender(const FileMessageSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent);
+	MessageFileSender(const MessageFileSender& other) = delete;
+	MessageFileSender(MessageFileSender&& other);
 	std::string createMessageBody() override;
+
+	//bool operator == (const MessageFileSender& other);
 };
 

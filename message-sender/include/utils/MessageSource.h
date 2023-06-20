@@ -33,12 +33,20 @@ class MessageFileSource : public MessageSource
 {
 public:
 	MessageFileSource(const std::string& file);
+	MessageFileSource(const MessageFileSource& other);
+	MessageFileSource(MessageFileSource&& other);
+
 	std::ifstream fHandler;
 
 	bool closeFHandler();
 	void reset();
 	std::string getMessage() override;
 	bool mInitialized{ false };
+
+	bool operator == (const MessageFileSource& other);
+
+private:
+	const std::string mFile;
 };
 
 

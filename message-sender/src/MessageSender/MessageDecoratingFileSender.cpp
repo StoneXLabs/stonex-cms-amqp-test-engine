@@ -27,6 +27,13 @@ MessageDecoratingFileSender::MessageDecoratingFileSender(const FileMessageDecora
 {
 }
 
+MessageDecoratingFileSender::MessageDecoratingFileSender(MessageDecoratingFileSender&& other)
+	:MessageSender(std::move(other)),
+	MessageFileSource(std::move(other)),
+	MessageDecorator(std::move(other))
+{
+}
+
 std::string MessageDecoratingFileSender::createMessageBody()
 {
 	try
@@ -87,3 +94,8 @@ MESSAGE_SEND_STATUS MessageDecoratingFileSender::send_map(int msg_delay_ms)
 {
 	return MESSAGE_SEND_STATUS::SEND_ERROR;
 }
+
+//bool MessageDecoratingFileSender::operator==(const MessageDecoratingFileSender& other)
+//{
+//	return false;
+//}

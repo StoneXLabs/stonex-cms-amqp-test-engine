@@ -24,14 +24,18 @@
 #include <utils/SentMessageCounter.h>
 #include <utils/MessageDecorator.h>
 
-class MessageCountingDecoratingSender : public MessageSender, public SentMessageCounter,public MessageDecorator
+class MessageCountingDecoratingSender : public MessageSender, public SentMessageCounter, public MessageDecorator
 {
 public:
 	explicit MessageCountingDecoratingSender(const MessageCountingDecoratingSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent);
+	MessageCountingDecoratingSender(const MessageCountingDecoratingSender& other) = delete;
+	MessageCountingDecoratingSender(MessageCountingDecoratingSender&& other);
 	virtual MESSAGE_SEND_STATUS send_text(int msg_delay_ms = 0) override;
 	virtual MESSAGE_SEND_STATUS send_bytes(int msg_delay_ms = 0) override;
 	virtual MESSAGE_SEND_STATUS send_stream(int msg_delay_ms = 0) override;
 	virtual MESSAGE_SEND_STATUS send_map(int msg_delay_ms = 0) override;
+
+	//bool operator == (const MessageCountingDecoratingSender& other);
 
 };
 

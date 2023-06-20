@@ -28,6 +28,12 @@ class CMSMessageDecorator : protected MessageField
 {
 public:
 	CMSMessageDecorator(const MessageField& messageField);
+	CMSMessageDecorator(const CMSMessageDecorator& other);
+	CMSMessageDecorator(CMSMessageDecorator&& other);
+
+	CMSMessageDecorator& operator = (const CMSMessageDecorator& other) = delete;
+	CMSMessageDecorator& operator = (CMSMessageDecorator&& other) = delete;
+	//TODO destructor
 	virtual void decorate(cms::Message* mes, cms::Session* sess) const;
 	void addNext(CMSMessageDecorator* next);
 

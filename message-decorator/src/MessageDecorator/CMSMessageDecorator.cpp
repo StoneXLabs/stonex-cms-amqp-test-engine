@@ -1,3 +1,5 @@
+#include "..\..\include\MessageDecorator\CMSMessageDecorator.h"
+#include "..\..\include\MessageDecorator\CMSMessageDecorator.h"
 /*
  * Copyright 2022 StoneX Financial Ltd.
  *
@@ -22,6 +24,19 @@
 CMSMessageDecorator::CMSMessageDecorator(const MessageField& messageField)
 	:MessageField(messageField)
 {
+}
+
+CMSMessageDecorator::CMSMessageDecorator(const CMSMessageDecorator& other)
+	: MessageField(other),
+	mNext{ other.mNext }
+{
+}
+
+CMSMessageDecorator::CMSMessageDecorator(CMSMessageDecorator&& other)
+	: MessageField(other),
+	mNext{ other.mNext }
+{
+	other.mNext = nullptr;
 }
 
 void CMSMessageDecorator::decorate(cms::Message * mes, cms::Session * sess) const

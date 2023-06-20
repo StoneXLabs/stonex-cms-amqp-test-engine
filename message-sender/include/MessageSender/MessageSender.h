@@ -40,12 +40,16 @@ class MessageSender
 {
 public:
 	MessageSender(const MessageSenderConfiguration& params, CMSClientTestUnit & client_params, Notifier& parent);
+	MessageSender(const MessageSender& other) = delete;
+	MessageSender(MessageSender&& other);
 
 	bool sendMessage();
 	std::string id() const;
 	std::string sessionId() const;
 	SessionHandler* getSessionHandler(const std::string& session_id) const;
 	ProducerHandler* getProducerHandler() const;
+
+	//bool operator == (const MessageSender& other);
 
 protected:
 	MESSAGE_SEND_STATUS send(int msg_delay_ms = 0);
@@ -57,8 +61,8 @@ protected:
 	MESSAGE_TYPE fromString(const std::string& message_type_string);
 
 protected:
-	SessionTestUnit* mSession;
-	ProducerTestUnit* mProducer;
+	SessionTestUnit* mSession{ nullptr };
+	ProducerTestUnit* mProducer{ nullptr };
 	const std::string mId{};
 	const std::string mSessionId{};
 	Notifier& mParent;

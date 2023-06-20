@@ -53,18 +53,25 @@ TestRunner::TestRunner(TestSuiteConfigParser & configurationParser, TestFunction
 		 }
 
 		 {
-			 auto start = std::chrono::high_resolution_clock::now();
-			 TestCase testCase(test, &mSenderFactory, mRegister, mTestReporter, mLogger);
-			 auto end = std::chrono::high_resolution_clock::now();
+			 if (test.enabled())
+			 {
+				 auto start = std::chrono::high_resolution_clock::now();
+				 TestCase testCase(test, &mSenderFactory, &mReceiverFactory, mRegister, mTestReporter, mLogger);
+				 auto end = std::chrono::high_resolution_clock::now();
 
-			 if (mTestReporter)
-				 mTestReporter->onMessage({REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::GENERAL, " [" + test.testName() + "] ", "Test initialization duration " + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()) + " [ms]"});
-			
-			 testCase.run();
+				 if (mTestReporter)
+					 mTestReporter->onMessage({ REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::GENERAL, " [" + test.testName() + "] ", "Test initialization duration " + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()) + " [ms]" });
+
+				 testCase.run();
+			 }
+			 else {
+
+				 if (mTestReporter)
+					 mTestReporter->onMessage({ REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::GENERAL, test.testName(), "test disabled" });
+			 }
+			 
 		 }
-		 
-		 if (mTestReporter)
-			 mTestReporter->onMessage({ REPORT_MESSAGE_SEVERITY::TRACE, REPORT_MESSAGE_TYPE::GENERAL, test.testName(), "Test result verification" });
+		
 
 
 	 });

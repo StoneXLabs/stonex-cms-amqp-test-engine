@@ -27,6 +27,13 @@ MessageCountingFileSender::MessageCountingFileSender(const FileMessageCountingSe
 {
 }
 
+MessageCountingFileSender::MessageCountingFileSender(MessageCountingFileSender&& other)
+	: MessageSender(std::move(other)),
+	SentMessageCounter(std::move(other)),
+	MessageFileSource(std::move(other))
+{
+}
+
 MESSAGE_SEND_STATUS MessageCountingFileSender::send_text(int msg_delay_ms)
 {
 	if (expectedEventCount() == sentMessageCount())
@@ -102,4 +109,9 @@ std::string MessageCountingFileSender::createMessageBody()
 
 	return "";
 }
+
+//bool MessageCountingFileSender::operator==(const MessageCountingFileSender& other)
+//{
+//	return false;
+//}
 

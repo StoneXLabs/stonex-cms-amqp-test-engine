@@ -24,6 +24,18 @@ SentMessageCounter::SentMessageCounter(long long expected_message_count)
 {
 }
 
+SentMessageCounter::SentMessageCounter(const SentMessageCounter& other)
+	: EventCounter(other),
+	mSentMessagesCount{ other.mSentMessagesCount }
+{
+}
+
+SentMessageCounter::SentMessageCounter(SentMessageCounter&& other)
+	: EventCounter(other),
+	mSentMessagesCount{ other.mSentMessagesCount }
+{
+}
+
 long long SentMessageCounter::sentMessageCount() const
 {
 	return mSentMessagesCount;
@@ -32,4 +44,10 @@ long long SentMessageCounter::sentMessageCount() const
 void SentMessageCounter::incrementSentCount()
 {
 	mSentMessagesCount++;
+}
+
+bool SentMessageCounter::operator==(const SentMessageCounter& other)
+{
+	return mSentMessagesCount == other.mSentMessagesCount &&
+		expectedEventCount() == other.expectedEventCount();
 }

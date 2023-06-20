@@ -26,6 +26,13 @@ MessageCountingDecoratingSender::MessageCountingDecoratingSender(const MessageCo
 {
 }
 
+MessageCountingDecoratingSender::MessageCountingDecoratingSender(MessageCountingDecoratingSender&& other)
+	: MessageSender(std::move(other)),
+	SentMessageCounter(std::move(other)),
+	MessageDecorator(std::move(other))
+{
+}
+
 MESSAGE_SEND_STATUS MessageCountingDecoratingSender::send_text(int msg_delay_ms)
 {
 	if (expectedEventCount() == sentMessageCount())
@@ -89,4 +96,9 @@ MESSAGE_SEND_STATUS MessageCountingDecoratingSender::send_map(int msg_delay_ms)
 {
 	return MESSAGE_SEND_STATUS::SEND_ERROR;
 }
+
+//bool MessageCountingDecoratingSender::operator==(const MessageCountingDecoratingSender& other)
+//{
+//	return false;
+//}
 

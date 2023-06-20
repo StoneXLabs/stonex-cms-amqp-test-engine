@@ -29,7 +29,11 @@ class MessageDecorator
 {
 public:
 	explicit MessageDecorator(const MessageDecoratorConfiguration& decoratorConfig);
+	MessageDecorator(const MessageDecorator& other) = delete;
+	MessageDecorator(MessageDecorator&& other);
 	void decorate(cms::Message* message, cms::Session* session) const;
+
+	bool operator == (const MessageDecorator& other);
 protected:
 	CMSMessageDecorator *mDecorator{ nullptr };
 };

@@ -25,8 +25,13 @@ class SentMessageCounter : public EventCounter
 {
 public:
 	SentMessageCounter(long long expected_message_count);
+	SentMessageCounter(const SentMessageCounter& other);
+	SentMessageCounter(SentMessageCounter&& other);
+
 	long long sentMessageCount() const;
 	void incrementSentCount();
+
+	bool operator == (const SentMessageCounter& other);
 private:
 	long long mSentMessagesCount{ 0 };
 };

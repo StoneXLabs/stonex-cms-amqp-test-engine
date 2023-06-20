@@ -22,10 +22,27 @@
 #include <utils/MessageSource.h>
 
 MessageFileSource::MessageFileSource(const std::string & file)
+	:mFile(file)
 {
-	fHandler.open(file);
+	fHandler.open(mFile);
 	if (fHandler.is_open())
 		mInitialized = true;
+}
+
+MessageFileSource::MessageFileSource(const MessageFileSource& other)
+	:mFile(other.mFile)
+{
+	fHandler.open(mFile);
+	if (fHandler.is_open())
+		mInitialized = true;
+}
+
+MessageFileSource::MessageFileSource(MessageFileSource&& other)
+	:mFile(other.mFile)
+{
+	fHandler.swap(other.fHandler);
+	mInitialized = other.mInitialized;
+	other.mInitialized = false;
 }
 
 
@@ -55,4 +72,9 @@ std::string MessageFileSource::getMessage()
 	}
 	else
 		return "";
+}
+
+bool MessageFileSource::operator==(const MessageFileSource& other)
+{
+	return mFile == other.mFile;
 }
