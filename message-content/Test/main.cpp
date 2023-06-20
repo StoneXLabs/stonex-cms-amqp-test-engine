@@ -29,6 +29,10 @@
 boost::json::value valueFromFile(const std::string& configFile)
 {
 	std::ifstream config_file(configFile);
+	if (config_file.fail()) {
+		std::cerr << "missing file " << configFile << std::endl;
+		return boost::json::object();
+	}
 
 	boost::json::stream_parser p;
 	boost::json::error_code ec;
@@ -54,7 +58,7 @@ int main()
 	{
 		std::cout << "##teamcity[testSuiteStarted name='message-content FIELD_TYPE::BOOLEANPROPERTY']" << std::endl;
 
-		boost::json::object::value_type message_content_config_json = *valueFromFile("test_message_property_bool.config").as_object().cbegin();
+		boost::json::object::value_type message_content_config_json = *valueFromFile("test_message_property_bool.config2").as_object().cbegin();
 		auto property = parser.createMessageFieldConfig(message_content_config_json.key_c_str(), message_content_config_json.value());
 		auto property_config = MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false");
 
