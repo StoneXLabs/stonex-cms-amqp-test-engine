@@ -50,24 +50,22 @@ boost::json::value valueFromFile(const std::string& configFile)
 
 
 
-int main()
+int main(int argc, char *argv[])
 {
-
 	MessageFieldConfigParser parser;
 	
 	{
 		std::cout << "##teamcity[testSuiteStarted name='message-content FIELD_TYPE::BOOLEANPROPERTY']" << std::endl;
 
-		boost::json::object::value_type message_content_config_json = *valueFromFile("test_message_property_bool.config2").as_object().cbegin();
+		boost::json::object::value_type message_content_config_json = *valueFromFile("test_message_property_bool.config").as_object().cbegin();
 		auto property = parser.createMessageFieldConfig(message_content_config_json.key_c_str(), message_content_config_json.value());
 		auto property_config = MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false");
 
-		std::cout << "##teamcity[testStarted name='FIELD_TYPE::BOOLEANPROPERTY']" << std::endl;
-		std::cout<<"##teamcity["<<((property != nullptr) ? "testFinished" : "testFailed")<<" name='FIELD_TYPE::BOOLEANPROPERTY']"<<std::endl;
+		std::cout << "##teamcity[testStarted name='parserTest FIELD_TYPE::BOOLEANPROPERTY']" << std::endl;
+		std::cout<<"##teamcity["<<((property != nullptr) ? "testFinished" : "testFailed")<<" name='parserTest FIELD_TYPE::BOOLEANPROPERTY']"<<std::endl;
 
-
-		std::cout << "##teamcity[testStarted name='FIELD_TYPE::BOOLEANPROPERTY']" << std::endl;
-		std::cout << "##teamcity[" << ((property->valueString() == property_config.valueString()) ? "testFinished" : "testFailed") << " name='FIELD_TYPE::BOOLEANPROPERTY']" << std::endl;
+		std::cout << "##teamcity[testStarted name='parsedValue FIELD_TYPE::BOOLEANPROPERTY']" << std::endl;
+		std::cout << "##teamcity[" << ((property->valueString() == property_config.valueString()) ? "testFinished" : "testFailed") << " name='parsedValue FIELD_TYPE::BOOLEANPROPERTY']" << std::endl;
 
 		std::cout << "##teamcity[testSuiteFinished name='message-content FIELD_TYPE::BOOLEANPROPERTY']" << std::endl;
 	}
@@ -79,12 +77,12 @@ int main()
 		auto property = parser.createMessageFieldConfig(message_content_config_json.key_c_str(), message_content_config_json.value());
 		auto property_config = MessageField(FIELD_TYPE::BYTEPROPERTY, "property", "127");
 
-		std::cout << "##teamcity[testStarted name='FIELD_TYPE::BYTEPROPERTY']" << std::endl;
-		std::cout << "##teamcity[" << ((property != nullptr) ? "testFinished" : "testFailed") << " name='FIELD_TYPE::BYTEPROPERTY']" << std::endl;
+		std::cout << "##teamcity[testStarted name='parserTest FIELD_TYPE::BYTEPROPERTY']" << std::endl;
+		std::cout << "##teamcity[" << ((property != nullptr) ? "testFinished" : "testFailed") << " name='parserTest FIELD_TYPE::BYTEPROPERTY']" << std::endl;
 
 
-		std::cout << "##teamcity[testStarted name='FIELD_TYPE::BYTEPROPERTY']" << std::endl;
-		std::cout << "##teamcity[" << ((property->valueString() == property_config.valueString()) ? "testFinished" : "testFailed") << " name='FIELD_TYPE::BYTEPROPERTY']" << std::endl;
+		std::cout << "##teamcity[testStarted name='parsedValue FIELD_TYPE::BYTEPROPERTY']" << std::endl;
+		std::cout << "##teamcity[" << ((property->valueString() == property_config.valueString()) ? "testFinished" : "testFailed") << " name='parsedValue FIELD_TYPE::BYTEPROPERTY']" << std::endl;
 
 		std::cout << "##teamcity[testSuiteFinished name='message-content FIELD_TYPE::BYTEPROPERTY']" << std::endl;
 	}
@@ -96,12 +94,12 @@ int main()
 		auto property = parser.createMessageFieldConfig(message_content_config_json.key_c_str(), message_content_config_json.value());
 		auto property_config = MessageField(FIELD_TYPE::DOUBLEPROPERTY, "property", "127");
 
-		std::cout << "##teamcity[testStarted name='FIELD_TYPE::DOUBLEPROPERTY']" << std::endl;
-		std::cout << "##teamcity[" << ((property != nullptr) ? "testFinished" : "testFailed") << " name='FIELD_TYPE::DOUBLEPROPERTY']" << std::endl;
+		std::cout << "##teamcity[testStarted name='parserTest FIELD_TYPE::DOUBLEPROPERTY']" << std::endl;
+		std::cout << "##teamcity[" << ((property != nullptr) ? "testFinished" : "testFailed") << " name='parserTest FIELD_TYPE::DOUBLEPROPERTY']" << std::endl;
 
 
-		std::cout << "##teamcity[testStarted name='FIELD_TYPE::DOUBLEPROPERTY']" << std::endl;
-		std::cout << "##teamcity[" << ((property->valueString() == property_config.valueString()) ? "testFinished" : "testFailed") << " name='FIELD_TYPE::DOUBLEPROPERTY']" << std::endl;
+		std::cout << "##teamcity[testStarted name='parsedValue FIELD_TYPE::DOUBLEPROPERTY']" << std::endl;
+		std::cout << "##teamcity[" << ((property->valueString() == property_config.valueString()) ? "testFinished" : "testFailed") << " name='parsedValue FIELD_TYPE::DOUBLEPROPERTY']" << std::endl;
 
 		std::cout << "##teamcity[testSuiteFinished name='message-content FIELD_TYPE::DOUBLEPROPERTY']" << std::endl;
 	}
@@ -111,14 +109,14 @@ int main()
 
 		boost::json::object::value_type message_content_config_json = *valueFromFile("test_message_property_float.config").as_object().cbegin();
 		auto property = parser.createMessageFieldConfig(message_content_config_json.key_c_str(), message_content_config_json.value());
-		auto property_config = MessageField(FIELD_TYPE::FLOATPROPERTY, "property", "127.11");
+		auto property_config = MessageField(FIELD_TYPE::FLOATPROPERTY, "property", "127.110000");
 
-		std::cout << "##teamcity[testStarted name='FIELD_TYPE::FLOATPROPERTY']" << std::endl;
-		std::cout << "##teamcity[" << ((property != nullptr) ? "testFinished" : "testFailed") << " name='FIELD_TYPE::FLOATPROPERTY']" << std::endl;
+		std::cout << "##teamcity[testStarted name='parserTest FIELD_TYPE::FLOATPROPERTY']" << std::endl;
+		std::cout << "##teamcity[" << ((property != nullptr) ? "testFinished" : "testFailed") << " name='parserTest FIELD_TYPE::FLOATPROPERTY']" << std::endl;
 
 
-		std::cout << "##teamcity[testStarted name='FIELD_TYPE::FLOATPROPERTY']" << std::endl;
-		std::cout << "##teamcity[" << ((property->valueString() == property_config.valueString()) ? "testFinished" : "testFailed") << " name='FIELD_TYPE::FLOATPROPERTY']" << std::endl;
+		std::cout << "##teamcity[testStarted name='parsedValue FIELD_TYPE::FLOATPROPERTY']" << std::endl;
+		std::cout << "##teamcity[" << ((property->valueString() == property_config.valueString()) ? "testFinished" : "testFailed") << " name='parsedValue FIELD_TYPE::FLOATPROPERTY']" << std::endl;
 
 		std::cout << "##teamcity[testSuiteFinished name='message-content FIELD_TYPE::FLOATPROPERTY']" << std::endl;
 	}
@@ -130,12 +128,12 @@ int main()
 		auto property = parser.createMessageFieldConfig(message_content_config_json.key_c_str(), message_content_config_json.value());
 		auto property_config = MessageField(FIELD_TYPE::INTPROPERTY, "property", "127");
 
-		std::cout << "##teamcity[testStarted name='FIELD_TYPE::INTPROPERTY']" << std::endl;
-		std::cout << "##teamcity[" << ((property != nullptr) ? "testFinished" : "testFailed") << " name='FIELD_TYPE::INTPROPERTY']" << std::endl;
+		std::cout << "##teamcity[testStarted name='parserTest FIELD_TYPE::INTPROPERTY']" << std::endl;
+		std::cout << "##teamcity[" << ((property != nullptr) ? "testFinished" : "testFailed") << " name='parserTest FIELD_TYPE::INTPROPERTY']" << std::endl;
 
 
-		std::cout << "##teamcity[testStarted name='FIELD_TYPE::INTPROPERTY']" << std::endl;
-		std::cout << "##teamcity[" << ((property->valueString() == property_config.valueString()) ? "testFinished" : "testFailed") << " name='FIELD_TYPE::INTPROPERTY']" << std::endl;
+		std::cout << "##teamcity[testStarted name='parsedValue FIELD_TYPE::INTPROPERTY']" << std::endl;
+		std::cout << "##teamcity[" << ((property->valueString() == property_config.valueString()) ? "testFinished" : "testFailed") << " name='parsedValue FIELD_TYPE::INTPROPERTY']" << std::endl;
 
 		std::cout << "##teamcity[testSuiteFinished name='message-content FIELD_TYPE::INTPROPERTY']" << std::endl;
 	}
@@ -147,12 +145,12 @@ int main()
 		auto property = parser.createMessageFieldConfig(message_content_config_json.key_c_str(), message_content_config_json.value());
 		auto property_config = MessageField(FIELD_TYPE::LONGPROPERTY, "property", "127");
 
-		std::cout << "##teamcity[testStarted name='FIELD_TYPE::LONGPROPERTY']" << std::endl;
-		std::cout << "##teamcity[" << ((property != nullptr) ? "testFinished" : "testFailed") << " name='FIELD_TYPE::LONGPROPERTY']" << std::endl;
+		std::cout << "##teamcity[testStarted name='parserTest FIELD_TYPE::LONGPROPERTY']" << std::endl;
+		std::cout << "##teamcity[" << ((property != nullptr) ? "testFinished" : "testFailed") << " name='parserTest FIELD_TYPE::LONGPROPERTY']" << std::endl;
 
 
-		std::cout << "##teamcity[testStarted name='FIELD_TYPE::LONGPROPERTY']" << std::endl;
-		std::cout << "##teamcity[" << ((property->valueString() == property_config.valueString()) ? "testFinished" : "testFailed") << " name='FIELD_TYPE::LONGPROPERTY']" << std::endl;
+		std::cout << "##teamcity[testStarted name='parsedValue FIELD_TYPE::LONGPROPERTY']" << std::endl;
+		std::cout << "##teamcity[" << ((property->valueString() == property_config.valueString()) ? "testFinished" : "testFailed") << " name='parsedValue FIELD_TYPE::LONGPROPERTY']" << std::endl;
 
 		std::cout << "##teamcity[testSuiteFinished name='message-content FIELD_TYPE::LONGPROPERTY']" << std::endl;
 	}
@@ -164,12 +162,12 @@ int main()
 		auto property = parser.createMessageFieldConfig(message_content_config_json.key_c_str(), message_content_config_json.value());
 		auto property_config = MessageField(FIELD_TYPE::SHORTPROPERTY, "property", "127");
 
-		std::cout << "##teamcity[testStarted name='FIELD_TYPE::SHORTPROPERTY']" << std::endl;
-		std::cout << "##teamcity[" << ((property != nullptr) ? "testFinished" : "testFailed") << " name='FIELD_TYPE::SHORTPROPERTY']" << std::endl;
+		std::cout << "##teamcity[testStarted name='parserTest FIELD_TYPE::SHORTPROPERTY']" << std::endl;
+		std::cout << "##teamcity[" << ((property != nullptr) ? "testFinished" : "testFailed") << " name='parserTest FIELD_TYPE::SHORTPROPERTY']" << std::endl;
 
 
-		std::cout << "##teamcity[testStarted name='FIELD_TYPE::SHORTPROPERTY']" << std::endl;
-		std::cout << "##teamcity[" << ((property->valueString() == property_config.valueString()) ? "testFinished" : "testFailed") << " name='FIELD_TYPE::SHORTPROPERTY']" << std::endl;
+		std::cout << "##teamcity[testStarted name='parsedValue FIELD_TYPE::SHORTPROPERTY']" << std::endl;
+		std::cout << "##teamcity[" << ((property->valueString() == property_config.valueString()) ? "testFinished" : "testFailed") << " name='parsedValue FIELD_TYPE::SHORTPROPERTY']" << std::endl;
 
 		std::cout << "##teamcity[testSuiteFinished name='message-content FIELD_TYPE::SHORTPROPERTY']" << std::endl;
 	}

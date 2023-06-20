@@ -40,3 +40,22 @@ configure_file(${PROJECT_SOURCE_DIR}/test_message_receivers_all.config ${CMAKE_C
 configure_file(${PROJECT_SOURCE_DIR}/message_file.txt ${CMAKE_CURRENT_BINARY_DIR}/message_file.txt COPYONLY)
 
 
+
+
+
+configure_file(${PROJECT_SOURCE_DIR}/test_message_receiver.config ${CMAKE_CURRENT_BINARY_DIR}/../../bin/test_message_receiver.config COPYONLY)
+
+configure_file(${PROJECT_SOURCE_DIR}/test_message_counting_receiver.config ${CMAKE_CURRENT_BINARY_DIR}/../../bin/test_message_counting_receiver.config COPYONLY)              
+configure_file(${PROJECT_SOURCE_DIR}/test_message_receiver_to_file.config ${CMAKE_CURRENT_BINARY_DIR}/../../bin/test_message_receiver_to_file.config COPYONLY)
+configure_file(${PROJECT_SOURCE_DIR}/test_message_decorating_receiver.config ${CMAKE_CURRENT_BINARY_DIR}/../../bin/test_message_decorating_receiver.config COPYONLY)
+
+configure_file(${PROJECT_SOURCE_DIR}/test_message_counting_receiver_to_file.config ${CMAKE_CURRENT_BINARY_DIR}/../../bin/test_message_counting_receiver_to_file.config COPYONLY)
+configure_file(${PROJECT_SOURCE_DIR}/test_message_decorating_receiver_to_file.config ${CMAKE_CURRENT_BINARY_DIR}/../../bin/test_message_decorating_receiver_to_file.config COPYONLY)
+configure_file(${PROJECT_SOURCE_DIR}/test_message_decorating_counting_receiver.config ${CMAKE_CURRENT_BINARY_DIR}/../../bin/test_message_decorating_counting_receiver.config COPYONLY)
+
+configure_file(${PROJECT_SOURCE_DIR}/test_message_decorating_counting_receiver_to_file.config ${CMAKE_CURRENT_BINARY_DIR}/../../bin/test_message_decorating_counting_receiver_to_file.config COPYONLY)
+
+configure_file(${PROJECT_SOURCE_DIR}/test_message_receivers_all.config ${CMAKE_CURRENT_BINARY_DIR}/../../bin/test_message_receivers_all.config COPYONLY)
+
+configure_file(${PROJECT_SOURCE_DIR}/message_file.txt ${CMAKE_CURRENT_BINARY_DIR}/../../bin/message_file.txt COPYONLY)
+
