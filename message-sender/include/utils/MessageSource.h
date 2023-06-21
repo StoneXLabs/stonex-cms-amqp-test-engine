@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 StoneX Financial Ltd.
+ * Copyright 2023 StoneX Financial Ltd.
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -33,12 +33,20 @@ class MessageFileSource : public MessageSource
 {
 public:
 	MessageFileSource(const std::string& file);
+	MessageFileSource(const MessageFileSource& other);
+	MessageFileSource(MessageFileSource&& other);
+
 	std::ifstream fHandler;
 
 	bool closeFHandler();
 	void reset();
 	std::string getMessage() override;
 	bool mInitialized{ false };
+
+	bool operator == (const MessageFileSource& other);
+
+private:
+	const std::string mFile;
 };
 
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 StoneX Financial Ltd.
+ * Copyright 2023 StoneX Financial Ltd.
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -27,10 +27,14 @@ class MessageCountingSender : public MessageSender, public SentMessageCounter
 {
 public:
 	explicit MessageCountingSender(const MessageCountingSenderConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent);
+	MessageCountingSender(const MessageCountingSender& other) = delete;
+	MessageCountingSender(MessageCountingSender&& other);
 	virtual MESSAGE_SEND_STATUS send_text(int msg_delay_ms = 0) override;
 	virtual MESSAGE_SEND_STATUS send_bytes(int msg_delay_ms = 0) override;
 	virtual MESSAGE_SEND_STATUS send_stream(int msg_delay_ms = 0) override;
 	virtual MESSAGE_SEND_STATUS send_map(int msg_delay_ms = 0) override;
+
+	//bool operator == (const MessageCountingSender& other);
 
 };
 

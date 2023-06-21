@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 StoneX Financial Ltd.
+ * Copyright 2023 StoneX Financial Ltd.
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -19,18 +19,14 @@
 
 #pragma once
 
-#include <MessageReceiver/MessageReceiver.h>
-#include <utils\MessageVerifier.h>
-#include "..\Configuration\MessageDecoratingReceiverConfiguration.h"
+#include <utils/EventCounter.h>
+#include <Configuration/MessageDecoratorConfiguration.h>
+#include <Configuration/MessageReceiverConfiguration.h>
 
-class MessageDecoratingReceiver : public MessageReceiver, public MessageVerifier
+class MessageCountingDecoratingReceiverConfiguration : public MessageReceiverConfiguration, public EventCounter, public MessageDecoratorConfiguration
 {
 public:
-	explicit MessageDecoratingReceiver(const MessageDecoratingReceiverConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent);
-	virtual ~MessageDecoratingReceiver() = default;
-
-	void onMessage(const cms::Message* message) override;
-
-
+	MessageCountingDecoratingReceiverConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& consumerId, const std::string& messageType, const std::string& receiverType, long long message_count, const std::vector<MessageField*>& decorations);
+	friend bool operator== (const MessageCountingDecoratingReceiverConfiguration& lhs, const MessageCountingDecoratingReceiverConfiguration& rhs);
 };
 

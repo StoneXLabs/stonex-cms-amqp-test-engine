@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 StoneX Financial Ltd.
+ * Copyright 2023 StoneX Financial Ltd.
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -33,13 +33,13 @@
 
 
 #include <MessageReceiver/MessageReceiver.h>
-#include "../src/MessageReceiver/MessageFileReceiver.h"
-#include "../src/MessageReceiver/MessageCountingReceiver.h"
-#include "../src/MessageReceiver/MessageDecoratingReceiver.h"
-#include "../src/MessageReceiver/MessageCountingFileReceiver.h"
-#include "../src/MessageReceiver/MessageDecoratingFileReceiver.h"
-#include "../src/MessageReceiver/MessageCountingDecoratingReceiver.h"
-#include "../src/MessageReceiver/MessageCountingDecoratingFileReceiver.h"
+#include <MessageReceiver/MessageFileReceiver.h>
+#include <MessageReceiver/MessageCountingReceiver.h>
+#include <MessageReceiver/MessageDecoratingReceiver.h>
+#include <MessageReceiver/MessageCountingFileReceiver.h>
+#include <MessageReceiver/MessageDecoratingFileReceiver.h>
+#include <MessageReceiver/MessageCountingDecoratingReceiver.h>
+#include <MessageReceiver/MessageCountingDecoratingFileReceiver.h>
 #include <ConfigurationParser/TestSuiteJsonConfigParser.h>
 #include <TestSuite/TestCase.h>
 #include <TestSuite/TestCasePerformer.h>
@@ -201,21 +201,21 @@ int main()
 		auto wrapper_config = WrapperConfiguration(std::vector< ConnectionConfiguration>({ connection_config }));
 
 
-		MessageReceiverConfiguration receiver1_config("connection1", "session1", "consumer1", "text", "engine-test");
-		MessageCountingReceiverConfiguration receiver2_config("connection1", "session1", "consumer2", "text", "engine-test", 1);
-		FileMessageReceiverConfiguration receiver3_config("connection1", "session1", "consumer3", "text", "engine-test", "test_messages_received.txt");
-		MessageDecoratingReceiverConfiguration receiver4_config("connection1", "session1", "consumer4", "text", "engine-test", { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
-		FileMessageCountingReceiverConfiguration receiver5_config("connection1", "session1", "consumer5", "text", "engine-test", "test_messages_received.txt", 1);
-		MessageCountingDecoratingReceiverConfiguration receiver6_config("connection1", "session1", "consumer6", "text", "engine-test", 1, { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
-		FileMessageDecoratingReceiverConfiguration receiver7_config("connection1", "session1", "consumer7", "text", "engine-test", "test_messages_received.txt", { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
-		FileMessageCountingDecoratingReceiverConfiguration receiver8_config("connection1", "session1", "consumer8", "text", "engine-test", "test_messages_received.txt", 1, { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
-		FileMessageCountingDecoratingReceiverConfiguration receiver9_config("connection1", "session1", "consumer9", "text", "engine-test", "test_messages_received.txt", 1, { new MessageField(FIELD_TYPE::STRINGPROPERTY,"FEATURE","C") });
-		FileMessageCountingDecoratingReceiverConfiguration receiver10_config("connection1", "session1", "consumer10", "text", "engine-test", "test_messages_received.txt", 1, { new MessageField(FIELD_TYPE::STRINGPROPERTY,"FEATURE","D") });
-		FileMessageCountingDecoratingReceiverConfiguration receiver11_config("connection1", "session1", "consumer11", "text", "engine-test", "test_messages_received.txt", 1, { new MessageField(FIELD_TYPE::STRINGPROPERTY,"FEATURE","F") });
-		FileMessageCountingDecoratingReceiverConfiguration receiver12_config("connection1", "session1", "consumer12", "text", "engine-test", "test_messages_received.txt", 1, { new MessageField(FIELD_TYPE::STRINGPROPERTY,"FEATURE","CD") });
-		FileMessageCountingDecoratingReceiverConfiguration receiver13_config("connection1", "session1", "consumer13", "text", "engine-test", "test_messages_received.txt", 1, { new MessageField(FIELD_TYPE::STRINGPROPERTY,"FEATURE","CF") });
-		FileMessageCountingDecoratingReceiverConfiguration receiver14_config("connection1", "session1", "consumer14", "text", "engine-test", "test_messages_received.txt", 1, { new MessageField(FIELD_TYPE::STRINGPROPERTY,"FEATURE","DF") });
-		FileMessageCountingDecoratingReceiverConfiguration receiver15_config("connection1", "session1", "consumer15", "text", "engine-test", "test_messages_received.txt", 1, { new MessageField(FIELD_TYPE::STRINGPROPERTY,"FEATURE","CDF") });
+		MessageReceiverConfiguration receiver1_config("connection1", "session1", "consumer1", "text", "engine");
+		MessageCountingReceiverConfiguration receiver2_config("connection1", "session1", "consumer2", "text", "engine", 1);
+		FileMessageReceiverConfiguration receiver3_config("connection1", "session1", "consumer3", "text", "engine", "test_messages_received.txt");
+		MessageDecoratingReceiverConfiguration receiver4_config("connection1", "session1", "consumer4", "text", "engine", { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+		FileMessageCountingReceiverConfiguration receiver5_config("connection1", "session1", "consumer5", "text", "engine", "test_messages_received.txt", 1);
+		MessageCountingDecoratingReceiverConfiguration receiver6_config("connection1", "session1", "consumer6", "text", "engine", 1, { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+		FileMessageDecoratingReceiverConfiguration receiver7_config("connection1", "session1", "consumer7", "text", "engine", "test_messages_received.txt", { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+		FileMessageCountingDecoratingReceiverConfiguration receiver8_config("connection1", "session1", "consumer8", "text", "engine", "test_messages_received.txt", 1, { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
+		FileMessageCountingDecoratingReceiverConfiguration receiver9_config("connection1", "session1", "consumer9", "text", "engine", "test_messages_received.txt", 1, { new MessageField(FIELD_TYPE::STRINGPROPERTY,"FEATURE","C") });
+		FileMessageCountingDecoratingReceiverConfiguration receiver10_config("connection1", "session1", "consumer10", "text", "engine", "test_messages_received.txt", 1, { new MessageField(FIELD_TYPE::STRINGPROPERTY,"FEATURE","D") });
+		FileMessageCountingDecoratingReceiverConfiguration receiver11_config("connection1", "session1", "consumer11", "text", "engine", "test_messages_received.txt", 1, { new MessageField(FIELD_TYPE::STRINGPROPERTY,"FEATURE","F") });
+		FileMessageCountingDecoratingReceiverConfiguration receiver12_config("connection1", "session1", "consumer12", "text", "engine", "test_messages_received.txt", 1, { new MessageField(FIELD_TYPE::STRINGPROPERTY,"FEATURE","CD") });
+		FileMessageCountingDecoratingReceiverConfiguration receiver13_config("connection1", "session1", "consumer13", "text", "engine", "test_messages_received.txt", 1, { new MessageField(FIELD_TYPE::STRINGPROPERTY,"FEATURE","CF") });
+		FileMessageCountingDecoratingReceiverConfiguration receiver14_config("connection1", "session1", "consumer14", "text", "engine", "test_messages_received.txt", 1, { new MessageField(FIELD_TYPE::STRINGPROPERTY,"FEATURE","DF") });
+		FileMessageCountingDecoratingReceiverConfiguration receiver15_config("connection1", "session1", "consumer15", "text", "engine", "test_messages_received.txt", 1, { new MessageField(FIELD_TYPE::STRINGPROPERTY,"FEATURE","CDF") });
 
 
 
@@ -298,7 +298,8 @@ int main()
 	/////////////////
 	{
 
-		auto sender_factory = new TestSenderFactory();
+		TestSenderFactory sender_factory;
+		MessageReceiverFactory receiver_factory;
 
 		TestSuiteJsonConfigParser parser("test_case_all_receivers.config");
 		auto suite_config = parser.createConfiguration();
@@ -312,9 +313,9 @@ int main()
 		StdOutTestObserver testObserver;
 		Notifier test_notifier(&testObserver);
 
-		TestCaseVerifier test_verifier(suite_config.testsBegin()->verifierConfig(), test_client, test_notifier);
+		TestCaseVerifier test_verifier(suite_config.testsBegin()->verifierConfig(), test_client, test_notifier, &receiver_factory);
 	
-		TestCasePerformer test_performer(suite_config.testsBegin()->performerConfig(), test_client, test_notifier, sender_factory);
+		TestCasePerformer test_performer(suite_config.testsBegin()->performerConfig(), test_client, test_notifier, &sender_factory);
 
 		test_performer.sendAll();
 		
@@ -323,7 +324,8 @@ int main()
 
 	{
 
-		auto sender_factory = new TestSenderFactory();
+		TestSenderFactory sender_factory;
+		MessageReceiverFactory receiver_factory;
 
 		TestSuiteJsonConfigParser parser("test_case_all.config");
 		auto suite_config = parser.createConfiguration();
@@ -336,7 +338,7 @@ int main()
 
 		auto logger = std::make_shared<StdOutLogger>();
 	
-		TestCase test_case(*suite_config.testsBegin(), sender_factory, test_register, &testObserver, logger);
+		TestCase test_case(*suite_config.testsBegin(), &sender_factory, &receiver_factory, test_register, &testObserver, logger);
 		test_case.run();
 	}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 StoneX Financial Ltd.
+ * Copyright 2023 StoneX Financial Ltd.
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -23,6 +23,12 @@
 MessageDecoratingSender::MessageDecoratingSender(const MessageDecoratingSenderConfiguration & config, CMSClientTestUnit & client_params, Notifier & parent)
 	:MessageSender(config, client_params, parent),
 	MessageDecorator(config.decorations())
+{
+}
+
+MessageDecoratingSender::MessageDecoratingSender(MessageDecoratingSender&& other)
+	: MessageSender(std::move(other)),
+	MessageDecorator(std::move(other))
 {
 }
 
@@ -72,5 +78,10 @@ MESSAGE_SEND_STATUS MessageDecoratingSender::send_map(int msg_delay_ms)
 {
 	return MESSAGE_SEND_STATUS::SEND_ERROR;
 }
+
+//bool MessageDecoratingSender::operator==(const MessageDecoratingSender& other)
+//{
+//	return false;
+//}
 
 

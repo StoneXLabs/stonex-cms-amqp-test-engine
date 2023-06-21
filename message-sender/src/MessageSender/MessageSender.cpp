@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 StoneX Financial Ltd.
+ * Copyright 2023 StoneX Financial Ltd.
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -45,6 +45,20 @@ MessageSender::MessageSender(const MessageSenderConfiguration& params, CMSClient
 	default:
 		break;
 	}
+}
+
+
+MessageSender::MessageSender(MessageSender&& other)
+	:mSession{ other.mSession },
+	mProducer{ other.mProducer },
+	mId{ other.mId },
+	mSessionId{ other.mSessionId },
+	mParent{ other.mParent },
+	mMessageType{ other.mMessageType }
+{
+	other.mSession = nullptr;
+	other.mProducer = nullptr;
+	other.mParent = nullptr;
 }
 
 bool MessageSender::sendMessage()
@@ -103,6 +117,11 @@ ProducerHandler * MessageSender::getProducerHandler() const
 {
 	return new ProducerHandler(mProducer);
 }
+
+//bool MessageSender::operator==(const MessageSender& other)
+//{
+//	return false;
+//}
 
 MESSAGE_SEND_STATUS MessageSender::send(int msg_delay_ms)
 {

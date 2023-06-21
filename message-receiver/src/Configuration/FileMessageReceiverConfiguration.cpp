@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 StoneX Financial Ltd.
+ * Copyright 2023 StoneX Financial Ltd.
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -17,7 +17,8 @@
  * limitations under the License.
  */
 
-#include "FileMessageReceiverConfiguration.h"
+#include <Configuration/FileMessageReceiverConfiguration.h>
+
 
 FileMessageReceiverConfiguration::FileMessageReceiverConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& consumerId, const std::string& messageType, const std::string& receiverType, const std::string & message_file)
 	:MessageReceiverConfiguration(connectionId, sessionId, consumerId, messageType, receiverType),

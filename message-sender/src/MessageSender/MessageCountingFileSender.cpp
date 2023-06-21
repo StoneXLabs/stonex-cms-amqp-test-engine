@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 StoneX Financial Ltd.
+ * Copyright 2023 StoneX Financial Ltd.
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -24,6 +24,13 @@ MessageCountingFileSender::MessageCountingFileSender(const FileMessageCountingSe
 	:MessageSender(config, client_params,parent),
 	SentMessageCounter(config.expectedEventCount()),
 	MessageFileSource(config.filePath())
+{
+}
+
+MessageCountingFileSender::MessageCountingFileSender(MessageCountingFileSender&& other)
+	: MessageSender(std::move(other)),
+	SentMessageCounter(std::move(other)),
+	MessageFileSource(std::move(other))
 {
 }
 
@@ -102,4 +109,9 @@ std::string MessageCountingFileSender::createMessageBody()
 
 	return "";
 }
+
+//bool MessageCountingFileSender::operator==(const MessageCountingFileSender& other)
+//{
+//	return false;
+//}
 

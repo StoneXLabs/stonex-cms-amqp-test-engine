@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 StoneX Financial Ltd.
+ * Copyright 2023 StoneX Financial Ltd.
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,17 +18,14 @@
  */
 
 #pragma once
-
-#include <utils/EventCounter.h>
-#include <utils/MessageFile.h>
-#include <Configuration/MessageDecoratorConfiguration.h>
 #include <Configuration/MessageReceiverConfiguration.h>
+#include <utils/MessageFile.h>
 
-class FileMessageCountingDecoratingReceiverConfiguration : public MessageReceiverConfiguration, public MessageFile, public EventCounter, public MessageDecoratorConfiguration
+class FileMessageReceiverConfiguration : public MessageReceiverConfiguration, public MessageFile
 {
 public:
-	FileMessageCountingDecoratingReceiverConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& consumerId, const std::string& messageType, const std::string& receiverType, const std::string& file_path, long long message_count, const std::vector<MessageField*>& decorations);
-	friend bool operator== (const FileMessageCountingDecoratingReceiverConfiguration& lhs, const FileMessageCountingDecoratingReceiverConfiguration& rhs);
+	FileMessageReceiverConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& consumerId, const std::string& messageType, const std::string& receiverType, const std::string& message_file);
+	friend bool operator== (const FileMessageReceiverConfiguration& lhs, const FileMessageReceiverConfiguration& rhs);
 
 };
 

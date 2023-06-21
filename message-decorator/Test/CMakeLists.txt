@@ -23,3 +23,5 @@ target_link_libraries(message-decorator-test
 
 	
 configure_file(${PROJECT_SOURCE_DIR}/test_message_decorator.config ${CMAKE_CURRENT_BINARY_DIR}/test_message_decorator.config COPYONLY) 
+
+configure_file(${PROJECT_SOURCE_DIR}/test_message_decorator.config ${CMAKE_CURRENT_BINARY_DIR}/../../bin/test_message_decorator.config COPYONLY) 

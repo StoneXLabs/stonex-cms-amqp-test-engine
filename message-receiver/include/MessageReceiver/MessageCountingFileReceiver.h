@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 StoneX Financial Ltd.
+ * Copyright 2023 StoneX Financial Ltd.
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -20,17 +20,16 @@
 #pragma once
 
 #include <MessageReceiver/MessageReceiver.h>
-#include <utils\ReceivedMessageCounter.h>
 #include <utils\MessageDestination.h>
-#include <utils\MessageVerifier.h>
-#include "..\Configuration\FileMessageCountingDecoratingReceiverConfiguration.h"
+#include <utils\ReceivedMessageCounter.h>
+#include "..\Configuration\FileMessageCountingReceiverConfiguration.h"
 
-class MessageCountingDecoratingFileReceiver : public MessageReceiver, public ReceivedMessageCounter, public MessageVerifier, public MessageFileDestination
+class MessageCountingFileReceiver : public MessageReceiver, public ReceivedMessageCounter, public MessageFileDestination
 {
 public:
-	explicit MessageCountingDecoratingFileReceiver(const FileMessageCountingDecoratingReceiverConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent);
-	virtual ~MessageCountingDecoratingFileReceiver() = default;
+	explicit MessageCountingFileReceiver(const FileMessageCountingReceiverConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent);
+	virtual ~MessageCountingFileReceiver() = default;
 	void onMessage(const cms::Message* message) override;
-
+	
 };
 

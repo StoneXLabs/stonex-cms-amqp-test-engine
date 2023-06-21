@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 StoneX Financial Ltd.
+ * Copyright 2023 StoneX Financial Ltd.
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -25,8 +25,13 @@ class SentMessageCounter : public EventCounter
 {
 public:
 	SentMessageCounter(long long expected_message_count);
+	SentMessageCounter(const SentMessageCounter& other);
+	SentMessageCounter(SentMessageCounter&& other);
+
 	long long sentMessageCount() const;
 	void incrementSentCount();
+
+	bool operator == (const SentMessageCounter& other);
 private:
 	long long mSentMessagesCount{ 0 };
 };

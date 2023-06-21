@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 StoneX Financial Ltd.
+ * Copyright 2023 StoneX Financial Ltd.
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,7 +18,7 @@
  */
 
 #include <fmt/format.h>
-#include "MessageCountingDecoratingFileReceiver.h"
+#include <MessageReceiver/MessageCountingDecoratingFileReceiver.h>
 
 MessageCountingDecoratingFileReceiver::MessageCountingDecoratingFileReceiver(const FileMessageCountingDecoratingReceiverConfiguration & config, CMSClientTestUnit & client_params, Notifier & parent)
 	:MessageReceiver(config, client_params),

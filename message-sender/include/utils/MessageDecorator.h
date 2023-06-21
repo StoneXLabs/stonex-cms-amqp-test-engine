@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 StoneX Financial Ltd.
+ * Copyright 2023 StoneX Financial Ltd.
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -29,7 +29,11 @@ class MessageDecorator
 {
 public:
 	explicit MessageDecorator(const MessageDecoratorConfiguration& decoratorConfig);
+	MessageDecorator(const MessageDecorator& other) = delete;
+	MessageDecorator(MessageDecorator&& other);
 	void decorate(cms::Message* message, cms::Session* session) const;
+
+	bool operator == (const MessageDecorator& other);
 protected:
 	CMSMessageDecorator *mDecorator{ nullptr };
 };

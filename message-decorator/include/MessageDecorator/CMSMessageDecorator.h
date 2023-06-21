@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 StoneX Financial Ltd.
+ * Copyright 2023 StoneX Financial Ltd.
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -28,6 +28,12 @@ class CMSMessageDecorator : protected MessageField
 {
 public:
 	CMSMessageDecorator(const MessageField& messageField);
+	CMSMessageDecorator(const CMSMessageDecorator& other);
+	CMSMessageDecorator(CMSMessageDecorator&& other);
+
+	CMSMessageDecorator& operator = (const CMSMessageDecorator& other) = delete;
+	CMSMessageDecorator& operator = (CMSMessageDecorator&& other) = delete;
+	//TODO destructor
 	virtual void decorate(cms::Message* mes, cms::Session* sess) const;
 	void addNext(CMSMessageDecorator* next);
 

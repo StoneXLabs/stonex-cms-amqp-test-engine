@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 StoneX Financial Ltd.
+ * Copyright 2023 StoneX Financial Ltd.
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -62,12 +62,12 @@ void ITestCase::testEvent(const EventStatus & event)
 
 
 
-TestCase::TestCase(const TestCaseConfiguration& test_config, MessageSenderFactory* factory, const TestFunctionRegister& functionRegister, TestObserver* observer, std::shared_ptr<StonexLogger> logger)
+TestCase::TestCase(const TestCaseConfiguration& test_config, MessageSenderFactory* senderFactory, MessageReceiverFactory* receiverFactory, const TestFunctionRegister& functionRegister, TestObserver* observer, std::shared_ptr<StonexLogger> logger)
 	:ITestCase(test_config.testName(), observer),
 	mTestExceptionVerifier(test_config.verifierConfig(),*this),
 	mTestedObject(test_config.uutConfig(), logger,"",&mTestExceptionVerifier, &mTestExceptionVerifier, &mTestExceptionVerifier),
-	mTestPerformer(test_config.performerConfig(), mTestedObject,*this, factory ),
-	mTestVerifier(test_config.verifierConfig(), mTestedObject,*this)
+	mTestPerformer(test_config.performerConfig(), mTestedObject,*this, senderFactory),
+	mTestVerifier(test_config.verifierConfig(), mTestedObject,*this, receiverFactory)
 {
 	if (test_config.enabled()) {
 		mTestFunction = functionRegister.getTestFunction(test_config.testFunctionName());

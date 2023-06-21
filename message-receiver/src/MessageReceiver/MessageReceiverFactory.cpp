@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 StoneX Financial Ltd.
+ * Copyright 2023 StoneX Financial Ltd.
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,63 +18,68 @@
  */
 
 #include <MessageReceiver/MessageReceiverFactory.h>
-#include "MessageCountingReceiver.h"
-#include "MessageDecoratingReceiver.h"
-#include "MessageFileReceiver.h"
-#include "MessageCountingFileReceiver.h"
-#include "MessageDecoratingFileReceiver.h"
-#include "MessageCountingDecoratingReceiver.h"
-#include "MessageCountingDecoratingFileReceiver.h"
-#include "../Configuration/MessageCountingReceiverConfiguration.h"
-#include "../Configuration/MessageDecoratingReceiverConfiguration.h"
-#include "../Configuration/FileMessageReceiverConfiguration.h"
-#include "../Configuration/FileMessageCountingReceiverConfiguration.h"
-#include "../Configuration/FileMessageDecoratingReceiverConfiguration.h"
-#include "../Configuration/MessageCountingDecoratingReceiverConfiguration.h"
-#include "../Configuration/FileMessageCountingDecoratingReceiverConfiguration.h"
+#include <MessageReceiver/MessageCountingReceiver.h>
+#include <MessageReceiver/MessageDecoratingReceiver.h>
+#include <MessageReceiver/MessageFileReceiver.h>
+#include <MessageReceiver/MessageCountingFileReceiver.h>
+#include <MessageReceiver/MessageDecoratingFileReceiver.h>
+#include <MessageReceiver/MessageCountingDecoratingReceiver.h>
+#include <MessageReceiver/MessageCountingDecoratingFileReceiver.h>
+#include <Configuration/MessageCountingReceiverConfiguration.h>
+#include <Configuration/MessageDecoratingReceiverConfiguration.h>
+#include <Configuration/FileMessageReceiverConfiguration.h>
+#include <Configuration/FileMessageCountingReceiverConfiguration.h>
+#include <Configuration/FileMessageDecoratingReceiverConfiguration.h>
+#include <Configuration/MessageCountingDecoratingReceiverConfiguration.h>
+#include <Configuration/FileMessageCountingDecoratingReceiverConfiguration.h>
 
-MessageReceiver * MessageReceiverFactory::create(const MessageReceiverConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, Notifier & parent) const
+MessageReceiverFactory::MessageReceiverFactory()
+	:mConsumerType("engine")
+{
+}
+
+MessageReceiver * MessageReceiverFactory::create(const MessageReceiverConfiguration & receiver_configuration, CMSClientTestUnit & client_configuration, Notifier & parent) const
 {
 
-	if (auto concrete_configuration = dynamic_cast<const MessageCountingReceiverConfiguration*>(&sender_configuration)) {
-		return new MessageCountingReceiver(*concrete_configuration, client_configuration, parent);
-	}
-	else if (auto concrete_configuration = dynamic_cast<const MessageDecoratingReceiverConfiguration*>(&sender_configuration)) {
-		return new MessageDecoratingReceiver(*concrete_configuration, client_configuration, parent);
-	}
-	else if (auto concrete_configuration = dynamic_cast<const MessageCountingDecoratingReceiverConfiguration*>(&sender_configuration)) {
-		return new MessageCountingDecoratingReceiver(*concrete_configuration, client_configuration, parent);
-	}
-	else if (auto concrete_configuration = dynamic_cast<const FileMessageReceiverConfiguration*>(&sender_configuration)) {
-		return new MessageFileReceiver(*concrete_configuration, client_configuration, parent);
-	}
-	else if (auto concrete_configuration = dynamic_cast<const FileMessageCountingReceiverConfiguration*>(&sender_configuration)) {
-		return new MessageCountingFileReceiver(*concrete_configuration, client_configuration, parent);
-	}
-	else if (auto concrete_configuration = dynamic_cast<const FileMessageDecoratingReceiverConfiguration*>(&sender_configuration)) {
-		return new MessageDecoratingFileReceiver(*concrete_configuration, client_configuration, parent);
-	}
-	else if (auto concrete_configuration = dynamic_cast<const FileMessageCountingDecoratingReceiverConfiguration*>(&sender_configuration)) {
-		return new MessageCountingDecoratingFileReceiver(*concrete_configuration, client_configuration, parent);
-	}
-	else if (auto concrete_configuration = dynamic_cast<const MessageReceiverConfiguration*>(&sender_configuration)) {
-		return new MessageReceiver(*concrete_configuration, client_configuration);
-	}
-	else 
+	if (receiver_configuration.receiverType() == mConsumerType)
 	{
-		return nullptr;
+		if (auto concrete_configuration = dynamic_cast<const MessageCountingReceiverConfiguration*>(&receiver_configuration)) {
+			return new MessageCountingReceiver(*concrete_configuration, client_configuration, parent);
+		}
+		else if (auto concrete_configuration = dynamic_cast<const MessageDecoratingReceiverConfiguration*>(&receiver_configuration)) {
+			return new MessageDecoratingReceiver(*concrete_configuration, client_configuration, parent);
+		}
+		else if (auto concrete_configuration = dynamic_cast<const MessageCountingDecoratingReceiverConfiguration*>(&receiver_configuration)) {
+			return new MessageCountingDecoratingReceiver(*concrete_configuration, client_configuration, parent);
+		}
+		else if (auto concrete_configuration = dynamic_cast<const FileMessageReceiverConfiguration*>(&receiver_configuration)) {
+			return new MessageFileReceiver(*concrete_configuration, client_configuration, parent);
+		}
+		else if (auto concrete_configuration = dynamic_cast<const FileMessageCountingReceiverConfiguration*>(&receiver_configuration)) {
+			return new MessageCountingFileReceiver(*concrete_configuration, client_configuration, parent);
+		}
+		else if (auto concrete_configuration = dynamic_cast<const FileMessageDecoratingReceiverConfiguration*>(&receiver_configuration)) {
+			return new MessageDecoratingFileReceiver(*concrete_configuration, client_configuration, parent);
+		}
+		else if (auto concrete_configuration = dynamic_cast<const FileMessageCountingDecoratingReceiverConfiguration*>(&receiver_configuration)) {
+			return new MessageCountingDecoratingFileReceiver(*concrete_configuration, client_configuration, parent);
+		}
+		else if (auto concrete_configuration = dynamic_cast<const MessageReceiverConfiguration*>(&receiver_configuration)) {
+			return new MessageReceiver(*concrete_configuration, client_configuration);
+		}
+		else
+			return nullptr;
 	}
+	else
+		return create_receiver(receiver_configuration, client_configuration, parent);
+
+
 		
 	
 	
 }
 
-MessageReceiver * MessageReceiverFactory::create_receiver(const MessageReceiverConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, Notifier & parent) const
+MessageReceiver * MessageReceiverFactory::create_receiver(const MessageReceiverConfiguration & receiver_configuration, CMSClientTestUnit & client_configuration, Notifier & parent) const
 {
 	return nullptr;
-}
-
-bool MessageReceiverFactory::acceptedReceiverTypeType(const std::string & type) const
-{
-	return true;
 }

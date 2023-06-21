@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 StoneX Financial Ltd.
+ * Copyright 2023 StoneX Financial Ltd.
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -25,6 +25,7 @@
 #include <Wrapper/CMSClientTestUnit.h>
 #include <Notifier/Notifier.h>
 #include <MessageSender/MessageSenderFactory.h>
+#include <MessageReceiver/MessageReceiverFactory.h>
 #include "TestFunctionRegister.h"
 #include "TestCaseStatus.h"
 #include "TestCasePerformer.h"
@@ -49,7 +50,7 @@ protected:
 class TestCase : public ITestCase
 {
 public:
-	TestCase(const TestCaseConfiguration& test_config, MessageSenderFactory* factory, const TestFunctionRegister& functionRegister, TestObserver* observer, std::shared_ptr<StonexLogger> logger);
+	TestCase(const TestCaseConfiguration& test_config, MessageSenderFactory* senderFactory, MessageReceiverFactory* receiverFactory, const TestFunctionRegister& functionRegister, TestObserver* observer, std::shared_ptr<StonexLogger> logger);
 	~TestCase() = default;
 	void run() override;
 private:

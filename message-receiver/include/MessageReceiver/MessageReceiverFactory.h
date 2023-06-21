@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 StoneX Financial Ltd.
+ * Copyright 2023 StoneX Financial Ltd.
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -25,9 +25,11 @@ class Notifier;
 
 class MessageReceiverFactory {
 public:
-	MessageReceiver* create(const MessageReceiverConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, Notifier& parent)  const;
+	MessageReceiverFactory();
+	MessageReceiver* create(const MessageReceiverConfiguration & receiver_configuration, CMSClientTestUnit & client_configuration, Notifier& parent)  const;
 
 protected:
-	virtual MessageReceiver* create_receiver(const MessageReceiverConfiguration & sender_configuration, CMSClientTestUnit & client_configuration, Notifier& parent)  const;
-	virtual bool acceptedReceiverTypeType(const std::string &type) const;
+	virtual MessageReceiver* create_receiver(const MessageReceiverConfiguration & receiver_configuration, CMSClientTestUnit & client_configuration, Notifier& parent)  const;
+private:
+	const std::string mConsumerType;
 };

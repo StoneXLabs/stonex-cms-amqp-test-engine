@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 StoneX Financial Ltd.
+ * Copyright 2023 StoneX Financial Ltd.
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -24,13 +24,13 @@
 #include <Wrapper/CMSClientTestUnit.h>
 #include <ConfigurationParser/TestCaseReceiverConfigurationParser.h>
 #include <MessageReceiver/MessageReceiver.h>
-#include "../src/MessageReceiver/MessageFileReceiver.h"
-#include "../src/MessageReceiver/MessageCountingReceiver.h"
-#include "../src/MessageReceiver/MessageDecoratingReceiver.h"
-#include "../src/MessageReceiver/MessageCountingFileReceiver.h"
-#include "../src/MessageReceiver/MessageDecoratingFileReceiver.h"
-#include "../src/MessageReceiver/MessageCountingDecoratingReceiver.h"
-#include "../src/MessageReceiver/MessageCountingDecoratingFileReceiver.h"
+#include <MessageReceiver/MessageFileReceiver.h>
+#include <MessageReceiver/MessageCountingReceiver.h>
+#include <MessageReceiver/MessageDecoratingReceiver.h>
+#include <MessageReceiver/MessageCountingFileReceiver.h>
+#include <MessageReceiver/MessageDecoratingFileReceiver.h>
+#include <MessageReceiver/MessageCountingDecoratingReceiver.h>
+#include <MessageReceiver/MessageCountingDecoratingFileReceiver.h>
 #include <Notifier/EventStatusObserver.h>
 #include <Notifier/Notifier.h>
 #include <StdOutLogger/StdOutLogger.h>
@@ -40,6 +40,10 @@
 boost::json::value valueFromFile(const std::string& configFile)
 {
 	std::ifstream config_file(configFile);
+	if (config_file.fail()) {
+		std::cerr << "missing file " << configFile << std::endl;
+		return boost::json::object();
+	}
 
 	boost::json::stream_parser p;
 	boost::json::error_code ec;
@@ -60,94 +64,165 @@ boost::json::value valueFromFile(const std::string& configFile)
 
 
 
-int main()
+int main(int argc, char *argv[])
+
 {
 	TestCaseReceiverConfigurationParser parser;
 
 	{
+		std::cout << "##teamcity[testSuiteStarted name='MessageReceiverConfiguration']" << std::endl;
+
 		boost::json::object::value_type message_receiver_config_json = *valueFromFile("test_message_receiver.config").as_object().cbegin();
 		auto consumer = parser.createTestCaseReceiverConfig(message_receiver_config_json.key_c_str(), message_receiver_config_json.value().as_object());
 		auto consumer_config = MessageReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine");
 
-		assert(consumer != nullptr);
-		assert(*consumer == consumer_config);
+		std::cout << "##teamcity[testStarted name='parserTest MessageReceiverConfiguration']" << std::endl;
+		std::cout << "##teamcity[" << ((consumer != nullptr) ? "testFinished" : "testFailed") << " name='parserTest MessageReceiverConfiguration']" << std::endl;
+
+		std::cout << "##teamcity[testStarted name='configuration value']" << std::endl;
+		std::cout << "##teamcity[" << ((*consumer == consumer_config) ? "testFinished" : "testFailed") << " name='configuration value']" << std::endl;
+
+		std::cout << "##teamcity[testSuiteFinished name='MessageReceiverConfiguration']" << std::endl;
 	}
 
 	{
+		std::cout << "##teamcity[testSuiteStarted name='MessageCountingReceiverConfiguration']" << std::endl;
+
 		boost::json::object::value_type message_receiver_config_json = *valueFromFile("test_message_counting_receiver.config").as_object().cbegin();
 		auto consumer = parser.createTestCaseReceiverConfig(message_receiver_config_json.key_c_str(), message_receiver_config_json.value().as_object());
 		auto consumer_config = MessageCountingReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine", 1);
 
-		assert(consumer != nullptr);
-		assert(dynamic_cast<MessageCountingReceiverConfiguration*>(consumer) != nullptr);
-		assert(*dynamic_cast<MessageCountingReceiverConfiguration*>(consumer) == consumer_config);
+		std::cout << "##teamcity[testStarted name='parserTest']" << std::endl;
+		std::cout << "##teamcity[" << ((consumer != nullptr) ? "testFinished" : "testFailed") << " name='parserTest MessageReceiverConfiguration']" << std::endl;
+
+		std::cout << "##teamcity[testStarted name='configuration cast']" << std::endl;
+		std::cout << "##teamcity[" << ((dynamic_cast<MessageCountingReceiverConfiguration*>(consumer)) ? "testFinished" : "testFailed") << " name='configuration cast']" << std::endl;
+
+		std::cout << "##teamcity[testStarted name='configuration value']" << std::endl;
+		std::cout << "##teamcity[" << ((*dynamic_cast<MessageCountingReceiverConfiguration*>(consumer) == consumer_config) ? "testFinished" : "testFailed") << " name='configuration value']" << std::endl;
+		
+		std::cout << "##teamcity[testSuiteFinished name='MessageCountingReceiverConfiguration']" << std::endl;
 
 	}
 
 	{
+		std::cout << "##teamcity[testSuiteStarted name='FileMessageReceiverConfiguration']" << std::endl;
+
 		boost::json::object::value_type message_receiver_config_json = *valueFromFile("test_message_receiver_to_file.config").as_object().cbegin();
 		auto consumer = parser.createTestCaseReceiverConfig(message_receiver_config_json.key_c_str(), message_receiver_config_json.value().as_object());
 		auto consumer_config = FileMessageReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine", "test_messages.txt");
 
+		std::cout << "##teamcity[testStarted name='parserTest']" << std::endl;
+		std::cout << "##teamcity[" << ((consumer != nullptr) ? "testFinished" : "testFailed") << " name='parserTest MessageReceiverConfiguration']" << std::endl;
 
-		assert(consumer != nullptr);
-		assert(dynamic_cast<FileMessageReceiverConfiguration*>(consumer) != nullptr);
-		assert(*dynamic_cast<FileMessageReceiverConfiguration*>(consumer) == consumer_config);
+		std::cout << "##teamcity[testStarted name='configuration cast']" << std::endl;
+		std::cout << "##teamcity[" << ((dynamic_cast<FileMessageReceiverConfiguration*>(consumer)) ? "testFinished" : "testFailed") << " name='configuration cast']" << std::endl;
+
+		std::cout << "##teamcity[testStarted name='configuration value']" << std::endl;
+		std::cout << "##teamcity[" << ((*dynamic_cast<FileMessageReceiverConfiguration*>(consumer) == consumer_config) ? "testFinished" : "testFailed") << " name='configuration value']" << std::endl;
+
+		std::cout << "##teamcity[testSuiteFinished name='FileMessageReceiverConfiguration']" << std::endl;
 	}
 
 	{
+		std::cout << "##teamcity[testSuiteStarted name='MessageDecoratingReceiverConfiguration']" << std::endl;
+
 		boost::json::object::value_type message_receiver_config_json = *valueFromFile("test_message_decorating_receiver.config").as_object().cbegin();
 		auto consumer = parser.createTestCaseReceiverConfig(message_receiver_config_json.key_c_str(), message_receiver_config_json.value().as_object());
 		auto consumer_config = MessageDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine", { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
 
-		assert(consumer != nullptr);
-		assert(dynamic_cast<MessageDecoratingReceiverConfiguration*>(consumer) != nullptr);
-		assert(*dynamic_cast<MessageDecoratingReceiverConfiguration*>(consumer) == consumer_config);
+		std::cout << "##teamcity[testStarted name='parserTest']" << std::endl;
+		std::cout << "##teamcity[" << ((consumer != nullptr) ? "testFinished" : "testFailed") << " name='parserTest MessageReceiverConfiguration']" << std::endl;
+
+		std::cout << "##teamcity[testStarted name='configuration cast']" << std::endl;
+		std::cout << "##teamcity[" << ((dynamic_cast<MessageDecoratingReceiverConfiguration*>(consumer)) ? "testFinished" : "testFailed") << " name='configuration cast']" << std::endl;
+
+		std::cout << "##teamcity[testStarted name='configuration value']" << std::endl;
+		std::cout << "##teamcity[" << ((*dynamic_cast<MessageDecoratingReceiverConfiguration*>(consumer) == consumer_config) ? "testFinished" : "testFailed") << " name='configuration value']" << std::endl;
+
+		std::cout << "##teamcity[testSuiteFinished name='MessageDecoratingReceiverConfiguration']" << std::endl;
 	}
 
 
 	{
+		std::cout << "##teamcity[testSuiteStarted name='FileMessageDecoratingReceiverConfiguration']" << std::endl;
+
 		boost::json::object::value_type message_receiver_config_json = *valueFromFile("test_message_decorating_receiver_to_file.config").as_object().cbegin();
 		auto consumer = parser.createTestCaseReceiverConfig(message_receiver_config_json.key_c_str(), message_receiver_config_json.value().as_object());
 		auto consumer_config = FileMessageDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine", "test_messages.txt", { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
 
-		assert(consumer != nullptr);
-		assert(dynamic_cast<FileMessageDecoratingReceiverConfiguration*>(consumer) != nullptr);
-		assert(*dynamic_cast<FileMessageDecoratingReceiverConfiguration*>(consumer) == consumer_config);
+		std::cout << "##teamcity[testStarted name='parserTest']" << std::endl;
+		std::cout << "##teamcity[" << ((consumer != nullptr) ? "testFinished" : "testFailed") << " name='parserTest MessageReceiverConfiguration']" << std::endl;
+
+		std::cout << "##teamcity[testStarted name='configuration cast']" << std::endl;
+		std::cout << "##teamcity[" << ((dynamic_cast<FileMessageDecoratingReceiverConfiguration*>(consumer)) ? "testFinished" : "testFailed") << " name='configuration cast']" << std::endl;
+
+		std::cout << "##teamcity[testStarted name='configuration value']" << std::endl;
+		std::cout << "##teamcity[" << ((*dynamic_cast<FileMessageDecoratingReceiverConfiguration*>(consumer) == consumer_config) ? "testFinished" : "testFailed") << " name='configuration value']" << std::endl;
+
+		std::cout << "##teamcity[testSuiteFinished name='FileMessageDecoratingReceiverConfiguration']" << std::endl;
 	}
 
 	{
+		std::cout << "##teamcity[testSuiteStarted name='FileMessageCountingReceiverConfiguration']" << std::endl;
+
 		boost::json::object::value_type message_receiver_config_json = *valueFromFile("test_message_counting_receiver_to_file.config").as_object().cbegin();
 		auto consumer = parser.createTestCaseReceiverConfig(message_receiver_config_json.key_c_str(), message_receiver_config_json.value().as_object());
 		auto consumer_config = FileMessageCountingReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine", "test_messages.txt", 1);
 
-		assert(consumer != nullptr);
-		assert(dynamic_cast<FileMessageCountingReceiverConfiguration*>(consumer) != nullptr);
-		assert(*dynamic_cast<FileMessageCountingReceiverConfiguration*>(consumer) == consumer_config);
+		std::cout << "##teamcity[testStarted name='parserTest']" << std::endl;
+		std::cout << "##teamcity[" << ((consumer != nullptr) ? "testFinished" : "testFailed") << " name='parserTest MessageReceiverConfiguration']" << std::endl;
+
+		std::cout << "##teamcity[testStarted name='configuration cast']" << std::endl;
+		std::cout << "##teamcity[" << ((dynamic_cast<FileMessageCountingReceiverConfiguration*>(consumer)) ? "testFinished" : "testFailed") << " name='configuration cast']" << std::endl;
+
+		std::cout << "##teamcity[testStarted name='configuration value']" << std::endl;
+		std::cout << "##teamcity[" << ((*dynamic_cast<FileMessageCountingReceiverConfiguration*>(consumer) == consumer_config) ? "testFinished" : "testFailed") << " name='configuration value']" << std::endl;
+
+		std::cout << "##teamcity[testSuiteFinished name='FileMessageCountingReceiverConfiguration']" << std::endl;
 	}
 
 	{
+		std::cout << "##teamcity[testSuiteStarted name='MessageCountingDecoratingReceiverConfiguration']" << std::endl;
+
 		boost::json::object::value_type message_receiver_config_json = *valueFromFile("test_message_decorating_counting_receiver.config").as_object().cbegin();
 		auto consumer = parser.createTestCaseReceiverConfig(message_receiver_config_json.key_c_str(), message_receiver_config_json.value().as_object());
 		auto consumer_config = MessageCountingDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine",  1, { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
 
-		assert(consumer != nullptr);
-		assert(dynamic_cast<MessageCountingDecoratingReceiverConfiguration*>(consumer) != nullptr);
-		assert(*dynamic_cast<MessageCountingDecoratingReceiverConfiguration*>(consumer) == consumer_config);
+		std::cout << "##teamcity[testStarted name='parserTest']" << std::endl;
+		std::cout << "##teamcity[" << ((consumer != nullptr) ? "testFinished" : "testFailed") << " name='parserTest MessageReceiverConfiguration']" << std::endl;
+
+		std::cout << "##teamcity[testStarted name='configuration cast']" << std::endl;
+		std::cout << "##teamcity[" << ((dynamic_cast<MessageCountingDecoratingReceiverConfiguration*>(consumer)) ? "testFinished" : "testFailed") << " name='configuration cast']" << std::endl;
+
+		std::cout << "##teamcity[testStarted name='configuration value']" << std::endl;
+		std::cout << "##teamcity[" << ((*dynamic_cast<MessageCountingDecoratingReceiverConfiguration*>(consumer) == consumer_config) ? "testFinished" : "testFailed") << " name='configuration value']" << std::endl;
+
+		std::cout << "##teamcity[testSuiteFinished name='MessageCountingDecoratingReceiverConfiguration']" << std::endl;
 	}
 
 	{
+		std::cout << "##teamcity[testSuiteStarted name='FileMessageCountingDecoratingReceiverConfiguration']" << std::endl;
+
 		boost::json::object::value_type message_receiver_config_json = *valueFromFile("test_message_decorating_counting_receiver_to_file.config").as_object().cbegin();
 		auto consumer = parser.createTestCaseReceiverConfig(message_receiver_config_json.key_c_str(), message_receiver_config_json.value().as_object());
 		auto consumer_config = FileMessageCountingDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine", "test_messages.txt", 1, { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
 
-		assert(consumer != nullptr);
-		assert(dynamic_cast<FileMessageCountingDecoratingReceiverConfiguration*>(consumer) != nullptr);
-		assert(*dynamic_cast<FileMessageCountingDecoratingReceiverConfiguration*>(consumer) == consumer_config);
+		std::cout << "##teamcity[testStarted name='parserTest']" << std::endl;
+		std::cout << "##teamcity[" << ((consumer != nullptr) ? "testFinished" : "testFailed") << " name='parserTest MessageReceiverConfiguration']" << std::endl;
+
+		std::cout << "##teamcity[testStarted name='configuration cast']" << std::endl;
+		std::cout << "##teamcity[" << ((dynamic_cast<FileMessageCountingDecoratingReceiverConfiguration*>(consumer)) ? "testFinished" : "testFailed") << " name='configuration cast']" << std::endl;
+
+		std::cout << "##teamcity[testStarted name='configuration value']" << std::endl;
+		std::cout << "##teamcity[" << ((*dynamic_cast<FileMessageCountingDecoratingReceiverConfiguration*>(consumer) == consumer_config) ? "testFinished" : "testFailed") << " name='configuration value']" << std::endl;
+
+		std::cout << "##teamcity[testSuiteFinished name='FileMessageCountingDecoratingReceiverConfiguration']" << std::endl;
 	}
 	
 
-
+	if (argc == 1)
+		return 0;
 	
 
 	{

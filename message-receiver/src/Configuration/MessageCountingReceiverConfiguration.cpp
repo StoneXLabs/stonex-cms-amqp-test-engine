@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 StoneX Financial Ltd.
+ * Copyright 2023 StoneX Financial Ltd.
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-#include "MessageCountingReceiverConfiguration.h"
+#include <Configuration/MessageCountingReceiverConfiguration.h>
 
 MessageCountingReceiverConfiguration::MessageCountingReceiverConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& consumerId, const std::string& messageType, const std::string& receiverType, long long message_count)
 	:MessageReceiverConfiguration(connectionId, sessionId,consumerId, messageType, receiverType),

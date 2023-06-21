@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 StoneX Financial Ltd.
+ * Copyright 2023 StoneX Financial Ltd.
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,14 +18,14 @@
  */
 
 #pragma once
-#include <Configuration/MessageReceiverConfiguration.h>
-#include <utils/MessageFile.h>
 
-class FileMessageReceiverConfiguration : public MessageReceiverConfiguration, public MessageFile
+#include <Configuration/MessageReceiverConfiguration.h>
+#include <utils/EventCounter.h>
+
+class MessageCountingReceiverConfiguration : public MessageReceiverConfiguration, public EventCounter
 {
 public:
-	FileMessageReceiverConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& consumerId, const std::string& messageType, const std::string& receiverType, const std::string& message_file);
-	friend bool operator== (const FileMessageReceiverConfiguration& lhs, const FileMessageReceiverConfiguration& rhs);
-
+	MessageCountingReceiverConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& consumerId, const std::string& messageType, const std::string& receiverType, long long message_count);
+	friend bool operator== (const MessageCountingReceiverConfiguration& lhs, const MessageCountingReceiverConfiguration& rhs);
 };
 
