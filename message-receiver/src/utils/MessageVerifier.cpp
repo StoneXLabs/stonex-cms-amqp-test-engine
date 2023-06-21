@@ -44,12 +44,12 @@ void MessageVerifier::verify(const cms::Message* message) const
 		{
 			auto t = mVerifierFactory.create(message, item);
 			if (!t)
-				mParent.testEvent(EventStatus(false, mId, fmt::format("expected message field missing {} {}", to_string(item->expectedField()), item->fieldName())));
+				mParent.testEvent(EventStatus(false, mId, fmt::format("{} expected message field missing {} {}", mId, to_string(item->expectedField()), item->fieldName())));
 			else
 				delete t;
 		}
 		else 
-			mParent.testEvent(EventStatus(false, mId, fmt::format("not initialized verifier")));
+			mParent.testEvent(EventStatus(false, mId, fmt::format("{} not initialized verifier", mId)));
 
 	});
 }

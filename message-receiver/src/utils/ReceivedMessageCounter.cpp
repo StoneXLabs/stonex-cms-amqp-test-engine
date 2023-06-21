@@ -49,9 +49,9 @@ ReceivedMessageCounter::ReceivedMessageCounter(ReceivedMessageCounter && other)
 ReceivedMessageCounter::~ReceivedMessageCounter()
 {
 	if (expectedEventCount() == mReceivedMessagesCount)
-		mParent.testEvent(EventStatus(true, mId, fmt::format("expected message count reached [{}/{}]", receivedMessageCount(), expectedEventCount())));
+		mParent.testEvent(EventStatus(true, mId, fmt::format("{} expected message count reached [{}/{}]", mId, receivedMessageCount(), expectedEventCount())));
 	else if (expectedEventCount() > mReceivedMessagesCount)
-		mParent.testEvent(EventStatus(false, mId, fmt::format("missing {} messages. received [{}/{}]", expectedEventCount() - receivedMessageCount(), receivedMessageCount(), expectedEventCount())));
+		mParent.testEvent(EventStatus(false, mId, fmt::format("{} missing {} messages. received [{}/{}]", mId, expectedEventCount() - receivedMessageCount(), receivedMessageCount(), expectedEventCount())));
 
 }
 
@@ -67,7 +67,7 @@ void ReceivedMessageCounter::incrementReceivedCount()
 		std::thread(mReceivedAllCallback).detach();
 	else if (mReceivedMessagesCount > expectedEventCount())
 	{
-		mParent.testEvent(EventStatus(false, mId, fmt::format("expected message count exceeded [{}/{}]", receivedMessageCount(), expectedEventCount())));
+		mParent.testEvent(EventStatus(false, mId, fmt::format("{} expected message count exceeded [{}/{}]", mId, receivedMessageCount(), expectedEventCount())));
 		std::thread(mReceivedAllCallback).detach();
 	}
 }
