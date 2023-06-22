@@ -30,7 +30,7 @@ void Notifier::testEvent(const EventStatus& event)
 	if (mReporter)
 	{
 		if (!event.correct())
-			mReporter->onMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR, " [" + event.eventSource() + "] ", event.errorMessage()));
+			mReporter->onMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR,event.eventSource(), event.errorMessage()));
 	}
 }
 

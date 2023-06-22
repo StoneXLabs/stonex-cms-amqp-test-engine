@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+ 
 #include <string>
 #include <Notifier/TeamCityTestObserver.h>
 
@@ -25,19 +25,23 @@ void TeamCityTestObserver::onMessage(const NotifyMessage& report)
 	switch (auto s = report.messageType())
 	{
 	case REPORT_MESSAGE_TYPE::TEST_SUITE_START:
+		mNotifierInfo["testSuiteName"] = report.source();
 		std::cout << "##teamcity[testSuiteStarted name='" << report.source() << "']" << std::endl;
 		break;
 	case REPORT_MESSAGE_TYPE::TEST_SUITE_END:
+		mNotifierInfo["testSuiteName"] = "";
 		std::cout << "##teamcity[testSuiteFinished name='" << report.source() << "']" << std::endl;
 		break;
 	case REPORT_MESSAGE_TYPE::TEST_START:
+		mNotifierInfo["testCaseName"] = report.source();
 		std::cout << "##teamcity[testStarted name='"<< report.source()<<"']" << std::endl;
 		break;
 	case REPORT_MESSAGE_TYPE::TEST_END:
+		mNotifierInfo["testCaseName"] = "";
 		std::cout << "##teamcity[testFinished name='" << report.source() <<  "' " << report.message() <<"]" << std::endl;
 		break;
 	case REPORT_MESSAGE_TYPE::TEST_ERROR:
-		std::cout << "##teamcity[testFailed name='" << report.source() << "' message='"<<report.message()<<"' details='message and stack trace']" << std::endl;
+		std::cout << "##teamcity[testFailed name='" << mNotifierInfo["testCaseName"] << "' message='"<<report.message()<<"' details='message and stack trace']" << std::endl;
 		mErrorCount++;
 		break;
 	case REPORT_MESSAGE_TYPE::TEST_SUCCESS:
