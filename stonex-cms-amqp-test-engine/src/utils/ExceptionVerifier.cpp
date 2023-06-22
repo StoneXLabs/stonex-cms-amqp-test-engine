@@ -44,7 +44,7 @@ ExceptionVerifier::ExceptionVerifier(ExceptionVerifier && other)
 ExceptionVerifier::~ExceptionVerifier()
 {
 	if (expectedEventCount() > mCaughtExceptionCount)
-		mParent.testEvent(EventStatus(false, mId, fmt::format("missing {} exceptions. received [{}/{}]", expectedEventCount() - mCaughtExceptionCount, mCaughtExceptionCount, expectedEventCount())));
+		mParent.testEvent(EventStatus(false, mId, fmt::format("{} missing {} exceptions. received [{}/{}]", mId, expectedEventCount() - mCaughtExceptionCount, mCaughtExceptionCount, expectedEventCount())));
 
 }
 
@@ -57,7 +57,7 @@ void ExceptionVerifier::incrementCaughtExceptionCount()
 {
 	mCaughtExceptionCount++;
 	if (mCaughtExceptionCount > expectedEventCount())
-		mParent.testEvent(EventStatus(false, mId, fmt::format("expected exceptions count exceeded [{}/{}]", mCaughtExceptionCount, expectedEventCount())));
+		mParent.testEvent(EventStatus(false, mId, fmt::format("{} expected exceptions count exceeded [{}/{}]", mId, mCaughtExceptionCount, expectedEventCount())));
 
 }
 

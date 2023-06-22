@@ -21,6 +21,7 @@
 
 #include <iostream>
 #include <vector>
+#include <map>
 #include "TestObserver.h"
 
 class TeamCityTestObserver : public TestObserver
@@ -31,5 +32,6 @@ public:
 
 private:
 	long long mErrorCount{0};
+	std::map<std::string, std::string> mNotifierInfo{{"testSuiteName",""},{"testCaseName",""}};
 };
 

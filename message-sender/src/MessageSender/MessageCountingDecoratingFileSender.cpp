@@ -110,7 +110,7 @@ std::string MessageCountingDecoratingFileSender::createMessageBody()
 	}
 	catch (const std::exception&)
 	{
-		mParent.testEvent(EventStatus(false, mId, fmt::format("can not read line from file")));
+		mParent.testEvent(EventStatus(false, mId, fmt::format("{} can not read line from file", mId)));
 
 	}
 

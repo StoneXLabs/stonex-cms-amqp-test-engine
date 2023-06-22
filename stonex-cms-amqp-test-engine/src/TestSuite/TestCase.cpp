@@ -24,15 +24,17 @@ ITestCase::ITestCase(const std::string& testName, TestObserver * observer)
 	:mTestName{testName},
 	Notifier(observer)
 {
+
+	TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_START, mTestName, ""));
 }
 
 ITestCase::~ITestCase() {
 	if (mTestSuccess)
-		TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_SUCCESS, " [" + mTestName + "] ", ""));
+		TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_SUCCESS, mTestName , ""));
 	else
-		TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR, " [" + mTestName + "] ", "test failed"));
+		TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR, mTestName , "test failed"));
 
-	TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_END, " [" + mTestName + "] ", std::to_string(mTestDuration.count()) + " [ms]"));
+	TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_END, mTestName , std::to_string(mTestDuration.count()) + " [ms]"));
 
 }
 
@@ -40,7 +42,6 @@ void TestCase::run()
 {
 	if (mTestFunction) {
 
-		TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_START, mTestName, ""));
 
 		auto start = std::chrono::high_resolution_clock::now();
 		mTestFunction(&mTestedObject, &mTestPerformer);
@@ -72,10 +73,10 @@ TestCase::TestCase(const TestCaseConfiguration& test_config, MessageSenderFactor
 	if (test_config.enabled()) {
 		mTestFunction = functionRegister.getTestFunction(test_config.testFunctionName());
 		if (!mTestFunction)
-			TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR, " [" + mTestName + "] ", test_config.testFunctionName() + "not found"));
+			TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR, mTestName , test_config.testFunctionName() + "not found"));
 	}
 	else
-		TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR, " [" + mTestName + "] ", "test disabled by configuration"));
+		TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR, mTestName , "test disabled by configuration"));
 
 }
 
