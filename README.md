@@ -18,3 +18,6 @@ updated conan dependency stonex-cms-amqp-lib/0.2.2 -> 0.2.3
 updated license
 added unittests teamcity service messages
 
+[2.0.0]
+added waiting receiver
+

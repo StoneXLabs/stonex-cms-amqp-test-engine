@@ -26,5 +26,12 @@ void TestFunctionRegister::registerTestFunction(const std::string & func_name, c
 
 test_method TestFunctionRegister::getTestFunction(const std::string & func_name) const
 {
-	return mRegisteredTestFunctions.at(func_name);
+	try
+	{
+		return mRegisteredTestFunctions.at(func_name);
+	}
+	catch (const std::exception&)
+	{
+		return nullptr;
+	}
 }
