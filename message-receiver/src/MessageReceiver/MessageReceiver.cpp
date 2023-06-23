@@ -1,3 +1,4 @@
+#include "..\..\include\MessageReceiver\MessageReceiver.h"
 /*
  * Copyright 2023 StoneX Financial Ltd.
  *
@@ -17,6 +18,8 @@
  * limitations under the License.
  */
 
+#include <chrono>
+#include <thread>
 #include <MessageReceiver/MessageReceiverFactory.h>
 #include <Notifier/EventStatus.h>
 
@@ -46,6 +49,11 @@ void MessageReceiver::onMessage(const cms::Message* message) {
 		mListener->onMessage(message);
 	else
 		delete message;
+}
+
+void MessageReceiver::waitForMessage(long long millis) const
+{
+	std::this_thread::sleep_for(std::chrono::milliseconds(millis));
 }
 
 MESSAGE_TYPE MessageReceiver::fromString(const std::string & message_type_string)

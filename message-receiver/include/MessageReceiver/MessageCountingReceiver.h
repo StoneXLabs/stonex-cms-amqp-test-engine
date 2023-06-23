@@ -30,6 +30,7 @@ public:
 	virtual ~MessageCountingReceiver() = default;
 
 	void onMessage(const cms::Message* message) override;
+	void waitForMessage(long long millis = 0) const override;
 	
 };
 

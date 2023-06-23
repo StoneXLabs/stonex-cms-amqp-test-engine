@@ -39,3 +39,14 @@ void MessageCountingFileReceiver::onMessage(const cms::Message* message)
 		delete message;
 
 }
+
+void MessageCountingFileReceiver::waitForMessage(long long millis) const
+{
+	if (millis == 0) //wait forever  
+	{
+		while (receivedMessageCount() < expectedEventCount());
+	}
+	else {
+		std::this_thread::sleep_for(std::chrono::milliseconds(millis));
+	}
+}

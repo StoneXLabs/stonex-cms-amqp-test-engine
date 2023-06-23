@@ -30,6 +30,7 @@ public:
 	explicit MessageCountingDecoratingReceiver(const MessageCountingDecoratingReceiverConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent);
 	virtual ~MessageCountingDecoratingReceiver() = default;
 	void onMessage(const cms::Message* message) override;
+	virtual void waitForMessage(long long millis = 0) const override;
 	
 };
 

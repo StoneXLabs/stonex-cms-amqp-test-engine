@@ -26,9 +26,9 @@
 
 class CMSClientTestUnit;
 class TestCasePerformer;
-class TestMessageReceiver;
+class TestCaseVerifier;
 
-using test_method = std::function<TEST_CASE_STATUS(CMSClientTestUnit*, TestCasePerformer*)>;
+using test_method = std::function<TEST_CASE_STATUS(CMSClientTestUnit*, TestCasePerformer*, TestCaseVerifier*)>;
 
 class TestFunctionRegister
 {

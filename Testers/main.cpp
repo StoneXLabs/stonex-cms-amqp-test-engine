@@ -51,7 +51,7 @@
 #include <MessageReceiver/MessageCountingDecoratingReceiver.h>
 #include <MessageReceiver/MessageCountingDecoratingFileReceiver.h>
 #include <Notifier/EventStatusObserver.h>
-#include <Notifier/TestNotifier.h>
+#include <Notifier/Notifier.h>
 #include <StdOutLogger/StdOutLogger.h>
 
 class TestMessageSender : public MessageSender
@@ -103,12 +103,14 @@ int main()
 		auto wrapper_config = WrapperConfiguration(std::vector< ConnectionConfiguration>({ connection_config }));
 
 		auto logger = std::make_shared<StdOutLogger>();
-		CMSClientTestUnit test_client(wrapper_config, logger);
 
 		Notifier event_notifier(nullptr);
 		EventStatusObserver event_observer(event_notifier);
 
 		{
+
+			CMSClientTestUnit test_client(wrapper_config, logger);
+
 			class TestMessageSender : public MessageSender
 			{
 			public:
@@ -134,12 +136,15 @@ int main()
 
 			assert(test_listener.check() == false);
 			sender.sendMessage();
-			std::this_thread::sleep_for(std::chrono::milliseconds(100));
+			receiver.waitForMessage(500);
 			assert(test_listener.check() == true);
 
 		}
 
 		{
+
+			CMSClientTestUnit test_client(wrapper_config, logger);
+
 			class TestMessageSender : public MessageSender
 			{
 			public:
@@ -163,12 +168,15 @@ int main()
 
 			assert(receiver.receivedMessageCount() == 0);
 			sender.sendMessage();
-			std::this_thread::sleep_for(std::chrono::milliseconds(100));
+			receiver.waitForMessage();
 			assert(receiver.receivedMessageCount() == receiver.expectedEventCount());
 
 		}
 
 		{
+
+			CMSClientTestUnit test_client(wrapper_config, logger);
+
 			class TestMessageSender : public MessageSender
 			{
 			public:
@@ -189,18 +197,21 @@ int main()
 			auto test_consumer_config = FileMessageReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine", "test_message_out.txt");
 			MessageFileReceiver receiver(test_consumer_config, test_client, event_notifier);
 
-
+			
 			TestMessageListener test_listener;
 			receiver.setMessageListener(&test_listener);
 
 			assert(test_listener.check() == false);
 			sender.sendMessage();
-			std::this_thread::sleep_for(std::chrono::milliseconds(100));
+			receiver.waitForMessage(500);
 			assert(test_listener.check() == true);
 
 		}
 
 		{
+
+			CMSClientTestUnit test_client(wrapper_config, logger);
+
 			class TestMessageSender : public MessageSender
 			{
 			public:
@@ -223,12 +234,15 @@ int main()
 
 			assert(receiver.receivedMessageCount() == 0);
 			sender.sendMessage();
-			std::this_thread::sleep_for(std::chrono::milliseconds(100));
+			receiver.waitForMessage();
 			assert(receiver.receivedMessageCount() == receiver.expectedEventCount());
 
 		}
 
 		{
+
+			CMSClientTestUnit test_client(wrapper_config, logger);
+
 			class TestMessageSender : public MessageSender
 			{
 			public:
@@ -246,12 +260,12 @@ int main()
 			auto test_producer_config = MessageSenderConfiguration("connection1", "session1", "producer1", "text", "engine");
 			TestMessageSender sender(test_producer_config, test_client, event_notifier);
 
-			auto test_consumer_config = FileMessageCountingDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine", "test_message_out.txt", 1, {new MessageTestField(FIELD_TYPE::BOOLEANPROPERTY, "property", "false")});
+			auto test_consumer_config = FileMessageCountingDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine", "test_message_out.txt", 1, {new MessageField(FIELD_TYPE::BOOLEANPROPERTY, "property", "false")});
 			MessageCountingDecoratingFileReceiver receiver(test_consumer_config, test_client, event_notifier);
 
 			assert(receiver.receivedMessageCount() == 0);
 			sender.sendMessage();
-			std::this_thread::sleep_for(std::chrono::milliseconds(100));
+			receiver.waitForMessage();
 			assert(receiver.receivedMessageCount() == receiver.expectedEventCount());
 
 		}

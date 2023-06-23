@@ -31,6 +31,7 @@ public:
 	explicit MessageCountingDecoratingFileReceiver(const FileMessageCountingDecoratingReceiverConfiguration& config, CMSClientTestUnit & client_params, Notifier& parent);
 	virtual ~MessageCountingDecoratingFileReceiver() = default;
 	void onMessage(const cms::Message* message) override;
+	void waitForMessage(long long millis = 0) const override;
 
 };
 
