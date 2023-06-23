@@ -44,7 +44,7 @@ void TestCase::run()
 
 
 		auto start = std::chrono::high_resolution_clock::now();
-		mTestFunction(&mTestedObject, &mTestPerformer);
+		mTestFunction(&mTestedObject, &mTestPerformer, &mTestVerifier);
 		auto end = std::chrono::high_resolution_clock::now();
 
 		mTestDuration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);

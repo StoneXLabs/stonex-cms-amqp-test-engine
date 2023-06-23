@@ -43,7 +43,7 @@ void TestCaseVerifier::waitForMessages(long long millis, const std::string & con
 	if(consumer.empty())
 		std::for_each(std::begin(mReceivers), std::end(mReceivers), [millis](MessageReceiver* item) {item->waitForMessage(millis); });
 	else {
-		auto found = std::find_if(std::begin(mReceivers), std::end(mReceivers), [consumer, millis](MessageReceiver* item) {item->id() == consumer; });
+		auto found = std::find_if(std::begin(mReceivers), std::end(mReceivers), [consumer, millis](MessageReceiver* item) {return item->id() == consumer; });
 		if (found != std::end(mReceivers))
 			(*found)->waitForMessage(millis);
 	}
