@@ -20,7 +20,6 @@
 #include <utils/ReceivedMessageCounter.h>
 #include <Notifier/Notifier.h>
 #include <fmt/format.h>
-#include <mutex>
 
 ReceivedMessageCounter::ReceivedMessageCounter(const std::string &id, long long expected_message_count, Notifier & parent)
 	:EventCounter(expected_message_count),
@@ -58,14 +57,11 @@ ReceivedMessageCounter::~ReceivedMessageCounter()
 
 long long ReceivedMessageCounter::receivedMessageCount() const
 {
-	std::unique_lock<std::mutex> lk(mCounterMutex);
 	return mReceivedMessagesCount;
 }
 
 void ReceivedMessageCounter::incrementReceivedCount()
 {
-	std::unique_lock<std::mutex> lk(mCounterMutex);
-
 	mReceivedMessagesCount++;
 	if (mReceivedMessagesCount == expectedEventCount())
 		std::thread(mReceivedAllCallback).detach();
@@ -78,7 +74,6 @@ void ReceivedMessageCounter::incrementReceivedCount()
 
 void ReceivedMessageCounter::registerCallback(std::function<void(void)> callback)
 {
-	std::unique_lock<std::mutex> lk(mCounterMutex);
 	mReceivedAllCallback = callback;
 	if (mReceivedMessagesCount >= expectedEventCount())
 		callback();

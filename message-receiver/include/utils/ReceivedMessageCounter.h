@@ -41,6 +41,5 @@ private:
 	const std::string mId;
 	Notifier &mParent;
 	std::function<void(void)> mReceivedAllCallback = []() {};
-	mutable std::mutex mCounterMutex;
 };
 
