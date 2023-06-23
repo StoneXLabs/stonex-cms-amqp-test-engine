@@ -38,21 +38,6 @@ ITestCase::~ITestCase() {
 
 }
 
-void TestCase::run()
-{
-	if (mTestFunction) {
-
-
-		auto start = std::chrono::high_resolution_clock::now();
-		mTestFunction(&mTestedObject, &mTestPerformer);
-		auto end = std::chrono::high_resolution_clock::now();
-
-		mTestDuration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-
-	}
-
-}
-
 void ITestCase::testEvent(const EventStatus & event)
 {
 	Notifier::testEvent(event);
@@ -73,10 +58,24 @@ TestCase::TestCase(const TestCaseConfiguration& test_config, MessageSenderFactor
 	if (test_config.enabled()) {
 		mTestFunction = functionRegister.getTestFunction(test_config.testFunctionName());
 		if (!mTestFunction)
-			TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR, mTestName , test_config.testFunctionName() + "not found"));
+			TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR, mTestName , test_config.testFunctionName() + " not found"));
 	}
 	else
-		TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR, mTestName , "test disabled by configuration"));
+		TestMessage(NotifyMessage(REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_IGNORED, mTestName , "test disabled by configuration"));
 
 }
 
+void TestCase::run()
+{
+	if (mTestFunction) {
+
+
+		auto start = std::chrono::high_resolution_clock::now();
+		mTestFunction(&mTestedObject, &mTestPerformer, &mTestVerifier);
+		auto end = std::chrono::high_resolution_clock::now();
+
+		mTestDuration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+
+	}
+
+}

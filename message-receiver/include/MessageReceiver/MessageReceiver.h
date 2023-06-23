@@ -37,7 +37,7 @@ public:
 	std::string id() const;
 
 	virtual void onMessage(const cms::Message* message) override;
-	
+	virtual void waitForMessage(long long millis = 0) const;
 
 protected:
 	MESSAGE_TYPE fromString(const std::string& message_type_string);

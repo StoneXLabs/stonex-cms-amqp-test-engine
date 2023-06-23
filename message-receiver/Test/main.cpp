@@ -249,7 +249,6 @@ int main(int argc, char *argv[])
 			auto test_consumer_config = MessageCountingReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine",1);
 			MessageCountingReceiver receiver(test_consumer_config, test_client, event_notifier);
 			
-			//assert(receiver.receivedMessageCount() == 1);
 		}
 
 		{
@@ -269,7 +268,6 @@ int main(int argc, char *argv[])
 			auto test_consumer_config = FileMessageCountingReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine", "message_file.txt", 1);
 			MessageCountingFileReceiver receiver(test_consumer_config, test_client, event_notifier);
 			
-			//assert(receiver.receivedMessageCount() == 1);
 		}
 
 		{
@@ -277,7 +275,6 @@ int main(int argc, char *argv[])
 			auto test_consumer_config = MessageCountingDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine", 1, { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
 			MessageCountingDecoratingReceiver receiver(test_consumer_config, test_client, event_notifier);
 			
-			//assert(receiver.receivedMessageCount() == 1);
 		}
 
 		{
@@ -290,7 +287,6 @@ int main(int argc, char *argv[])
 			auto test_consumer_config = FileMessageCountingDecoratingReceiverConfiguration("connection1", "session1", "consumer1", "text", "engine", "message_file.txt", 1, { new MessageField(FIELD_TYPE::BOOLEANPROPERTY,"property","false") });
 			MessageCountingDecoratingFileReceiver receiver(test_consumer_config, test_client, event_notifier);
 			
-			//assert(receiver.receivedMessageCount() == 1);
 		}
 
 

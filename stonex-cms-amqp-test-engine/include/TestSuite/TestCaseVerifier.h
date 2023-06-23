@@ -32,6 +32,8 @@ public:
 	TestCaseVerifier(const TestCaseVerifierConfiguration& params, CMSClientTestUnit& client_params, Notifier& notifier, MessageReceiverFactory* receiverFactory);
 	~TestCaseVerifier();
 
+	void waitForMessages(long long millis = 0, const std::string& consumer = "");
+	
 private:
 	std::vector<MessageReceiver*> mReceivers;
 };
