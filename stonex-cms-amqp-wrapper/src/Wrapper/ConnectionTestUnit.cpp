@@ -30,7 +30,7 @@ ConnectionTestUnit::ConnectionTestUnit(const ConnectionConfiguration& params, st
 	if (!params.user().empty() && !params.password().empty())
 	{
 
-		auto factory = connectionFactory(params.url());
+		auto factory = cms::amqp::CMSConnectionFactory::createCMSConnectionFactory(params.url());
 		
 		if (auto log_source = dynamic_cast<StonexLogSource*>(factory); log_source != nullptr && logger != nullptr)
 			logger->attach("connection factory", log_source);
@@ -249,9 +249,4 @@ ProducerTestUnit* const ConnectionTestUnit::producer(const std::string &id) {
 	}
 
 	return found;
-}
-
-cms::ConnectionFactory * ConnectionTestUnit::connectionFactory(const std::string & url)
-{
-	return cms::amqp::CMSConnectionFactory::createCMSConnectionFactory(url);
 }

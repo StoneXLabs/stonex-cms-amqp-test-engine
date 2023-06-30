@@ -34,6 +34,7 @@ CMSClientTestUnit::CMSClientTestUnit(const WrapperConfiguration & config, std::s
 
 CMSClientTestUnit::~CMSClientTestUnit()
 {
+//	std::for_each(std::begin(mConnections), std::end(mConnections), [this](const ConnectionTestUnit& item) {});
 	mConnections.clear();
 }
 

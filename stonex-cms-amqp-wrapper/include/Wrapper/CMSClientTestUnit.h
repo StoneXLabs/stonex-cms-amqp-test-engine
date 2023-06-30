@@ -48,9 +48,6 @@ public:
 	ConsumerTestUnit* const consumer(const std::string &connectionId,const std::string &sessionId,const std::string &id);
 	ProducerTestUnit* const producer(const std::string &connectionId,const std::string &sessionId,const std::string &id);
 	
-protected:
-
-
 private:
 	std::vector<ConnectionTestUnit> mConnections;
 };
