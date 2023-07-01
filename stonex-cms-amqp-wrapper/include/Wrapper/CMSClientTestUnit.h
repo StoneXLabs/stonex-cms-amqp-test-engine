@@ -34,7 +34,6 @@ public:
 	CMSClientTestUnit(const CMSClientTestUnit& other) = delete;
 	~CMSClientTestUnit();
 
-	void addConnection(const ConnectionConfiguration* params, std::shared_ptr<StonexLogger> logger, cms::ExceptionListener* factoryExceptionListener, cms::ExceptionListener* connectionExceptionListener, cms::ExceptionListener* sessionExceptionListener);
 	void startConnection(const std::string& id);
 	void closeConnection(const std::string& id);
 	void startConnections();
@@ -42,16 +41,17 @@ public:
 
 	void closeSessions();
 
-	std::vector<ConnectionTestUnit>& connections();
+	std::vector<ConnectionTestUnit*> connections();
 	ConnectionTestUnit* const connection(const std::string &id);
 	SessionTestUnit* const session(const std::string &connectionId, const std::string &id);
 	ConsumerTestUnit* const consumer(const std::string &connectionId,const std::string &sessionId,const std::string &id);
 	ProducerTestUnit* const producer(const std::string &connectionId,const std::string &sessionId,const std::string &id);
 	
 protected:
-
+	void addConnection(const ConnectionConfiguration* params, std::shared_ptr<StonexLogger> logger, cms::ExceptionListener* factoryExceptionListener, cms::ExceptionListener* connectionExceptionListener, cms::ExceptionListener* sessionExceptionListener);
+	virtual ConnectionTestUnit* createConnection(const ConnectionConfiguration* params, std::shared_ptr<StonexLogger> logger, cms::ExceptionListener* factoryExceptionListener, cms::ExceptionListener* connectionExceptionListener, cms::ExceptionListener* sessionExceptionListener);
 
 private:
-	std::vector<ConnectionTestUnit> mConnections;
+	std::vector<ConnectionTestUnit*> mConnections;
 };
 
