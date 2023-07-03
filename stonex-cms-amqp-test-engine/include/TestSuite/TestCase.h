@@ -23,7 +23,6 @@
 #include <string>
 #include <Configuration/TestCaseConfiguration.h>
 #include <Wrapper/CMSClientTestUnit.h>
-#include <Notifier/Notifier.h>
 #include <MessageSender/MessageSenderFactory.h>
 #include <MessageReceiver/MessageReceiverFactory.h>
 #include "TestFunctionRegister.h"
@@ -31,27 +30,13 @@
 #include "TestCasePerformer.h"
 #include "TestCaseVerifier.h"
 #include "TestCaseExceptionVerifier.h"
-
-class ITestCase : public Notifier
-{
-public:
-	ITestCase(const std::string& testName, TestObserver* observer);
-	~ITestCase();
-	virtual void run() = 0;
-
-protected:
-	void testEvent(const EventStatus& event) override;
-protected:
-	const std::string mTestName;
-	bool mTestSuccess{ true };
-	std::chrono::milliseconds mTestDuration;
-};
+#include "ITestCase.h"
 
 class TestCase : public ITestCase
 {
 public:
 	TestCase(const TestCaseConfiguration& test_config, MessageSenderFactory* senderFactory, MessageReceiverFactory* receiverFactory, const TestFunctionRegister& functionRegister, TestObserver* observer, std::shared_ptr<StonexLogger> logger);
-	~TestCase() = default;
+	virtual ~TestCase() = default;
 	void run() override;
 private:
 	TestCaseExceptionVerifier mTestExceptionVerifier;

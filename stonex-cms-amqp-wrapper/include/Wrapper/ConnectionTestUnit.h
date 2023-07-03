@@ -20,6 +20,7 @@
 #pragma once
 
 #include <cms/Connection.h>
+#include <cms/ConnectionFactory.h>
 #include <logger/StoneXLogger.h>
 #include "../Configuration/ConnectionConfiguration.h"
 #include "SessionTestUnit.h"
@@ -59,6 +60,9 @@ public:
 	SessionTestUnit* const session(const std::string &id);
 	ConsumerTestUnit* const consumer(const std::string &id);
 	ProducerTestUnit* const producer(const std::string &id);
+
+protected:
+	virtual cms::ConnectionFactory* connectionFactory(const std::string& url);
 
 private:
 	const std::string mId;

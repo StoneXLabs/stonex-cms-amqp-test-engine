@@ -34,13 +34,12 @@ CMSClientTestUnit::CMSClientTestUnit(const WrapperConfiguration & config, std::s
 
 CMSClientTestUnit::~CMSClientTestUnit()
 {
-//	std::for_each(std::begin(mConnections), std::end(mConnections), [this](const ConnectionTestUnit& item) {});
 	mConnections.clear();
 }
 
 void CMSClientTestUnit::addConnection(const ConnectionConfiguration* params, std::shared_ptr<StonexLogger> logger, cms::ExceptionListener* factoryExceptionListener, cms::ExceptionListener* connectionExceptionListener, cms::ExceptionListener* sessionExceptionListener)
 {
-	auto existing_connection = std::find_if(std::begin(mConnections), std::end(mConnections), [params, factoryExceptionListener, connectionExceptionListener, sessionExceptionListener](ConnectionTestUnit& item) {return item.id() == params->key(); });
+	auto existing_connection = std::find_if(std::begin(mConnections), std::end(mConnections), [params, factoryExceptionListener, connectionExceptionListener, sessionExceptionListener](ConnectionTestUnit* item) {return item->id() == params->key(); });
 	if (existing_connection != mConnections.end())
 	{
 	}
@@ -48,8 +47,7 @@ void CMSClientTestUnit::addConnection(const ConnectionConfiguration* params, std
 	{
 		try
 		{
-			auto connection = ConnectionTestUnit(*params,logger, factoryExceptionListener, connectionExceptionListener, sessionExceptionListener);
-			mConnections.push_back(std::move(connection));
+			mConnections.push_back(createConnection(params, logger, factoryExceptionListener, connectionExceptionListener, sessionExceptionListener));
 
 		}
 		catch (const std::exception&)
@@ -60,38 +58,43 @@ void CMSClientTestUnit::addConnection(const ConnectionConfiguration* params, std
 	}
 }
 
+ConnectionTestUnit * CMSClientTestUnit::createConnection(const ConnectionConfiguration * params, std::shared_ptr<StonexLogger> logger, cms::ExceptionListener * factoryExceptionListener, cms::ExceptionListener * connectionExceptionListener, cms::ExceptionListener * sessionExceptionListener)
+{
+	return new ConnectionTestUnit(*params, logger, factoryExceptionListener, connectionExceptionListener, sessionExceptionListener);
+}
+
 void CMSClientTestUnit::startConnection(const std::string& id)
 {
-	std::for_each(std::begin(mConnections), std::end(mConnections), [id](ConnectionTestUnit& item) { return item.id() == id; });
+	std::for_each(std::begin(mConnections), std::end(mConnections), [id](ConnectionTestUnit* item) { return item->id() == id; });
 
 }
 
 void CMSClientTestUnit::closeConnection(const std::string& id)
 {
-	std::for_each(std::begin(mConnections), std::end(mConnections), [id](ConnectionTestUnit& item) { return item.id() == id; });
+	std::for_each(std::begin(mConnections), std::end(mConnections), [id](ConnectionTestUnit* item) { return item->id() == id; });
 
 }
 
 void CMSClientTestUnit::startConnections()
 {
-	std::for_each(std::begin(mConnections), std::end(mConnections), [](ConnectionTestUnit& item) { item.start(); });
+	std::for_each(std::begin(mConnections), std::end(mConnections), [](ConnectionTestUnit* item) { item->start(); });
 }
 
 void CMSClientTestUnit::closeConnections()
 {
-	std::for_each(std::begin(mConnections), std::end(mConnections), [](ConnectionTestUnit& item) { item.close(); });
+	std::for_each(std::begin(mConnections), std::end(mConnections), [](ConnectionTestUnit* item) { item->close(); });
 }
 
 void CMSClientTestUnit::closeSessions()
 {
-	std::for_each(std::begin(mConnections), std::end(mConnections), [](ConnectionTestUnit& item) {
-		std::for_each(std::begin(item.sessions()), std::end(item.sessions()), [](SessionTestUnit& session_item) {
+	std::for_each(std::begin(mConnections), std::end(mConnections), [](ConnectionTestUnit* item) {
+		std::for_each(std::begin(item->sessions()), std::end(item->sessions()), [](SessionTestUnit& session_item) {
 			session_item.close();
 		});
 	});
 }
 
-std::vector<ConnectionTestUnit>& CMSClientTestUnit::connections()
+std::vector<ConnectionTestUnit*> CMSClientTestUnit::connections()
 {
 	return mConnections;
 }
@@ -101,12 +104,12 @@ ConnectionTestUnit* const CMSClientTestUnit::connection(const std::string &id)
 {
 	ConnectionTestUnit* found{ nullptr };
 
-	auto found_connection = std::find_if(std::begin(mConnections), std::end(mConnections), [&id](const ConnectionTestUnit& item) {
-		return item.id() == id;
+	auto found_connection = std::find_if(std::begin(mConnections), std::end(mConnections), [&id](const ConnectionTestUnit* item) {
+		return item->id() == id;
 	});
 
 	if (found_connection != std::end(mConnections))
-		found = &*found_connection;
+		found = *found_connection;
 
 	return found;
 
