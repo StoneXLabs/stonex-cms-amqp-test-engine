@@ -61,9 +61,17 @@ TestRunner::TestRunner(TestSuiteConfigParser & configurationParser, TestFunction
 
 				 if (mTestReporter)
 					 mTestReporter->onMessage({ REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::GENERAL, " [" + test.testName() + "] ", "Test initialization duration " + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()) + " [ms]" });
+				 
+				 if (testCase)
+				 {
+					 testCase->run();
+					 delete testCase;
+				 }
+				 else
+					 if (mTestReporter)
+						 mTestReporter->onMessage({ REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR, test.testName(), "failed to create TestCase" });
 
-				 testCase->run();
-				 delete testCase;
+				 
 			 }
 			 else {
 
