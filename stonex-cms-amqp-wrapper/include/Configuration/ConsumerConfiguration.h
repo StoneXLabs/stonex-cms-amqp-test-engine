@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <Configuration\ClientConfiguration.h>
+#include <Configuration/ClientConfiguration.h>
 
 class ConsumerConfiguration : public ClientConfiguration
 {

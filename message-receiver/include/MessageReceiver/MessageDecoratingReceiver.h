@@ -20,8 +20,8 @@
 #pragma once
 
 #include <MessageReceiver/MessageReceiver.h>
-#include <utils\MessageVerifier.h>
-#include "..\Configuration\MessageDecoratingReceiverConfiguration.h"
+#include <utils/MessageVerifier.h>
+#include "../Configuration/MessageDecoratingReceiverConfiguration.h"
 
 class MessageDecoratingReceiver : public MessageReceiver, public MessageVerifier
 {

@@ -21,8 +21,8 @@
 
 #include <string>
 #include <vector>
-#include <Configuration\ConsumerConfiguration.h>
-#include <Configuration\ProducerConfiguration.h>
+#include <Configuration/ConsumerConfiguration.h>
+#include <Configuration/ProducerConfiguration.h>
 #include <Configuration/DefaultTerminationType.h>
 
 class SessionConfiguration : public DefaultTerminationConfiguration

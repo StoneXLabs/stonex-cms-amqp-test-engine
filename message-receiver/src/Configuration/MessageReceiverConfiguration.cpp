@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-#include <Configuration\MessageReceiverConfiguration.h>
+#include <Configuration/MessageReceiverConfiguration.h>
 
 MessageReceiverConfiguration::MessageReceiverConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& consumerId, const std::string& messageType, const std::string& receiverType)
 	:mConnectionId{ connectionId },

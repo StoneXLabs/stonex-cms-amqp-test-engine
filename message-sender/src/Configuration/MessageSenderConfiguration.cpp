@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-#include <Configuration\MessageSenderConfiguration.h>
+#include <Configuration/MessageSenderConfiguration.h>
 
 MessageSenderConfiguration::MessageSenderConfiguration(const std::string& connectionId, const std::string& sessionId, const std::string& producerId, const std::string& messageType, const std::string& senderType)
 	:mConnectionId{ connectionId },

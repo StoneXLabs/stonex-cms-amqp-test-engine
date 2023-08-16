@@ -20,7 +20,7 @@
 #pragma once
 
 #include <vector>
-#include <Configuration\MessageSenderConfiguration.h>
+#include <Configuration/MessageSenderConfiguration.h>
 
 class TestCasePerformerConfiguration
 {

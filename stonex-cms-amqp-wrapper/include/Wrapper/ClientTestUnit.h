@@ -20,9 +20,9 @@
 #pragma once
 
 #include <string>
-#include <cms\Session.h>
-#include <cms\Destination.h>
-#include "..\Configuration\ClientConfiguration.h"
+#include <cms/Session.h>
+#include <cms/Destination.h>
+#include "../Configuration/ClientConfiguration.h"
 
 class ClientTestUnit : public DefaultTerminationConfiguration
 {

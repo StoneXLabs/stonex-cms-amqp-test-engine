@@ -22,7 +22,7 @@
 #include <string>
 #include <algorithm>
 #include <vector>
-#include <Configuration\SessionConfiguration.h>
+#include <Configuration/SessionConfiguration.h>
 #include <Configuration/DefaultTerminationType.h>
 
 class ConnectionConfiguration : public DefaultTerminationConfiguration

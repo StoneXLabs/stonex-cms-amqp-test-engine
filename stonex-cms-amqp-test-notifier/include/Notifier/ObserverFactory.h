@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Notifier\TestObserver.h>
+#include <Notifier/TestObserver.h>
 
 class ObserverFactory
 {

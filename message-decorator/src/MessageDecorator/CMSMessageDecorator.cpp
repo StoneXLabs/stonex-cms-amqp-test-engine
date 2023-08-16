@@ -1,5 +1,5 @@
-#include "..\..\include\MessageDecorator\CMSMessageDecorator.h"
-#include "..\..\include\MessageDecorator\CMSMessageDecorator.h"
+#include "../../include/MessageDecorator/CMSMessageDecorator.h"
+#include "../../include/MessageDecorator/CMSMessageDecorator.h"
 /*
  * Copyright 2023 StoneX Financial Ltd.
  *

@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-#include <Configuration\FileMessageDecoratingSenderConfiguration.h>
+#include <Configuration/FileMessageDecoratingSenderConfiguration.h>
 
 FileMessageDecoratingSenderConfiguration::FileMessageDecoratingSenderConfiguration(const std::string & connectionId, const std::string & sessionId, const std::string & producerId, const std::string& messageType, const std::string& senderType, const std::string & message_file, const std::vector<MessageField*>& decorations)
 	:MessageSenderConfiguration(connectionId, sessionId, producerId, messageType, senderType),

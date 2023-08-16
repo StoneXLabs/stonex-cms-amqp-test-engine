@@ -22,8 +22,8 @@
 #include <algorithm>
 #include <thread>
 #include <map>
-#include <cms\MessageProducer.h>
-#include <cms\Session.h>
+#include <cms/MessageProducer.h>
+#include <cms/Session.h>
 #include <Wrapper/CMSClientTestUnit.h>
 #include <Configuration/MessageSenderConfiguration.h>
 #include <MessageSender/MessageSenderFactory.h>

@@ -18,7 +18,7 @@
  */
 #pragma once
 #include <boost/json.hpp>
-#include "..\Configuration\ExceptionsConfiguration.h"
+#include "../Configuration/ExceptionsConfiguration.h"
 
 class ExceptionsConfigurationParser
 {

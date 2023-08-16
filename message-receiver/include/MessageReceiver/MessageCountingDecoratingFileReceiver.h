@@ -20,10 +20,10 @@
 #pragma once
 
 #include <MessageReceiver/MessageReceiver.h>
-#include <utils\ReceivedMessageCounter.h>
-#include <utils\MessageDestination.h>
-#include <utils\MessageVerifier.h>
-#include "..\Configuration\FileMessageCountingDecoratingReceiverConfiguration.h"
+#include <utils/ReceivedMessageCounter.h>
+#include <utils/MessageDestination.h>
+#include <utils/MessageVerifier.h>
+#include "../Configuration/FileMessageCountingDecoratingReceiverConfiguration.h"
 
 class MessageCountingDecoratingFileReceiver : public MessageReceiver, public ReceivedMessageCounter, public MessageVerifier, public MessageFileDestination
 {

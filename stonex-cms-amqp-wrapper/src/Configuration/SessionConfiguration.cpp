@@ -20,7 +20,7 @@
 #include <sstream>
 #include <iterator>
 #include <algorithm>
-#include <Configuration\SessionConfiguration.h>
+#include <Configuration/SessionConfiguration.h>
 
 SessionConfiguration::SessionConfiguration(const std::string key, bool autoAck, bool transacted, const  std::vector<ConsumerConfiguration>& consumerConfiguration, const  std::vector<ProducerConfiguration>& producerConfiguration)
 	:DefaultTerminationConfiguration(DefaultTerminationMode::CloseOnDestruction),

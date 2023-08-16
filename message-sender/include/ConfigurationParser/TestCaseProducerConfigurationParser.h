@@ -21,7 +21,7 @@
 
 #include <boost/json.hpp>
 #include <ConfigurationParser/MessageDecoratorConfigurationParser.h>
-#include "..\Configuration\MessageSenderConfiguration.h"
+#include "../Configuration/MessageSenderConfiguration.h"
 
 class TestCaseProducerConfigurationParser : public MessageDecoratorConfigurationParser
 {

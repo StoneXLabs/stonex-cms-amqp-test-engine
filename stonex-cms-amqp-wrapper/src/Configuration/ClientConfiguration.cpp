@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-#include "Configuration\ClientConfiguration.h"
+#include "Configuration/ClientConfiguration.h"
 
 std::ostream & operator<<(std::ostream & os, const ClientType & other)
 {

@@ -19,7 +19,7 @@
 
 #include <algorithm>
 #include <iterator>
-#include <Configuration\TestSuiteConfiguration.h>
+#include <Configuration/TestSuiteConfiguration.h>
 #include <fmt/format.h>
 
 TestSuiteConfiguration::TestSuiteConfiguration(const std::string suiteName, const std::list<TestCaseConfiguration>& testCaseConfigs)
