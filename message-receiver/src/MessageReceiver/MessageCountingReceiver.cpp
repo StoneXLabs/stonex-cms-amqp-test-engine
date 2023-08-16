@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+#include <thread>
 #include <MessageReceiver/MessageCountingReceiver.h>
 
 MessageCountingReceiver::MessageCountingReceiver(const MessageCountingReceiverConfiguration & config, CMSClientTestUnit & client_params, Notifier & parent)

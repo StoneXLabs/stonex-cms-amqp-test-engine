@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+#include <thread>
 #include <boost/json.hpp>
 #include <fstream>
 #include <vector>
