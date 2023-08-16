@@ -14,15 +14,26 @@ add_executable(message-sender-test main.cpp)
 
 target_include_directories(message-sender-test PUBLIC ${PROJECT_SOURCE_DIR} )
 
-target_link_libraries(message-sender-test
-	message-sender
-	stonex-cms-amqp-wrapper
-	message-decorator
-	CONAN_PKG::boost
-	secur32 
-	crypt32 
-	Ws2_32
+
+
+if (UNIX)
+	target_link_libraries(message-sender-test
+		message-sender
+		stonex-cms-amqp-wrapper
+		message-decorator
+		CONAN_PKG::boost
 	)
+else()
+	target_link_libraries(message-sender-test
+		message-sender
+		stonex-cms-amqp-wrapper
+		message-decorator
+		CONAN_PKG::boost
+		secur32 
+		crypt32 
+		Ws2_32
+	)
+endif()
 
 configure_file(${PROJECT_SOURCE_DIR}/test_message_sender.config ${CMAKE_CURRENT_BINARY_DIR}/test_message_sender.config COPYONLY)
 

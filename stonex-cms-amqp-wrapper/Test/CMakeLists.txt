@@ -13,16 +13,26 @@ add_executable(stonex-cms-amqp-wrapper-test main.cpp)
 
 target_include_directories(stonex-cms-amqp-wrapper-test PUBLIC ${PROJECT_SOURCE_DIR}/main.cpp )
 
-target_link_libraries(stonex-cms-amqp-wrapper-test
-	stonex-cms-amqp-wrapper
-	CONAN_PKG::stonex-cms-amqp-lib
-	CONAN_PKG::stonex-logger-wrapper
-	CONAN_PKG::boost
-	secur32 
-	crypt32 
-	Ws2_32
-	)
 
+	
+if (UNIX)
+	target_link_libraries(stonex-cms-amqp-wrapper-test
+		stonex-cms-amqp-wrapper
+		CONAN_PKG::stonex-cms-amqp-lib
+		CONAN_PKG::stonex-logger-wrapper
+		CONAN_PKG::boost
+	)
+else()
+	target_link_libraries(stonex-cms-amqp-wrapper-test
+		stonex-cms-amqp-wrapper
+		CONAN_PKG::stonex-cms-amqp-lib
+		CONAN_PKG::stonex-logger-wrapper
+		CONAN_PKG::boost
+		secur32 
+		crypt32 
+		Ws2_32
+	)
+endif()
 
 configure_file(${PROJECT_SOURCE_DIR}/test_consumer.config ${CMAKE_CURRENT_BINARY_DIR}/test_consumer.config COPYONLY)
 configure_file(${PROJECT_SOURCE_DIR}/test_producer.config ${CMAKE_CURRENT_BINARY_DIR}/test_producer.config COPYONLY)

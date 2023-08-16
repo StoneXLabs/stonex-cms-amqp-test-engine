@@ -22,10 +22,20 @@ target_include_directories(send-receive-test
 	PUBLIC ${PROJECT_SOURCE_DIR}/include
 	)
 
-target_link_libraries(send-receive-test
-	message-receiver
-	message-sender
-	secur32 
-	crypt32 
-	Ws2_32
+
+
+
+if (UNIX)
+	target_link_libraries(send-receive-test
+		message-receiver
+		message-sender
 	)
+else()
+	target_link_libraries(send-receive-test
+		message-receiver
+		message-sender
+		secur32 
+		crypt32 
+		Ws2_32
+	)
+endif()

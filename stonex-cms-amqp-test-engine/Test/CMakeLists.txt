@@ -14,16 +14,27 @@ add_executable(stonex-cms-amqp-test-engne-test main.cpp ${sourceFiles} ${headerF
 
 target_include_directories(stonex-cms-amqp-test-engne-test PUBLIC ${PROJECT_SOURCE_DIR} )
 
-target_link_libraries(stonex-cms-amqp-test-engne-test
-	stonex-cms-amqp-test-engine
-	message-receiver
-	message-sender
-	CONAN_PKG::boost
-	secur32 
-	crypt32 
-	Ws2_32
-	)
 
+
+	
+if (UNIX)
+	target_link_libraries(stonex-cms-amqp-test-engne-test
+		stonex-cms-amqp-test-engine
+		message-receiver
+		message-sender
+		CONAN_PKG::boost
+	)
+else()
+	target_link_libraries(stonex-cms-amqp-test-engne-test
+		stonex-cms-amqp-test-engine
+		message-receiver
+		message-sender
+		CONAN_PKG::boost
+		secur32 
+		crypt32 
+		Ws2_32
+	)
+endif()
 	
 configure_file(${PROJECT_SOURCE_DIR}/test_suite.config ${CMAKE_CURRENT_BINARY_DIR}/test_suite.config COPYONLY)    
 configure_file(${PROJECT_SOURCE_DIR}/test_case.config ${CMAKE_CURRENT_BINARY_DIR}/test_case.config COPYONLY)     

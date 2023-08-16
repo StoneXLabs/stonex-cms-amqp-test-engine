@@ -13,14 +13,22 @@ add_executable(message-decorator-test main.cpp)
 
 target_include_directories(message-decorator-test PUBLIC ${PROJECT_SOURCE_DIR}/main.cpp )
 
-target_link_libraries(message-decorator-test
-	message-decorator
-	CONAN_PKG::boost
-	secur32 
-	crypt32 
-	Ws2_32
-	)
 
+
+if (UNIX)
+	target_link_libraries(message-decorator-test
+		message-decorator
+		CONAN_PKG::boost
+		)
+else()
+	target_link_libraries(message-decorator-test
+		message-decorator
+		CONAN_PKG::boost
+		secur32 
+		crypt32 
+		Ws2_32
+		)
+endif()
 	
 configure_file(${PROJECT_SOURCE_DIR}/test_message_decorator.config ${CMAKE_CURRENT_BINARY_DIR}/test_message_decorator.config COPYONLY) 
 

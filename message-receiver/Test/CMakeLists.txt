@@ -13,15 +13,26 @@ add_executable(message-receiver-test main.cpp)
 
 target_include_directories(message-receiver-test PUBLIC ${PROJECT_SOURCE_DIR}/main.cpp )
 
-target_link_libraries(message-receiver-test
-	message-receiver
-	message-content-verifier
-	stonex-cms-amqp-wrapper
-	CONAN_PKG::boost
-	secur32 
-	crypt32 
-	Ws2_32
+
+
+if (UNIX)
+	target_link_libraries(message-receiver-test
+		message-receiver
+		message-content-verifier
+		stonex-cms-amqp-wrapper
+		CONAN_PKG::boost
 	)
+else()
+	target_link_libraries(message-receiver-test
+		message-receiver
+		message-content-verifier
+		stonex-cms-amqp-wrapper
+		CONAN_PKG::boost
+		secur32 
+		crypt32 
+		Ws2_32
+	)
+endif()
 
 configure_file(${PROJECT_SOURCE_DIR}/test_message_receiver.config ${CMAKE_CURRENT_BINARY_DIR}/test_message_receiver.config COPYONLY)
 
