@@ -20,7 +20,6 @@
 #pragma once
 
 #include <algorithm>
-#include <thread>
 #include <map>
 #include <cms/MessageProducer.h>
 #include <cms/Session.h>

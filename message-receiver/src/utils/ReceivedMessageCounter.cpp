@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+#include <thread>
 #include <utils/ReceivedMessageCounter.h>
 #include <Notifier/Notifier.h>
 #include <fmt/format.h>

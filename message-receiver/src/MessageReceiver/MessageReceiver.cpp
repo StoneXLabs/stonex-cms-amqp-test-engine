@@ -18,7 +18,6 @@
  * limitations under the License.
  */
 
-#include <thread>
 #include <chrono>
 #include <thread>
 #include <MessageReceiver/MessageReceiverFactory.h>

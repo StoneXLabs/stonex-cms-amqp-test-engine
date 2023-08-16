@@ -21,7 +21,6 @@
 #include <fstream>
 #include <vector>
 #include <iostream>
-#include <thread>
 #include <Wrapper/CMSClientTestUnit.h>
 #include <ConfigurationParser/TestCaseProducerConfigurationParser.h>
 #include <ConfigurationParser/TestCaseReceiverConfigurationParser.h>
