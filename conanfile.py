@@ -25,9 +25,9 @@ class StonexCmsAmqpTestEngineConan(ConanFile):
             self.requires("boost/1.78.0@enterprise_messaging/stable")
         elif self.settings.os == "Linux":
             self.requires("boost/1.78.0")  
-            self.requires("zlib/1.2.13")  
-        self.requires("stonex-cms-amqp-lib/0.2.3@enterprise_messaging/test")
-        self.requires("stonex-logger-wrapper/0.0.2@enterprise_messaging/test")
+        self.requires("stonex-cms-amqp-lib/None@enterprise_messaging/test")
+        self.requires("stonex-logger-wrapper/None@enterprise_messaging/test")
+        self.requires("zlib/1.2.13", override=True)
 
         
     def config_options(self):
@@ -56,6 +56,8 @@ class StonexCmsAmqpTestEngineConan(ConanFile):
         self.copy("*.h", dst="include",src="common/activemq-cpp/src/main")
         
         self.copy("*.lib", dst="lib",src="lib", keep_path=False)
+        self.copy("*.so*", dst="lib",src="lib", keep_path=False)
+        self.copy("*.a", dst="lib",src="lib", keep_path=False)
         self.copy("*.pdb", dst="lib",src="lib", keep_path=False)
         self.copy("*.exe", dst="bin",src="bin", keep_path=False)
         
