@@ -25,8 +25,8 @@ class StonexCmsAmqpTestEngineConan(ConanFile):
             self.requires("boost/1.78.0@enterprise_messaging/stable")
         elif self.settings.os == "Linux":
             self.requires("boost/1.78.0")  
-        self.requires("stonex-cms-amqp-lib/None@enterprise_messaging/test")
-        self.requires("stonex-logger-wrapper/None@enterprise_messaging/test")
+        self.requires("stonex-cms-amqp-lib/0.2.3@enterprise_messaging/test")
+        self.requires("stonex-logger-wrapper/0.0.2@enterprise_messaging/test")
         self.requires("zlib/1.2.13", override=True)
 
         
