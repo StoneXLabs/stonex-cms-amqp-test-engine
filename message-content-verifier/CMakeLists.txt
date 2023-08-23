@@ -9,8 +9,15 @@ file(GLOB sourceFiles ${PROJECT_SOURCE_DIR}/src/MessageContentVerifiers/*.cpp )
 file(GLOB headerFiles ${PROJECT_SOURCE_DIR}/include/MessageContentVerifiers/*.h)
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${sourceFiles} ${headerFiles})
+            
 
-add_library(message-content-verifier STATIC)              
+          
+if(BUILD_STATIC_LIBS)
+	add_library(message-content-verifier STATIC)  
+else()
+	add_library(message-content-verifier SHARED) 
+endif()  
+
 
 target_sources(message-content-verifier
     PRIVATE ${sourceFiles}

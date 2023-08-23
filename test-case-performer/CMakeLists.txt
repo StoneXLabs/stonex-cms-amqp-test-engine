@@ -19,7 +19,12 @@ file(GLOB headerFiles
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${sourceFiles} ${headerFiles})
 
-add_library(test-case-performer STATIC ${sourceFiles} ${headerFiles})              
+          
+if(BUILD_STATIC_LIBS)
+	add_library(test-case-performer STATIC ${sourceFiles} ${headerFiles})    
+else()
+	add_library(test-case-performer SHARED ${sourceFiles} ${headerFiles}) 
+endif()  
 
 target_include_directories(test-case-performer PUBLIC ${PROJECT_SOURCE_DIR}/include/ )
 

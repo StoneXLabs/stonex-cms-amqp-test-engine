@@ -19,6 +19,7 @@ target_include_directories(stonex-cms-amqp-test-engne-test PUBLIC ${PROJECT_SOUR
 	
 if (UNIX)
 	target_link_libraries(stonex-cms-amqp-test-engne-test
+		CONAN_PKG::stonex-cms-amqp-lib
 		stonex-cms-amqp-test-engine
 		message-receiver
 		message-sender

@@ -24,13 +24,13 @@
 #include <iostream>
 #include <test_utils/TestSenderFactory.h>
 #include <Configuration/MessageSenderConfiguration.h>
-#include <Configuration/FileMessageSenderConfiguration.h >
-#include <Configuration/MessageCountingSenderConfiguration.h >
-#include <Configuration/MessageDecoratingSenderConfiguration.h >
-#include <Configuration/FileMessageCountingSenderConfiguration.h >
-#include <Configuration/FileMessageDecoratingSenderConfiguration.h >
-#include <Configuration/MessageCountingDecoratingSenderConfiguration.h >
-#include <Configuration/FileMessageCountingDecoratingSenderConfiguration.h >
+#include <Configuration/FileMessageSenderConfiguration.h>
+#include <Configuration/MessageCountingSenderConfiguration.h>
+#include <Configuration/MessageDecoratingSenderConfiguration.h>
+#include <Configuration/FileMessageCountingSenderConfiguration.h>
+#include <Configuration/FileMessageDecoratingSenderConfiguration.h>
+#include <Configuration/MessageCountingDecoratingSenderConfiguration.h>
+#include <Configuration/FileMessageCountingDecoratingSenderConfiguration.h>
 
 
 #include <MessageReceiver/MessageReceiver.h>

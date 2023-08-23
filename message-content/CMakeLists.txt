@@ -17,8 +17,15 @@ file(GLOB headerFiles
 	)
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${sourceFiles} ${headerFiles})
+    
 
-add_library(message-content STATIC)      
+          
+if(BUILD_STATIC_LIBS)
+	add_library(message-content STATIC)  
+else()
+	add_library(message-content SHARED)  
+endif()  
+
 
 target_sources(message-content
     PRIVATE ${sourceFiles}

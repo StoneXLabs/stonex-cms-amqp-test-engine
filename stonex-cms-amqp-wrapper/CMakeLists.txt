@@ -10,8 +10,15 @@ file(GLOB sourceFiles ${PROJECT_SOURCE_DIR}/src/Wrapper/*.cpp  ${PROJECT_SOURCE_
 file(GLOB headerFiles ${PROJECT_SOURCE_DIR}/include/Configuration/*.h  ${PROJECT_SOURCE_DIR}/include/Wrapper/*.h ${PROJECT_SOURCE_DIR}/include/ConfigurationParser/*.h)
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${sourceFiles} ${headerFiles})
+          
 
-add_library(stonex-cms-amqp-wrapper STATIC ${sourceFiles} ${headerFiles})              
+          
+if(BUILD_STATIC_LIBS)
+	add_library(stonex-cms-amqp-wrapper STATIC ${sourceFiles} ${headerFiles})    
+else()
+	add_library(stonex-cms-amqp-wrapper SHARED ${sourceFiles} ${headerFiles})
+endif()  
+
 
 target_include_directories(stonex-cms-amqp-wrapper PUBLIC ${PROJECT_SOURCE_DIR}/include/ )
 

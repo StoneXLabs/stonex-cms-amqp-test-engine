@@ -9,7 +9,14 @@ file(GLOB sourceFiles ${PROJECT_SOURCE_DIR}/src/Notifier/*.cpp )
 file(GLOB headerFiles ${PROJECT_SOURCE_DIR}/include/Notifier/*.h )
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${sourceFiles} ${headerFiles})
+            
 
-add_library(stonex-cms-amqp-test-notifier STATIC ${sourceFiles} ${headerFiles})              
+          
+if(BUILD_STATIC_LIBS)
+	add_library(stonex-cms-amqp-test-notifier STATIC ${sourceFiles} ${headerFiles})  
+else()
+	add_library(stonex-cms-amqp-test-notifier SHARED ${sourceFiles} ${headerFiles}) 
+endif()  
+
 
 target_include_directories(stonex-cms-amqp-test-notifier PUBLIC ${PROJECT_SOURCE_DIR}/include)

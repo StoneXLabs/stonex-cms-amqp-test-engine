@@ -27,6 +27,7 @@ target_include_directories(send-receive-test
 
 if (UNIX)
 	target_link_libraries(send-receive-test
+		CONAN_PKG::stonex-cms-amqp-lib
 		message-receiver
 		message-sender
 	)
@@ -39,3 +40,4 @@ else()
 		Ws2_32
 	)
 endif()
+

@@ -25,20 +25,26 @@ class StonexCmsAmqpTestEngineConan(ConanFile):
             self.requires("boost/1.78.0@enterprise_messaging/stable")
         elif self.settings.os == "Linux":
             self.requires("boost/1.78.0")  
-        self.requires("stonex-cms-amqp-lib/0.2.3@enterprise_messaging/test")
-        self.requires("stonex-logger-wrapper/0.0.2@enterprise_messaging/test")
+        self.requires("stonex-cms-amqp-lib/None@enterprise_messaging/test")
+        self.requires("stonex-logger-wrapper/None@enterprise_messaging/test")
         self.requires("zlib/1.2.13", override=True)
 
         
     def config_options(self):
         if self.settings.os == "Windows":
             del self.options.fPIC
+	
+        self.options["stonex-cms-amqp-lib"].shared = self.options.shared
+        self.options["stonex-logger-wrapper"].shared = self.options.shared
+        self.options["red-hat-amq-clients-c++"].shared = self.options.shared
 
     def source(self):
          self.run("git clone https://github.com/StoneXLabs/stonex-cms-amqp-test-engine.git")  
 
     def build(self):
         cmake = CMake(self)
+        if self.options.shared == False:
+            cmake.definitions["BUILD_STATIC_LIBS"]="ON"
         cmake.configure()
         cmake.build()
 
@@ -76,5 +82,11 @@ class StonexCmsAmqpTestEngineConan(ConanFile):
         self.copy("*message*.txt", dst="bin",src="stonex-cms-amqp-wrapper/Test")
 
     def package_info(self):
-        self.cpp_info.libs = self.collect_libs()
+        if self.options.shared:
+             self.cpp_info.libs = self.collect_libs()
+        else:
+             self.cpp_info.libs = ["stonex-cms-amqp-test-engine","message-sender","message-receiver","message-decorator","stonex-cms-amqp-wrapper","test-utils","stonex-cms-amqp-test-notifier","message-content-verifier","message-content"]
+        
+
+     #   self.cpp_info.libs = self.collect_libs()
 
