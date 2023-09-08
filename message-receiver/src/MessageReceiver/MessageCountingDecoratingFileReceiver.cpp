@@ -45,6 +45,9 @@ void MessageCountingDecoratingFileReceiver::onMessage(const cms::Message* messag
 
 void MessageCountingDecoratingFileReceiver::waitForMessage(long long millis) const
 {
+	if (!mConsumer)
+		return;
+
 	if (millis == 0) //wait forever  
 	{
 		while (receivedMessageCount() < expectedEventCount());

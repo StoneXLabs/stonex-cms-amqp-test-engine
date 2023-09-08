@@ -63,18 +63,14 @@ long long ReceivedMessageCounter::receivedMessageCount() const
 void ReceivedMessageCounter::incrementReceivedCount()
 {
 	mReceivedMessagesCount++;
-	if (mReceivedMessagesCount == expectedEventCount())
-		std::thread(mReceivedAllCallback).detach();
-	else if (mReceivedMessagesCount > expectedEventCount())
-	{
+	if (mReceivedMessagesCount > expectedEventCount())
 		mParent.testEvent(EventStatus(false, mId, fmt::format("{} expected message count exceeded [{}/{}]", mId, receivedMessageCount(), expectedEventCount())));
-		std::thread(mReceivedAllCallback).detach();
-	}
+	
 }
 
 void ReceivedMessageCounter::registerCallback(std::function<void(void)> callback)
 {
 	mReceivedAllCallback = callback;
 	if (mReceivedMessagesCount >= expectedEventCount())
-		callback();
+		mReceivedAllCallback();
 }
