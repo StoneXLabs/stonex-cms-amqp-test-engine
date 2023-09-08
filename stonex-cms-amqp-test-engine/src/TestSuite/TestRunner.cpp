@@ -56,13 +56,22 @@ TestRunner::TestRunner(TestSuiteConfigParser & configurationParser, TestFunction
 			 if (test.enabled())
 			 {
 				 auto start = std::chrono::high_resolution_clock::now();
-				 TestCase testCase(test, &mSenderFactory, &mReceiverFactory, mRegister, mTestReporter, mLogger);
+				 ITestCase* testCase =  createTestCase(test, &mSenderFactory, &mReceiverFactory, mRegister, mTestReporter, mLogger);
 				 auto end = std::chrono::high_resolution_clock::now();
 
 				 if (mTestReporter)
 					 mTestReporter->onMessage({ REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::GENERAL, " [" + test.testName() + "] ", "Test initialization duration " + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()) + " [ms]" });
+				 
+				 if (testCase)
+				 {
+					 testCase->run();
+					 delete testCase;
+				 }
+				 else
+					 if (mTestReporter)
+						 mTestReporter->onMessage({ REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_ERROR, test.testName(), "failed to create TestCase" });
 
-				 testCase.run();
+				 
 			 }
 			 else {
 
@@ -79,4 +88,9 @@ TestRunner::TestRunner(TestSuiteConfigParser & configurationParser, TestFunction
 
 	 if (mTestReporter)
 		mTestReporter->onMessage({ REPORT_MESSAGE_SEVERITY::INFO, REPORT_MESSAGE_TYPE::TEST_SUITE_END, mSuiteConfiguration.name(), mSuiteConfiguration.name() });
+ }
+
+ ITestCase * TestRunner::createTestCase(const TestCaseConfiguration& test_config, MessageSenderFactory* senderFactory, MessageReceiverFactory* receiverFactory, const TestFunctionRegister& functionRegister, TestObserver* observer, std::shared_ptr<StonexLogger> logger)
+ {
+	 return new TestCase(test_config, &mSenderFactory, &mReceiverFactory, mRegister, mTestReporter, mLogger);
  }

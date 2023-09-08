@@ -27,6 +27,7 @@
 #include <Notifier/TestObserver.h>
 #include <logger/StoneXLogger.h>
 #include <logger/StonexLogSource.h>
+#include <TestSuite/ITestCase.h>
 
 class TestRunner
 {
@@ -34,6 +35,9 @@ class TestRunner
 public:
 	TestRunner(TestSuiteConfigParser& configurationParser, TestFunctionRegister& functionRegister, MessageReceiverFactory& receiverFactory,  MessageSenderFactory& senderFactory, TestObserver* reporter, std::shared_ptr<StonexLogger> logger);
 	void run();
+protected:
+	virtual ITestCase* createTestCase(const TestCaseConfiguration& test_config, MessageSenderFactory* senderFactory, MessageReceiverFactory* receiverFactory, const TestFunctionRegister& functionRegister, TestObserver* observer, std::shared_ptr<StonexLogger> logger);
+
 private:
 	TestSuiteConfiguration mSuiteConfiguration;
 	TestFunctionRegister& mRegister;
