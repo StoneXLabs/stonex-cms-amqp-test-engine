@@ -53,6 +53,9 @@ void MessageReceiver::onMessage(const cms::Message* message) {
 
 void MessageReceiver::waitForMessage(long long millis) const
 {
+	if (!mConsumer)
+		return;
+
 	std::this_thread::sleep_for(std::chrono::milliseconds(millis));
 }
 
